@@ -1,31 +1,21 @@
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
 
 /**
  * Created by slekkala on 9/8/15.
  */
 public class GrepServer {
-
-    private static final Logger LOG = Logger.getLogger(GrepServer.class);
-
+    private static final Logger LOG = LoggerFactory.getLogger(GrepServer.class);
 
     public static void main(String[] args) throws Exception {
         BasicConfigurator.configure();
         LOG.info("The Grep server is running.");
-        ServerSocket listener = new ServerSocket(9898);
-        try {
+        try (ServerSocket listener = new ServerSocket(9898)) {
             while (true) {
                 new Grepper(listener.accept()).start();
             }
-        } finally {
-            listener.close();
         }
     }
 }

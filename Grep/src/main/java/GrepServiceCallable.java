@@ -1,5 +1,5 @@
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.concurrent.Callable;
  */
 public class GrepServiceCallable implements Callable<String> {
 
-    private static final Logger LOG = Logger.getLogger(GrepServiceCallable.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GrepServiceCallable.class);
 
 
     private String grepCommand;
@@ -30,7 +30,6 @@ public class GrepServiceCallable implements Callable<String> {
     public String grepUsingSocket(String grepCommand) {
         String serverAddress = "127.0.0.1";
         int port = 9898;
-        BasicConfigurator.configure();
         StringBuilder resultBuilder = new StringBuilder();
 
         try

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.concurrent.Callable;
 
 /**
@@ -17,9 +18,11 @@ public class GrepServiceCallable implements Callable<String> {
 
 
     private String grepCommand;
+    private String hostName;
 
-    public GrepServiceCallable(String grepCommand) {
+    public GrepServiceCallable(String grepCommand, String hostName) {
         this.grepCommand = grepCommand;
+        this.hostName = hostName;
     }
 
     @Override
@@ -28,15 +31,13 @@ public class GrepServiceCallable implements Callable<String> {
     }
 
     public String grepUsingSocket(String grepCommand) {
-        String serverAddress = "127.0.0.1";
         int port = 9898;
         StringBuilder resultBuilder = new StringBuilder();
 
-        try
-        {
-            LOG.info("Connecting to " + serverAddress +
+        try {
+            LOG.info("Connecting to " + this.hostName +
                     " on port " + port);
-            Socket client = new Socket(serverAddress, port);
+            Socket client = new Socket(this.hostName, port);
             System.out.println("Just connected to "
                     + client.getRemoteSocketAddress());
             BufferedReader in = new BufferedReader(
@@ -48,14 +49,16 @@ public class GrepServiceCallable implements Callable<String> {
 
             String output;
 
-            while((output=in.readLine())!=null) {
-                resultBuilder.append(client.getRemoteSocketAddress()+ "-" + output).append(System.getProperty("line.separator"));
+            while ((output = in.readLine()) != null) {
+                LOG.info(client.getRemoteSocketAddress() + "-" + output + System.getProperty("line.separator"));
             }
             client.close();
-        }catch(IOException e)
-        {
-            e.printStackTrace();
+        } catch (UnknownHostException e) {
+            LOG.error("Unknown host exception while connecting to " + this.hostName + e.toString());
+        } catch (IOException e) {
+            LOG.error("IOException " + e.toString());
         }
+        LOG.info("done");
         return resultBuilder.toString();
     }
 

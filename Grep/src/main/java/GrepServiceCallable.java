@@ -32,35 +32,30 @@ public class GrepServiceCallable implements Callable<String> {
 
     public String grepUsingSocket(String grepCommand) {
         int port = 9898;
-        StringBuilder resultBuilder = new StringBuilder();
 
         try {
-            LOG.info("Connecting to " + this.hostName +
-                    " on port " + port);
-            Socket client = new Socket(this.hostName, port);
-            System.out.println("Just connected to "
-                    + client.getRemoteSocketAddress());
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(client.getInputStream()));
-            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+            LOG.info("Connecting to " + this.hostName + " on port " + port);
+            Socket client = new Socket(hostName, port);
+            LOG.info("Just connected to " + hostName);
 
+            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 
             out.println(grepCommand);
 
             String output;
-
             while ((output = in.readLine()) != null) {
-                LOG.info(client.getRemoteSocketAddress() + "-" + output + System.getProperty("line.separator"));
+                LOG.info("[" + hostName + "]>" + output + System.getProperty("line.separator"));
             }
+
             client.close();
+            LOG.info("[" + hostName + " FINISHED]");
         } catch (UnknownHostException e) {
             LOG.error("Unknown host exception while connecting to " + this.hostName + e.toString());
         } catch (IOException e) {
-            LOG.error("IOException " + e.toString());
+            LOG.error("IOException " + e.toString() + " to " + hostName);
         }
-        LOG.info("done");
-        return resultBuilder.toString();
+
+        return new StringBuilder().toString();
     }
-
-
 }

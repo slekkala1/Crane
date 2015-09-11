@@ -15,7 +15,7 @@ public class Console {
     }
 
     @Command
-    public void grepAll(String grepCommand) throws IOException, InterruptedException, ExecutionException {
+    public void grep(String grepCommand) throws IOException, InterruptedException, ExecutionException {
         grepClient.grepAllMachines(grepCommand);
     }
 

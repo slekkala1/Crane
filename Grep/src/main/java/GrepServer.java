@@ -1,6 +1,7 @@
 import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.net.ServerSocket;
 
 /**
@@ -17,5 +18,6 @@ public class GrepServer {
                 new Grepper(listener.accept()).start();
             }
         }
+
     }
 }

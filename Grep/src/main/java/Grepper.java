@@ -17,27 +17,24 @@ public class Grepper extends Thread {
 
     public Grepper(Socket socket) {
         this.socket = socket;
-        LOG.info("New conection from");
+        LOG.info("New conection from" + socket.getRemoteSocketAddress().toString());
     }
 
     public void run() {
         BufferedReader br = null;
 
-        try (
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         ) {
             String input = in.readLine();
             if (input == null || !input.startsWith("grep")) {
                 return;
             }
 
-            LOG.info(input);
-            String output;
+            LOG.info("Grep command to be executed:" + input);
+            br = Grepper.execute(input);
 
-             br = Grepper.execute(input);
+            String output;
             while ((output = br.readLine()) != null) {
                 out.println(output);
             }
@@ -46,7 +43,7 @@ public class Grepper extends Thread {
             LOG.info("Error handling client" + e);
         } finally {
             try {
-                if(br!=null) br.close();
+                if (br != null) br.close();
                 socket.close();
             } catch (IOException e) {
                 LOG.info("Couldn't close a socket, what's going on?");
@@ -60,9 +57,6 @@ public class Grepper extends Thread {
         String[] commands = {"/bin/sh", "-c", grepCommand};
         Process proc = rt.exec(commands);
 
-        System.out.println(commands[2]);
-
         return new BufferedReader(new InputStreamReader(proc.getInputStream()));
-
     }
 }

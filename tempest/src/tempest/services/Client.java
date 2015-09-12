@@ -26,28 +26,20 @@ public class Client {
         this.logger = logger;
     }
 
-    public String grep(String machine, String options) {
-        Response response = new ClientCommandExecutor<Response>(machine,  new Grep(options)).execute();
-        logger.logLine(Logger.INFO, "grep returned " + response.getLineCount() + " lines");
-        return response.getResponse();
+    public Response grep(String machine, String options) {
+        return new ClientCommandExecutor<Response>(machine,  new Grep(options)).execute();
     }
 
-    public String grepAll(String options) {
-        Response response = executeAllParallel(new Grep(options));
-        logger.logLine(Logger.INFO, "grepAll returned " + response.getLineCount() + " lines");
-        return response.getResponse();
+    public Response grepAll(String options) {
+        return executeAllParallel(new Grep(options));
     }
 
-    public String ping(String machine) {
-        Response response = new ClientCommandExecutor<Response>(machine, new Ping()).execute();
-        logger.logLine(Logger.INFO, "ping returned " + response.getLineCount() + " lines");
-        return response.getResponse();
+    public Response ping(String machine) {
+        return new ClientCommandExecutor<Response>(machine, new Ping()).execute();
     }
 
-    public String pingAll() {
-        Response response = executeAllParallel(new Ping());
-        logger.logLine(Logger.INFO, "pingAll returned " + response + " lines");
-        return response.getResponse();
+    public Response pingAll() {
+        return executeAllParallel(new Ping());
     }
 
     private <TResponse extends CommandResponse<TResponse>> TResponse executeAllParallel(ClientCommand<TResponse> command) {

@@ -1,6 +1,12 @@
 package tempest.services;
 
 import tempest.Machines;
+import tempest.commands.client.Grep;
+import tempest.commands.client.Ping;
+import tempest.commands.response.Response;
+import tempest.interfaces.ClientCommand;
+import tempest.interfaces.CommandResponse;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,34 +27,45 @@ public class Client {
     }
 
     public String grep(String machine, String options) {
-        return new ClientCommandExecutor(machine, "grep " + options).execute();
+        Response response = new ClientCommandExecutor<Response>(machine,  new Grep(options)).execute();
+        logger.logLine(Logger.INFO, "grep returned " + response.getLineCount() + " lines");
+        return response.getResponse();
     }
 
     public String grepAll(String options) {
-        return executeAllParallel("grep " + options);
+        Response response = executeAllParallel(new Grep(options));
+        logger.logLine(Logger.INFO, "grepAll returned " + response.getLineCount() + " lines");
+        return response.getResponse();
     }
 
     public String ping(String machine) {
-        return new ClientCommandExecutor(machine, "ping").execute();
+        Response response = new ClientCommandExecutor<Response>(machine, new Ping()).execute();
+        logger.logLine(Logger.INFO, "ping returned " + response.getLineCount() + " lines");
+        return response.getResponse();
     }
 
     public String pingAll() {
-        return executeAllParallel("ping");
+        Response response = executeAllParallel(new Ping());
+        logger.logLine(Logger.INFO, "pingAll returned " + response + " lines");
+        return response.getResponse();
     }
 
-    private String executeAllParallel(String command) {
+    private <TResponse extends CommandResponse<TResponse>> TResponse executeAllParallel(ClientCommand<TResponse> command) {
         long startTime = System.currentTimeMillis();
-        Set<Future<String>> futureSet = new HashSet<>();
+        Set<Future<TResponse>> futureSet = new HashSet<>();
 
         for (String machine : this.machines) {
-            Callable<String> callable = new ClientCommandExecutor(machine, command);
-            Future<String> future = pool.submit(callable);
+            Callable<TResponse> callable = new ClientCommandExecutor<>(machine, command);
+            Future<TResponse> future = pool.submit(callable);
             futureSet.add(future);
         }
-        StringBuilder resultBuilder = new StringBuilder();
-        for (Future<String> future : futureSet) {
+        TResponse response = null;
+        for (Future<TResponse> future : futureSet) {
             try {
-                resultBuilder.append(future.get());
+                if (response == null)
+                    response = future.get();
+                else
+                    response = response.add(future.get());
             } catch (ExecutionException e) {
                 logger.logLine(Logger.SEVERE, String.valueOf(e));
             } catch (InterruptedException e) {
@@ -58,43 +75,44 @@ public class Client {
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
         logger.logLine(Logger.INFO, "Query latency" + elapsedTime);
-        return resultBuilder.toString();
+        return response;
     }
 
-    class ClientCommandExecutor implements Callable<String> {
+    class ClientCommandExecutor<TResponse extends CommandResponse<TResponse>> implements Callable<TResponse> {
         private final String server;
-        private final String command;
+        private final ClientCommand command;
 
-        public ClientCommandExecutor(String server, String command) {
+        public ClientCommandExecutor(String server, ClientCommand command) {
 
             this.server = server;
             this.command = command;
         }
 
-        @Override
-        public String call() {
+        public TResponse call() {
             return execute();
         }
 
-        public String execute(){
+        public TResponse execute(){
             String line;
             try{
                 Socket socket = new Socket(server, 4444);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                out.println(command);
+                out.println(command.getRequest());
                 socket.shutdownOutput();
 
+                int lineCount = 0;
                 StringBuilder builder = new StringBuilder();
                 while ((line = in.readLine()) != null) {
                     builder.append(line);
+                    ++lineCount;
                 }
                 socket.close();
-                return builder.toString();
+                return (TResponse)command.getResponse(builder.toString(), lineCount);
             } catch (IOException e){
-                System.out.println("Read failed");
-                return "Error";
+                logger.logLine(Logger.WARNING, "Client socket failed " + e);
+                return null;
             }
         }
     }

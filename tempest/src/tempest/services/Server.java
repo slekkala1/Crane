@@ -1,8 +1,8 @@
 package tempest.services;
 
-import tempest.Command;
-import tempest.Commands.Grep;
-import tempest.Commands.Ping;
+import tempest.commands.server.Grep;
+import tempest.commands.server.Ping;
+import tempest.interfaces.ServerCommand;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,13 +12,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-    private final Command[] commands;
+    private final ServerCommand[] commands;
     private final Logger logger;
     private ServiceRunner runner;
 
     public Server(Logger logger) {
         this.logger = logger;
-        commands = new Command[] { new Ping(), new Grep(logger)};
+        commands = new ServerCommand[] { new Ping(), new Grep(logger)};
     }
 
     public void start() {
@@ -88,7 +88,7 @@ public class Server {
                 }
 
                 String request = builder.toString();
-                for (Command command : commands) {
+                for (ServerCommand command : commands) {
                     if (command.canExecute(request)) {
                         out.append(command.execute(request));
                     }

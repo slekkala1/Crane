@@ -1,9 +1,9 @@
-package tempest.Commands;
+package tempest.commands.server;
 
-import tempest.Command;
+import tempest.interfaces.ServerCommand;
 import tempest.services.Logger;
 
-public class Grep extends Command {
+public class Grep implements ServerCommand {
     private final Logger logger;
 
     public Grep(Logger logger) {
@@ -11,12 +11,10 @@ public class Grep extends Command {
         this.logger = logger;
     }
 
-    @Override
     public boolean canExecute(String message) {
         return message.startsWith("grep ");
     }
 
-    @Override
     public String execute(String message) {
         return logger.grep(message.substring(5));
     }

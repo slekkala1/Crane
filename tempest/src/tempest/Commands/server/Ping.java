@@ -1,14 +1,12 @@
-package tempest.Commands;
+package tempest.commands.server;
 
-import tempest.Command;
+import tempest.interfaces.ServerCommand;
 
-public class Ping extends Command {
-    @Override
+public class Ping implements ServerCommand {
     public boolean canExecute(String message) {
         return message.startsWith("ping");
     }
 
-    @Override
     public String execute(String message) {
         return "Hello";
     }

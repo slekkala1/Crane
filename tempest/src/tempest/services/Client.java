@@ -1,5 +1,6 @@
 package tempest.services;
 
+import tempest.Machine;
 import tempest.Machines;
 import tempest.commands.client.Grep;
 import tempest.commands.client.Ping;
@@ -18,7 +19,7 @@ import java.util.concurrent.*;
 
 public class Client {
     private static ExecutorService pool = Executors.newFixedThreadPool(7);
-    private final String[] machines;
+    private final Machine[] machines;
     private final Logger logger;
 
     public Client(Machines machines, Logger logger) {
@@ -26,7 +27,7 @@ public class Client {
         this.logger = logger;
     }
 
-    public Response grep(String machine, String options) {
+    public Response grep(Machine machine, String options) {
         return new ClientCommandExecutor<Response>(machine, new Grep(options)).execute();
     }
 
@@ -34,7 +35,7 @@ public class Client {
         return executeAllParallel(new Grep(options));
     }
 
-    public Response ping(String machine) {
+    public Response ping(Machine machine) {
         return new ClientCommandExecutor<Response>(machine, new Ping()).execute();
     }
 
@@ -45,7 +46,7 @@ public class Client {
     private <TResponse extends CommandResponse<TResponse>> TResponse executeAllParallel(ClientCommand<TResponse> command) {
         Set<Future<TResponse>> futureSet = new HashSet<>();
 
-        for (String machine : this.machines) {
+        for (Machine machine : this.machines) {
             Callable<TResponse> callable = new ClientCommandExecutor<>(machine, command);
             Future<TResponse> future = pool.submit(callable);
             futureSet.add(future);
@@ -71,10 +72,10 @@ public class Client {
     }
 
     class ClientCommandExecutor<TResponse extends CommandResponse<TResponse>> implements Callable<TResponse> {
-        private final String server;
+        private final Machine server;
         private final ClientCommand command;
 
-        public ClientCommandExecutor(String server, ClientCommand command) {
+        public ClientCommandExecutor(Machine server, ClientCommand command) {
 
             this.server = server;
             this.command = command;
@@ -88,9 +89,9 @@ public class Client {
             String line;
             long startTime = System.currentTimeMillis();
             try {
-                logger.logLine(Logger.INFO, "Connecting to " + server + " on port " + 4444);
-                Socket socket = new Socket(server, 4444);
-                logger.logLine(Logger.INFO, "Just connected to " + server + " on port " + 4444);
+                logger.logLine(Logger.INFO, "Connecting to " + server.getHostName() + " on port " + server.getPort());
+                Socket socket = new Socket(server.getHostName(), server.getPort());
+                logger.logLine(Logger.INFO, "Just connected to " + server.getHostName() + " on port " + server.getPort());
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 

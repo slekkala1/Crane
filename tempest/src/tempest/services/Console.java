@@ -2,6 +2,7 @@ package tempest.services;
 
 import asg.cliche.Command;
 import asg.cliche.Param;
+import tempest.Machine;
 import tempest.commands.response.Response;
 import tempest.interfaces.CommandResponse;
 
@@ -47,8 +48,8 @@ public class Console {
     }
 
     @Command
-    public String grepMachine(@Param(name="machine")String machine, @Param(name="options")String options) throws IOException, InterruptedException {
-        Response response = client.grep(machine, options);
+    public String grepMachine(@Param(name="machine", description="host:port")String machine, @Param(name="options")String options) throws IOException, InterruptedException {
+        Response response = client.grep(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
         return response.getResponse() + formatResponseStatistics(response);
     }
 
@@ -66,8 +67,8 @@ public class Console {
     }
 
     @Command
-    public String grepMachineToFile(@Param(name="file")String file, @Param(name="machine")String machine, @Param(name="options")String options) throws IOException, InterruptedException {
-        Response response = client.grep(machine, options);
+    public String grepMachineToFile(@Param(name="file", description="host:port")String file, @Param(name="machine")String machine, @Param(name="options")String options) throws IOException, InterruptedException {
+        Response response = client.grep(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
         Files.write(FileSystems.getDefault().getPath(file), response.getResponse().getBytes());
         return "Wrote to " + file + System.getProperty("line.separator") + formatResponseStatistics(response);
     }
@@ -79,8 +80,8 @@ public class Console {
     }
 
     @Command
-    public String pingMachine(@Param(name="machine")String machine) throws IOException, InterruptedException {
-        Response response = client.ping(machine);
+    public String pingMachine(@Param(name="machine", description="host:port")String machine) throws IOException, InterruptedException {
+        Response response = client.ping(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])));
         return response.getResponse() + formatResponseStatistics(response);
     }
 

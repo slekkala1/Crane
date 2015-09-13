@@ -10,28 +10,41 @@ import java.util.List;
 import java.util.Properties;
 
 public class Machines {
-    private final List<String> machines;
-    private final String localMachine;
+    private final List<Machine> machines = new ArrayList<>();
+    private final Machine localMachine;
 
     public Machines() throws UnknownHostException {
-        machines = new ArrayList<>(Arrays.asList(readPropertiesFile().split(",")));
-        localMachine = Inet4Address.getLocalHost().getHostName();
+        this(readPropertiesFile().split(","), 4444);
+    }
+
+    public Machines(String[] machines, int port) throws UnknownHostException {
+        for(String machine : machines) {
+            String[] split = machine.split(":");
+            this.machines.add(new Machine(split[0], Integer.parseInt(split[1])));
+        }
+        localMachine = new Machine(Inet4Address.getLocalHost().getHostName(), port);
         if (getMachineNumber() == -1)
-            machines.add(localMachine);
+            this.machines.add(localMachine);
     }
 
     public int getMachineNumber() {
-        return machines.indexOf(localMachine);
+        int i = 0;
+        for (Machine machine : machines) {
+            if (machine.getHostName() == localMachine.getHostName() && machine.getPort() == localMachine.getPort())
+                return i;
+            ++i;
+        }
+        return -1;
     }
 
-    public String[] getMachines() {
-        return machines.toArray(new String[machines.size()]);
+    public Machine[] getMachines() {
+        return machines.toArray(new Machine[machines.size()]);
     }
 
-    private String readPropertiesFile() {
+    private static String readPropertiesFile() {
         Properties prop = new Properties();
 
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+        try (InputStream inputStream = Machines.class.getClassLoader().getResourceAsStream("config.properties")) {
 
             if (inputStream != null) {
                 prop.load(inputStream);

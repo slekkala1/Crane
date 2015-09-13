@@ -30,7 +30,7 @@ public class Machines {
     public int getMachineNumber() {
         int i = 0;
         for (Machine machine : machines) {
-            if (machine.getHostName() == localMachine.getHostName() && machine.getPort() == localMachine.getPort())
+            if (machine.getHostName().equals(localMachine.getHostName()) && machine.getPort() == localMachine.getPort())
                 return i;
             ++i;
         }

@@ -13,8 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class Client {
@@ -44,31 +43,33 @@ public class Client {
     }
 
     private <TResponse extends CommandResponse<TResponse>> TResponse executeAllParallel(ClientCommand<TResponse> command) {
-        Set<Future<TResponse>> futureSet = new HashSet<>();
-
+        Collection<Callable<TResponse>> commandExecutors = new ArrayList<>();
         for (Machine machine : this.machines) {
-            Callable<TResponse> callable = new ClientCommandExecutor<>(machine, command);
-            Future<TResponse> future = pool.submit(callable);
-            futureSet.add(future);
+            commandExecutors.add(new ClientCommandExecutor<TResponse>(machine, command));
         }
-        TResponse response = null;
-        for (Future<TResponse> future : futureSet) {
-            try {
-                if (response == null)
-                    response = future.get();
-                else {
-                    TResponse tResponse = future.get();
-                    if (tResponse != null) {
-                        response = response.add(tResponse);
+        List<Future<TResponse>> results;
+        try {
+            results = pool.invokeAll(commandExecutors);
+            TResponse response = null;
+            for (Future<TResponse> future : results) {
+                try {
+                    if (response == null)
+                        response = future.get();
+                    else {
+                        TResponse tResponse = future.get();
+                        if (tResponse != null) {
+                            response = response.add(tResponse);
+                        }
                     }
+                } catch (ExecutionException e) {
+                    logger.logLine(Logger.SEVERE, String.valueOf(e));
                 }
-            } catch (ExecutionException e) {
-                logger.logLine(Logger.SEVERE, String.valueOf(e));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
+            return response;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        return response;
+        return null;
     }
 
     class ClientCommandExecutor<TResponse extends CommandResponse<TResponse>> implements Callable<TResponse> {

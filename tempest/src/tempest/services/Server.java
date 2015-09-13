@@ -43,7 +43,7 @@ public class Server {
 
         public void run() {
             try{
-                server = new ServerSocket(4444);
+                server = new ServerSocket(port);
 
                 while(isRunning){
                     ServiceWorker worker;

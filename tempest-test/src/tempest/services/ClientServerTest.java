@@ -15,22 +15,22 @@ public class ClientServerTest {
     public void distributedPingAll() throws IOException {
         String hostTemplate = Inet4Address.getLocalHost().getHostName() + ":";
         Machines machines = new Machines(new String[] {
-                hostTemplate + 1111,
-                hostTemplate + 2222,
-                hostTemplate + 3333,
+                hostTemplate + 4441,
+                hostTemplate + 4442,
+                hostTemplate + 4443,
                 hostTemplate + 4444,
-                hostTemplate + 5555,
-                hostTemplate + 6666,
-                hostTemplate + 7777
-        }, 1111);
+                hostTemplate + 4445,
+                hostTemplate + 4446,
+                hostTemplate + 4447
+        }, 4441);
         Logger logger = new Logger(new MockExecutor(), new MockLogWrapper(), "logfile.log", "logfile.log");
-        Server server1 = new Server(logger, 1111);
-        Server server2 = new Server(logger, 2222);
-        Server server3 = new Server(logger, 3333);
+        Server server1 = new Server(logger, 4441);
+        Server server2 = new Server(logger, 4442);
+        Server server3 = new Server(logger, 4443);
         Server server4 = new Server(logger, 4444);
-        Server server5 = new Server(logger, 5555);
-        Server server6 = new Server(logger, 6666);
-        Server server7 = new Server(logger, 7777);
+        Server server5 = new Server(logger, 4445);
+        Server server6 = new Server(logger, 4446);
+        Server server7 = new Server(logger, 4447);
 
         server1.start();
         server2.start();

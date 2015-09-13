@@ -100,7 +100,7 @@ public class Client {
                 int lineCount = 0;
                 StringBuilder builder = new StringBuilder();
                 while ((line = in.readLine()) != null) {
-                    builder.append(line);
+                    builder.append(line).append(System.lineSeparator());
                     ++lineCount;
                 }
                 socket.close();

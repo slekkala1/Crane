@@ -13,7 +13,8 @@ public class CommandLineExecutor implements Executor {
     public String[] exec(String command, String options) {
         try {
             List<String> results = new ArrayList<>();
-            Process process = Runtime.getRuntime().exec(command);
+            String commandWithOptions = command + " " + options;
+            Process process = Runtime.getRuntime().exec(commandWithOptions);
             InputStream stdout = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
             String line;

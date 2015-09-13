@@ -7,10 +7,57 @@ import tempest.interfaces.Executor;
 import tempest.interfaces.LogWrapper;
 
 import java.io.IOException;
+import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 
 public class LoggerTest {
+    @Test
+    public void loggerConstructorSetsFileHandler() throws IOException {
+        MockLogWrapper logWrapper = new MockLogWrapper();
+        new Logger(new Machines(), new MockExecutor(), logWrapper);
+        assertEquals(1, logWrapper.addHandlerCallCount);
+        assertEquals(FileHandler.class.getName(), logWrapper.lastHandler.getClass().getName());
+        assertEquals(Logger.SingleLineFormatter.class.getName(), logWrapper.lastHandler.getFormatter().getClass().getName());
+    }
+
+    @Test
+    public void logLineCorrectSourceClassAndSourceMethod() throws IOException {
+        MockLogWrapper logWrapper = new MockLogWrapper();
+        Logger logger = new Logger(new Machines(), new MockExecutor(), logWrapper);
+        logger.logLine(Logger.INFO, "foo bar");
+        assertEquals(1, logWrapper.logpCallCount);
+        assertEquals("tempest.services.LoggerTest", logWrapper.lastSourceClass);
+        assertEquals("logLineCorrectSourceClassAndSourceMethod", logWrapper.lastSourceMethod);
+    }
+
+    @Test
+    public void logLineSevere() throws IOException {
+        MockLogWrapper logWrapper = new MockLogWrapper();
+        Logger logger = new Logger(new Machines(), new MockExecutor(), logWrapper);
+        logger.logLine(Logger.SEVERE, "foo bar");
+        assertEquals(1, logWrapper.logpCallCount);
+        assertEquals(Level.SEVERE, logWrapper.lastLevel);
+    }
+
+    @Test
+    public void logLineWarning() throws IOException {
+        MockLogWrapper logWrapper = new MockLogWrapper();
+        Logger logger = new Logger(new Machines(), new MockExecutor(), logWrapper);
+        logger.logLine(Logger.WARNING, "foo bar");
+        assertEquals(1, logWrapper.logpCallCount);
+        assertEquals(Level.WARNING, logWrapper.lastLevel);
+    }
+
+    @Test
+    public void logLineInfo() throws IOException {
+        MockLogWrapper logWrapper = new MockLogWrapper();
+        Logger logger = new Logger(new Machines(), new MockExecutor(), logWrapper);
+        logger.logLine(Logger.INFO, "foo bar");
+        assertEquals(1, logWrapper.logpCallCount);
+        assertEquals(Level.INFO, logWrapper.lastLevel);
+    }
+
     @Test
     public void getLogfileSetCorrectly() throws IOException {
         Logger logger = new Logger(new Machines(), new MockExecutor(), new MockLogWrapper());
@@ -20,25 +67,25 @@ public class LoggerTest {
     @Test
     public void grepDelegatesExecutor() throws IOException {
         MockExecutor executor = new MockExecutor();
-        Logger logger = new Logger(new Machines(), executor, new MockLogWrapper());
+        Logger logger = new Logger(new Machines(), executor, new DefaultLogWrapper());
         logger.grep("foo");
-        assertEquals(1, executor.getExecCallCount());
+        assertEquals(1, executor.execCallCount);
     }
 
     @Test
     public void grepBuildsCorrectCommand() throws IOException {
         MockExecutor executor = new MockExecutor();
-        Logger logger = new Logger(new Machines(), executor, new MockLogWrapper());
+        Logger logger = new Logger(new Machines(), executor, new DefaultLogWrapper());
         logger.grep("foo");
-        assertEquals("grep", executor.getCommand());
-        assertEquals("foo machine.1.log", executor.getOptions());
+        assertEquals("grep", executor.command);
+        assertEquals("foo machine.1.log", executor.options);
     }
 
     @Test
     public void grepPrependsLogFileConcatResults() throws IOException {
         MockExecutor executor = new MockExecutor();
-        executor.setResult(new String[]{"foo bar", "foolicious"});
-        Logger logger = new Logger(new Machines(), executor, new MockLogWrapper());
+        executor.result = new String[]{"foo bar", "foolicious"};
+        Logger logger = new Logger(new Machines(), executor, new DefaultLogWrapper());
         String expectedResult = "machine.1.log - foo bar" + System.getProperty("line.separator")
                 + "machine.1.log - foolicious" + System.getProperty("line.separator");
         assertEquals(expectedResult, logger.grep("foo"));
@@ -50,14 +97,20 @@ public class LoggerTest {
         private Handler lastHandler;
         private Level lastLevel;
         private String lastSourceClass;
-
+        private String lastSourceMethod;
+        private String lastMsg;
 
         public void addHandler(Handler handler) {
-
+            ++addHandlerCallCount;
+            lastHandler = handler;
         }
 
         public void logp(Level level, String sourceClass, String sourceMethod, String msg) {
-
+            ++logpCallCount;
+            lastLevel = level;
+            lastSourceClass = sourceClass;
+            lastSourceMethod = sourceMethod;
+            lastMsg = msg;
         }
     }
 
@@ -72,21 +125,6 @@ public class LoggerTest {
             this.command = command;
             this.options = options;
             return result;
-        }
-
-        public String getCommand() {
-            return command;
-        }
-
-        public int getExecCallCount() {
-            return execCallCount;
-        }
-        public String getOptions() {
-            return options;
-        }
-
-        public void setResult(String[] result) {
-            this.result = result;
         }
     }
 }

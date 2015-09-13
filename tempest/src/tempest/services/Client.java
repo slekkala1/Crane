@@ -27,7 +27,7 @@ public class Client {
     }
 
     public Response grep(String machine, String options) {
-        return new ClientCommandExecutor<Response>(machine,  new Grep(options)).execute();
+        return new ClientCommandExecutor<Response>(machine, new Grep(options)).execute();
     }
 
     public Response grepAll(String options) {
@@ -56,8 +56,12 @@ public class Client {
             try {
                 if (response == null)
                     response = future.get();
-                else
-                    response = response.add(future.get());
+                else {
+                    TResponse tResponse = future.get();
+                    if (tResponse != null) {
+                        response = response.add(tResponse);
+                    }
+                }
             } catch (ExecutionException e) {
                 logger.logLine(Logger.SEVERE, String.valueOf(e));
             } catch (InterruptedException e) {
@@ -84,9 +88,9 @@ public class Client {
             return execute();
         }
 
-        public TResponse execute(){
+        public TResponse execute() {
             String line;
-            try{
+            try {
                 Socket socket = new Socket(server, 4444);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -101,8 +105,8 @@ public class Client {
                     ++lineCount;
                 }
                 socket.close();
-                return (TResponse)command.getResponse(builder.toString(), lineCount);
-            } catch (IOException e){
+                return (TResponse) command.getResponse(builder.toString(), lineCount);
+            } catch (IOException e) {
                 logger.logLine(Logger.WARNING, "Client socket failed " + e);
                 return null;
             }

@@ -88,7 +88,9 @@ public class Client {
             String line;
             long startTime = System.currentTimeMillis();
             try {
+                logger.logLine(Logger.INFO, "Connecting to " + server + " on port " + 4444);
                 Socket socket = new Socket(server, 4444);
+                logger.logLine(Logger.INFO, "Just connected to " + server + " on port " + 4444);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -106,7 +108,7 @@ public class Client {
                 long elapsedTime = stopTime - startTime;
                 return (TResponse) command.getResponse(builder.toString(), lineCount, elapsedTime);
             } catch (IOException e) {
-                logger.logLine(Logger.WARNING, "Client socket failed " + e);
+                logger.logLine(Logger.WARNING, "Client socket failed while connecting to " + server + e);
                 return null;
             }
         }

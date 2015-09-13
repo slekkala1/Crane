@@ -59,9 +59,22 @@ public class LoggerTest {
     }
 
     @Test
-    public void getLogfileSetCorrectly() throws IOException {
+    public void getLogFileSetCorrectlyDefault() throws IOException {
         Logger logger = new Logger(new Machines(), new MockExecutor(), new MockLogWrapper());
         assertEquals("machine.1.log", logger.getLogFile());
+    }
+
+    @Test
+    public void getGrepFileSetCorrectlyDefault() throws IOException {
+        Logger logger = new Logger(new Machines(), new MockExecutor(), new MockLogWrapper());
+        assertEquals("machine.1.log", logger.getGrepFile());
+    }
+
+    @Test
+    public void getLogFileAndGrepFileSetCorrectly() throws IOException {
+        Logger logger = new Logger(new MockExecutor(), new MockLogWrapper(), "logFile.log", "grepFile.log");
+        assertEquals("logFile.log", logger.getLogFile());
+        assertEquals("grepFile.log", logger.getGrepFile());
     }
 
     @Test
@@ -86,8 +99,8 @@ public class LoggerTest {
         MockExecutor executor = new MockExecutor();
         executor.result = new String[]{"foo bar", "foolicious"};
         Logger logger = new Logger(new Machines(), executor, new DefaultLogWrapper());
-        String expectedResult = "machine.1.log - foo bar" + System.getProperty("line.separator")
-                + "machine.1.log - foolicious" + System.getProperty("line.separator");
+        String expectedResult = "machine.1.log - foo bar" + System.lineSeparator()
+                + "machine.1.log - foolicious" + System.lineSeparator();
         assertEquals(expectedResult, logger.grep("foo"));
     }
 

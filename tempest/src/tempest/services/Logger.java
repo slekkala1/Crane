@@ -15,10 +15,16 @@ public class Logger {
 
     private final LogWrapper logWrapper;
     private final String logFile;
+    private final String grepFile;
     private final Executor executor;
 
     public Logger(Machines machines, Executor executor, LogWrapper logWrapper) throws IOException {
-        logFile = "machine." + machines.getMachineNumber() + ".log";
+        this(executor, logWrapper, "machine." + machines.getMachineNumber() + ".log", "machine." + machines.getMachineNumber() + ".log");
+    }
+
+    public Logger(Executor executor, LogWrapper logWrapper, String logfile, String grepFile) throws IOException {
+        this.logFile = logfile;
+        this.grepFile = grepFile;
         this.executor = executor;
         this.logWrapper = logWrapper;
         FileHandler fileHandler = new FileHandler(logFile);
@@ -37,16 +43,20 @@ public class Logger {
     }
 
     public String grep(String options) {
-        String[] results = executor.exec("grep", options + " " + logFile);
+        String[] results = executor.exec("grep", options + " " + grepFile);
         StringBuilder resultBuilder = new StringBuilder();
         for (String line : results) {
-            resultBuilder.append(logFile).append(" - ").append(line).append(System.getProperty("line.separator"));
+            resultBuilder.append(logFile).append(" - ").append(line).append(System.lineSeparator());
         }
         return resultBuilder.toString();
     }
 
     public String getLogFile() {
         return logFile;
+    }
+
+    public String getGrepFile() {
+        return grepFile;
     }
 
     class SingleLineFormatter extends Formatter {

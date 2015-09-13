@@ -17,12 +17,12 @@ public class Machines {
         this(readPropertiesFile().split(","), 4444);
     }
 
-    public Machines(String[] machines, int port) throws UnknownHostException {
+    public Machines(String[] machines, int localPort) throws UnknownHostException {
         for(String machine : machines) {
             String[] split = machine.split(":");
             this.machines.add(new Machine(split[0], Integer.parseInt(split[1])));
         }
-        localMachine = new Machine(Inet4Address.getLocalHost().getHostName(), port);
+        localMachine = new Machine(Inet4Address.getLocalHost().getHostName(), localPort);
         if (getMachineNumber() == -1)
             this.machines.add(localMachine);
     }

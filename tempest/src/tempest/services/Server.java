@@ -14,10 +14,12 @@ import java.net.Socket;
 public class Server {
     private final ServerCommand[] commands;
     private final Logger logger;
+    private final int port;
     private ServiceRunner runner;
 
-    public Server(Logger logger) {
+    public Server(Logger logger, int port) {
         this.logger = logger;
+        this.port = port;
         commands = new ServerCommand[] { new Ping(), new Grep(logger)};
     }
 

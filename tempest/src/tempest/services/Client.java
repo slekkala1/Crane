@@ -27,7 +27,7 @@ public class Client {
         this.logger = logger;
     }
 
-    public Response grep(Machine machine, String options) {
+    public Response grep(String machine, String options) {
         return new ClientCommandExecutor<Response>(machine, new Grep(options)).execute();
     }
 
@@ -35,7 +35,7 @@ public class Client {
         return executeAllParallel(new Grep(options));
     }
 
-    public Response ping(Machine machine) {
+    public Response ping(String machine) {
         return new ClientCommandExecutor<Response>(machine, new Ping()).execute();
     }
 
@@ -91,7 +91,7 @@ public class Client {
             try {
                 logger.logLine(Logger.INFO, "Connecting to " + server.getHostName() + " on port " + server.getPort());
                 Socket socket = new Socket(server.getHostName(), server.getPort());
-                logger.logLine(Logger.INFO, "Just connected to " + server.getHostName() + " on port " + server.getPort());
+                logger.logLine(Logger.INFO, "Just connected to " + server.getHostName() + " on port " + 4444);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 

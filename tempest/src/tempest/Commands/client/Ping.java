@@ -8,7 +8,7 @@ public class Ping implements ClientCommand<Response> {
         return "ping";
     }
 
-    public Response getResponse(String response, int lineCount) {
-        return new Response(response, lineCount);
+    public Response getResponse(String response, int lineCount, long elapsedTime) {
+        return new Response(response + System.getProperty("line.separator"), lineCount, elapsedTime);
     }
 }

@@ -71,7 +71,6 @@ public class Server {
 
         ServiceWorker(Socket client) {
             this.client = client;
-            logger.logLine(Logger.INFO, "New connection from " + client.getRemoteSocketAddress().toString());
         }
 
         public void run(){

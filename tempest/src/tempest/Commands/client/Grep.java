@@ -14,7 +14,7 @@ public class Grep implements ClientCommand<Response> {
         return "grep " + options;
     }
 
-    public Response getResponse(String response, int lineCount) {
-        return new Response(response, lineCount);
+    public Response getResponse(String response, int lineCount, long elapsedTime) {
+        return new Response(response, lineCount, elapsedTime);
     }
 }

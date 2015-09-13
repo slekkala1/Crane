@@ -3,6 +3,7 @@ package tempest.services;
 import asg.cliche.Command;
 import asg.cliche.Param;
 import tempest.commands.response.Response;
+import tempest.interfaces.CommandResponse;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -41,12 +42,14 @@ public class Console {
 
     @Command
     public String grepAll(@Param(name="options")String options) throws IOException, InterruptedException {
-        return client.grepAll(options).getResponse();
+        Response response = client.grepAll(options);
+        return response.getResponse() + formatResponseStatistics(response);
     }
 
     @Command
     public String grepMachine(@Param(name="machine")String machine, @Param(name="options")String options) throws IOException, InterruptedException {
-        return client.grep(machine, options).getResponse();
+        Response response = client.grep(machine, options);
+        return response.getResponse() + formatResponseStatistics(response);
     }
 
     @Command
@@ -59,23 +62,35 @@ public class Console {
     public String grepAllToFile(@Param(name="file")String file, @Param(name="options")String options) throws IOException, InterruptedException {
         Response response = client.grepAll(options);
         Files.write(FileSystems.getDefault().getPath(file), response.getResponse().getBytes());
-        return "Wrote " + response.getLineCount() + " lines to " + file;
+        return "Wrote to " + file + System.getProperty("line.separator") + formatResponseStatistics(response);
     }
 
     @Command
     public String grepMachineToFile(@Param(name="file")String file, @Param(name="machine")String machine, @Param(name="options")String options) throws IOException, InterruptedException {
         Response response = client.grep(machine, options);
         Files.write(FileSystems.getDefault().getPath(file), response.getResponse().getBytes());
-        return "Wrote " + response.getLineCount() + " lines to " + file;
+        return "Wrote to " + file + System.getProperty("line.separator") + formatResponseStatistics(response);
     }
 
     @Command
     public String pingAll() throws IOException, InterruptedException {
-        return client.pingAll().getResponse();
+        Response response = client.pingAll();
+        return response.getResponse() + formatResponseStatistics(response);
     }
 
     @Command
     public String pingMachine(@Param(name="machine")String machine) throws IOException, InterruptedException {
-        return client.ping(machine).getResponse();
+        Response response = client.ping(machine);
+        return response.getResponse() + formatResponseStatistics(response);
+    }
+
+    private String formatResponseStatistics(CommandResponse response) {
+        StringBuilder resultBuilder = new StringBuilder("------------------------------");
+        resultBuilder.append(System.getProperty("line.separator"));
+        resultBuilder.append("Lines: ").append(response.getLineCount());
+        resultBuilder.append(System.getProperty("line.separator"));
+        resultBuilder.append("Latency: ").append(response.getQueryLatency()).append("ms");
+        resultBuilder.append(System.getProperty("line.separator"));
+        return resultBuilder.toString();
     }
 }

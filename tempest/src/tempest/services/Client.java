@@ -43,7 +43,6 @@ public class Client {
     }
 
     private <TResponse extends CommandResponse<TResponse>> TResponse executeAllParallel(ClientCommand<TResponse> command) {
-        long startTime = System.currentTimeMillis();
         Set<Future<TResponse>> futureSet = new HashSet<>();
 
         for (String machine : this.machines) {
@@ -68,9 +67,6 @@ public class Client {
                 e.printStackTrace();
             }
         }
-        long stopTime = System.currentTimeMillis();
-        long elapsedTime = stopTime - startTime;
-        logger.logLine(Logger.INFO, "Query latency" + elapsedTime);
         return response;
     }
 
@@ -90,6 +86,7 @@ public class Client {
 
         public TResponse execute() {
             String line;
+            long startTime = System.currentTimeMillis();
             try {
                 Socket socket = new Socket(server, 4444);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -105,7 +102,9 @@ public class Client {
                     ++lineCount;
                 }
                 socket.close();
-                return (TResponse) command.getResponse(builder.toString(), lineCount);
+                long stopTime = System.currentTimeMillis();
+                long elapsedTime = stopTime - startTime;
+                return (TResponse) command.getResponse(builder.toString(), lineCount, elapsedTime);
             } catch (IOException e) {
                 logger.logLine(Logger.WARNING, "Client socket failed " + e);
                 return null;

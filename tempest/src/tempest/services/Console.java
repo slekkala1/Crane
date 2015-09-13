@@ -2,7 +2,7 @@ package tempest.services;
 
 import asg.cliche.Command;
 import asg.cliche.Param;
-import tempest.xcommands.response.Response;
+import tempest.commands.response.Response;
 import tempest.interfaces.CommandResponse;
 
 import java.io.IOException;

@@ -1,9 +1,9 @@
 package tempest.services;
 
 import tempest.Machines;
-import tempest.xcommands.client.Grep;
-import tempest.xcommands.client.Ping;
-import tempest.xcommands.response.Response;
+import tempest.commands.client.Grep;
+import tempest.commands.client.Ping;
+import tempest.commands.response.Response;
 import tempest.interfaces.ClientCommand;
 import tempest.interfaces.CommandResponse;
 

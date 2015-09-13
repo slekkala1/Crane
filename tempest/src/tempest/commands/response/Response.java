@@ -1,4 +1,4 @@
-package tempest.xcommands.response;
+package tempest.commands.response;
 
 import tempest.interfaces.CommandResponse;
 

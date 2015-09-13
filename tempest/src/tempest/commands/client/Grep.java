@@ -1,6 +1,6 @@
-package tempest.xcommands.client;
+package tempest.commands.client;
 
-import tempest.xcommands.response.Response;
+import tempest.commands.response.Response;
 import tempest.interfaces.ClientCommand;
 
 public class Grep implements ClientCommand<Response> {

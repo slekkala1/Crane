@@ -1,4 +1,4 @@
-package tempest.xcommands.server;
+package tempest.commands.server;
 
 import tempest.interfaces.ServerCommand;
 

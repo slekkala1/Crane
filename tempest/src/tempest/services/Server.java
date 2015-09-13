@@ -1,7 +1,7 @@
 package tempest.services;
 
-import tempest.xcommands.server.Grep;
-import tempest.xcommands.server.Ping;
+import tempest.commands.server.Grep;
+import tempest.commands.server.Ping;
 import tempest.interfaces.ServerCommand;
 
 import java.io.BufferedReader;

@@ -18,10 +18,12 @@ public class Logger {
     private final Executor executor;
 
     public Logger(Machines machines, Executor executor, LogWrapper logWrapper) throws IOException {
-        logFile = "machine." + machines.getMachineNumber() + ".log";
+        int machineNumber =  machines.getMachineNumber()+1;
+        logFile = "vm" + machineNumber + ".log";
+        String serverLog = "machine." + machines.getMachineNumber() + ".log";
         this.executor = executor;
         this.logWrapper = logWrapper;
-        FileHandler fileHandler = new FileHandler(logFile);
+        FileHandler fileHandler = new FileHandler(serverLog);
         fileHandler.setFormatter(new SingleLineFormatter());
         logWrapper.addHandler(fileHandler);
     }

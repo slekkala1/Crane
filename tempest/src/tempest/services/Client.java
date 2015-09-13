@@ -92,7 +92,7 @@ public class Client {
             try {
                 logger.logLine(Logger.INFO, "Connecting to " + server.getHostName() + " on port " + server.getPort());
                 Socket socket = new Socket(server.getHostName(), server.getPort());
-                logger.logLine(Logger.INFO, "Just connected to " + server.getHostName() + " on port " + 4444);
+                logger.logLine(Logger.INFO, "Just connected to " + server.getHostName() + " on port " + server.getPort());
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 

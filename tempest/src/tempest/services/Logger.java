@@ -46,7 +46,7 @@ public class Logger {
         String[] results = executor.exec("grep", options + " " + grepFile);
         StringBuilder resultBuilder = new StringBuilder();
         for (String line : results) {
-            resultBuilder.append(logFile).append(" - ").append(line).append(System.lineSeparator());
+            resultBuilder.append(line).append(System.lineSeparator());
         }
         return resultBuilder.toString();
     }

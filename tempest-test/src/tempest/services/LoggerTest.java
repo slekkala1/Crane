@@ -95,12 +95,12 @@ public class LoggerTest {
     }
 
     @Test
-    public void grepPrependsLogFileConcatResults() throws IOException {
+    public void grepConcatResults() throws IOException {
         MockExecutor executor = new MockExecutor();
         executor.result = new String[]{"foo bar", "foolicious"};
         Logger logger = new Logger(new Machines(), executor, new DefaultLogWrapper());
-        String expectedResult = "machine.1.log - foo bar" + System.lineSeparator()
-                + "machine.1.log - foolicious" + System.lineSeparator();
+        String expectedResult = "foo bar" + System.lineSeparator()
+                + "foolicious" + System.lineSeparator();
         assertEquals(expectedResult, logger.grep("foo"));
     }
 }

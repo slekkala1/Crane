@@ -1,6 +1,6 @@
-package tempest.commands.client;
+package tempest.xcommands.client;
 
-import tempest.commands.response.Response;
+import tempest.xcommands.response.Response;
 import tempest.interfaces.ClientCommand;
 
 public class Ping implements ClientCommand<Response> {

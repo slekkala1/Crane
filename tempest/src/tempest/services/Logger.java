@@ -2,6 +2,7 @@ package tempest.services;
 
 import tempest.Machines;
 import tempest.interfaces.Executor;
+import tempest.interfaces.LogWrapper;
 
 import java.io.*;
 import java.util.Date;
@@ -12,27 +13,27 @@ public class Logger {
     public static final String WARNING = "warning";
     public static final String SEVERE = "severe";
 
-    private final java.util.logging.Logger logger = java.util.logging.Logger.getGlobal();
+    private final LogWrapper logWrapper;
     private final String logFile;
     private final Executor executor;
 
-    public Logger(Machines machines, Executor executor) throws IOException {
+    public Logger(Machines machines, Executor executor, LogWrapper logWrapper) throws IOException {
         logFile = "machine." + machines.getMachineNumber() + ".log";
         this.executor = executor;
+        this.logWrapper = logWrapper;
         FileHandler fileHandler = new FileHandler(logFile);
         fileHandler.setFormatter(new SingleLineFormatter());
-        logger.addHandler(fileHandler);
-        logger.setUseParentHandlers(true);
+        logWrapper.addHandler(fileHandler);
     }
 
     public void logLine(String level, String message) {
         StackTraceElement stackTrace = Thread.currentThread().getStackTrace()[2];
         if (level.equals(SEVERE))
-            logger.logp(Level.SEVERE, stackTrace.getClassName(), stackTrace.getMethodName(), message);
+            logWrapper.logp(Level.SEVERE, stackTrace.getClassName(), stackTrace.getMethodName(), message);
         if (level.equals(WARNING))
-            logger.logp(Level.WARNING, stackTrace.getClassName(), stackTrace.getMethodName(), message);
+            logWrapper.logp(Level.WARNING, stackTrace.getClassName(), stackTrace.getMethodName(), message);
         if (level.equals(INFO))
-            logger.logp(Level.INFO, stackTrace.getClassName(), stackTrace.getMethodName(), message);
+            logWrapper.logp(Level.INFO, stackTrace.getClassName(), stackTrace.getMethodName(), message);
     }
 
     public String grep(String options) {

@@ -21,27 +21,13 @@
     </dependencies>
     <build>
         <sourceDirectory>src/</sourceDirectory>
+        <testSourceDirectory>src/</testSourceDirectory>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <finalName>uber-${artifactId}-${version}</finalName>
                 </configuration>
             </plugin>
         </plugins>

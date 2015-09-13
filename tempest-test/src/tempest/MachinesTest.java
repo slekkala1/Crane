@@ -1,8 +1,7 @@
-package tempest.test;
+package tempest;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import tempest.Machines;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;

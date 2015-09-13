@@ -2,7 +2,7 @@
 
 *.iml
 *.log
-*.log.lck
+*.log.*
 
 target/
 ## Directory-based project format:

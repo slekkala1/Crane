@@ -1,10 +1,10 @@
-package tempest.test.services;
+package tempest.services;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
 import tempest.Machines;
 import tempest.interfaces.Executor;
-import tempest.services.Logger;
+
 import java.io.IOException;
 
 public class LoggerTest {

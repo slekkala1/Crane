@@ -41,6 +41,10 @@ public class Machines {
         return machines.toArray(new Machine[machines.size()]);
     }
 
+    public Machine getLocalMachine() {
+        return localMachine;
+    }
+
     private static String readPropertiesFile() {
         Properties prop = new Properties();
 

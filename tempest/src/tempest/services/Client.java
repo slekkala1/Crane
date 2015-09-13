@@ -27,7 +27,7 @@ public class Client {
         this.logger = logger;
     }
 
-    public Response grep(String machine, String options) {
+    public Response grep(Machine machine, String options) {
         return new ClientCommandExecutor<Response>(machine, new Grep(options)).execute();
     }
 
@@ -35,7 +35,7 @@ public class Client {
         return executeAllParallel(new Grep(options));
     }
 
-    public Response ping(String machine) {
+    public Response ping(Machine machine) {
         return new ClientCommandExecutor<Response>(machine, new Ping()).execute();
     }
 

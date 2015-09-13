@@ -12,8 +12,8 @@ public class TempestApp implements Runnable {
 
     public TempestApp() throws IOException {
         machines = new Machines();
-        String logFile = "vm" + (machines.getMachineNumber() + 1) + ".log";
-        String grepFile = "machine." + machines.getMachineNumber() + ".log";
+        String logFile = "machine." + machines.getMachineNumber() + ".log";
+        String grepFile = "vm" + (machines.getMachineNumber() + 1) + ".log";
         Logger logger = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, grepFile);
         Client client = new Client(machines, logger);
         server = new Server(logger);

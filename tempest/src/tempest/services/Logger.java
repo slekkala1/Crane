@@ -1,6 +1,7 @@
 package tempest.services;
 
 import tempest.Machines;
+import tempest.interfaces.Executor;
 
 import java.io.*;
 import java.util.Date;
@@ -13,9 +14,11 @@ public class Logger {
 
     private final java.util.logging.Logger logger = java.util.logging.Logger.getGlobal();
     private final String logFile;
+    private final Executor executor;
 
-    public Logger(Machines machines) throws IOException {
+    public Logger(Machines machines, Executor executor) throws IOException {
         logFile = "machine." + machines.getMachineNumber() + ".log";
+        this.executor = executor;
         FileHandler fileHandler = new FileHandler(logFile);
         fileHandler.setFormatter(new SingleLineFormatter());
         logger.addHandler(fileHandler);
@@ -33,21 +36,16 @@ public class Logger {
     }
 
     public String grep(String options) {
-        String command = "grep " + options + " " + logFile;
-        try {
-            Process process = Runtime.getRuntime().exec(command);
-            InputStream stdout = process.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
-            StringBuilder resultBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine ()) != null) {
-                resultBuilder.append(logFile).append(" - ").append(line).append(System.getProperty("line.separator"));
-            }
-            return resultBuilder.toString();
-        } catch (IOException e) {
-            logLine(SEVERE, "IOException while grepping" + e);
-            return "Grep failed.";
+        String[] results = executor.exec("grep", options + " " + logFile);
+        StringBuilder resultBuilder = new StringBuilder();
+        for (String line : results) {
+            resultBuilder.append(logFile).append(" - ").append(line).append(System.getProperty("line.separator"));
         }
+        return resultBuilder.toString();
+    }
+
+    public String getLogFile() {
+        return logFile;
     }
 
     class SingleLineFormatter extends Formatter {

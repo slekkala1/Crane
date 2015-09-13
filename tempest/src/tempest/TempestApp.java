@@ -12,7 +12,7 @@ public class TempestApp implements Runnable {
 
     public TempestApp() throws IOException {
         machines = new Machines();
-        Logger logger = new Logger(machines);
+        Logger logger = new Logger(machines, new CommandLineExecutor());
         Client client = new Client(machines, logger);
         server = new Server(logger);
         console = new Console(logger, client, server);

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 How to run?
 1) On each machine, run /opt/tempest/run-tempest.sh to start the Server and Client, the corresponding vmx.log file is already on each machine
 2) Go to the machine from which you want to make the grep distributed call and type ‘?list’ at the >Tempest prompt to see the function calls that can be made from Client end
@@ -14,3 +15,15 @@ Run Tests (once you have installed)
 1) cd ../../tempest-test
 2) mvn clean test
 
+=======
+Tempest
+=======
+
+Install
+-------
+### From Scratch
+
+
+
+### As Prepared on VMs
+>>>>>>> 60c4b464ec0c9e03132efb29228379d16b294076

@@ -82,7 +82,7 @@ public class ClientServerTest {
         Server server7 = new Server(logger7, 5447);
 
         Machines machinesFull = new Machines(new String[] { hostTemplate + 5448 }, 5448);
-        Logger loggerFull = new Logger(new MockExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vmfull.testlog");
+        Logger loggerFull = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vmfull.testlog");
         Server serverFull = new Server(loggerFull, 5448);
 
         server1.start();

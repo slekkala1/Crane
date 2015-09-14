@@ -99,7 +99,7 @@ public class ClientServerTest {
         Response response = client.grepAll("catalog");
 
         Client clientFull = new Client(machinesFull, loggerFull);
-        Response responseFull = clientFull.grep(machinesFull.getLocalMachine(), "money");
+        Response responseFull = clientFull.grep(machinesFull.getLocalMachine(), "catalog");
 
         System.out.println("Full response lines: " + responseFull.getLineCount());
         System.out.println("Distributed response lines: " + response.getLineCount());

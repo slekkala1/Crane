@@ -68,7 +68,9 @@ correctly.
 
 Performance
 -----------
-
+Grepping distributed across the the recommended logfiles provides the following average latencies with all 7 machines:
+Pattern: 12,  Lines 335921, Average Latency: ~350ms
+Pattern: 123, Lines 8509,   Average Latency: ~50ms
 
 Summary
 -------

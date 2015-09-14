@@ -66,19 +66,19 @@ public class ClientServerTest {
                 hostTemplate + 5446,
                 hostTemplate + 5447
         }, 5441);
-        Logger logger1 = new Logger(new MockExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm1.testlog");
+        Logger logger1 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm1.testlog");
         Server server1 = new Server(logger1, 5441);
-        Logger logger2 = new Logger(new MockExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm2.testlog");
+        Logger logger2 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm2.testlog");
         Server server2 = new Server(logger2, 5442);
-        Logger logger3 = new Logger(new MockExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm3.testlog");
+        Logger logger3 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm3.testlog");
         Server server3 = new Server(logger3, 5443);
-        Logger logger4 = new Logger(new MockExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm4.testlog");
+        Logger logger4 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm4.testlog");
         Server server4 = new Server(logger4, 5444);
-        Logger logger5 = new Logger(new MockExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm5.testlog");
+        Logger logger5 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm5.testlog");
         Server server5 = new Server(logger5, 5445);
-        Logger logger6 = new Logger(new MockExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm6.testlog");
+        Logger logger6 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm6.testlog");
         Server server6 = new Server(logger6, 5446);
-        Logger logger7 = new Logger(new MockExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm7.testlog");
+        Logger logger7 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm7.testlog");
         Server server7 = new Server(logger7, 5447);
 
         Machines machinesFull = new Machines(new String[] { hostTemplate + 5448 }, 5448);

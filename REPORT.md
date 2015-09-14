@@ -60,6 +60,16 @@ Console
 of the above described classes into a convenient utility.  You can type ?list to get a list of available commands and 
 exit to exit.
 
+Tests
+-----
+**Logger** has the most through tests since it performs the logging and grepping. **Client** and **Server** have tests 
+to demonstrate that the **Ping** and **Grep** commands function across multiple servers running on the same machines 
+correctly.
+
+Performance
+-----------
+
+
 Summary
 -------
 

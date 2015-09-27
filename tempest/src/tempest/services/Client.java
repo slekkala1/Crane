@@ -5,10 +5,7 @@ import tempest.Machines;
 import tempest.commands.client.Grep;
 import tempest.commands.client.Ping;
 import tempest.commands.response.Response;
-import tempest.interfaces.ClientCommand;
-import tempest.interfaces.CommandResponse;
-import tempest.interfaces.Logger;
-import tempest.interfaces.UdpClientCommand;
+import tempest.interfaces.*;
 import tempest.networking.TcpClientCommandExecutor;
 import tempest.networking.UdpClientCommandExecutor;
 
@@ -26,7 +23,7 @@ public class Client {
     }
 
     public Response grep(Machine machine, String options) {
-        return new TcpClientCommandExecutor<Response>(machine, new Grep(options), logger).execute();
+        return createExecutor(machine, new Grep(options)).execute();
     }
 
     public Response grepAll(String options) {
@@ -34,7 +31,7 @@ public class Client {
     }
 
     public Response ping(Machine machine) {
-        return new UdpClientCommandExecutor<Response>(machine, new Ping(), logger).execute();
+        return createExecutor(machine, new Ping()).execute();
     }
 
     public Response pingAll() {
@@ -44,11 +41,7 @@ public class Client {
     private <TResponse extends CommandResponse<TResponse>> TResponse executeAllParallel(ClientCommand<TResponse> command) {
         Collection<Callable<TResponse>> commandExecutors = new ArrayList<>();
         for (Machine machine : this.machines) {
-            if (command instanceof UdpClientCommand) {
-                commandExecutors.add(new UdpClientCommandExecutor<TResponse>(machine, (UdpClientCommand)command, logger));
-            } else {
-                commandExecutors.add(new TcpClientCommandExecutor<TResponse>(machine, command, logger));
-            }
+            commandExecutors.add(createExecutor(machine, command));
         }
         List<Future<TResponse>> results;
         try {
@@ -73,5 +66,11 @@ public class Client {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private <TResponse extends CommandResponse<TResponse>> ClientCommandExecutor<TResponse> createExecutor(Machine machine, ClientCommand<TResponse> command) {
+        if (command instanceof UdpClientCommand)
+            return new UdpClientCommandExecutor<>(machine, (UdpClientCommand)command, logger);
+        return new TcpClientCommandExecutor<>(machine, command, logger);
     }
 }

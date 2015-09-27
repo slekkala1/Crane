@@ -2,6 +2,7 @@ package tempest.networking;
 
 import tempest.Machine;
 import tempest.interfaces.ClientCommand;
+import tempest.interfaces.ClientCommandExecutor;
 import tempest.interfaces.CommandResponse;
 import tempest.interfaces.Logger;
 import tempest.services.DefaultLogger;
@@ -11,9 +12,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.concurrent.Callable;
 
-public class TcpClientCommandExecutor<TResponse extends CommandResponse<TResponse>> implements Callable<TResponse> {
+public class TcpClientCommandExecutor<TResponse extends CommandResponse<TResponse>> implements ClientCommandExecutor<TResponse> {
     private final Machine server;
     private final ClientCommand command;
     private final Logger logger;

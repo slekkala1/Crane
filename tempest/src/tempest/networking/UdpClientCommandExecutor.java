@@ -1,6 +1,7 @@
 package tempest.networking;
 
 import tempest.Machine;
+import tempest.interfaces.ClientCommandExecutor;
 import tempest.interfaces.CommandResponse;
 import tempest.interfaces.Logger;
 import tempest.interfaces.UdpClientCommand;
@@ -10,9 +11,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.concurrent.Callable;
 
-public class UdpClientCommandExecutor<TResponse extends CommandResponse<TResponse>> implements Callable<TResponse> {
+public class UdpClientCommandExecutor<TResponse extends CommandResponse<TResponse>> implements ClientCommandExecutor<TResponse> {
     private final Machine server;
     private final UdpClientCommand command;
     private final Logger logger;

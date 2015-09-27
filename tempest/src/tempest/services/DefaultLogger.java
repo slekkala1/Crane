@@ -5,7 +5,6 @@ import tempest.interfaces.Executor;
 import tempest.interfaces.LogWrapper;
 
 import java.io.*;
-import java.util.Date;
 import java.util.logging.*;
 
 public class DefaultLogger implements tempest.interfaces.Logger {
@@ -27,7 +26,6 @@ public class DefaultLogger implements tempest.interfaces.Logger {
         logWrapper.addFileHandler(logFile);
     }
 
-    @Override
     public void logLine(String level, String message) {
         StackTraceElement stackTrace = Thread.currentThread().getStackTrace()[2];
         if (level.equals(SEVERE))
@@ -38,7 +36,6 @@ public class DefaultLogger implements tempest.interfaces.Logger {
             logWrapper.logp(Level.INFO, stackTrace.getClassName(), stackTrace.getMethodName(), message);
     }
 
-    @Override
     public String grep(String options) {
         String[] results = executor.exec("grep", options + " " + grepFile);
         StringBuilder resultBuilder = new StringBuilder();
@@ -48,12 +45,10 @@ public class DefaultLogger implements tempest.interfaces.Logger {
         return resultBuilder.toString();
     }
 
-    @Override
     public String getLogFile() {
         return logFile;
     }
 
-    @Override
     public String getGrepFile() {
         return grepFile;
     }

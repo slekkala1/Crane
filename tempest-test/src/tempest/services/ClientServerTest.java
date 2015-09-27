@@ -126,8 +126,6 @@ public class ClientServerTest {
         Client clientFull = new Client(machinesFull, loggerFull);
         Response responseFull = clientFull.grep(machinesFull.getLocalMachine(), "catalog");
 
-        System.out.println("Full response lines: " + responseFull.getLineCount());
-        System.out.println("Distributed response lines: " + response.getLineCount());
         assertEquals(responseFull.getLineCount(), response.getLineCount());
 
         server1.stop();

@@ -1,9 +1,9 @@
 package tempest.commands.client;
 
 import tempest.commands.response.Response;
-import tempest.interfaces.ClientCommand;
+import tempest.interfaces.UdpClientCommand;
 
-public class Ping implements ClientCommand<Response> {
+public class Ping implements UdpClientCommand<Response> {
     public String getRequest() {
         return "ping";
     }

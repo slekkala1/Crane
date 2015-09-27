@@ -8,12 +8,10 @@ import tempest.commands.response.Response;
 import tempest.interfaces.ClientCommand;
 import tempest.interfaces.CommandResponse;
 import tempest.interfaces.Logger;
+import tempest.interfaces.UdpClientCommand;
+import tempest.networking.TcpClientCommandExecutor;
+import tempest.networking.UdpClientCommandExecutor;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -28,7 +26,7 @@ public class Client {
     }
 
     public Response grep(Machine machine, String options) {
-        return new ClientCommandExecutor<Response>(machine, new Grep(options)).execute();
+        return new TcpClientCommandExecutor<Response>(machine, new Grep(options), logger).execute();
     }
 
     public Response grepAll(String options) {
@@ -36,7 +34,7 @@ public class Client {
     }
 
     public Response ping(Machine machine) {
-        return new ClientCommandExecutor<Response>(machine, new Ping()).execute();
+        return new UdpClientCommandExecutor<Response>(machine, new Ping(), logger).execute();
     }
 
     public Response pingAll() {
@@ -46,7 +44,11 @@ public class Client {
     private <TResponse extends CommandResponse<TResponse>> TResponse executeAllParallel(ClientCommand<TResponse> command) {
         Collection<Callable<TResponse>> commandExecutors = new ArrayList<>();
         for (Machine machine : this.machines) {
-            commandExecutors.add(new ClientCommandExecutor<TResponse>(machine, command));
+            if (command instanceof UdpClientCommand) {
+                commandExecutors.add(new UdpClientCommandExecutor<TResponse>(machine, (UdpClientCommand)command, logger));
+            } else {
+                commandExecutors.add(new TcpClientCommandExecutor<TResponse>(machine, command, logger));
+            }
         }
         List<Future<TResponse>> results;
         try {
@@ -71,49 +73,5 @@ public class Client {
             e.printStackTrace();
         }
         return null;
-    }
-
-    class ClientCommandExecutor<TResponse extends CommandResponse<TResponse>> implements Callable<TResponse> {
-        private final Machine server;
-        private final ClientCommand command;
-
-        public ClientCommandExecutor(Machine server, ClientCommand command) {
-
-            this.server = server;
-            this.command = command;
-        }
-
-        public TResponse call() {
-            return execute();
-        }
-
-        public TResponse execute() {
-            String line;
-            long startTime = System.currentTimeMillis();
-            try {
-                logger.logLine(DefaultLogger.INFO, "Connecting to " + server.getHostName() + " on port " + server.getPort());
-                Socket socket = new Socket(server.getHostName(), server.getPort());
-                logger.logLine(DefaultLogger.INFO, "Just connected to " + server.getHostName() + " on port " + server.getPort());
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                out.println(command.getRequest());
-                socket.shutdownOutput();
-
-                int lineCount = 0;
-                StringBuilder builder = new StringBuilder();
-                while ((line = in.readLine()) != null) {
-                    builder.append(line).append(System.lineSeparator());
-                    ++lineCount;
-                }
-                socket.close();
-                long stopTime = System.currentTimeMillis();
-                long elapsedTime = stopTime - startTime;
-                return (TResponse) command.getResponse(builder.toString(), lineCount, elapsedTime);
-            } catch (IOException e) {
-                logger.logLine(DefaultLogger.WARNING, "Client socket failed while connecting to " + server + e);
-                return null;
-            }
-        }
     }
 }

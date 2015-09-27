@@ -2,6 +2,7 @@ package tempest.services;
 
 import tempest.commands.server.Grep;
 import tempest.commands.server.Ping;
+import tempest.interfaces.Logger;
 import tempest.interfaces.ServerCommand;
 
 import java.io.BufferedReader;
@@ -53,7 +54,7 @@ public class Server {
             } catch (IOException e) {
                 if (!isRunning)
                     return;
-                logger.logLine(Logger.INFO, "Error accepting client request" + e);
+                logger.logLine(DefaultLogger.INFO, "Error accepting client request" + e);
             }
         }
 
@@ -98,7 +99,7 @@ public class Server {
                 out.close();
 
             } catch (IOException e) {
-                logger.logLine(Logger.INFO, "Error handling command" + e);
+                logger.logLine(DefaultLogger.INFO, "Error handling command" + e);
             }
         }
     }

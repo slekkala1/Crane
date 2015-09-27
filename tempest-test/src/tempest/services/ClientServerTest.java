@@ -4,13 +4,30 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import tempest.Machines;
 import tempest.commands.response.Response;
+import tempest.interfaces.Logger;
 import tempest.mocks.MockExecutor;
 import tempest.mocks.MockLogWrapper;
+import tempest.mocks.MockLogger;
 
 import java.io.IOException;
 import java.net.Inet4Address;
 
 public class ClientServerTest {
+    private final String log1 = "the";
+    private final String log2 = "quick";
+    private final String log3 = "brown";
+    private final String log4 = "fox";
+    private final String log5 = "jumped";
+    private final String log6 = "over";
+    private final String log7 = "lazy";
+    private final String logFull = log1 + System.lineSeparator()
+            + log2 + System.lineSeparator()
+            + log3 + System.lineSeparator()
+            + log4 + System.lineSeparator()
+            + log5 + System.lineSeparator()
+            + log6 + System.lineSeparator()
+            + log7;
+
     @Test
     public void distributedPingAll() throws IOException {
         String hostTemplate = Inet4Address.getLocalHost().getHostName() + ":";
@@ -23,7 +40,7 @@ public class ClientServerTest {
                 hostTemplate + 5546,
                 hostTemplate + 5547
         }, 5541);
-        Logger logger = new Logger(new MockExecutor(), new MockLogWrapper(), "logfile.log", "logfile.log");
+        Logger logger = new MockLogger();
         Server server1 = new Server(logger, 5541);
         Server server2 = new Server(logger, 5542);
         Server server3 = new Server(logger, 5543);
@@ -66,23 +83,31 @@ public class ClientServerTest {
                 hostTemplate + 5446,
                 hostTemplate + 5447
         }, 5441);
-        Logger logger1 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm1.testlog");
+        MockLogger logger1 = new MockLogger();
+        logger1.grep = log1;
         Server server1 = new Server(logger1, 5441);
-        Logger logger2 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm2.testlog");
+        MockLogger logger2 = new MockLogger();
+        logger2.grep = log2;
         Server server2 = new Server(logger2, 5442);
-        Logger logger3 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm3.testlog");
+        MockLogger logger3 = new MockLogger();
+        logger3.grep = log3;
         Server server3 = new Server(logger3, 5443);
-        Logger logger4 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm4.testlog");
+        MockLogger logger4 = new MockLogger();
+        logger4.grep = log4;
         Server server4 = new Server(logger4, 5444);
-        Logger logger5 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm5.testlog");
+        MockLogger logger5 = new MockLogger();
+        logger5.grep = log5;
         Server server5 = new Server(logger5, 5445);
-        Logger logger6 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm6.testlog");
+        MockLogger logger6 = new MockLogger();
+        logger6.grep = log6;
         Server server6 = new Server(logger6, 5446);
-        Logger logger7 = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vm7.testlog");
+        MockLogger logger7 = new MockLogger();
+        logger7.grep = log7;
         Server server7 = new Server(logger7, 5447);
 
         Machines machinesFull = new Machines(new String[] { hostTemplate + 5448 }, 5448);
-        Logger loggerFull = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), "logfile.log", "logs/vmfull.testlog");
+        MockLogger loggerFull = new MockLogger();
+        loggerFull.grep = logFull;
         Server serverFull = new Server(loggerFull, 5448);
 
         server1.start();

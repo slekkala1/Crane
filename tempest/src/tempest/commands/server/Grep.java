@@ -1,7 +1,8 @@
 package tempest.commands.server;
 
+import tempest.interfaces.Logger;
 import tempest.interfaces.ServerCommand;
-import tempest.services.Logger;
+import tempest.services.DefaultLogger;
 
 public class Grep implements ServerCommand {
     private final Logger logger;

@@ -1,6 +1,7 @@
 package tempest;
 
 import asg.cliche.ShellFactory;
+import tempest.interfaces.Logger;
 import tempest.services.*;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class TempestApp implements Runnable {
         machines = new Machines();
         String logFile = "machine." + machines.getMachineNumber() + ".log";
         String grepFile = "vm" + (machines.getMachineNumber() + 1) + ".log";
-        Logger logger = new Logger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, grepFile);
+        Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, grepFile);
         Client client = new Client(machines, logger);
         server = new Server(logger, 4444);
         console = new Console(logger, client, server);

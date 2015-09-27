@@ -7,6 +7,7 @@ import tempest.commands.client.Ping;
 import tempest.commands.response.Response;
 import tempest.interfaces.ClientCommand;
 import tempest.interfaces.CommandResponse;
+import tempest.interfaces.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,7 +63,7 @@ public class Client {
                         }
                     }
                 } catch (ExecutionException e) {
-                    logger.logLine(Logger.SEVERE, String.valueOf(e));
+                    logger.logLine(DefaultLogger.SEVERE, String.valueOf(e));
                 }
             }
             return response;
@@ -90,9 +91,9 @@ public class Client {
             String line;
             long startTime = System.currentTimeMillis();
             try {
-                logger.logLine(Logger.INFO, "Connecting to " + server.getHostName() + " on port " + server.getPort());
+                logger.logLine(DefaultLogger.INFO, "Connecting to " + server.getHostName() + " on port " + server.getPort());
                 Socket socket = new Socket(server.getHostName(), server.getPort());
-                logger.logLine(Logger.INFO, "Just connected to " + server.getHostName() + " on port " + server.getPort());
+                logger.logLine(DefaultLogger.INFO, "Just connected to " + server.getHostName() + " on port " + server.getPort());
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -110,7 +111,7 @@ public class Client {
                 long elapsedTime = stopTime - startTime;
                 return (TResponse) command.getResponse(builder.toString(), lineCount, elapsedTime);
             } catch (IOException e) {
-                logger.logLine(Logger.WARNING, "Client socket failed while connecting to " + server + e);
+                logger.logLine(DefaultLogger.WARNING, "Client socket failed while connecting to " + server + e);
                 return null;
             }
         }

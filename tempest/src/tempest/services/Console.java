@@ -5,6 +5,7 @@ import asg.cliche.Param;
 import tempest.Machine;
 import tempest.commands.response.Response;
 import tempest.interfaces.CommandResponse;
+import tempest.interfaces.Logger;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;

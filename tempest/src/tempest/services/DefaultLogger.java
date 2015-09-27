@@ -24,9 +24,7 @@ public class DefaultLogger implements tempest.interfaces.Logger {
         this.grepFile = grepFile;
         this.executor = executor;
         this.logWrapper = logWrapper;
-        FileHandler fileHandler = new FileHandler(logFile);
-        fileHandler.setFormatter(new SingleLineFormatter());
-        logWrapper.addHandler(fileHandler);
+        logWrapper.addFileHandler(logFile);
     }
 
     @Override
@@ -58,41 +56,5 @@ public class DefaultLogger implements tempest.interfaces.Logger {
     @Override
     public String getGrepFile() {
         return grepFile;
-    }
-
-    class SingleLineFormatter extends Formatter {
-
-        private static final String format = "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$s %2$s %5$s%6$s%n";
-        private final Date dat = new Date();
-
-        public synchronized String format(LogRecord record) {
-            dat.setTime(record.getMillis());
-            String source;
-            if (record.getSourceClassName() != null) {
-                source = record.getSourceClassName();
-                if (record.getSourceMethodName() != null) {
-                    source += " " + record.getSourceMethodName();
-                }
-            } else {
-                source = record.getLoggerName();
-            }
-            String message = formatMessage(record);
-            String throwable = "";
-            if (record.getThrown() != null) {
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                pw.println();
-                record.getThrown().printStackTrace(pw);
-                pw.close();
-                throwable = sw.toString();
-            }
-            return String.format(format,
-                    dat,
-                    source,
-                    record.getLoggerName(),
-                    record.getLevel().getName(),
-                    message,
-                    throwable);
-        }
     }
 }

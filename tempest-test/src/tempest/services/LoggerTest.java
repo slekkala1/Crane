@@ -1,24 +1,24 @@
 package tempest.services;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import tempest.Machines;
+import tempest.interfaces.Logger;
 import tempest.mocks.MockExecutor;
 import tempest.mocks.MockLogWrapper;
 
 import java.io.IOException;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 
 public class LoggerTest {
-    @Test
+   @Test
     public void loggerConstructorSetsFileHandler() throws IOException {
         MockLogWrapper logWrapper = new MockLogWrapper();
-        new DefaultLogger(new Machines(), new MockExecutor(), logWrapper);
+        Logger logger = new DefaultLogger(new Machines(), new MockExecutor(), logWrapper);
         assertEquals(1, logWrapper.addHandlerCallCount);
-        assertEquals(FileHandler.class.getName(), logWrapper.lastHandler.getClass().getName());
-        assertEquals(DefaultLogger.SingleLineFormatter.class.getName(), logWrapper.lastHandler.getFormatter().getClass().getName());
+        assertEquals(logger.getLogFile(), logWrapper.file);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class LoggerTest {
     @Test
     public void grepDelegatesExecutor() throws IOException {
         MockExecutor executor = new MockExecutor();
-        DefaultLogger logger = new DefaultLogger(new Machines(), executor, new DefaultLogWrapper());
+        DefaultLogger logger = new DefaultLogger(new Machines(), executor, new MockLogWrapper());
         logger.grep("foo");
         assertEquals(1, executor.execCallCount);
     }
@@ -88,7 +88,7 @@ public class LoggerTest {
     @Test
     public void grepBuildsCorrectCommand() throws IOException {
         MockExecutor executor = new MockExecutor();
-        DefaultLogger logger = new DefaultLogger(new Machines(), executor, new DefaultLogWrapper());
+        DefaultLogger logger = new DefaultLogger(new Machines(), executor, new MockLogWrapper());
         logger.grep("foo");
         assertEquals("grep", executor.command);
         assertEquals("foo machine.1.log", executor.options);
@@ -98,7 +98,7 @@ public class LoggerTest {
     public void grepConcatResults() throws IOException {
         MockExecutor executor = new MockExecutor();
         executor.result = new String[]{"foo bar", "foolicious"};
-        DefaultLogger logger = new DefaultLogger(new Machines(), executor, new DefaultLogWrapper());
+        DefaultLogger logger = new DefaultLogger(new Machines(), executor, new MockLogWrapper());
         String expectedResult = "foo bar" + System.lineSeparator()
                 + "foolicious" + System.lineSeparator();
         assertEquals(expectedResult, logger.grep("foo"));

@@ -1,9 +1,9 @@
 package tempest.interfaces;
 
-import java.util.logging.Handler;
+import java.io.IOException;
 import java.util.logging.Level;
 
 public interface LogWrapper {
-    void addHandler(Handler handler);
+    void addFileHandler(String file) throws IOException;
     void logp(Level level, String sourceClass, String sourceMethod, String msg);
 }

@@ -1,12 +1,15 @@
 package tempest.services;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 import tempest.Machines;
-import tempest.commands.response.Response;
+import tempest.commands.Response;
+import tempest.commands.ResponseData;
+import tempest.commands.handler.GrepHandler;
+import tempest.commands.handler.PingHandler;
+import tempest.interfaces.CommandHandler;
 import tempest.interfaces.Logger;
-import tempest.mocks.MockExecutor;
-import tempest.mocks.MockLogWrapper;
 import tempest.mocks.MockLogger;
 
 import java.io.IOException;
@@ -41,13 +44,14 @@ public class ClientServerTest {
                 hostTemplate + 5547
         }, 5541);
         Logger logger = new MockLogger();
-        Server server1 = new Server(logger, 5541);
-        Server server2 = new Server(logger, 5542);
-        Server server3 = new Server(logger, 5543);
-        Server server4 = new Server(logger, 5544);
-        Server server5 = new Server(logger, 5545);
-        Server server6 = new Server(logger, 5546);
-        Server server7 = new Server(logger, 5547);
+        CommandHandler[] commandHandlers = new CommandHandler[] { new PingHandler(), new GrepHandler(logger)};
+        Server server1 = new Server(logger, 5541, commandHandlers);
+        Server server2 = new Server(logger, 5542, commandHandlers);
+        Server server3 = new Server(logger, 5543, commandHandlers);
+        Server server4 = new Server(logger, 5544, commandHandlers);
+        Server server5 = new Server(logger, 5545, commandHandlers);
+        Server server6 = new Server(logger, 5546, commandHandlers);
+        Server server7 = new Server(logger, 5547, commandHandlers);
 
         server1.start();
         server2.start();
@@ -57,10 +61,10 @@ public class ClientServerTest {
         server6.start();
         server7.start();
 
-        Client client = new Client(machines, logger);
-        Response response = client.pingAll();
+        Client client = new Client(machines, logger, commandHandlers);
+        Response<String> response = client.pingAll();
 
-        assertTrue(5 <= response.getLineCount());
+        assertTrue(5 <= response.getResponseData().getLineCount());
 
         server1.stop();
         server2.stop();
@@ -85,30 +89,32 @@ public class ClientServerTest {
         }, 5441);
         MockLogger logger1 = new MockLogger();
         logger1.grep = log1;
-        Server server1 = new Server(logger1, 5441);
+        CommandHandler[] commandHandlers1 = new CommandHandler[] { new PingHandler(), new GrepHandler(logger1)};
+        Server server1 = new Server(logger1, 5441, commandHandlers1);
         MockLogger logger2 = new MockLogger();
         logger2.grep = log2;
-        Server server2 = new Server(logger2, 5442);
+        Server server2 = new Server(logger2, 5442, new CommandHandler[] { new PingHandler(), new GrepHandler(logger2)});
         MockLogger logger3 = new MockLogger();
         logger3.grep = log3;
-        Server server3 = new Server(logger3, 5443);
+        Server server3 = new Server(logger3, 5443, new CommandHandler[] { new PingHandler(), new GrepHandler(logger3)});
         MockLogger logger4 = new MockLogger();
         logger4.grep = log4;
-        Server server4 = new Server(logger4, 5444);
+        Server server4 = new Server(logger4, 5444, new CommandHandler[] { new PingHandler(), new GrepHandler(logger4)});
         MockLogger logger5 = new MockLogger();
         logger5.grep = log5;
-        Server server5 = new Server(logger5, 5445);
+        Server server5 = new Server(logger5, 5445, new CommandHandler[] { new PingHandler(), new GrepHandler(logger5)});
         MockLogger logger6 = new MockLogger();
         logger6.grep = log6;
-        Server server6 = new Server(logger6, 5446);
+        Server server6 = new Server(logger6, 5446, new CommandHandler[] { new PingHandler(), new GrepHandler(logger6)});
         MockLogger logger7 = new MockLogger();
         logger7.grep = log7;
-        Server server7 = new Server(logger7, 5447);
+        Server server7 = new Server(logger7, 5447, new CommandHandler[] { new PingHandler(), new GrepHandler(logger7)});
 
         Machines machinesFull = new Machines(new String[] { hostTemplate + 5448 }, 5448);
         MockLogger loggerFull = new MockLogger();
         loggerFull.grep = logFull;
-        Server serverFull = new Server(loggerFull, 5448);
+        CommandHandler[] commandHandlersFull = new CommandHandler[] { new PingHandler(), new GrepHandler(loggerFull)};
+        Server serverFull = new Server(loggerFull, 5448, commandHandlersFull);
 
         server1.start();
         server2.start();
@@ -120,13 +126,13 @@ public class ClientServerTest {
 
         serverFull.start();
 
-        Client client = new Client(machines, logger1);
-        Response response = client.grepAll("catalog");
+        Client client = new Client(machines, logger1, commandHandlers1);
+        Response<String> response = client.grepAll("catalog");
 
-        Client clientFull = new Client(machinesFull, loggerFull);
-        Response responseFull = clientFull.grep(machinesFull.getLocalMachine(), "catalog");
+        Client clientFull = new Client(machinesFull, loggerFull, commandHandlersFull);
+        Response<String> responseFull = clientFull.grep(machinesFull.getLocalMachine(), "catalog");
 
-        assertEquals(responseFull.getLineCount(), response.getLineCount());
+        assertEquals(responseFull.getResponseData().getLineCount(), response.getResponseData().getLineCount());
 
         server1.stop();
         server2.stop();

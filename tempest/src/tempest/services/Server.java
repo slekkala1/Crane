@@ -1,31 +1,31 @@
 package tempest.services;
 
-import tempest.commands.server.Grep;
-import tempest.commands.server.Ping;
+import tempest.interfaces.CommandHandler;
 import tempest.interfaces.Logger;
-import tempest.interfaces.ServerCommand;
 import tempest.networking.TcpServiceRunner;
 import tempest.networking.UdpServiceRunner;
 
 public class Server {
     private final Logger logger;
     private final int port;
+    private final CommandHandler[] commandHandlers;
     private TcpServiceRunner tcpRunner;
     private UdpServiceRunner udpRunner;
 
-    public Server(Logger logger, int port) {
+    public Server(Logger logger, int port, CommandHandler[] commandHandlers) {
         this.logger = logger;
         this.port = port;
+        this.commandHandlers = commandHandlers;
     }
 
     public void start() {
         if (tcpRunner == null) {
-            tcpRunner = new TcpServiceRunner(logger, port, new ServerCommand[] { new Ping(), new Grep(logger)});
+            tcpRunner = new TcpServiceRunner(logger, port, commandHandlers);
             new Thread(tcpRunner).start();
         }
 
         if (udpRunner == null) {
-            udpRunner = new UdpServiceRunner(logger, port, new ServerCommand[]{new Ping(), new Grep(logger)});
+            udpRunner = new UdpServiceRunner(logger, port, commandHandlers);
             new Thread(udpRunner).start();
         }
     }

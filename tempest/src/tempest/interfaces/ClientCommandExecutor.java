@@ -1,7 +1,9 @@
 package tempest.interfaces;
 
+import tempest.commands.Response;
+
 import java.util.concurrent.Callable;
 
-public interface ClientCommandExecutor<TResponse extends CommandResponse<TResponse>> extends Callable<TResponse> {
-    TResponse execute();
+public interface ClientCommandExecutor<TResponse> extends Callable<Response<TResponse>> {
+    Response<TResponse> execute();
 }

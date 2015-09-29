@@ -1,7 +1,7 @@
 package tempest.networking;
 
+import tempest.interfaces.CommandHandler;
 import tempest.interfaces.Logger;
-import tempest.interfaces.ServerCommand;
 import tempest.services.DefaultLogger;
 
 import java.io.IOException;
@@ -12,12 +12,12 @@ public class TcpServiceRunner implements Runnable {
     private final int port;
     private boolean isRunning = true;
     private ServerSocket server;
-    private final ServerCommand[] commands;
+    private final CommandHandler[] commandHandlers;
 
-    public TcpServiceRunner(Logger logger, int port, ServerCommand[] commands) {
+    public TcpServiceRunner(Logger logger, int port, CommandHandler[] commandHandlers) {
         this.logger = logger;
         this.port = port;
-        this.commands = commands;
+        this.commandHandlers = commandHandlers;
     }
 
     public void run() {
@@ -26,7 +26,7 @@ public class TcpServiceRunner implements Runnable {
 
             while(isRunning){
                 TcpServiceWorker worker;
-                worker = new TcpServiceWorker(server.accept(), logger, commands);
+                worker = new TcpServiceWorker(server.accept(), logger, commandHandlers);
                 new Thread(worker).start();
             }
         } catch (IOException e) {

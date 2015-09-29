@@ -1,30 +1,38 @@
 package tempest.networking;
 
+import tempest.commands.Header;
+import tempest.interfaces.Command;
+import tempest.interfaces.CommandHandler;
 import tempest.interfaces.Logger;
-import tempest.interfaces.ServerCommand;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.Arrays;
 
 public class UdpServiceWorker implements Runnable {
     private final DatagramPacket packet;
     private final DatagramSocket socket;
-    private final ServerCommand[] commands;
+    private final CommandHandler[] commandHandlers;
     private final Logger logger;
 
-    UdpServiceWorker(DatagramPacket packet, DatagramSocket socket, ServerCommand[] commands, Logger logger) {
+    UdpServiceWorker(DatagramPacket packet, DatagramSocket socket, CommandHandler[] commandHandlers, Logger logger) {
         this.packet = packet;
         this.socket = socket;
-        this.commands = commands;
+        this.commandHandlers = commandHandlers;
         this.logger = logger;
     }
 
     public void run(){
-        String request = new String(packet.getData(), 0, packet.getLength());
-        for (ServerCommand command : commands) {
-            if (command.canExecute(request)) {
-                sendResponse(command.execute(request));
+        String[] data = new String(packet.getData(), 0, packet.getLength()).split("[\r\n]+");
+        Header header = new Header(data[0]);
+        String request = data[1];
+        String response = Arrays.toString(Arrays.copyOfRange(data, 2, data.length));
+        for (CommandHandler commandHandler : commandHandlers) {
+            if (commandHandler.canHandle(header.getCommandId())) {
+                Command command = commandHandler.deserialize(request, response);
+                command.setResponse(commandHandler.execute(command.getRequest()));
+                sendResponse(commandHandler.serialize(command));
             }
         }
     }

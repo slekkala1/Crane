@@ -1,7 +1,9 @@
 package tempest.networking;
 
+import tempest.commands.Header;
+import tempest.interfaces.Command;
+import tempest.interfaces.CommandHandler;
 import tempest.interfaces.Logger;
-import tempest.interfaces.ServerCommand;
 import tempest.services.DefaultLogger;
 
 import java.io.BufferedReader;
@@ -13,12 +15,12 @@ import java.net.Socket;
 public class TcpServiceWorker implements Runnable {
     private final Socket client;
     private final Logger logger;
-    private final ServerCommand[] commands;
+    private final CommandHandler[] commandHandlers;
 
-    TcpServiceWorker(Socket client, Logger logger, ServerCommand[] commands) {
+    TcpServiceWorker(Socket client, Logger logger, CommandHandler[] commandHandlers) {
         this.client = client;
         this.logger = logger;
-        this.commands = commands;
+        this.commandHandlers = commandHandlers;
     }
 
     public void run(){
@@ -29,15 +31,19 @@ public class TcpServiceWorker implements Runnable {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(client.getOutputStream(), true);
 
+            Header header = new Header(in.readLine());
+            String request = in.readLine();
             StringBuilder builder = new StringBuilder();
             while ((line = in.readLine()) != null) {
                 builder.append(line);
             }
 
-            String request = builder.toString();
-            for (ServerCommand command : commands) {
-                if (command.canExecute(request)) {
-                    out.append(command.execute(request));
+            String response = builder.toString();
+            for (CommandHandler commandHandler : commandHandlers) {
+                if (commandHandler.canHandle(header.getCommandId())) {
+                    Command command = commandHandler.deserialize(request, response);
+                    command.setResponse(commandHandler.execute(command.getRequest()));
+                    out.append(commandHandler.serialize(command));
                 }
             }
             out.flush();

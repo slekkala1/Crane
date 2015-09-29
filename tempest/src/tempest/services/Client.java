@@ -2,9 +2,9 @@ package tempest.services;
 
 import tempest.Machine;
 import tempest.Machines;
-import tempest.commands.client.Grep;
-import tempest.commands.client.Ping;
-import tempest.commands.response.Response;
+import tempest.commands.Response;
+import tempest.commands.command.Grep;
+import tempest.commands.command.Ping;
 import tempest.interfaces.*;
 import tempest.networking.TcpClientCommandExecutor;
 import tempest.networking.UdpClientCommandExecutor;
@@ -16,18 +16,24 @@ public class Client {
     private static ExecutorService pool = Executors.newFixedThreadPool(7);
     private final Machine[] machines;
     private final Logger logger;
+    private final CommandHandler[] commandHandlers;
 
-    public Client(Machines machines, Logger logger) {
+    public Client(Machines machines, Logger logger, CommandHandler[] commandHandlers) {
         this.machines = machines.getMachines();
         this.logger = logger;
+        this.commandHandlers = commandHandlers;
     }
 
     public Response grep(Machine machine, String options) {
-        return createExecutor(machine, new Grep(options)).execute();
+        Grep grep = new Grep();
+        grep.setRequest(options);
+        return createExecutor(machine, grep).execute();
     }
 
     public Response grepAll(String options) {
-        return executeAllParallel(new Grep(options));
+        Grep grep = new Grep();
+        grep.setRequest(options);
+        return executeAllParallel(grep);
     }
 
     public Response ping(Machine machine) {
@@ -38,23 +44,24 @@ public class Client {
         return executeAllParallel(new Ping());
     }
 
-    private <TResponse extends CommandResponse<TResponse>> TResponse executeAllParallel(ClientCommand<TResponse> command) {
-        Collection<Callable<TResponse>> commandExecutors = new ArrayList<>();
+    private <TRequest, TResponse> Response<TResponse> executeAllParallel(Command<TRequest, TResponse> command) {
+        Collection<Callable<Response<TResponse>>> commandExecutors = new ArrayList<>();
         for (Machine machine : this.machines) {
             commandExecutors.add(createExecutor(machine, command));
         }
-        List<Future<TResponse>> results;
+        List<Future<Response<TResponse>>> results;
         try {
             results = pool.invokeAll(commandExecutors);
-            TResponse response = null;
-            for (Future<TResponse> future : results) {
+            Response<TResponse> response = null;
+            for (Future<Response<TResponse>> future : results) {
                 try {
                     if (response == null)
                         response = future.get();
                     else {
-                        TResponse tResponse = future.get();
+                        Response<TResponse> tResponse = future.get();
                         if (tResponse != null) {
-                            response = response.add(tResponse);
+                            response.setResponseData(response.getResponseData().add(tResponse.getResponseData()));
+                            response.setResponse(command.add(response.getResponse(), tResponse.getResponse()));
                         }
                     }
                 } catch (ExecutionException e) {
@@ -68,9 +75,14 @@ public class Client {
         return null;
     }
 
-    private <TResponse extends CommandResponse<TResponse>> ClientCommandExecutor<TResponse> createExecutor(Machine machine, ClientCommand<TResponse> command) {
-        if (command instanceof UdpClientCommand)
-            return new UdpClientCommandExecutor<>(machine, (UdpClientCommand)command, logger);
-        return new TcpClientCommandExecutor<>(machine, command, logger);
+    private <TRequest, TResponse> ClientCommandExecutor<TResponse> createExecutor(Machine machine, Command<TRequest, TResponse> command) {
+        CommandHandler commandHandler = null;
+        for (CommandHandler ch : commandHandlers) {
+            if (ch.canHandle(command.getCommandId()))
+                commandHandler = ch;
+        }
+        if (command instanceof UdpCommand)
+            return new UdpClientCommandExecutor<>(machine, command, commandHandler, logger);
+        return new TcpClientCommandExecutor<>(machine, command, commandHandler, logger);
     }
 }

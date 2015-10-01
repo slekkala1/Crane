@@ -5,7 +5,7 @@ import tempest.interfaces.CommandHandler;
 
 public class PingHandler implements CommandHandler<Ping, Object, String> {
     public String getCommandId() {
-        return "ping";
+        return Ping.id;
     }
 
     public boolean canHandle(String commandId) {

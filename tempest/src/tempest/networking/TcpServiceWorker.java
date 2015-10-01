@@ -43,7 +43,7 @@ public class TcpServiceWorker implements Runnable {
                 if (commandHandler.canHandle(header.getCommandId())) {
                     Command command = commandHandler.deserialize(request, response);
                     command.setResponse(commandHandler.execute(command.getRequest()));
-                    out.append(commandHandler.serialize(command));
+                    out.append(createHeader(command) + commandHandler.serialize(command));
                 }
             }
             out.flush();
@@ -52,5 +52,9 @@ public class TcpServiceWorker implements Runnable {
         } catch (IOException e) {
             logger.logLine(DefaultLogger.INFO, "Error handling command" + e);
         }
+    }
+
+    private String createHeader(Command command) {
+        return command.getCommandId() + System.lineSeparator();
     }
 }

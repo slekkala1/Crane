@@ -13,7 +13,7 @@ public class GrepHandler implements CommandHandler<Grep, String, String> {
     }
 
     public String getCommandId() {
-        return "grep";
+        return Grep.id;
     }
 
     public boolean canHandle(String commandId) {

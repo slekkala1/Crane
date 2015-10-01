@@ -32,7 +32,7 @@ public class UdpServiceWorker implements Runnable {
             if (commandHandler.canHandle(header.getCommandId())) {
                 Command command = commandHandler.deserialize(request, response);
                 command.setResponse(commandHandler.execute(command.getRequest()));
-                sendResponse(commandHandler.serialize(command));
+                sendResponse(createHeader(command) + commandHandler.serialize(command));
             }
         }
     }
@@ -45,5 +45,9 @@ public class UdpServiceWorker implements Runnable {
         } catch (IOException e) {
             logger.logLine(Logger.WARNING, "Couldn't send response packet.");
         }
+    }
+
+    private String createHeader(Command command) {
+        return command.getCommandId() + System.lineSeparator();
     }
 }

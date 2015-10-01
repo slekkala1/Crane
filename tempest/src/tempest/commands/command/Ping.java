@@ -3,11 +3,12 @@ package tempest.commands.command;
 import tempest.interfaces.UdpCommand;
 
 public class Ping implements UdpCommand<Object, String> {
+    public static final String id = "ping";
     private Object request;
     private String response;
 
     public String getCommandId() {
-        return "grep";
+        return id;
     }
 
     public Object getRequest() {

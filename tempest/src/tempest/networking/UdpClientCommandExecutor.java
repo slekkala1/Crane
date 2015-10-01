@@ -43,7 +43,7 @@ public class UdpClientCommandExecutor<TCommand extends Command<TRequest, TRespon
             socket.send(udpRequest);
             socket.receive(udpResponse);
 
-            String[] data = new String(udpResponse.getData(), 0, udpResponse.getLength()).split("[\r\n]+");
+            String[] data = new String(udpResponse.getData(), 0, udpResponse.getLength()).split(System.lineSeparator());
             String request = data[1];
             String response = Arrays.toString(Arrays.copyOfRange(data, 2, data.length));
             Command<TRequest, TResponse> responseCommand = commandHandler.deserialize(request, response);
@@ -64,6 +64,6 @@ public class UdpClientCommandExecutor<TCommand extends Command<TRequest, TRespon
     }
 
     private String createHeader(Command command) {
-        return command.getResponse() + System.lineSeparator();
+        return command.getCommandId() + System.lineSeparator();
     }
 }

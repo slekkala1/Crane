@@ -3,11 +3,12 @@ package tempest.commands.command;
 import tempest.interfaces.Command;
 
 public class Grep implements Command<String, String> {
+    public static final String id = "grep";
     private String request;
     private String response;
 
     public String getCommandId() {
-        return "grep";
+        return id;
     }
 
     public String getRequest() {

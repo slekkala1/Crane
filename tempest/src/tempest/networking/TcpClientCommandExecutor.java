@@ -44,8 +44,13 @@ public class TcpClientCommandExecutor<TCommand extends Command<TRequest, TRespon
             String request = in.readLine();
             int lineCount = 0;
             StringBuilder responseBuilder = new StringBuilder();
+            boolean first = true;
             while ((line = in.readLine()) != null) {
-                responseBuilder.append(line).append(System.lineSeparator());
+                if (!first) {
+                    responseBuilder.append(System.lineSeparator());
+                }
+                first = false;
+                responseBuilder.append(line);
                 ++lineCount;
             }
             socket.close();
@@ -62,6 +67,6 @@ public class TcpClientCommandExecutor<TCommand extends Command<TRequest, TRespon
     }
 
     private String createHeader(Command command) {
-        return command.getResponse() + System.lineSeparator();
+        return command.getCommandId() + System.lineSeparator();
     }
 }

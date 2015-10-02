@@ -1,0 +1,13 @@
+
+//option java_package = "protobuf";
+option java_outer_classname = "MembershipListProtos";
+
+message MemberId {
+    required string ip = 1;
+    required uint32 hearbeat = 3;
+    required uint64 timestamp = 2;
+}
+
+message MembershipList {
+    repeated MemberId member = 1;
+}

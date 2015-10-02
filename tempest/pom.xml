@@ -13,6 +13,11 @@
             <artifactId>cliche</artifactId>
             <version>110413</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.6.1</version>
+        </dependency>
     </dependencies>
     <build>
         <sourceDirectory>src/</sourceDirectory>

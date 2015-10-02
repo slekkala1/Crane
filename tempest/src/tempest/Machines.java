@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -39,6 +38,22 @@ public class Machines {
 
     public Machine[] getMachines() {
         return machines.toArray(new Machine[machines.size()]);
+    }
+
+
+    public List<Machine> getRandomMachines(int num) {
+        int i = 0;
+        List<Machine> randomMachinesList = new ArrayList<Machine>(num);
+
+        while(i < num) {
+            int index = (int)(Math.random()*machines.size());
+            if(machines.get(index) != getLocalMachine()) {
+                randomMachinesList.add(machines.get(index));
+            }
+            i++;
+        }
+
+        return randomMachinesList;
     }
 
     public Machine getLocalMachine() {

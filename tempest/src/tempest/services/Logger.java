@@ -4,9 +4,14 @@ import tempest.Machines;
 import tempest.interfaces.Executor;
 import tempest.interfaces.LogWrapper;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Date;
-import java.util.logging.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 public class Logger {
     public static final String INFO = "info";

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/cs425-mp-lekkala-morrow.iml" filepath="$PROJECT_DIR$/.idea/cs425-mp-lekkala-morrow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tempest/tempest.iml" filepath="$PROJECT_DIR$/tempest/tempest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tempest-test/tempest-test.iml" filepath="$PROJECT_DIR$/tempest-test/tempest-test.iml" />
     </modules>
   </component>
 </project>

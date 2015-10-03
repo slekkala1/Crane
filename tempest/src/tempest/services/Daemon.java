@@ -1,6 +1,6 @@
 package tempest.services;
 
-import main.resources.MembershipListProtos;
+import tempest.protos.Membership;
 import tempest.Machine;
 import tempest.Machines;
 import tempest.interfaces.Logger;
@@ -24,7 +24,7 @@ public class Daemon {
     private ServiceRunner runner;
     private DaemonClient daemonClient;
 
-    private MembershipListProtos.MembershipList membershipList = MembershipListUtil.getNewMembershipList();
+    private Membership.MembershipList membershipList = MembershipListUtil.getNewMembershipList();
     private static ExecutorService pool = Executors.newCachedThreadPool();
 
     public Daemon(Logger logger, int port) {
@@ -69,7 +69,7 @@ public class Daemon {
                     serverSocket.receive(receivePacket);
                     ByteArrayInputStream inputStream = new ByteArrayInputStream(receiveData);
                     if(inputStream!=null) {
-                        MembershipListProtos.MembershipList receivedMembershipList = MembershipListProtos.MembershipList.parseDelimitedFrom(inputStream);
+                        Membership.MembershipList receivedMembershipList = Membership.MembershipList.parseDelimitedFrom(inputStream);
                         logger.logLine(Logger.INFO, "Current Membership list " + membershipList.toString());
 
                         logger.logLine(Logger.INFO, "Recieved Membership list " + receivedMembershipList.toString());

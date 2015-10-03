@@ -1,6 +1,6 @@
 package tempest.services;
 
-import main.resources.MembershipListProtos;
+import tempest.protos.Membership;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -13,17 +13,17 @@ import java.util.Map;
 public class MembershipListUtil {
 
 
-    public static MembershipListProtos.MembershipList getNewMembershipList() {
-        MembershipListProtos.MembershipList membershipList1 = null;
+    public static Membership.MembershipList getNewMembershipList() {
+        Membership.MembershipList membershipList1 = null;
         try {
-            membershipList1 = MembershipListProtos.MembershipList.newBuilder().addMember(MembershipListProtos.MemberId.newBuilder().setIp(InetAddress.getLocalHost().getHostAddress()).setHearbeat(1).setTimestamp(System.currentTimeMillis()).build()).build();
+            membershipList1 = Membership.MembershipList.newBuilder().addMember(Membership.Member.newBuilder().setIp(InetAddress.getLocalHost().getHostAddress()).setHearbeat(1).setTimestamp(System.currentTimeMillis()).build()).build();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         return membershipList1;
     }
 
-    public static synchronized MembershipListProtos.MembershipList mergeMembershipList(MembershipListProtos.MembershipList receivedMembershipList, MembershipListProtos.MembershipList membershipList) {
+    public static synchronized Membership.MembershipList mergeMembershipList(Membership.MembershipList receivedMembershipList, Membership.MembershipList membershipList) {
         Map<String,MemberHealth> map1 =getMap(receivedMembershipList);
         Map<String,MemberHealth> map2 =getMap(membershipList);
 
@@ -41,19 +41,19 @@ public class MembershipListUtil {
         return toProtobuf(map2);
     }
 
-    private static synchronized MembershipListProtos.MembershipList toProtobuf(Map<String, MemberHealth> map) {
+    private static synchronized Membership.MembershipList toProtobuf(Map<String, MemberHealth> map) {
 
-        MembershipListProtos.MembershipList.Builder membershipListBuilder = MembershipListProtos.MembershipList.newBuilder();
+        Membership.MembershipList.Builder membershipListBuilder = Membership.MembershipList.newBuilder();
 
         for (Map.Entry<String, MemberHealth> entry : map.entrySet())
         {
-           membershipListBuilder.addMember(MembershipListProtos.MemberId.newBuilder().setIp(entry.getKey()).setHearbeat(entry.getValue().getHeartbeat()).setTimestamp(entry.getValue().getTimestamp()).build());
+           membershipListBuilder.addMember(Membership.Member.newBuilder().setIp(entry.getKey()).setHearbeat(entry.getValue().getHeartbeat()).setTimestamp(entry.getValue().getTimestamp()).build());
         }
         return membershipListBuilder.build();
     }
 
-    private static synchronized Map<String,MemberHealth> getMap(MembershipListProtos.MembershipList receivedMembershipList) {
-        MembershipListProtos.MembershipList.Builder builder = receivedMembershipList.toBuilder();
+    private static synchronized Map<String,MemberHealth> getMap(Membership.MembershipList receivedMembershipList) {
+        Membership.MembershipList.Builder builder = receivedMembershipList.toBuilder();
 
         Map<String,MemberHealth> memberHealthMap = new HashMap<String,MemberHealth>();
         int i=0;
@@ -66,7 +66,7 @@ public class MembershipListUtil {
         return memberHealthMap;
     }
 
-    public static synchronized MembershipListProtos.MembershipList updateMembershipList(MembershipListProtos.MembershipList membershipList) {
+    public static synchronized Membership.MembershipList updateMembershipList(Membership.MembershipList membershipList) {
         Map<String,MemberHealth> map2 =getMap(membershipList);
         try {
             int heartbeat = map2.get(InetAddress.getLocalHost().getHostAddress()).getHeartbeat();

@@ -8,15 +8,15 @@ import java.util.logging.Level;
 public class MockLogWrapper implements LogWrapper {
     public int addHandlerCallCount;
     public int logpCallCount;
-    public Handler lastHandler;
+    public String file;
     public Level lastLevel;
     public String lastSourceClass;
     public String lastSourceMethod;
     public String lastMsg;
 
-    public void addHandler(Handler handler) {
+    public void addFileHandler(String file) {
         ++addHandlerCallCount;
-        lastHandler = handler;
+        this.file = file;
     }
 
     public void logp(Level level, String sourceClass, String sourceMethod, String msg) {

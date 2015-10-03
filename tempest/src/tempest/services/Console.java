@@ -3,8 +3,9 @@ package tempest.services;
 import asg.cliche.Command;
 import asg.cliche.Param;
 import tempest.Machine;
-import tempest.commands.response.Response;
-import tempest.interfaces.CommandResponse;
+import tempest.commands.Response;
+import tempest.commands.ResponseData;
+import tempest.interfaces.Logger;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -43,14 +44,14 @@ public class Console {
 
     @Command
     public String grepAll(@Param(name="options")String options) throws IOException, InterruptedException {
-        Response response = client.grepAll(options);
-        return response.getResponse() + formatResponseStatistics(response);
+        Response<String> response = client.grepAll(options);
+        return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 
     @Command
     public String grepMachine(@Param(name="machine", description="host:port")String machine, @Param(name="options")String options) throws IOException, InterruptedException {
-        Response response = client.grep(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
-        return response.getResponse() + formatResponseStatistics(response);
+        Response<String> response = client.grep(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
+        return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 
     @Command
@@ -61,31 +62,31 @@ public class Console {
 
     @Command
     public String grepAllToFile(@Param(name="file")String file, @Param(name="options")String options) throws IOException, InterruptedException {
-        Response response = client.grepAll(options);
+        Response<String> response = client.grepAll(options);
         Files.write(FileSystems.getDefault().getPath(file), response.getResponse().getBytes());
-        return "Wrote to " + file + System.getProperty("line.separator") + formatResponseStatistics(response);
+        return "Wrote to " + file + System.getProperty("line.separator") + formatResponseStatistics(response.getResponseData());
     }
 
     @Command
     public String grepMachineToFile(@Param(name="file", description="host:port")String file, @Param(name="machine")String machine, @Param(name="options")String options) throws IOException, InterruptedException {
-        Response response = client.grep(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
+        Response<String> response = client.grep(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
         Files.write(FileSystems.getDefault().getPath(file), response.getResponse().getBytes());
-        return "Wrote to " + file + System.getProperty("line.separator") + formatResponseStatistics(response);
+        return "Wrote to " + file + System.getProperty("line.separator") + formatResponseStatistics(response.getResponseData());
     }
 
     @Command
     public String pingAll() throws IOException, InterruptedException {
-        Response response = client.pingAll();
-        return response.getResponse() + formatResponseStatistics(response);
+        Response<String> response = client.pingAll();
+        return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 
     @Command
     public String pingMachine(@Param(name="machine", description="host:port")String machine) throws IOException, InterruptedException {
-        Response response = client.ping(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])));
-        return response.getResponse() + formatResponseStatistics(response);
+        Response<String> response = client.ping(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])));
+        return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 
-    private String formatResponseStatistics(CommandResponse response) {
+    private String formatResponseStatistics(ResponseData response) {
         StringBuilder resultBuilder = new StringBuilder("------------------------------");
         resultBuilder.append(System.getProperty("line.separator"));
         resultBuilder.append("Lines: ").append(response.getLineCount());

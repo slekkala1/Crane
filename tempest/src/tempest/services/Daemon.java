@@ -3,6 +3,7 @@ package tempest.services;
 import main.resources.MembershipListProtos;
 import tempest.Machine;
 import tempest.Machines;
+import tempest.interfaces.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

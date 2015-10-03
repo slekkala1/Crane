@@ -23,7 +23,7 @@ public class MembershipListUtil {
         return membershipList1;
     }
 
-    public static synchronized void mergeMembershipList(MembershipListProtos.MembershipList receivedMembershipList,MembershipListProtos.MembershipList membershipList) {
+    public static synchronized MembershipListProtos.MembershipList mergeMembershipList(MembershipListProtos.MembershipList receivedMembershipList, MembershipListProtos.MembershipList membershipList) {
         Map<String,MemberHealth> map1 =getMap(receivedMembershipList);
         Map<String,MemberHealth> map2 =getMap(membershipList);
 
@@ -38,17 +38,18 @@ public class MembershipListUtil {
             }
         }
 
-        toProtobuf(map2,membershipList);
+        return toProtobuf(map2);
     }
 
-    private static synchronized void toProtobuf(Map<String, MemberHealth> map, MembershipListProtos.MembershipList membershipList) {
+    private static synchronized MembershipListProtos.MembershipList toProtobuf(Map<String, MemberHealth> map) {
 
-        membershipList.toBuilder().clear();
+        MembershipListProtos.MembershipList.Builder membershipListBuilder = MembershipListProtos.MembershipList.newBuilder();
 
         for (Map.Entry<String, MemberHealth> entry : map.entrySet())
         {
-            membershipList = membershipList.toBuilder().addMember(MembershipListProtos.MemberId.newBuilder().setIp(entry.getKey()).setHearbeat(entry.getValue().getHeartbeat()).setTimestamp(entry.getValue().getTimestamp()).build()).build();
+           membershipListBuilder.addMember(MembershipListProtos.MemberId.newBuilder().setIp(entry.getKey()).setHearbeat(entry.getValue().getHeartbeat()).setTimestamp(entry.getValue().getTimestamp()).build());
         }
+        return membershipListBuilder.build();
     }
 
     private static synchronized Map<String,MemberHealth> getMap(MembershipListProtos.MembershipList receivedMembershipList) {
@@ -65,35 +66,30 @@ public class MembershipListUtil {
         return memberHealthMap;
     }
 
-    public static synchronized void updateMembershipList(MembershipListProtos.MembershipList membershipList) {
+    public static synchronized MembershipListProtos.MembershipList updateMembershipList(MembershipListProtos.MembershipList membershipList) {
         Map<String,MemberHealth> map2 =getMap(membershipList);
         try {
             int heartbeat = map2.get(InetAddress.getLocalHost().getHostAddress()).getHeartbeat();
             map2.get(InetAddress.getLocalHost().getHostAddress()).setHeartbeat(heartbeat + 1);
             map2.get(InetAddress.getLocalHost().getHostAddress()).setTimestamp(System.currentTimeMillis());
 
-            toProtobuf(map2, membershipList);
+            return toProtobuf(map2);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+        return membershipList;
     }
 
 
 //    public static void main(String[] args) {
-//        //MembershipListProtos.MembershipList received = getNewMembershipList();
-//        System.out.println(membershipList);
-//        try {
-//            MembershipListProtos.MembershipList receivedMembershipList = MembershipListProtos.MembershipList.newBuilder().addMember(MembershipListProtos.MemberId.newBuilder().setIp(InetAddress.getLocalHost().getHostAddress()).setHearbeat(10).setTimestamp(System.currentTimeMillis()).build()).build();
-//            receivedMembershipList = receivedMembershipList.toBuilder().addMember(MembershipListProtos.MemberId.newBuilder().setIp("10.0.1.28").setHearbeat(10).setTimestamp(System.currentTimeMillis()).build()).build();
-//            System.out.println(receivedMembershipList);
+//        MembershipListProtos.MembershipList received = getNewMembershipList();
+//        //System.out.println(received);
+//           // MembershipListProtos.MembershipList receivedMembershipList = MembershipListProtos.MembershipList.newBuilder().addMember(MembershipListProtos.MemberId.newBuilder().setIp(InetAddress.getLocalHost().getHostAddress()).setHearbeat(10).setTimestamp(System.currentTimeMillis()).build()).build();
+//            MembershipListProtos.MembershipList receivedMembershipList = MembershipListProtos.MembershipList.newBuilder().addMember(MembershipListProtos.MemberId.newBuilder().setIp("10.0.1.28").setHearbeat(10).setTimestamp(System.currentTimeMillis()).build()).build();
+//            //System.out.println(receivedMembershipList);
+//            System.out.println(mergeMembershipList(receivedMembershipList,received));
 //
-//            mergeMembershipList(receivedMembershipList);
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(membershipList);
 //
 //        // MembershipListProtos. MembershipList membershipList =
 //    }
-
 }

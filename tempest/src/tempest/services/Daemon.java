@@ -39,7 +39,7 @@ public class Daemon {
         if (daemonClient !=null)
             return;
         try {
-            daemonClient = new DaemonClient(new Machines(),3);//do I need to know which machines are up before sending gossip?
+            daemonClient = new DaemonClient(new Machines().getMachines(),2);//do I need to know which machines are up before sending gossip?
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -60,15 +60,22 @@ public class Daemon {
         public void run() {
             try {
                 DatagramSocket serverSocket = new DatagramSocket(port);
+                logger.logLine(Logger.INFO, "Started Daemon server on" + InetAddress.getLocalHost().getHostName());
 
                 while (isRunning) {
-                    logger.logLine(Logger.INFO, "Started Daemon server on" + InetAddress.getLocalHost().getHostName());
                     byte[] receiveData = new byte[1024];
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                     serverSocket.receive(receivePacket);
                     ByteArrayInputStream inputStream = new ByteArrayInputStream(receiveData);
-                    MembershipListProtos.MembershipList receivedMembershipList = MembershipListProtos.MembershipList.parseDelimitedFrom(inputStream);
-                    MembershipListUtil.mergeMembershipList(receivedMembershipList, membershipList);
+                    if(inputStream!=null) {
+                        MembershipListProtos.MembershipList receivedMembershipList = MembershipListProtos.MembershipList.parseDelimitedFrom(inputStream);
+                        logger.logLine(Logger.INFO, "Current Membership list " + membershipList.toString());
+
+                        logger.logLine(Logger.INFO, "Recieved Membership list " + receivedMembershipList.toString());
+
+                        membershipList = MembershipListUtil.mergeMembershipList(receivedMembershipList, membershipList);
+                        logger.logLine(Logger.INFO, "Merged Membership list " + membershipList.toString());
+                    }
                 }
             } catch (SocketException e) {
                 e.printStackTrace();
@@ -87,17 +94,20 @@ public class Daemon {
 
     class DaemonClient implements Runnable {
 
-        private final List<Machine> machines;
+        private final Machine[] machines;
 
-        public DaemonClient(Machines machines, int k) {
-            this.machines = machines.getRandomMachines(k);
+        public DaemonClient(Machine[] machines, int k) {
+//            this.machines = machines.getRandomMachines(k);
+            this.machines = machines;
+
         }
 
         public void run() {
             while (true) {
                 try {
                     Thread.sleep(500);
-                    MembershipListUtil.updateMembershipList(membershipList);
+                    membershipList = MembershipListUtil.updateMembershipList(membershipList);
+                    logger.logLine(Logger.INFO, "Updated Membership list " + membershipList.toString());
 
                     Collection<Callable<Integer>> commandExecutors = new ArrayList<>();
                     for (Machine machine : machines) {
@@ -134,12 +144,14 @@ public class Daemon {
                 String line;
                 long localtimeStamp = System.currentTimeMillis();
                 try {
+                    logger.logLine(Logger.INFO, "Sending membershipList to Daemon server on machine " + server.getHostName());
+
                     DatagramSocket aClientSocket = new DatagramSocket();
                     ByteArrayOutputStream aOutput = new ByteArrayOutputStream(1024);
 
                     membershipList.writeDelimitedTo(aOutput);
 
-                    byte aSendData[] = aOutput.toByteArray();
+                    byte[] aSendData = aOutput.toByteArray();
                     InetAddress aIp = InetAddress.getByName(server.getHostName());// or aReceivePacket.getAddress();
 
                     DatagramPacket aSendPacket = new DatagramPacket(aSendData, aSendData.length, aIp, 9876);

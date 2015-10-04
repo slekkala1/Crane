@@ -8,24 +8,24 @@ import tempest.interfaces.Logger;
 import tempest.services.*;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 
 public class TempestApp implements Runnable {
     private final Console console;
     private final Server server;
-    private final Machines machines;
+    private final MembershipService membershipService;
     private final GossipServer gossipServer;
     private final CommandHandler[] commandHandlers;
 
     public TempestApp() throws IOException {
-        machines = new Machines();
-        String logFile = "machine." + machines.getMachineNumber() + ".log";
-        String grepFile = "vm" + (machines.getMachineNumber() + 1) + ".log";
-        Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, grepFile);
+        membershipService = new MembershipService();
+        String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
+        Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
         commandHandlers = new CommandHandler[] { new PingHandler(), new GrepHandler(logger)};
-        Client client = new Client(machines, logger, commandHandlers);
+        Client client = new Client(membershipService, logger, commandHandlers);
         server = new Server(logger, 4444, commandHandlers);
         gossipServer = new GossipServer(logger, 9876);
-        console = new Console(logger, client, server, gossipServer);
+        console = new Console(logger, client, server, gossipServer, membershipService);
     }
 
     public void run() {

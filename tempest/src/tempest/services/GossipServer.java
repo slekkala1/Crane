@@ -1,7 +1,7 @@
 package tempest.services;
 
 import tempest.protos.Membership;
-import tempest.Machines;
+import tempest.MembershipService;
 import tempest.interfaces.Logger;
 
 import java.io.ByteArrayInputStream;
@@ -31,7 +31,7 @@ public class GossipServer {
         if (gossipClient !=null)
             return;
         try {
-            gossipClient = new GossipClient(membershipList, new Machines().getMachines(), logger, 2);//do I need to know which machines are up before sending gossip?
+            gossipClient = new GossipClient(new MembershipService(), logger);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class GossipServer {
             try {
                 serverSocket = new DatagramSocket(port);
                 serverSocket.setSoTimeout(1000);   // set the timeout in millisecounds.
-                logger.logLine(Logger.INFO, "Started Daemon server on" + InetAddress.getLocalHost().getHostName());
+                logger.logLine(Logger.INFO, "Started Gossip server on" + InetAddress.getLocalHost().getHostName());
                 byte[] receiveData = new byte[1024];
 
                 while (isRunning) {

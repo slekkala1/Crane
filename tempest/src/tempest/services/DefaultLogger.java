@@ -1,10 +1,11 @@
 package tempest.services;
 
-import tempest.Machines;
+import tempest.MembershipService;
 import tempest.interfaces.Executor;
 import tempest.interfaces.LogWrapper;
 
 import java.io.*;
+import java.net.Inet4Address;
 import java.util.logging.*;
 
 public class DefaultLogger implements tempest.interfaces.Logger {
@@ -14,8 +15,8 @@ public class DefaultLogger implements tempest.interfaces.Logger {
     private final String grepFile;
     private final Executor executor;
 
-    public DefaultLogger(Machines machines, Executor executor, LogWrapper logWrapper) throws IOException {
-        this(executor, logWrapper, "machine." + machines.getMachineNumber() + ".log", "machine." + machines.getMachineNumber() + ".log");
+    public DefaultLogger(MembershipService membershipService, Executor executor, LogWrapper logWrapper) throws IOException {
+        this(executor, logWrapper, "machine." + Inet4Address.getLocalHost().getHostName() + ".log", "machine." + Inet4Address.getLocalHost().getHostName() + ".log");
     }
 
     public DefaultLogger(Executor executor, LogWrapper logWrapper, String logfile, String grepFile) throws IOException {

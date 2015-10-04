@@ -1,6 +1,6 @@
 package tempest.services;
 
-import tempest.Machine;
+import tempest.MembershipService;
 import tempest.interfaces.Logger;
 import tempest.protos.Membership;
 
@@ -15,16 +15,13 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class GossipClient implements Runnable {
-    private final Machine[] machines;
     private static ExecutorService pool = Executors.newCachedThreadPool();
     private final Logger logger;
-    private Membership.MembershipList membershipList;
+    private MembershipService membershipService;
     private boolean isRunning = true;
 
-    public GossipClient(Membership.MembershipList membershipList, Machine[] machines, Logger logger, int k) {
-        this.membershipList = membershipList;
-//        this.machines = machines.getRandomMachines(k);
-        this.machines = machines;
+    public GossipClient(MembershipService membershipService, Logger logger) {
+        this.membershipService = membershipService;
         this.logger = logger;
     }
 
@@ -33,13 +30,10 @@ public class GossipClient implements Runnable {
             try {
                 Thread.sleep(500);
 
-                membershipList = MembershipListUtil.updateMembershipList(membershipList);
-                //logger.logLine(Logger.INFO, "Updated Membership list " + membershipList.toString());
+                membershipService.update();
 
                 Collection<Callable<Integer>> commandExecutors = new ArrayList<>();
-                for (Machine machine : machines) {
-                    commandExecutors.add(new ClientCommandExecutor<Integer>(machine));
-                }
+                commandExecutors.add(new ClientCommandExecutor<Integer>(membershipService.getRandomMachine()));
                 List<Future<Integer>> results;
                 results = pool.invokeAll(commandExecutors);
                 for (Future<Integer> future : results) {
@@ -61,9 +55,9 @@ public class GossipClient implements Runnable {
 
 
     class ClientCommandExecutor<Integer> implements Callable<java.lang.Integer> {
-        private final Machine server;
+        private final Membership.Member server;
 
-        public ClientCommandExecutor(Machine server) {
+        public ClientCommandExecutor(Membership.Member server) {
             this.server = server;
         }
 
@@ -81,10 +75,10 @@ public class GossipClient implements Runnable {
                 DatagramSocket aClientSocket = new DatagramSocket();
                 ByteArrayOutputStream aOutput = new ByteArrayOutputStream(1024);
 
-                membershipList.writeDelimitedTo(aOutput);
+                membershipService.getMembershipList().writeDelimitedTo(aOutput);
 
                 byte[] aSendData = aOutput.toByteArray();
-                InetAddress aIp = InetAddress.getByName(server.getHostName());// or aReceivePacket.getAddress();
+                InetAddress aIp = InetAddress.getByName(server.getHost());// or aReceivePacket.getAddress();
 
                 DatagramPacket aSendPacket = new DatagramPacket(aSendData, aSendData.length, aIp, 9876);
                 aClientSocket.send(aSendPacket);

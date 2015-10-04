@@ -2,7 +2,7 @@ package tempest.services;
 
 import asg.cliche.Command;
 import asg.cliche.Param;
-import tempest.Machine;
+import tempest.MembershipService;
 import tempest.commands.Response;
 import tempest.commands.ResponseData;
 import tempest.interfaces.Logger;
@@ -15,27 +15,31 @@ public class Console {
     private final Logger logger;
     private final Client client;
     private final Server server;
-    private final GossipServer daemon;
+    private final GossipServer gossipServer;
+    private final MembershipService membershipService;
 
-    public Console(Logger logger, Client client, Server server, GossipServer daemon) {
+    public Console(Logger logger, Client client, Server server, GossipServer gossipServer, MembershipService membershipService) {
         this.logger = logger;
         this.client = client;
         this.server = server;
-        this.daemon = daemon;
+        this.gossipServer = gossipServer;
+        this.membershipService = membershipService;
     }
 
     @Command
     public void daemonJoin() {
-        if (client.ping(new Machine("fa15-cs425-g03-01.cs.illinois.edu", 4444)) == null) {
-            logger.logLine(DefaultLogger.SEVERE, "Introducer is down, cannot join");
-        } else {
-            daemon.start();
-        }
+        membershipService.start(client);
+//        if (client.ping(new Machine("fa15-cs425-g03-01.cs.illinois.edu", 4444)) == null) {
+//            logger.logLine(DefaultLogger.SEVERE, "Introducer is down, cannot join");
+//        } else {
+//            gossipServer.start();
+//        }
     }
 
     @Command
     public void daemonLeave() {
-        daemon.stop();
+        membershipService.stop();
+        gossipServer.stop();
     }
 
     @Command
@@ -66,7 +70,7 @@ public class Console {
 
     @Command
     public String grepMachine(@Param(name = "machine", description = "host:port") String machine, @Param(name = "options") String options) throws IOException, InterruptedException {
-        Response<String> response = client.grep(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
+        Response<String> response = client.grep(membershipService.getMember(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
         return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 
@@ -85,7 +89,7 @@ public class Console {
 
     @Command
     public String grepMachineToFile(@Param(name = "file", description = "host:port") String file, @Param(name = "machine") String machine, @Param(name = "options") String options) throws IOException, InterruptedException {
-        Response<String> response = client.grep(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
+        Response<String> response = client.grep(membershipService.getMember(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
         Files.write(FileSystems.getDefault().getPath(file), response.getResponse().getBytes());
         return "Wrote to " + file + System.getProperty("line.separator") + formatResponseStatistics(response.getResponseData());
     }
@@ -98,7 +102,7 @@ public class Console {
 
     @Command
     public String pingMachine(@Param(name = "machine", description = "host:port") String machine) throws IOException, InterruptedException {
-        Response<String> response = client.ping(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])));
+        Response<String> response = client.ping(membershipService.getMember(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])));
         return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 

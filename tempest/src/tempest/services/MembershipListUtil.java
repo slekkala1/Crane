@@ -16,7 +16,7 @@ public class MembershipListUtil {
     public static Membership.MembershipList getNewMembershipList() {
         Membership.MembershipList membershipList1 = null;
         try {
-            membershipList1 = Membership.MembershipList.newBuilder().addMember(Membership.Member.newBuilder().setIp(InetAddress.getLocalHost().getHostAddress()).setHearbeat(1).setTimestamp(System.currentTimeMillis()).build()).build();
+            membershipList1 = Membership.MembershipList.newBuilder().addMember(Membership.Member.newBuilder().setHost(InetAddress.getLocalHost().getHostAddress()).setHearbeat(1).setTimestamp(System.currentTimeMillis()).build()).build();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class MembershipListUtil {
 
         for (Map.Entry<String, MemberHealth> entry : map.entrySet())
         {
-           membershipListBuilder.addMember(Membership.Member.newBuilder().setIp(entry.getKey()).setHearbeat(entry.getValue().getHeartbeat()).setTimestamp(entry.getValue().getTimestamp()).build());
+           membershipListBuilder.addMember(Membership.Member.newBuilder().setHost(entry.getKey()).setHearbeat(entry.getValue().getHeartbeat()).setTimestamp(entry.getValue().getTimestamp()).build());
         }
         return membershipListBuilder.build();
     }
@@ -59,7 +59,7 @@ public class MembershipListUtil {
         int i=0;
         while(builder.getMemberList().size()>i) {
             MemberHealth memberHealth = new MemberHealth(builder.getMember(i).getTimestamp(),builder.getMember(i).getHearbeat());
-            memberHealthMap.put(builder.getMember(i).getIp(), memberHealth);
+            memberHealthMap.put(builder.getMember(i).getHost(), memberHealth);
             i++;
         }
 

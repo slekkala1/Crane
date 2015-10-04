@@ -1,9 +1,9 @@
 package tempest.networking;
 
-import tempest.Machine;
 import tempest.commands.Response;
 import tempest.commands.ResponseData;
 import tempest.interfaces.*;
+import tempest.protos.Membership;
 import tempest.services.DefaultLogger;
 
 import java.io.BufferedReader;
@@ -13,12 +13,12 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class TcpClientCommandExecutor<TCommand extends Command<TRequest, TResponse>, TRequest, TResponse> implements ClientCommandExecutor<TResponse> {
-    private final Machine server;
+    private final Membership.Member server;
     private final TCommand command;
     private final CommandHandler<TCommand, TRequest, TResponse> commandHandler;
     private final Logger logger;
 
-    public TcpClientCommandExecutor(Machine server, TCommand command, CommandHandler<TCommand, TRequest, TResponse> commandHandler, Logger logger) {
+    public TcpClientCommandExecutor(Membership.Member server, TCommand command, CommandHandler<TCommand, TRequest, TResponse> commandHandler, Logger logger) {
         this.server = server;
         this.command = command;
         this.commandHandler = commandHandler;
@@ -33,7 +33,7 @@ public class TcpClientCommandExecutor<TCommand extends Command<TRequest, TRespon
         String line;
         long startTime = System.currentTimeMillis();
         try {
-            Socket socket = new Socket(server.getHostName(), server.getPort());
+            Socket socket = new Socket(server.getHost(), server.getPort());
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 

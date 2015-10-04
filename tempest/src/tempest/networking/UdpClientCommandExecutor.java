@@ -1,9 +1,9 @@
 package tempest.networking;
 
-import tempest.Machine;
 import tempest.commands.Response;
 import tempest.commands.ResponseData;
 import tempest.interfaces.*;
+import tempest.protos.Membership;
 import tempest.services.DefaultLogger;
 
 import java.io.IOException;
@@ -13,12 +13,12 @@ import java.net.InetAddress;
 import java.util.Arrays;
 
 public class UdpClientCommandExecutor<TCommand extends Command<TRequest, TResponse>, TRequest, TResponse> implements ClientCommandExecutor<TResponse> {
-    private final Machine server;
+    private final Membership.Member server;
     private final TCommand command;
     private final CommandHandler<TCommand, TRequest, TResponse> commandHandler;
     private final Logger logger;
 
-    public UdpClientCommandExecutor(Machine server, TCommand command, CommandHandler<TCommand, TRequest, TResponse> commandHandler, Logger logger) {
+    public UdpClientCommandExecutor(Membership.Member server, TCommand command, CommandHandler<TCommand, TRequest, TResponse> commandHandler, Logger logger) {
 
         this.server = server;
         this.command = command;
@@ -37,7 +37,7 @@ public class UdpClientCommandExecutor<TCommand extends Command<TRequest, TRespon
             socket.setSoTimeout(500);
 
             byte[] requestData = (createHeader(command) + commandHandler.serialize(command)).getBytes();
-            DatagramPacket udpRequest = new DatagramPacket(requestData, requestData.length, InetAddress.getByName(server.getHostName()), server.getPort());
+            DatagramPacket udpRequest = new DatagramPacket(requestData, requestData.length, InetAddress.getByName(server.getHost()), server.getPort());
             DatagramPacket udpResponse = new DatagramPacket(new byte[1024], 1024);
 
             socket.send(udpRequest);

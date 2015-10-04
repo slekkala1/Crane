@@ -1,7 +1,10 @@
 package tempest;
 
+import tempest.commands.Response;
 import tempest.protos.Membership;
 import tempest.services.Client;
+import tempest.services.GossipClient;
+import tempest.services.Heartbeat;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -13,6 +16,7 @@ import java.util.Properties;
 public class MembershipService {
     private final String introducer;
     private final Membership.Member localMachine;
+    private Heartbeat heartbeat;
     private Client client;
     private Membership.MembershipList membershipList;
 
@@ -28,13 +32,21 @@ public class MembershipService {
                 .build();
     }
 
-    public void start(Client client) {
+    public void start(Client client, GossipClient gossipClient) {
         this.client = client;
-        //todo: send introduce to introducer and set membershipList to result, start heartbeat service
+        this.heartbeat = new Heartbeat(gossipClient);
+        Membership.Member introduceMember = Membership.Member.newBuilder()
+                .setHost(introducer.split(":")[0])
+                .setPort(Integer.parseInt(introducer.split(":")[1]))
+                .build();
+        Response<Membership.MembershipList> introduceResponse = client.introduce(introduceMember, localMachine);
+        membershipList = introduceResponse.getResponse();
+        heartbeat.start();
     }
 
     public void stop() {
-        //todo: send leave
+        heartbeat.stop();
+        client.leave(localMachine);
     }
 
     public void addMember(Membership.Member member) {

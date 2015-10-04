@@ -6,17 +6,18 @@ import java.util.concurrent.TimeUnit;
 
 public class Heartbeat {
     private final ScheduledExecutorService scheduler;
-    private final HeartbeatRunner runner;
+    private final GossipClient client;
 
-    public Heartbeat() {
+    public Heartbeat(GossipClient gossipClient) {
         scheduler =  Executors.newScheduledThreadPool(1);
-        runner = new HeartbeatRunner();
-        scheduler.scheduleAtFixedRate(runner, 0, 500, TimeUnit.MILLISECONDS);
+        this.client = gossipClient;
     }
 
-    class HeartbeatRunner implements Runnable {
-        public void run() {
+    public void start() {
+        scheduler.scheduleAtFixedRate(client, 0, 500, TimeUnit.MILLISECONDS);
+    }
 
-        }
+    public void stop() {
+        scheduler.shutdown();
     }
 }

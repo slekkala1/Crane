@@ -14,13 +14,15 @@ import java.nio.file.Files;
 public class Console {
     private final Logger logger;
     private final Client client;
+    private final GossipClient gossipClient;
     private final Server server;
     private final GossipServer gossipServer;
     private final MembershipService membershipService;
 
-    public Console(Logger logger, Client client, Server server, GossipServer gossipServer, MembershipService membershipService) {
+    public Console(Logger logger, Client client, GossipClient gossipClient, Server server, GossipServer gossipServer, MembershipService membershipService) {
         this.logger = logger;
         this.client = client;
+        this.gossipClient = gossipClient;
         this.server = server;
         this.gossipServer = gossipServer;
         this.membershipService = membershipService;
@@ -28,12 +30,8 @@ public class Console {
 
     @Command
     public void daemonJoin() {
-        membershipService.start(client);
-//        if (client.ping(new Machine("fa15-cs425-g03-01.cs.illinois.edu", 4444)) == null) {
-//            logger.logLine(DefaultLogger.SEVERE, "Introducer is down, cannot join");
-//        } else {
-//            gossipServer.start();
-//        }
+        membershipService.start(client, gossipClient);
+        gossipServer.start();
     }
 
     @Command

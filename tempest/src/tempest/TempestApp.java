@@ -15,6 +15,7 @@ public class TempestApp implements Runnable {
     private final Server server;
     private final MembershipService membershipService;
     private final GossipServer gossipServer;
+    private final GossipClient gossipClient;
     private final CommandHandler[] commandHandlers;
 
     public TempestApp() throws IOException {
@@ -25,7 +26,8 @@ public class TempestApp implements Runnable {
         Client client = new Client(membershipService, logger, commandHandlers);
         server = new Server(logger, 4444, commandHandlers);
         gossipServer = new GossipServer(logger, 9876);
-        console = new Console(logger, client, server, gossipServer, membershipService);
+        gossipClient = new GossipClient(membershipService, logger);
+        console = new Console(logger, client, gossipClient, server, gossipServer, membershipService);
     }
 
     public void run() {

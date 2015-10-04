@@ -3,6 +3,8 @@ package tempest.services;
 import tempest.MembershipService;
 import tempest.commands.Response;
 import tempest.commands.command.Grep;
+import tempest.commands.command.Introduce;
+import tempest.commands.command.Leave;
 import tempest.commands.command.Ping;
 import tempest.interfaces.*;
 import tempest.networking.TcpClientCommandExecutor;
@@ -36,6 +38,18 @@ public class Client {
         Grep grep = new Grep();
         grep.setRequest(options);
         return executeAllParallel(grep);
+    }
+
+    public Response introduce(Membership.Member member, Membership.Member localMember) {
+        Introduce introduce = new Introduce();
+        introduce.setRequest(localMember);
+        return createExecutor(member, introduce).execute();
+    }
+
+    public Response leave(Membership.Member localMember) {
+        Leave introduce = new Leave();
+        introduce.setRequest(localMember);
+        return executeAllParallel(introduce);
     }
 
     public Response ping(Membership.Member member) {

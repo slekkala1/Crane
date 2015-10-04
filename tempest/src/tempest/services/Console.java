@@ -43,6 +43,16 @@ public class Console {
     }
 
     @Command
+    public void getMembershipList() {
+        //todo: prints memebershipList at any time as in demo instructions
+    }
+
+    @Command
+    public void getSelfId() {
+        //todo: return self ID as in demo instructions
+    }
+
+    @Command
     public void serviceStart() {
         server.start();
     }

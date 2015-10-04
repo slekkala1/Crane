@@ -1,8 +1,8 @@
 package tempest.services;
 
-import tempest.protos.Membership;
 import tempest.Machines;
 import tempest.interfaces.Logger;
+import tempest.protos.Membership;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

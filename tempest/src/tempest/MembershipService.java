@@ -2,6 +2,7 @@ package tempest;
 
 import tempest.protos.Membership;
 import tempest.services.Client;
+import tempest.services.MembershipListUtil;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -37,8 +38,8 @@ public class MembershipService {
         //todo: send leave
     }
 
-    public void addMember(Membership.Member member) {
-        //todo: add member to membershipList
+    public synchronized void addMember(Membership.Member member) {
+        membershipList = MembershipListUtil.addMemberToMembershipList(member,membershipList);
     }
 
     public Membership.MembershipList getMembershipList() {
@@ -64,8 +65,8 @@ public class MembershipService {
         return localMachine;
     }
 
-    public void update() {
-
+    public synchronized void update() {
+        membershipList = MembershipListUtil.updateMembershipList(membershipList);
     }
 
     private int getLocalIndex(Membership.MembershipList snapshot) {

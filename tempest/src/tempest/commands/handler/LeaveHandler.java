@@ -44,7 +44,7 @@ public class LeaveHandler implements CommandHandler<Leave, Membership.Member, St
     }
 
     public String execute(Membership.Member request) {
-        membershipService.removeMember(request);
+        membershipService.memberLeft(request);
         return "Bye";
     }
 }

@@ -69,7 +69,11 @@ public class MembershipService {
     }
 
     public Membership.Member getMember(String host, int port) {
-        //todo: get member via host and port
+        Membership.MembershipList snapshot = membershipList;
+        for (Membership.Member member : snapshot.getMemberList()) {
+            if (member.getHost().equals(host) && member.getPort() == port)
+                return member;
+        }
         return null;
     }
 

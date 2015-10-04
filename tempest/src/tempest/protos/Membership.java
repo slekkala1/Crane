@@ -8,65 +8,61 @@ public final class Membership {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface MemberOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface MemberOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Member)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required string host = 1;
     /**
-     * <code>required string host = 1;</code>
+     * <code>optional string host = 1;</code>
      */
     boolean hasHost();
     /**
-     * <code>required string host = 1;</code>
+     * <code>optional string host = 1;</code>
      */
     java.lang.String getHost();
     /**
-     * <code>required string host = 1;</code>
+     * <code>optional string host = 1;</code>
      */
     com.google.protobuf.ByteString
         getHostBytes();
 
-    // required int32 port = 2;
     /**
-     * <code>required int32 port = 2;</code>
+     * <code>optional int32 port = 2;</code>
      */
     boolean hasPort();
     /**
-     * <code>required int32 port = 2;</code>
+     * <code>optional int32 port = 2;</code>
      */
     int getPort();
 
-    // required uint64 timestamp = 3;
     /**
-     * <code>required uint64 timestamp = 3;</code>
+     * <code>optional uint64 timestamp = 3;</code>
      */
     boolean hasTimestamp();
     /**
-     * <code>required uint64 timestamp = 3;</code>
+     * <code>optional uint64 timestamp = 3;</code>
      */
     long getTimestamp();
 
-    // required uint32 hearbeat = 4;
     /**
-     * <code>required uint32 hearbeat = 4;</code>
+     * <code>optional uint32 hearbeat = 4;</code>
      */
     boolean hasHearbeat();
     /**
-     * <code>required uint32 hearbeat = 4;</code>
+     * <code>optional uint32 hearbeat = 4;</code>
      */
     int getHearbeat();
 
-    // required string nodeStatus = 5;
     /**
-     * <code>required string nodeStatus = 5;</code>
+     * <code>optional string nodeStatus = 5;</code>
      */
     boolean hasNodeStatus();
     /**
-     * <code>required string nodeStatus = 5;</code>
+     * <code>optional string nodeStatus = 5;</code>
      */
     java.lang.String getNodeStatus();
     /**
-     * <code>required string nodeStatus = 5;</code>
+     * <code>optional string nodeStatus = 5;</code>
      */
     com.google.protobuf.ByteString
         getNodeStatusBytes();
@@ -75,8 +71,9 @@ public final class Membership {
    * Protobuf type {@code Member}
    */
   public static final class Member extends
-      com.google.protobuf.GeneratedMessage
-      implements MemberOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Member)
+      MemberOrBuilder {
     // Use Member.newBuilder() to construct.
     private Member(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -123,8 +120,9 @@ public final class Membership {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              host_ = input.readBytes();
+              host_ = bs;
               break;
             }
             case 16: {
@@ -143,8 +141,9 @@ public final class Membership {
               break;
             }
             case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000010;
-              nodeStatus_ = input.readBytes();
+              nodeStatus_ = bs;
               break;
             }
           }
@@ -187,17 +186,16 @@ public final class Membership {
     }
 
     private int bitField0_;
-    // required string host = 1;
     public static final int HOST_FIELD_NUMBER = 1;
     private java.lang.Object host_;
     /**
-     * <code>required string host = 1;</code>
+     * <code>optional string host = 1;</code>
      */
     public boolean hasHost() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required string host = 1;</code>
+     * <code>optional string host = 1;</code>
      */
     public java.lang.String getHost() {
       java.lang.Object ref = host_;
@@ -214,7 +212,7 @@ public final class Membership {
       }
     }
     /**
-     * <code>required string host = 1;</code>
+     * <code>optional string host = 1;</code>
      */
     public com.google.protobuf.ByteString
         getHostBytes() {
@@ -230,65 +228,61 @@ public final class Membership {
       }
     }
 
-    // required int32 port = 2;
     public static final int PORT_FIELD_NUMBER = 2;
     private int port_;
     /**
-     * <code>required int32 port = 2;</code>
+     * <code>optional int32 port = 2;</code>
      */
     public boolean hasPort() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required int32 port = 2;</code>
+     * <code>optional int32 port = 2;</code>
      */
     public int getPort() {
       return port_;
     }
 
-    // required uint64 timestamp = 3;
     public static final int TIMESTAMP_FIELD_NUMBER = 3;
     private long timestamp_;
     /**
-     * <code>required uint64 timestamp = 3;</code>
+     * <code>optional uint64 timestamp = 3;</code>
      */
     public boolean hasTimestamp() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>required uint64 timestamp = 3;</code>
+     * <code>optional uint64 timestamp = 3;</code>
      */
     public long getTimestamp() {
       return timestamp_;
     }
 
-    // required uint32 hearbeat = 4;
     public static final int HEARBEAT_FIELD_NUMBER = 4;
     private int hearbeat_;
     /**
-     * <code>required uint32 hearbeat = 4;</code>
+     * <code>optional uint32 hearbeat = 4;</code>
      */
     public boolean hasHearbeat() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>required uint32 hearbeat = 4;</code>
+     * <code>optional uint32 hearbeat = 4;</code>
      */
     public int getHearbeat() {
       return hearbeat_;
     }
 
-    // required string nodeStatus = 5;
     public static final int NODESTATUS_FIELD_NUMBER = 5;
     private java.lang.Object nodeStatus_;
     /**
-     * <code>required string nodeStatus = 5;</code>
+     * <code>optional string nodeStatus = 5;</code>
      */
     public boolean hasNodeStatus() {
       return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
-     * <code>required string nodeStatus = 5;</code>
+     * <code>optional string nodeStatus = 5;</code>
      */
     public java.lang.String getNodeStatus() {
       java.lang.Object ref = nodeStatus_;
@@ -305,7 +299,7 @@ public final class Membership {
       }
     }
     /**
-     * <code>required string nodeStatus = 5;</code>
+     * <code>optional string nodeStatus = 5;</code>
      */
     public com.google.protobuf.ByteString
         getNodeStatusBytes() {
@@ -331,28 +325,9 @@ public final class Membership {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
-      if (!hasHost()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasPort()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasTimestamp()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasHearbeat()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasNodeStatus()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -486,8 +461,9 @@ public final class Membership {
      * Protobuf type {@code Member}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements tempest.protos.Membership.MemberOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Member)
+        tempest.protos.Membership.MemberOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return tempest.protos.Membership.internal_static_Member_descriptor;
@@ -618,26 +594,6 @@ public final class Membership {
       }
 
       public final boolean isInitialized() {
-        if (!hasHost()) {
-          
-          return false;
-        }
-        if (!hasPort()) {
-          
-          return false;
-        }
-        if (!hasTimestamp()) {
-          
-          return false;
-        }
-        if (!hasHearbeat()) {
-          
-          return false;
-        }
-        if (!hasNodeStatus()) {
-          
-          return false;
-        }
         return true;
       }
 
@@ -660,30 +616,32 @@ public final class Membership {
       }
       private int bitField0_;
 
-      // required string host = 1;
       private java.lang.Object host_ = "";
       /**
-       * <code>required string host = 1;</code>
+       * <code>optional string host = 1;</code>
        */
       public boolean hasHost() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required string host = 1;</code>
+       * <code>optional string host = 1;</code>
        */
       public java.lang.String getHost() {
         java.lang.Object ref = host_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          host_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            host_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>required string host = 1;</code>
+       * <code>optional string host = 1;</code>
        */
       public com.google.protobuf.ByteString
           getHostBytes() {
@@ -699,7 +657,7 @@ public final class Membership {
         }
       }
       /**
-       * <code>required string host = 1;</code>
+       * <code>optional string host = 1;</code>
        */
       public Builder setHost(
           java.lang.String value) {
@@ -712,7 +670,7 @@ public final class Membership {
         return this;
       }
       /**
-       * <code>required string host = 1;</code>
+       * <code>optional string host = 1;</code>
        */
       public Builder clearHost() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -721,7 +679,7 @@ public final class Membership {
         return this;
       }
       /**
-       * <code>required string host = 1;</code>
+       * <code>optional string host = 1;</code>
        */
       public Builder setHostBytes(
           com.google.protobuf.ByteString value) {
@@ -734,22 +692,21 @@ public final class Membership {
         return this;
       }
 
-      // required int32 port = 2;
       private int port_ ;
       /**
-       * <code>required int32 port = 2;</code>
+       * <code>optional int32 port = 2;</code>
        */
       public boolean hasPort() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required int32 port = 2;</code>
+       * <code>optional int32 port = 2;</code>
        */
       public int getPort() {
         return port_;
       }
       /**
-       * <code>required int32 port = 2;</code>
+       * <code>optional int32 port = 2;</code>
        */
       public Builder setPort(int value) {
         bitField0_ |= 0x00000002;
@@ -758,7 +715,7 @@ public final class Membership {
         return this;
       }
       /**
-       * <code>required int32 port = 2;</code>
+       * <code>optional int32 port = 2;</code>
        */
       public Builder clearPort() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -767,22 +724,21 @@ public final class Membership {
         return this;
       }
 
-      // required uint64 timestamp = 3;
       private long timestamp_ ;
       /**
-       * <code>required uint64 timestamp = 3;</code>
+       * <code>optional uint64 timestamp = 3;</code>
        */
       public boolean hasTimestamp() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>required uint64 timestamp = 3;</code>
+       * <code>optional uint64 timestamp = 3;</code>
        */
       public long getTimestamp() {
         return timestamp_;
       }
       /**
-       * <code>required uint64 timestamp = 3;</code>
+       * <code>optional uint64 timestamp = 3;</code>
        */
       public Builder setTimestamp(long value) {
         bitField0_ |= 0x00000004;
@@ -791,7 +747,7 @@ public final class Membership {
         return this;
       }
       /**
-       * <code>required uint64 timestamp = 3;</code>
+       * <code>optional uint64 timestamp = 3;</code>
        */
       public Builder clearTimestamp() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -800,22 +756,21 @@ public final class Membership {
         return this;
       }
 
-      // required uint32 hearbeat = 4;
       private int hearbeat_ ;
       /**
-       * <code>required uint32 hearbeat = 4;</code>
+       * <code>optional uint32 hearbeat = 4;</code>
        */
       public boolean hasHearbeat() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>required uint32 hearbeat = 4;</code>
+       * <code>optional uint32 hearbeat = 4;</code>
        */
       public int getHearbeat() {
         return hearbeat_;
       }
       /**
-       * <code>required uint32 hearbeat = 4;</code>
+       * <code>optional uint32 hearbeat = 4;</code>
        */
       public Builder setHearbeat(int value) {
         bitField0_ |= 0x00000008;
@@ -824,7 +779,7 @@ public final class Membership {
         return this;
       }
       /**
-       * <code>required uint32 hearbeat = 4;</code>
+       * <code>optional uint32 hearbeat = 4;</code>
        */
       public Builder clearHearbeat() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -833,30 +788,32 @@ public final class Membership {
         return this;
       }
 
-      // required string nodeStatus = 5;
       private java.lang.Object nodeStatus_ = "";
       /**
-       * <code>required string nodeStatus = 5;</code>
+       * <code>optional string nodeStatus = 5;</code>
        */
       public boolean hasNodeStatus() {
         return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>required string nodeStatus = 5;</code>
+       * <code>optional string nodeStatus = 5;</code>
        */
       public java.lang.String getNodeStatus() {
         java.lang.Object ref = nodeStatus_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          nodeStatus_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            nodeStatus_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>required string nodeStatus = 5;</code>
+       * <code>optional string nodeStatus = 5;</code>
        */
       public com.google.protobuf.ByteString
           getNodeStatusBytes() {
@@ -872,7 +829,7 @@ public final class Membership {
         }
       }
       /**
-       * <code>required string nodeStatus = 5;</code>
+       * <code>optional string nodeStatus = 5;</code>
        */
       public Builder setNodeStatus(
           java.lang.String value) {
@@ -885,7 +842,7 @@ public final class Membership {
         return this;
       }
       /**
-       * <code>required string nodeStatus = 5;</code>
+       * <code>optional string nodeStatus = 5;</code>
        */
       public Builder clearNodeStatus() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -894,7 +851,7 @@ public final class Membership {
         return this;
       }
       /**
-       * <code>required string nodeStatus = 5;</code>
+       * <code>optional string nodeStatus = 5;</code>
        */
       public Builder setNodeStatusBytes(
           com.google.protobuf.ByteString value) {
@@ -918,10 +875,10 @@ public final class Membership {
     // @@protoc_insertion_point(class_scope:Member)
   }
 
-  public interface MembershipListOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface MembershipListOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:MembershipList)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .Member member = 1;
     /**
      * <code>repeated .Member member = 1;</code>
      */
@@ -950,8 +907,9 @@ public final class Membership {
    * Protobuf type {@code MembershipList}
    */
   public static final class MembershipList extends
-      com.google.protobuf.GeneratedMessage
-      implements MembershipListOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:MembershipList)
+      MembershipListOrBuilder {
     // Use MembershipList.newBuilder() to construct.
     private MembershipList(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1047,7 +1005,6 @@ public final class Membership {
       return PARSER;
     }
 
-    // repeated .Member member = 1;
     public static final int MEMBER_FIELD_NUMBER = 1;
     private java.util.List<tempest.protos.Membership.Member> member_;
     /**
@@ -1089,14 +1046,9 @@ public final class Membership {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
-      for (int i = 0; i < getMemberCount(); i++) {
-        if (!getMember(i).isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -1202,8 +1154,9 @@ public final class Membership {
      * Protobuf type {@code MembershipList}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements tempest.protos.Membership.MembershipListOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:MembershipList)
+        tempest.protos.Membership.MembershipListOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return tempest.protos.Membership.internal_static_MembershipList_descriptor;
@@ -1325,12 +1278,6 @@ public final class Membership {
       }
 
       public final boolean isInitialized() {
-        for (int i = 0; i < getMemberCount(); i++) {
-          if (!getMember(i).isInitialized()) {
-            
-            return false;
-          }
-        }
         return true;
       }
 
@@ -1353,7 +1300,6 @@ public final class Membership {
       }
       private int bitField0_;
 
-      // repeated .Member member = 1;
       private java.util.List<tempest.protos.Membership.Member> member_ =
         java.util.Collections.emptyList();
       private void ensureMemberIsMutable() {
@@ -1495,7 +1441,8 @@ public final class Membership {
           java.lang.Iterable<? extends tempest.protos.Membership.Member> values) {
         if (memberBuilder_ == null) {
           ensureMemberIsMutable();
-          super.addAll(values, member_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, member_);
           onChanged();
         } else {
           memberBuilder_.addAllMessages(values);
@@ -1604,12 +1551,12 @@ public final class Membership {
     // @@protoc_insertion_point(class_scope:MembershipList)
   }
 
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Member_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Member_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_MembershipList_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -1623,36 +1570,36 @@ public final class Membership {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\020Membership.proto\"]\n\006Member\022\014\n\004host\030\001 \002" +
-      "(\t\022\014\n\004port\030\002 \002(\005\022\021\n\ttimestamp\030\003 \002(\004\022\020\n\010h" +
-      "earbeat\030\004 \002(\r\022\022\n\nnodeStatus\030\005 \002(\t\")\n\016Mem" +
+      "\n\020Membership.proto\"]\n\006Member\022\014\n\004host\030\001 \001" +
+      "(\t\022\014\n\004port\030\002 \001(\005\022\021\n\ttimestamp\030\003 \001(\004\022\020\n\010h" +
+      "earbeat\030\004 \001(\r\022\022\n\nnodeStatus\030\005 \001(\t\")\n\016Mem" +
       "bershipList\022\027\n\006member\030\001 \003(\0132\007.MemberB\034\n\016" +
       "tempest.protosB\nMembership"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_Member_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_Member_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Member_descriptor,
-              new java.lang.String[] { "Host", "Port", "Timestamp", "Hearbeat", "NodeStatus", });
-          internal_static_MembershipList_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_MembershipList_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_MembershipList_descriptor,
-              new java.lang.String[] { "Member", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_Member_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_Member_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Member_descriptor,
+        new java.lang.String[] { "Host", "Port", "Timestamp", "Hearbeat", "NodeStatus", });
+    internal_static_MembershipList_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_MembershipList_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_MembershipList_descriptor,
+        new java.lang.String[] { "Member", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

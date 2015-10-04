@@ -3,11 +3,11 @@ option java_package = "tempest.protos";
 option java_outer_classname = "Membership";
 
 message Member {
-    required string host = 1;
-    required int32 port = 2;
-    required uint64 timestamp = 3;
-    required uint32 hearbeat = 4;
-    required string nodeStatus = 5;
+    optional string host = 1;
+    optional int32 port = 2;
+    optional uint64 timestamp = 3;
+    optional uint32 hearbeat = 4;
+    optional string nodeStatus = 5;
 }
 
 message MembershipList {

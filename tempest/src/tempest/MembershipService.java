@@ -54,6 +54,10 @@ public class MembershipService {
         membershipList = MembershipListUtil.addMemberToMembershipList(member,membershipList);
     }
 
+    public synchronized void removeMember(Membership.Member member) {
+        //todo: mark this member as LEAVE
+    }
+
     public Membership.MembershipList getMembershipList() {
         return membershipList;
     }
@@ -75,10 +79,6 @@ public class MembershipService {
                 return member;
         }
         return null;
-    }
-
-    public Membership.Member getLocalMachine() {
-        return localMachine;
     }
 
     public synchronized void update() {

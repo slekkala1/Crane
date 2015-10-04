@@ -1,5 +1,6 @@
 package tempest.commands.handler;
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import tempest.MembershipService;
 import tempest.commands.command.Introduce;
 import tempest.commands.command.Leave;
@@ -30,13 +31,20 @@ public class LeaveHandler implements CommandHandler<Leave, Membership.Member, St
     }
 
     public Leave deserialize(String request, String response) {
-        Leave grep = new Leave();
-        //grep.setResponse(response);
-        return grep;
+        Leave leave = new Leave();
+        try {
+            leave.setRequest(Membership.Member.parseFrom(request.getBytes()));
+            leave.setResponse(response);
+            return leave;
+
+        } catch (InvalidProtocolBufferException e) {
+            logger.logLine(Logger.SEVERE, "Protobuf failed to deserialize Leave");
+        }
+        return null;
     }
 
     public String execute(Membership.Member request) {
-        //membershipService.memberLeft(request);
+        membershipService.removeMember(request);
         return "Bye";
     }
 }

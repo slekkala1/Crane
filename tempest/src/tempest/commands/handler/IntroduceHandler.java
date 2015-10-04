@@ -1,5 +1,6 @@
 package tempest.commands.handler;
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import tempest.MembershipService;
 import tempest.commands.command.Introduce;
 import tempest.interfaces.CommandHandler;
@@ -29,12 +30,20 @@ public class IntroduceHandler implements CommandHandler<Introduce, Membership.Me
     }
 
     public Introduce deserialize(String request, String response) {
-        Introduce grep = new Introduce();
-        //grep.setResponse(response);
-        return grep;
+        Introduce introduce = new Introduce();
+        try {
+            introduce.setRequest(Membership.Member.parseFrom(request.getBytes()));
+            introduce.setResponse(Membership.MembershipList.parseFrom(response.getBytes()));
+            return introduce;
+
+        } catch (InvalidProtocolBufferException e) {
+            logger.logLine(Logger.SEVERE, "Protobuf failed to deserialize Introduce");
+        }
+        return null;
     }
 
     public Membership.MembershipList execute(Membership.Member request) {
+        membershipService.addMember(request);
         return membershipService.getMembershipList();
     }
 }

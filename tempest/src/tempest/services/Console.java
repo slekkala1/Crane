@@ -29,13 +29,13 @@ public class Console {
     }
 
     @Command
-    public void daemonJoin() {
+    public void startMembership() {
         membershipService.start(client, gossipClient);
         gossipServer.start();
     }
 
     @Command
-    public void daemonLeave() {
+    public void stopMembership() {
         membershipService.stop();
         gossipServer.stop();
     }

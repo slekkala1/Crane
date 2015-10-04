@@ -2,6 +2,8 @@ package tempest;
 
 import asg.cliche.ShellFactory;
 import tempest.commands.handler.GrepHandler;
+import tempest.commands.handler.IntroduceHandler;
+import tempest.commands.handler.LeaveHandler;
 import tempest.commands.handler.PingHandler;
 import tempest.interfaces.CommandHandler;
 import tempest.interfaces.Logger;
@@ -22,7 +24,7 @@ public class TempestApp implements Runnable {
         membershipService = new MembershipService();
         String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
         Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
-        commandHandlers = new CommandHandler[] { new PingHandler(), new GrepHandler(logger)};
+        commandHandlers = new CommandHandler[] { new PingHandler(), new GrepHandler(logger), new IntroduceHandler(membershipService, logger), new LeaveHandler(membershipService, logger)};
         Client client = new Client(membershipService, logger, commandHandlers);
         server = new Server(logger, 4444, commandHandlers);
         gossipServer = new GossipServer(logger, 9876);

@@ -24,8 +24,8 @@ public class MembershipListUtil {
     }
 
     public static synchronized Membership.MembershipList mergeMembershipList(Membership.MembershipList receivedMembershipList, Membership.MembershipList membershipList) {
-        Map<String,MemberHealth> map1 =getMap(receivedMembershipList);
-        Map<String,MemberHealth> map2 =getMap(membershipList);
+        Map<String,MemberHealth> map1 = getMap(receivedMembershipList);
+        Map<String,MemberHealth> map2 = getMap(membershipList);
 
         for (Map.Entry<String, MemberHealth> entry : map1.entrySet())
         {

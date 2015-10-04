@@ -13,7 +13,7 @@ public class TempestApp implements Runnable {
     private final Console console;
     private final Server server;
     private final Machines machines;
-    private final Daemon daemon;
+    private final GossipServer daemon;
     private final CommandHandler[] commandHandlers;
 
     public TempestApp() throws IOException {
@@ -24,7 +24,7 @@ public class TempestApp implements Runnable {
         commandHandlers = new CommandHandler[] { new PingHandler(), new GrepHandler(logger)};
         Client client = new Client(machines, logger, commandHandlers);
         server = new Server(logger, 4444, commandHandlers);
-        daemon = new Daemon(logger, 9876);
+        daemon = new GossipServer(logger, 9876);
         console = new Console(logger, client, server);
     }
 

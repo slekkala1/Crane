@@ -19,6 +19,7 @@ public class GossipClient implements Runnable {
     private static ExecutorService pool = Executors.newCachedThreadPool();
     private final Logger logger;
     private Membership.MembershipList membershipList;
+    private boolean isRunning = true;
 
     public GossipClient(Membership.MembershipList membershipList, Machine[] machines, Logger logger, int k) {
         this.membershipList = membershipList;
@@ -28,11 +29,12 @@ public class GossipClient implements Runnable {
     }
 
     public void run() {
-        while (true) {
+        while (isRunning) {
             try {
                 Thread.sleep(500);
+
                 membershipList = MembershipListUtil.updateMembershipList(membershipList);
-                logger.logLine(Logger.INFO, "Updated Membership list " + membershipList.toString());
+                //logger.logLine(Logger.INFO, "Updated Membership list " + membershipList.toString());
 
                 Collection<Callable<Integer>> commandExecutors = new ArrayList<>();
                 for (Machine machine : machines) {
@@ -53,6 +55,11 @@ public class GossipClient implements Runnable {
         }
     }
 
+    public void stop() {
+        isRunning = false;
+    }
+
+
     class ClientCommandExecutor<Integer> implements Callable<java.lang.Integer> {
         private final Machine server;
 
@@ -69,7 +76,7 @@ public class GossipClient implements Runnable {
             String line;
             long localtimeStamp = System.currentTimeMillis();
             try {
-                logger.logLine(Logger.INFO, "Sending membershipList to GossipServer server on machine " + server.getHostName());
+                //logger.logLine(Logger.INFO, "Sending membershipList to GossipServer server on machine " + server.getHostName());
 
                 DatagramSocket aClientSocket = new DatagramSocket();
                 ByteArrayOutputStream aOutput = new ByteArrayOutputStream(1024);
@@ -87,4 +94,5 @@ public class GossipClient implements Runnable {
             }
         }
     }
+
 }

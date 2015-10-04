@@ -15,11 +15,27 @@ public class Console {
     private final Logger logger;
     private final Client client;
     private final Server server;
+    private final GossipServer daemon;
 
-    public Console(Logger logger, Client client, Server server) {
+    public Console(Logger logger, Client client, Server server, GossipServer daemon) {
         this.logger = logger;
         this.client = client;
         this.server = server;
+        this.daemon = daemon;
+    }
+
+    @Command
+    public void daemonJoin() {
+        if (client.ping(new Machine("fa15-cs425-g03-01.cs.illinois.edu", 4444)) == null) {
+            logger.logLine(DefaultLogger.SEVERE, "Introducer is down, cannot join");
+        } else {
+            daemon.start();
+        }
+    }
+
+    @Command
+    public void daemonLeave() {
+        daemon.stop();
     }
 
     @Command
@@ -33,42 +49,42 @@ public class Console {
     }
 
     @Command
-    public void log(@Param(name="level")String level, @Param(name="message")String message) {
+    public void log(@Param(name = "level") String level, @Param(name = "message") String message) {
         logger.logLine(level, message);
     }
 
     @Command
-    public String grepLocal(@Param(name="options")String options) throws InterruptedException, IOException {
+    public String grepLocal(@Param(name = "options") String options) throws InterruptedException, IOException {
         return logger.grep(options);
     }
 
     @Command
-    public String grepAll(@Param(name="options")String options) throws IOException, InterruptedException {
+    public String grepAll(@Param(name = "options") String options) throws IOException, InterruptedException {
         Response<String> response = client.grepAll(options);
         return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 
     @Command
-    public String grepMachine(@Param(name="machine", description="host:port")String machine, @Param(name="options")String options) throws IOException, InterruptedException {
+    public String grepMachine(@Param(name = "machine", description = "host:port") String machine, @Param(name = "options") String options) throws IOException, InterruptedException {
         Response<String> response = client.grep(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
         return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 
     @Command
-    public String grepLocalToFile(@Param(name="file")String file, @Param(name="options")String options) throws InterruptedException, IOException {
+    public String grepLocalToFile(@Param(name = "file") String file, @Param(name = "options") String options) throws InterruptedException, IOException {
         Files.write(FileSystems.getDefault().getPath(file), logger.grep(options).getBytes());
         return "Wrote to " + file;
     }
 
     @Command
-    public String grepAllToFile(@Param(name="file")String file, @Param(name="options")String options) throws IOException, InterruptedException {
+    public String grepAllToFile(@Param(name = "file") String file, @Param(name = "options") String options) throws IOException, InterruptedException {
         Response<String> response = client.grepAll(options);
         Files.write(FileSystems.getDefault().getPath(file), response.getResponse().getBytes());
         return "Wrote to " + file + System.getProperty("line.separator") + formatResponseStatistics(response.getResponseData());
     }
 
     @Command
-    public String grepMachineToFile(@Param(name="file", description="host:port")String file, @Param(name="machine")String machine, @Param(name="options")String options) throws IOException, InterruptedException {
+    public String grepMachineToFile(@Param(name = "file", description = "host:port") String file, @Param(name = "machine") String machine, @Param(name = "options") String options) throws IOException, InterruptedException {
         Response<String> response = client.grep(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])), options);
         Files.write(FileSystems.getDefault().getPath(file), response.getResponse().getBytes());
         return "Wrote to " + file + System.getProperty("line.separator") + formatResponseStatistics(response.getResponseData());
@@ -81,7 +97,7 @@ public class Console {
     }
 
     @Command
-    public String pingMachine(@Param(name="machine", description="host:port")String machine) throws IOException, InterruptedException {
+    public String pingMachine(@Param(name = "machine", description = "host:port") String machine) throws IOException, InterruptedException {
         Response<String> response = client.ping(new Machine(machine.split(":")[0], Integer.parseInt(machine.split(":")[1])));
         return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }

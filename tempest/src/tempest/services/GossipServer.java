@@ -7,6 +7,7 @@ import tempest.interfaces.Logger;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.*;
+import java.util.Arrays;
 
 public class GossipServer {
 
@@ -35,6 +36,7 @@ public class GossipServer {
             e.printStackTrace();
         }
         new Thread(gossipClient).start();
+        gossipClient = null;
     }
 
     public void stop() {
@@ -42,34 +44,41 @@ public class GossipServer {
             return;
         runner.stop();
         runner = null;
+        if (gossipClient == null)
+            return;
+        gossipClient.stop();
+        gossipClient = null;
     }
 
     class ServiceRunner implements Runnable {
         private boolean isRunning = true;
         private DatagramSocket serverSocket;
+        private volatile boolean stopped = false;
 
         public void run() {
             try {
-                DatagramSocket serverSocket = new DatagramSocket(port);
-                logger.logLine(Logger.INFO, "Started GossipServer server on" + InetAddress.getLocalHost().getHostName());
+                serverSocket = new DatagramSocket(port);
+                serverSocket.setSoTimeout(1000);   // set the timeout in millisecounds.
+                logger.logLine(Logger.INFO, "Started Daemon server on" + InetAddress.getLocalHost().getHostName());
+                byte[] receiveData = new byte[1024];
 
                 while (isRunning) {
-                    byte[] receiveData = new byte[1024];
+                    Arrays.fill(receiveData, (byte) 0);
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-                    serverSocket.receive(receivePacket);
-                    ByteArrayInputStream inputStream = new ByteArrayInputStream(receiveData);
-                    if(inputStream!=null) {
-                        Membership.MembershipList receivedMembershipList = Membership.MembershipList.parseDelimitedFrom(inputStream);
-                        logger.logLine(Logger.INFO, "Current Membership list " + membershipList.toString());
-
-                        logger.logLine(Logger.INFO, "Recieved Membership list " + receivedMembershipList.toString());
-
-                        membershipList = MembershipListUtil.mergeMembershipList(receivedMembershipList, membershipList);
-                        logger.logLine(Logger.INFO, "Merged Membership list " + membershipList.toString());
+                    try {
+                        serverSocket.receive(receivePacket);
+                    } catch (SocketTimeoutException e) {
+                        continue;
                     }
+                    ByteArrayInputStream inputStream = new ByteArrayInputStream(receiveData);
+                    Membership.MembershipList receivedMembershipList = Membership.MembershipList.parseDelimitedFrom(inputStream);
+                    //logger.logLine(Logger.INFO, "Current Membership list " + membershipList.toString());
+                    //logger.logLine(Logger.INFO, "Recieved Membership list " + receivedMembershipList.toString());
+
+                    membershipList = MembershipListUtil.mergeMembershipList(receivedMembershipList, membershipList);
+                    //logger.logLine(Logger.INFO, "Merged Membership list " + membershipList.toString());
                 }
-            } catch (SocketException e) {
-                e.printStackTrace();
+                stopped = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -79,9 +88,15 @@ public class GossipServer {
             isRunning = false;
             if (serverSocket == null)
                 return;
+            while (!stopped) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             serverSocket.close();
+            stopped = false;
         }
     }
-
-
 }

@@ -10,10 +10,12 @@ public class PingHandler implements CommandHandler<Ping, Object, String> {
     }
 
     public Command.Message serialize(Ping command) {
+        Command.Ping.Builder pingBuilder = Command.Ping.newBuilder();
+        if (command.getResponse() != null)
+            pingBuilder.setResponse(command.getResponse());
         Command.Message message = Command.Message.newBuilder()
                 .setType(Command.Message.Type.PING)
-                .setPing(Command.Ping.newBuilder()
-                        .setResponse(command.getResponse()).build())
+                .setPing(pingBuilder)
                 .build();
         return message;
     }

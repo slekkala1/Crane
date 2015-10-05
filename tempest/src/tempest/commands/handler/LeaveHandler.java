@@ -18,11 +18,12 @@ public class LeaveHandler implements CommandHandler<Leave, Membership.Member, St
     }
 
     public Command.Message serialize(Leave command) {
+        Command.Leave.Builder leaveBuilder = Command.Leave.newBuilder().setRequest(command.getRequest());
+        if (command.getResponse() != null)
+            leaveBuilder.setResponse(command.getResponse());
         Command.Message message = Command.Message.newBuilder()
                 .setType(Command.Message.Type.LEAVE)
-                .setLeave(Command.Leave.newBuilder()
-                        .setRequest(command.getRequest())
-                        .setResponse(command.getResponse()).build())
+                .setLeave(leaveBuilder)
                 .build();
         return message;
     }

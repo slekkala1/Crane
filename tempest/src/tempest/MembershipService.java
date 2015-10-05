@@ -90,7 +90,7 @@ public class MembershipService {
     public synchronized Membership.MembershipList getMembershipList() {
         Membership.MembershipList.Builder builder = Membership.MembershipList.newBuilder().addMember(localMemberHealth.toMember());
         for (MemberHealth memberHealth : memberHealths) {
-            if (!memberHealth.getHasLeft()) {
+            if (!memberHealth.hasLeft()) {
                 builder.addMember(memberHealth.toMember());
             }
         }
@@ -119,13 +119,18 @@ public class MembershipService {
                 removals.add(memberHealth);
             }
             else if (currentTime - memberHealth.getLastSeen() > 2750) {
-                memberHealth.setHasFailed(true);
-                logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has failed");
+                if (!memberHealth.hasFailed()) {
+                    memberHealth.setHasFailed(true);
+                    logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has failed");
+                }
             }
-            memberHealth.setHasFailed(false);
+            else {
+                memberHealth.setHasFailed(false);
+            }
         }
         for (MemberHealth memberHealth : removals) {
             memberHealths.remove(memberHealth);
+            logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has been removed");
         }
     }
 

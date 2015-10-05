@@ -26,7 +26,7 @@ public class IntroduceHandler implements CommandHandler<Introduce, Membership.Me
             introduceBuilder.setResponse(command.getResponse());
         Command.Message message = Command.Message.newBuilder()
                 .setType(Command.Message.Type.INTRODUCE)
-                .setIntroduce(introduceBuilder.build())
+                .setIntroduce(introduceBuilder)
                 .build();
         return message;
     }

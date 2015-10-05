@@ -39,7 +39,7 @@ public class MemberHealth {
         return lastSeen;
     }
 
-    public boolean getHasLeft() {
+    public boolean hasLeft() {
         return hasLeft;
     }
 
@@ -47,7 +47,7 @@ public class MemberHealth {
         this.hasLeft = hasLeft;
     }
 
-    public boolean isHasFailed() {
+    public boolean hasFailed() {
         return hasFailed;
     }
 

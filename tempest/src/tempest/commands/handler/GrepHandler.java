@@ -18,11 +18,12 @@ public class GrepHandler implements CommandHandler<Grep, String, String> {
     }
 
     public Command.Message serialize(Grep command) {
+        Command.Grep.Builder grepBuilder = Command.Grep.newBuilder().setRequest(command.getRequest());
+        if (command.getResponse() != null)
+            grepBuilder.setResponse(command.getResponse());
         Command.Message message = Command.Message.newBuilder()
                 .setType(Command.Message.Type.GREP)
-                .setGrep(Command.Grep.newBuilder()
-                        .setRequest(command.getRequest())
-                        .setResponse(command.getResponse()))
+                .setGrep(grepBuilder)
                 .build();
         return message;
     }

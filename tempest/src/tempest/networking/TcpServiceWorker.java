@@ -20,27 +20,21 @@ public class TcpServiceWorker implements Runnable {
     }
 
     public void run(){
-        PrintWriter out;
         try{
             tempest.protos.Command.Message message = tempest.protos.Command.Message.parseFrom(client.getInputStream());
-            out = new PrintWriter(client.getOutputStream(), true);
 
             for (CommandHandler commandHandler : commandHandlers) {
                 if (commandHandler.canHandle(message.getType())) {
                     Command command = commandHandler.deserialize(message);
                     command.setResponse(commandHandler.execute(command.getRequest()));
-                    out.append(createHeader(command) + commandHandler.serialize(command));
+                    commandHandler.serialize(command).writeTo(client.getOutputStream());
                 }
             }
-            out.flush();
-            out.close();
+            client.getOutputStream().flush();
+            client.getOutputStream().close();
 
         } catch (IOException e) {
             logger.logLine(DefaultLogger.INFO, "Error handling command" + e);
         }
-    }
-
-    private String createHeader(Command command) {
-        return command.getType() + System.lineSeparator();
     }
 }

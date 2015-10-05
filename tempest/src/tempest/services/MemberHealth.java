@@ -1,15 +1,58 @@
 package tempest.services;
 
+import tempest.protos.Membership;
+
 public class MemberHealth {
-
-    private long timestamp;
+    private final String host;
+    private final int port;
+    private final long timestamp;
+    private long lastSeen;
     private int heartbeat;
-    private NodeStatus nodeStatus;
+    private boolean hasLeft;
+    private boolean hasFailed;
 
-    public MemberHealth(long timestamp, int heartbeat, NodeStatus nodeStatus) {
-        this.heartbeat = heartbeat;
+    public MemberHealth(Membership.Member member) {
+        this(member.getHost(), member.getPort(), member.getTimestamp(), member.getHearbeat());
+    }
+
+    public MemberHealth(String host, int port, long timestamp, int heartbeat) {
+        this.host = host;
+        this.port = port;
         this.timestamp = timestamp;
-        this.nodeStatus = nodeStatus;
+        lastSeen = System.currentTimeMillis();
+        this.heartbeat = heartbeat;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public long getLastSeen() {
+        return lastSeen;
+    }
+
+    public boolean getHasLeft() {
+        return hasLeft;
+    }
+
+    public void setHasLeft(boolean hasLeft) {
+        this.hasLeft = hasLeft;
+    }
+
+    public boolean isHasFailed() {
+        return hasFailed;
+    }
+
+    public void setHasFailed(boolean hasFailed) {
+        this.hasFailed = hasFailed;
     }
 
     public int getHeartbeat() {
@@ -20,20 +63,29 @@ public class MemberHealth {
         this.heartbeat = heartbeat;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public boolean matches(Membership.Member member) {
+        return host.equals(member.getHost())
+                && port == member.getPort()
+                && timestamp == member.getTimestamp();
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void merge(Membership.Member member) {
+        if (heartbeat < member.getHearbeat()) {
+            heartbeat = member.getHearbeat();
+            lastSeen = System.currentTimeMillis();
+        }
     }
 
-
-    public NodeStatus getNodeStatus() {
-        return nodeStatus;
+    public Membership.Member toMember() {
+        return Membership.Member.newBuilder()
+                .setHost(host)
+                .setPort(port)
+                .setTimestamp(timestamp)
+                .setHearbeat(heartbeat)
+                .build();
     }
 
-    public void setNodeStatus(NodeStatus nodeStatus) {
-        this.nodeStatus = nodeStatus;
+    public String getId() {
+        return getHost() + ":" + getPort() + ":" + getTimestamp();
     }
 }

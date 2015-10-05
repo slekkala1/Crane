@@ -9,16 +9,17 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class MembershipService {
     private final Logger logger;
     private final String introducer;
-    private Membership.Member localMember;
+    private MemberHealth localMemberHealth;
     private Heartbeat heartbeat;
     private Client client;
-    private Membership.MembershipList membershipList;
+    private final List<MemberHealth> memberHealths = new ArrayList<>();
 
     public MembershipService(Logger logger) throws UnknownHostException {
         this(logger, readPropertiesFile(), 4444);
@@ -27,10 +28,7 @@ public class MembershipService {
     public MembershipService(Logger logger, String introducer, int localPort) throws UnknownHostException {
         this.logger = logger;
         this.introducer = introducer;
-        localMember = Membership.Member.newBuilder().setHost(Inet4Address.getLocalHost().getHostName())
-                .setPort(localPort)
-                .setTimestamp(new Date().getTime())
-                .build();
+        localMemberHealth = new MemberHealth(Inet4Address.getLocalHost().getHostName(), localPort, System.currentTimeMillis(), 0);
     }
 
     public void start(Client client, GossipClient gossipClient) {
@@ -40,84 +38,92 @@ public class MembershipService {
                 .setHost(introducer.split(":")[0])
                 .setPort(Integer.parseInt(introducer.split(":")[1]))
                 .build();
-        Response<Membership.MembershipList> introduceResponse = client.introduce(introduceMember, localMember);
-        membershipList = introduceResponse.getResponse();
+        Response<Membership.MembershipList> introduceResponse = client.introduce(introduceMember, localMemberHealth.toMember());
+        merge(introduceResponse.getResponse());
         heartbeat.start();
     }
 
     public void stop() {
         heartbeat.stop();
-        client.leave(localMember);
+        client.leave(localMemberHealth.toMember());
     }
 
     public synchronized void addMember(Membership.Member member) {
-        membershipList = membershipList.toBuilder().addMember(member).build();
+        MemberHealth memberHealth = new MemberHealth(member);
+        memberHealths.add(memberHealth);
+        logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has joined");
     }
 
     public synchronized void memberLeft(Membership.Member memberLeft) {
-        int removeIndex = -1;
-        for (int i = 0; i < membershipList.getMemberList().size(); i++) {
-            if (membershipList.getMemberList().get(i).getHost().equals(memberLeft.getHost())) {
-                removeIndex = i;
-                break;
+        for (MemberHealth memberHealth : memberHealths) {
+            if (memberHealth.matches(memberLeft)) {
+                memberHealth.setHasLeft(true);
+                logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has left");
             }
         }
-        if (removeIndex >= 0) {
-            Membership.Member updatedMember = memberLeft.toBuilder().setNodeStatus(NodeStatus.LEAVE.name()).build();
-            membershipList = membershipList.toBuilder().removeMember(removeIndex)
-                                .addMember(updatedMember).build();
+    }
+
+    public synchronized void merge(Membership.MembershipList membershipList) {
+        for (Membership.Member member : membershipList.getMemberList()) {
+            if (localMemberHealth.matches(member)) {
+                continue;
+            }
+            boolean merged = false;
+            for(MemberHealth memberHealth : memberHealths) {
+                if (memberHealth.matches(member)) {
+                    memberHealth.merge(member);
+                    merged = true;
+                    continue;
+                }
+            }
+            if (!merged) {
+                MemberHealth memberHealth = new MemberHealth(member);
+                memberHealths.add(memberHealth);
+                logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has joined");
+            }
         }
     }
 
-    public void merge(Membership.MembershipList otherList) {
-        membershipList = MembershipListUtil.mergeMembershipList(otherList, membershipList);
-    }
-
-    public Membership.MembershipList getMembershipList() {
-        return membershipList;
-    }
-
-    public Membership.Member getRandomMachine() {
-        Membership.MembershipList snapshot = membershipList;
-        int index = (int) (Math.random() * snapshot.getMemberCount());
-        int localIndex = getLocalIndex(snapshot);
-        while (index == localIndex) {
-            index = (int) (Math.random() * snapshot.getMemberCount());
+    public synchronized Membership.MembershipList getMembershipList() {
+        Membership.MembershipList.Builder builder = Membership.MembershipList.newBuilder().addMember(localMemberHealth.toMember());
+        for (MemberHealth memberHealth : memberHealths) {
+            if (!memberHealth.getHasLeft()) {
+                builder.addMember(memberHealth.toMember());
+            }
         }
-        return snapshot.getMember(index);
+        return builder.build();
     }
 
-    public Membership.Member getMember(String host, int port) {
-        Membership.MembershipList snapshot = membershipList;
-        for (Membership.Member member : snapshot.getMemberList()) {
-            if (member.getHost().equals(host) && member.getPort() == port)
-                return member;
+    public synchronized Membership.Member getRandomMachine() {
+        int index = (int) (Math.random() * memberHealths.size());
+        return memberHealths.toArray(new MemberHealth[memberHealths.size()])[index].toMember();
+    }
+
+    public synchronized Membership.Member getMember(String host, int port) {
+        for (MemberHealth memberHealth : memberHealths) {
+            if (memberHealth.getHost().equals(host) && memberHealth.getPort() == port)
+                return memberHealth.toMember();
         }
         return null;
     }
 
     public synchronized void update() {
-        Membership.MembershipList.Builder membershipListBuilder = membershipList.toBuilder();
-        for (Membership.Member.Builder memberBuilder : membershipListBuilder.getMemberBuilderList()) {
-            if (memberBuilder.getHost().equals(localMember.getHost())
-                    && memberBuilder.getPort() == localMember.getPort()
-                    && memberBuilder.getTimestamp() == localMember.getTimestamp()) {
-                memberBuilder.setHearbeat(memberBuilder.getHearbeat() + 1);
+        localMemberHealth.setHeartbeat(localMemberHealth.getHeartbeat() + 1);
+        long currentTime = System.currentTimeMillis();
+        List<MemberHealth> removals = new ArrayList<>();
+        for (MemberHealth memberHealth : memberHealths) {
+            if (currentTime - memberHealth.getLastSeen() > 5750) {
+                removals.add(memberHealth);
             }
+            else if (currentTime - memberHealth.getLastSeen() > 2750) {
+                memberHealth.setHasFailed(true);
+                logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has failed");
+            }
+            memberHealth.setHasFailed(false);
         }
-        membershipList = membershipListBuilder.build();
-    }
-
-    private int getLocalIndex(Membership.MembershipList snapshot) {
-        int i = 0;
-        for (Membership.Member member : snapshot.getMemberList()) {
-            if (member.getHost().equals(localMember.getHost())
-                    && member.getPort() == localMember.getPort()
-                    && member.getTimestamp() == localMember.getTimestamp())
-                return i;
-            ++i;
+        for (MemberHealth memberHealth : removals) {
+            memberHealths.remove(memberHealth);
         }
-        return -1;
     }
 
     private static String readPropertiesFile() {

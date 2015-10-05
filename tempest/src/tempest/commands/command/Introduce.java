@@ -2,7 +2,6 @@ package tempest.commands.command;
 
 import tempest.interfaces.Command;
 import tempest.protos.Membership;
-import tempest.services.MembershipListUtil;
 
 public class Introduce implements Command<Membership.Member, Membership.MembershipList> {
     public static final tempest.protos.Command.Message.Type type = tempest.protos.Command.Message.Type.INTRODUCE;
@@ -30,6 +29,6 @@ public class Introduce implements Command<Membership.Member, Membership.Membersh
     }
 
     public Membership.MembershipList add(Membership.MembershipList response1, Membership.MembershipList response2) {
-        return MembershipListUtil.mergeMembershipList(response1, response2);
+        return null; // not used
     }
 }

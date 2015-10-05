@@ -2,7 +2,6 @@ package tempest.commands.command;
 
 import tempest.interfaces.Command;
 import tempest.protos.Membership;
-import tempest.services.MembershipListUtil;
 
 public class Leave implements Command<Membership.Member, String> {
     public static final tempest.protos.Command.Message.Type type = tempest.protos.Command.Message.Type.LEAVE;

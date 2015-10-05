@@ -1,6 +1,7 @@
 package tempest;
 
 import tempest.commands.Response;
+import tempest.interfaces.Logger;
 import tempest.protos.Membership;
 import tempest.services.*;
 
@@ -12,17 +13,19 @@ import java.util.Date;
 import java.util.Properties;
 
 public class MembershipService {
+    private final Logger logger;
     private final String introducer;
     private final Membership.Member localMachine;
     private Heartbeat heartbeat;
     private Client client;
     private Membership.MembershipList membershipList;
 
-    public MembershipService() throws UnknownHostException {
-        this(readPropertiesFile(), 4444);
+    public MembershipService(Logger logger) throws UnknownHostException {
+        this(logger, readPropertiesFile(), 4444);
     }
 
-    public MembershipService(String introducer, int localPort) throws UnknownHostException {
+    public MembershipService(Logger logger, String introducer, int localPort) throws UnknownHostException {
+        this.logger = logger;
         this.introducer = introducer;
         localMachine = Membership.Member.newBuilder().setHost(Inet4Address.getLocalHost().getHostName())
                 .setPort(localPort)

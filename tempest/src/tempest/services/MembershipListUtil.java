@@ -86,17 +86,4 @@ public class MembershipListUtil {
         }
         return membershipList;
     }
-
-
-//    public static void main(String[] args) {
-//        MembershipListProtos.MembershipList received = getNewMembershipList();
-//        //System.out.println(received);
-//           // MembershipListProtos.MembershipList receivedMembershipList = MembershipListProtos.MembershipList.newBuilder().addMember(MembershipListProtos.MemberId.newBuilder().setIp(InetAddress.getLocalHost().getHostAddress()).setHearbeat(10).setTimestamp(System.currentTimeMillis()).build()).build();
-//            MembershipListProtos.MembershipList receivedMembershipList = MembershipListProtos.MembershipList.newBuilder().addMember(MembershipListProtos.MemberId.newBuilder().setIp("10.0.1.28").setHearbeat(10).setTimestamp(System.currentTimeMillis()).build()).build();
-//            //System.out.println(receivedMembershipList);
-//            System.out.println(mergeMembershipList(receivedMembershipList,received));
-//
-//
-//        // MembershipListProtos. MembershipList membershipList =
-//    }
 }

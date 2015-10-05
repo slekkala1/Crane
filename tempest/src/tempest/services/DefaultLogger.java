@@ -1,6 +1,5 @@
 package tempest.services;
 
-import tempest.MembershipService;
 import tempest.interfaces.Executor;
 import tempest.interfaces.LogWrapper;
 
@@ -15,7 +14,7 @@ public class DefaultLogger implements tempest.interfaces.Logger {
     private final String grepFile;
     private final Executor executor;
 
-    public DefaultLogger(MembershipService membershipService, Executor executor, LogWrapper logWrapper) throws IOException {
+    public DefaultLogger(Executor executor, LogWrapper logWrapper) throws IOException {
         this(executor, logWrapper, "machine." + Inet4Address.getLocalHost().getHostName() + ".log", "machine." + Inet4Address.getLocalHost().getHostName() + ".log");
     }
 

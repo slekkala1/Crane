@@ -10,15 +10,14 @@ import java.net.*;
 import java.util.Arrays;
 
 public class GossipServer {
-
+    private final MembershipService membershipService;
     private final Logger logger;
     private final int port;
     private ServiceRunner runner;
     private GossipClient gossipClient;
 
-    private Membership.MembershipList membershipList = MembershipListUtil.getNewMembershipList();
-
-    public GossipServer(Logger logger, int port) {
+    public GossipServer(MembershipService membershipService, Logger logger, int port) {
+        this.membershipService = membershipService;
         this.logger = logger;
         this.port = port;
     }
@@ -30,11 +29,7 @@ public class GossipServer {
         new Thread(runner).start();
         if (gossipClient !=null)
             return;
-        try {
-            gossipClient = new GossipClient(new MembershipService(), logger);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        gossipClient = new GossipClient(membershipService, logger);
         new Thread(gossipClient).start();
         gossipClient = null;
     }
@@ -74,8 +69,7 @@ public class GossipServer {
                     Membership.MembershipList receivedMembershipList = Membership.MembershipList.parseDelimitedFrom(inputStream);
                     //logger.logLine(Logger.INFO, "Current Membership list " + membershipList.toString());
                     //logger.logLine(Logger.INFO, "Recieved Membership list " + receivedMembershipList.toString());
-
-                    membershipList = MembershipListUtil.mergeMembershipList(receivedMembershipList, membershipList);
+                    membershipService.merge(receivedMembershipList);
                     //logger.logLine(Logger.INFO, "Merged Membership list " + membershipList.toString());
                 }
                 stopped = true;

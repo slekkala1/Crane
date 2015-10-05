@@ -15,7 +15,7 @@ import java.util.Properties;
 public class MembershipService {
     private final Logger logger;
     private final String introducer;
-    private final Membership.Member localMachine;
+    private Membership.Member localMember;
     private Heartbeat heartbeat;
     private Client client;
     private Membership.MembershipList membershipList;
@@ -27,7 +27,7 @@ public class MembershipService {
     public MembershipService(Logger logger, String introducer, int localPort) throws UnknownHostException {
         this.logger = logger;
         this.introducer = introducer;
-        localMachine = Membership.Member.newBuilder().setHost(Inet4Address.getLocalHost().getHostName())
+        localMember = Membership.Member.newBuilder().setHost(Inet4Address.getLocalHost().getHostName())
                 .setPort(localPort)
                 .setTimestamp(new Date().getTime())
                 .build();
@@ -40,18 +40,18 @@ public class MembershipService {
                 .setHost(introducer.split(":")[0])
                 .setPort(Integer.parseInt(introducer.split(":")[1]))
                 .build();
-        Response<Membership.MembershipList> introduceResponse = client.introduce(introduceMember, localMachine);
+        Response<Membership.MembershipList> introduceResponse = client.introduce(introduceMember, localMember);
         membershipList = introduceResponse.getResponse();
         heartbeat.start();
     }
 
     public void stop() {
         heartbeat.stop();
-        client.leave(localMachine);
+        client.leave(localMember);
     }
 
     public synchronized void addMember(Membership.Member member) {
-        membershipList = MembershipListUtil.addMemberToMembershipList(member, membershipList);
+        membershipList = membershipList.toBuilder().addMember(member).build();
     }
 
     public synchronized void memberLeft(Membership.Member memberLeft) {
@@ -67,6 +67,10 @@ public class MembershipService {
             membershipList = membershipList.toBuilder().removeMember(removeIndex)
                                 .addMember(updatedMember).build();
         }
+    }
+
+    public void merge(Membership.MembershipList otherList) {
+        membershipList = MembershipListUtil.mergeMembershipList(otherList, membershipList);
     }
 
     public Membership.MembershipList getMembershipList() {
@@ -93,15 +97,23 @@ public class MembershipService {
     }
 
     public synchronized void update() {
-        membershipList = MembershipListUtil.updateMembershipList(membershipList);
+        Membership.MembershipList.Builder membershipListBuilder = membershipList.toBuilder();
+        for (Membership.Member.Builder memberBuilder : membershipListBuilder.getMemberBuilderList()) {
+            if (memberBuilder.getHost().equals(localMember.getHost())
+                    && memberBuilder.getPort() == localMember.getPort()
+                    && memberBuilder.getTimestamp() == localMember.getTimestamp()) {
+                memberBuilder.setHearbeat(memberBuilder.getHearbeat() + 1);
+            }
+        }
+        membershipList = membershipListBuilder.build();
     }
 
     private int getLocalIndex(Membership.MembershipList snapshot) {
         int i = 0;
         for (Membership.Member member : snapshot.getMemberList()) {
-            if (member.getHost().equals(localMachine.getHost())
-                    && member.getPort() == localMachine.getPort()
-                    && member.getTimestamp() == localMachine.getTimestamp())
+            if (member.getHost().equals(localMember.getHost())
+                    && member.getPort() == localMember.getPort()
+                    && member.getTimestamp() == localMember.getTimestamp())
                 return i;
             ++i;
         }

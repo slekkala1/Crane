@@ -40,14 +40,6 @@ public class MembershipListUtil {
         return toProtobuf(currentMap);
     }
 
-    public static synchronized Membership.MembershipList addMemberToMembershipList(Membership.Member member, Membership.MembershipList membershipList) {
-        Membership.MembershipList.Builder membershipListBuilder = membershipList.toBuilder();
-
-        membershipListBuilder.addMember(member);
-
-        return membershipListBuilder.build();
-    }
-
     private static synchronized Membership.MembershipList toProtobuf(Map<String, MemberHealth> map) {
 
         Membership.MembershipList.Builder membershipListBuilder = Membership.MembershipList.newBuilder();

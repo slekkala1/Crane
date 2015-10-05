@@ -21,13 +21,13 @@ public class TempestApp implements Runnable {
     private final CommandHandler[] commandHandlers;
 
     public TempestApp() throws IOException {
-        membershipService = new MembershipService();
         String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
         Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
+        membershipService = new MembershipService(logger);
         commandHandlers = new CommandHandler[] { new PingHandler(), new GrepHandler(logger), new IntroduceHandler(membershipService, logger), new LeaveHandler(membershipService)};
         Client client = new Client(membershipService, logger, commandHandlers);
         server = new Server(logger, 4444, commandHandlers);
-        gossipServer = new GossipServer(logger, 9876);
+        gossipServer = new GossipServer(membershipService, logger, 9876);
         gossipClient = new GossipClient(membershipService, logger);
         console = new Console(logger, client, gossipClient, server, gossipServer, membershipService);
     }

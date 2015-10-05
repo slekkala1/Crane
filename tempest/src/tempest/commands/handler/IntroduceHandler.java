@@ -21,11 +21,12 @@ public class IntroduceHandler implements CommandHandler<Introduce, Membership.Me
     }
 
     public Command.Message serialize(Introduce command) {
+        Command.Introduce.Builder introduceBuilder = Command.Introduce.newBuilder().setRequest(command.getRequest());
+        if (command.getResponse() != null)
+            introduceBuilder.setResponse(command.getResponse());
         Command.Message message = Command.Message.newBuilder()
                 .setType(Command.Message.Type.INTRODUCE)
-                .setIntroduce(Command.Introduce.newBuilder()
-                        .setRequest(command.getRequest())
-                        .setResponse(command.getResponse()).build())
+                .setIntroduce(introduceBuilder.build())
                 .build();
         return message;
     }

@@ -37,8 +37,8 @@ public class Console {
 
     @Command(abbrev="stme")
     public void stopMembership() {
-        membershipService.stop();
         gossipServer.stop();
+        membershipService.stop();
     }
 
     @Command

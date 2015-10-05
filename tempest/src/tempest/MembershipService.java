@@ -50,7 +50,6 @@ public class MembershipService {
         heartbeat.stop();
         client.leave(localMemberHealth.toMember());
         memberHealths.clear();
-
     }
 
     public synchronized void addMember(Membership.Member member) {

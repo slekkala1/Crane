@@ -30,7 +30,7 @@ public class LeaveHandler implements CommandHandler<Leave, Membership.Member, St
 
     public Leave deserialize(Command.Message message) {
         Leave leave = new Leave();
-        leave.setRequest(message.getIntroduce().getRequest());
+        leave.setRequest(message.getLeave().getRequest());
         if (message.getIntroduce().hasResponse())
             leave.setResponse(message.getLeave().getResponse());
         return leave;

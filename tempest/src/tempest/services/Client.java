@@ -37,7 +37,7 @@ public class Client {
     public Response grepAll(String options) {
         Grep grep = new Grep();
         grep.setRequest(options);
-        return executeAllParallel(grep);
+        return executeAllParallel(grep, true);
     }
 
     public Response introduce(Membership.Member member, Membership.Member localMember) {
@@ -47,9 +47,9 @@ public class Client {
     }
 
     public Response leave(Membership.Member localMember) {
-        Leave introduce = new Leave();
-        introduce.setRequest(localMember);
-        return executeAllParallel(introduce);
+        Leave leave = new Leave();
+        leave.setRequest(localMember);
+        return executeAllParallel(leave, false);
     }
 
     public Response ping(Membership.Member member) {
@@ -57,13 +57,19 @@ public class Client {
     }
 
     public Response pingAll() {
-        return executeAllParallel(new Ping());
+        return executeAllParallel(new Ping(), false);
     }
 
-    private <TRequest, TResponse> Response<TResponse> executeAllParallel(Command<TRequest, TResponse> command) {
+    private <TRequest, TResponse> Response<TResponse> executeAllParallel(Command<TRequest, TResponse> command, boolean includeLocal) {
         Collection<Callable<Response<TResponse>>> commandExecutors = new ArrayList<>();
-        for (Membership.Member machine : membershipService.getMembershipList().getMemberList()) {
-            commandExecutors.add(createExecutor(machine, command));
+        if (includeLocal) {
+            for (Membership.Member machine : membershipService.getMembershipList().getMemberList()) {
+                commandExecutors.add(createExecutor(machine, command));
+            }
+        } else {
+            for (Membership.Member machine : membershipService.getMembershipListNoLocal().getMemberList()) {
+                commandExecutors.add(createExecutor(machine, command));
+            }
         }
         List<Future<Response<TResponse>>> results;
         try {

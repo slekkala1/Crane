@@ -86,11 +86,20 @@ public class MembershipService {
             }
         }
     }
-
     public synchronized Membership.MembershipList getMembershipList() {
         Membership.MembershipList.Builder builder = Membership.MembershipList.newBuilder().addMember(localMemberHealth.toMember());
         for (MemberHealth memberHealth : memberHealths) {
             if (!memberHealth.hasLeft()) {
+                builder.addMember(memberHealth.toMember());
+            }
+        }
+        return builder.build();
+    }
+
+    public synchronized Membership.MembershipList getMembershipListNoLocal() {
+        Membership.MembershipList.Builder builder = Membership.MembershipList.newBuilder();
+        for (MemberHealth memberHealth : memberHealths) {
+            if (!memberHealth.hasLeft() && !memberHealth.hasFailed()) {
                 builder.addMember(memberHealth.toMember());
             }
         }
@@ -119,7 +128,7 @@ public class MembershipService {
                 removals.add(memberHealth);
             }
             else if (currentTime - memberHealth.getLastSeen() > 2750) {
-                if (!memberHealth.hasFailed()) {
+                if (!memberHealth.hasFailed() && !memberHealth.hasLeft()) {
                     memberHealth.setHasFailed(true);
                     logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has failed");
                 }

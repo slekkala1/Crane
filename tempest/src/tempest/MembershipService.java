@@ -129,16 +129,19 @@ public class MembershipService {
         long currentTime = System.currentTimeMillis();
         List<MemberHealth> removals = new ArrayList<>();
         for (MemberHealth memberHealth : memberHealths) {
-            if (currentTime - memberHealth.getLastSeen() > 5200) {
+            if (currentTime - memberHealth.getLastSeen() > 5500) {
                 removals.add(memberHealth);
             }
-            else if (currentTime - memberHealth.getLastSeen() > 2600) {
+            else if (currentTime - memberHealth.getLastSeen() > 2750) {
                 if (!memberHealth.hasFailed() && !memberHealth.hasLeft()) {
                     memberHealth.setHasFailed(true);
                     logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has failed");
                 }
             }
             else {
+                if (memberHealth.hasFailed()) {
+                    logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has rejoined");
+                }
                 memberHealth.setHasFailed(false);
             }
         }

@@ -91,6 +91,7 @@ public class MembershipService {
             }
         }
     }
+
     public synchronized Membership.MembershipList getMembershipList() {
         Membership.MembershipList.Builder builder = Membership.MembershipList.newBuilder().addMember(localMemberHealth.toMember());
         for (MemberHealth memberHealth : memberHealths) {

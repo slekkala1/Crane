@@ -31,8 +31,8 @@ public class Console {
 
     @Command(abbrev="sm")
     public void startMembership() throws UnknownHostException {
-        membershipService.start(client, gossipClient);
         gossipServer.start();
+        membershipService.start(client, gossipClient);
     }
 
     @Command(abbrev="stme")

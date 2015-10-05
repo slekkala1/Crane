@@ -22,7 +22,7 @@ public class LeaveHandler implements CommandHandler<Leave, Membership.Member, St
         if (command.getResponse() != null)
             leaveBuilder.setResponse(command.getResponse());
         Command.Message message = Command.Message.newBuilder()
-                .setType(Command.Message.Type.LEAVE)
+                .setType(Leave.type)
                 .setLeave(leaveBuilder)
                 .build();
         return message;

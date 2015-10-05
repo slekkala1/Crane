@@ -63,7 +63,7 @@ reads the machines from the config.properties file.
 
 **ClientCommand** provides an interface to send a request through the **Client** to a **Server** that a
 corresponding **ServerCommand** can recognise and execute on the server.  Once the **ServerCommand** finishes
-executing it sends a response through the **Server** to the **Client** where the **ClientCommand processes
+executing it sends a response through the **Server** to the **Client** where the **ClientCommand** processes
 the response into a **CommandResponse**. **CommandResponse** is strongly typed, rather than just a string, to
 facilitate easier unit testing and easier processing in the **Console**.
 

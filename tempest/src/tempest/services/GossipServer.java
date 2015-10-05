@@ -14,7 +14,6 @@ public class GossipServer {
     private final Logger logger;
     private final int port;
     private ServiceRunner runner;
-    private GossipClient gossipClient;
 
     public GossipServer(MembershipService membershipService, Logger logger, int port) {
         this.membershipService = membershipService;
@@ -27,11 +26,6 @@ public class GossipServer {
             return;
         runner = new ServiceRunner();
         new Thread(runner).start();
-        if (gossipClient !=null)
-            return;
-        gossipClient = new GossipClient(membershipService, logger);
-        new Thread(gossipClient).start();
-        gossipClient = null;
     }
 
     public void stop() {
@@ -39,10 +33,6 @@ public class GossipServer {
             return;
         runner.stop();
         runner = null;
-        if (gossipClient == null)
-            return;
-        gossipClient.stop();
-        gossipClient = null;
     }
 
     class ServiceRunner implements Runnable {

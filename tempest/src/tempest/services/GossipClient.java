@@ -18,7 +18,6 @@ public class GossipClient implements Runnable {
     private static ExecutorService pool = Executors.newCachedThreadPool();
     private final Logger logger;
     private MembershipService membershipService;
-    private boolean isRunning = true;
 
     public GossipClient(MembershipService membershipService, Logger logger) {
         this.membershipService = membershipService;
@@ -26,33 +25,25 @@ public class GossipClient implements Runnable {
     }
 
     public void run() {
-        while (isRunning) {
-            try {
-                Thread.sleep(500);
-
-                membershipService.update();
-
-                Collection<Callable<Integer>> commandExecutors = new ArrayList<>();
-                commandExecutors.add(new ClientCommandExecutor<Integer>(membershipService.getRandomMachine()));
-                List<Future<Integer>> results;
-                results = pool.invokeAll(commandExecutors);
-                for (Future<Integer> future : results) {
-                    try {
-                        future.get();
-                    } catch (ExecutionException e) {
-                        logger.logLine(Logger.SEVERE, String.valueOf(e));
-                    }
+        if (membershipService.getMembershipList().getMemberCount() < 2)
+            return;
+        try {
+            membershipService.update();
+            Collection<Callable<Integer>> commandExecutors = new ArrayList<>();
+            commandExecutors.add(new ClientCommandExecutor<Integer>(membershipService.getRandomMachine()));
+            List<Future<Integer>> results;
+            results = pool.invokeAll(commandExecutors);
+            for (Future<Integer> future : results) {
+                try {
+                    future.get();
+                } catch (ExecutionException e) {
+                    logger.logLine(Logger.SEVERE, String.valueOf(e));
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
-
-    public void stop() {
-        isRunning = false;
-    }
-
 
     class ClientCommandExecutor<Integer> implements Callable<java.lang.Integer> {
         private final Membership.Member server;

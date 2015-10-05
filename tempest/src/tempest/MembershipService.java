@@ -49,6 +49,9 @@ public class MembershipService {
     }
 
     public synchronized void addMember(Membership.Member member) {
+        if (localMemberHealth.matches(member)) {
+            return;
+        }
         MemberHealth memberHealth = new MemberHealth(member);
         memberHealths.add(memberHealth);
         logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has joined");

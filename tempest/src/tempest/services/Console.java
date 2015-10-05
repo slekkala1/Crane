@@ -42,7 +42,7 @@ public class Console {
 
     @Command
     public void getMembershipList() {
-        //todo: prints memebershipList at any time as in demo instructions
+        logger.logLine(membershipService.getMembershipList().toString(),logger.INFO);
     }
 
     @Command

@@ -2,10 +2,7 @@ package tempest;
 
 import tempest.commands.Response;
 import tempest.protos.Membership;
-import tempest.services.Client;
-import tempest.services.GossipClient;
-import tempest.services.Heartbeat;
-import tempest.services.MembershipListUtil;
+import tempest.services.*;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -51,11 +48,22 @@ public class MembershipService {
     }
 
     public synchronized void addMember(Membership.Member member) {
-        membershipList = MembershipListUtil.addMemberToMembershipList(member,membershipList);
+        membershipList = MembershipListUtil.addMemberToMembershipList(member, membershipList);
     }
 
-    public synchronized void removeMember(Membership.Member member) {
-        //todo: mark this member as LEAVE
+    public synchronized void memberLeft(Membership.Member memberLeft) {
+        int removeIndex = -1;
+        for (int i = 0; i < membershipList.getMemberList().size(); i++) {
+            if (membershipList.getMemberList().get(i).getHost().equals(memberLeft.getHost())) {
+                removeIndex = i;
+                break;
+            }
+        }
+        if (removeIndex >= 0) {
+            Membership.Member updatedMember = memberLeft.toBuilder().setNodeStatus(NodeStatus.LEAVE.name()).build();
+            membershipList = membershipList.toBuilder().removeMember(removeIndex)
+                                .addMember(updatedMember).build();
+        }
     }
 
     public Membership.MembershipList getMembershipList() {
@@ -64,10 +72,10 @@ public class MembershipService {
 
     public Membership.Member getRandomMachine() {
         Membership.MembershipList snapshot = membershipList;
-        int index = (int)(Math.random()* snapshot.getMemberCount());
+        int index = (int) (Math.random() * snapshot.getMemberCount());
         int localIndex = getLocalIndex(snapshot);
         while (index == localIndex) {
-            index = (int)(Math.random()* snapshot.getMemberCount());
+            index = (int) (Math.random() * snapshot.getMemberCount());
         }
         return snapshot.getMember(index);
     }

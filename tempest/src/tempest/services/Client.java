@@ -94,7 +94,7 @@ public class Client {
     private <TRequest, TResponse> ClientCommandExecutor<TResponse> createExecutor(Membership.Member member, Command<TRequest, TResponse> command) {
         CommandHandler commandHandler = null;
         for (CommandHandler ch : commandHandlers) {
-            if (ch.canHandle(command.getCommandId()))
+            if (ch.canHandle(command.getType()))
                 commandHandler = ch;
         }
         if (command instanceof UdpCommand)

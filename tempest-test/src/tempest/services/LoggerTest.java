@@ -10,6 +10,7 @@ import tempest.mocks.MockExecutor;
 import tempest.mocks.MockLogWrapper;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.util.logging.Level;
 
 public class LoggerTest {
@@ -61,13 +62,13 @@ public class LoggerTest {
     @Test
     public void getLogFileSetCorrectlyDefault() throws IOException {
         DefaultLogger logger = new DefaultLogger(new MembershipService(), new MockExecutor(), new MockLogWrapper());
-        assertEquals("machine.1.log", logger.getLogFile());
+        assertEquals("machine." + Inet4Address.getLocalHost().getHostName() + ".log", logger.getLogFile());
     }
 
     @Test
     public void getGrepFileSetCorrectlyDefault() throws IOException {
         DefaultLogger logger = new DefaultLogger(new MembershipService(), new MockExecutor(), new MockLogWrapper());
-        assertEquals("machine.1.log", logger.getGrepFile());
+        assertEquals("machine." + Inet4Address.getLocalHost().getHostName() + ".log", logger.getGrepFile());
     }
 
     @Test
@@ -91,7 +92,7 @@ public class LoggerTest {
         DefaultLogger logger = new DefaultLogger(new MembershipService(), executor, new MockLogWrapper());
         logger.grep("foo");
         assertEquals("grep", executor.command);
-        assertEquals("foo machine.1.log", executor.options);
+        assertEquals("foo machine." + Inet4Address.getLocalHost().getHostName() + ".log", executor.options);
     }
 
     @Test

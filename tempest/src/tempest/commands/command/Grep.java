@@ -3,12 +3,12 @@ package tempest.commands.command;
 import tempest.interfaces.Command;
 
 public class Grep implements Command<String, String> {
-    public static final String id = "grep";
+    public static final tempest.protos.Command.Message.Type type = tempest.protos.Command.Message.Type.GREP;
     private String request;
     private String response;
 
-    public String getCommandId() {
-        return id;
+    public tempest.protos.Command.Message.Type getType() {
+        return type;
     }
 
     public String getRequest() {

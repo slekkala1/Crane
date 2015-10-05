@@ -1,9 +1,8 @@
 package tempest.interfaces;
 
 public interface CommandHandler<TCommand extends Command<TRequest, TResponse>, TRequest, TResponse> {
-    String getCommandId();
-    boolean canHandle(String commandId);
-    String serialize(TCommand command);
-    TCommand deserialize(String request, String response);
+    boolean canHandle(tempest.protos.Command.Message.Type type);
+    tempest.protos.Command.Message serialize(TCommand command);
+    TCommand deserialize(tempest.protos.Command.Message message);
     TResponse execute(TRequest request);
 }

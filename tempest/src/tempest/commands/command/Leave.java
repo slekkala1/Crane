@@ -5,12 +5,12 @@ import tempest.protos.Membership;
 import tempest.services.MembershipListUtil;
 
 public class Leave implements Command<Membership.Member, String> {
-    public static final String id = "leave";
+    public static final tempest.protos.Command.Message.Type type = tempest.protos.Command.Message.Type.LEAVE;
     private Membership.Member request;
     private String response;
 
-    public String getCommandId() {
-        return id;
+    public tempest.protos.Command.Message.Type getType() {
+        return type;
     }
 
     public Membership.Member getRequest() {

@@ -2,23 +2,26 @@ package tempest.commands.handler;
 
 import tempest.commands.command.Ping;
 import tempest.interfaces.CommandHandler;
+import tempest.protos.Command;
 
 public class PingHandler implements CommandHandler<Ping, Object, String> {
-    public String getCommandId() {
-        return Ping.id;
+    public boolean canHandle(Command.Message.Type type) {
+        return type == Ping.type;
     }
 
-    public boolean canHandle(String commandId) {
-        return getCommandId().equals(commandId);
+    public Command.Message serialize(Ping command) {
+        Command.Message message = Command.Message.newBuilder()
+                .setType(Command.Message.Type.PING)
+                .setPing(Command.Ping.newBuilder()
+                        .setResponse(command.getResponse()).build())
+                .build();
+        return message;
     }
 
-    public String serialize(Ping command) {
-        return System.lineSeparator() + command.getResponse();
-    }
-
-    public Ping deserialize(String request, String response) {
+    public Ping deserialize(Command.Message message) {
         Ping ping = new Ping();
-        ping.setResponse(response);
+        if (message.hasPing() && message.getPing().hasResponse())
+        ping.setResponse(message.getPing().getResponse());
         return ping;
     }
 

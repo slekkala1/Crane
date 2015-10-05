@@ -6,6 +6,7 @@ import org.junit.Test;
 import tempest.commands.command.Grep;
 import tempest.commands.command.Ping;
 import tempest.commands.handler.PingHandler;
+import tempest.protos.Command;
 
 public class PingTest {
     @Test
@@ -32,17 +33,20 @@ public class PingTest {
         ping.setRequest(request);
         ping.setResponse(response);
         PingHandler pingHandler = new PingHandler();
-        String serializedPing = pingHandler.serialize(ping);
-        String expectedResult = System.lineSeparator() + "Hello";
-        assertEquals(expectedResult, serializedPing);
+        Command.Message message = pingHandler.serialize(ping);
+        assertEquals(Command.Message.Type.PING, message.getType());
+        assertEquals("Hello", message.getPing().getResponse());
     }
 
     @Test
     public void PingHandlerDeserialize() {
-        String serializedRequest = "ping doesn't do special requests";
-        String serializedResponse = "Hello";
+        Command.Message message = Command.Message.newBuilder()
+                .setType(Command.Message.Type.PING)
+                .setPing(Command.Ping.newBuilder()
+                        .setResponse("Hello"))
+                .build();
         PingHandler pingHandler = new PingHandler();
-        Ping ping = pingHandler.deserialize(serializedRequest, serializedResponse);
+        Ping ping = pingHandler.deserialize(message);
         assertEquals(null, ping.getRequest());
         assertEquals("Hello", ping.getResponse());
     }
@@ -50,8 +54,8 @@ public class PingTest {
     @Test
     public void PingHandlerCanHandle() {
         PingHandler pingHandler = new PingHandler();
-        assertTrue(pingHandler.canHandle(new Ping().getCommandId()));
-        assertFalse(pingHandler.canHandle(new Grep().getCommandId()));
+        assertTrue(pingHandler.canHandle(new Ping().getType()));
+        assertFalse(pingHandler.canHandle(new Grep().getType()));
     }
 
     @Test

@@ -1,15 +1,11 @@
 package tempest.networking;
 
-import tempest.commands.Header;
 import tempest.interfaces.Command;
 import tempest.interfaces.CommandHandler;
 import tempest.interfaces.Logger;
 import tempest.services.DefaultLogger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class TcpServiceWorker implements Runnable {
@@ -24,24 +20,14 @@ public class TcpServiceWorker implements Runnable {
     }
 
     public void run(){
-        String line;
-        BufferedReader in;
         PrintWriter out;
         try{
-            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            tempest.protos.Command.Message message = tempest.protos.Command.Message.parseFrom(client.getInputStream());
             out = new PrintWriter(client.getOutputStream(), true);
 
-            Header header = new Header(in.readLine());
-            String request = in.readLine();
-            StringBuilder builder = new StringBuilder();
-            while ((line = in.readLine()) != null) {
-                builder.append(line);
-            }
-
-            String response = builder.toString();
             for (CommandHandler commandHandler : commandHandlers) {
-                if (commandHandler.canHandle(header.getCommandId())) {
-                    Command command = commandHandler.deserialize(request, response);
+                if (commandHandler.canHandle(message.getType())) {
+                    Command command = commandHandler.deserialize(message);
                     command.setResponse(commandHandler.execute(command.getRequest()));
                     out.append(createHeader(command) + commandHandler.serialize(command));
                 }
@@ -55,6 +41,6 @@ public class TcpServiceWorker implements Runnable {
     }
 
     private String createHeader(Command command) {
-        return command.getCommandId() + System.lineSeparator();
+        return command.getType() + System.lineSeparator();
     }
 }

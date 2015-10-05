@@ -1,46 +1,38 @@
 package tempest.commands.handler;
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import tempest.MembershipService;
-import tempest.commands.command.Introduce;
 import tempest.commands.command.Leave;
 import tempest.interfaces.CommandHandler;
-import tempest.interfaces.Logger;
+import tempest.protos.Command;
 import tempest.protos.Membership;
 
 public class LeaveHandler implements CommandHandler<Leave, Membership.Member, String> {
     private final MembershipService membershipService;
-    private final Logger logger;
 
-    public LeaveHandler(MembershipService membershipService, Logger logger) {
+    public LeaveHandler(MembershipService membershipService) {
         this.membershipService = membershipService;
-        this.logger = logger;
     }
 
-    public String getCommandId() {
-        return Introduce.id;
+    public boolean canHandle(Command.Message.Type type) {
+        return Leave.type == type;
     }
 
-    public boolean canHandle(String commandId) {
-        return getCommandId().equals(commandId);
+    public Command.Message serialize(Leave command) {
+        Command.Message message = Command.Message.newBuilder()
+                .setType(Command.Message.Type.LEAVE)
+                .setLeave(Command.Leave.newBuilder()
+                        .setRequest(command.getRequest())
+                        .setResponse(command.getResponse()).build())
+                .build();
+        return message;
     }
 
-    public String serialize(Leave command) {
-        return command.getRequest() + System.lineSeparator()
-                + command.getResponse();
-    }
-
-    public Leave deserialize(String request, String response) {
+    public Leave deserialize(Command.Message message) {
         Leave leave = new Leave();
-        try {
-            leave.setRequest(Membership.Member.parseFrom(request.getBytes()));
-            leave.setResponse(response);
-            return leave;
-
-        } catch (InvalidProtocolBufferException e) {
-            logger.logLine(Logger.SEVERE, "Protobuf failed to deserialize Leave");
-        }
-        return null;
+        leave.setRequest(message.getIntroduce().getRequest());
+        if (message.getIntroduce().hasResponse())
+            leave.setResponse(message.getLeave().getResponse());
+        return leave;
     }
 
     public String execute(Membership.Member request) {

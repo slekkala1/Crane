@@ -3,6 +3,7 @@ package tempest.commands.handler;
 import tempest.commands.command.Grep;
 import tempest.interfaces.CommandHandler;
 import tempest.interfaces.Logger;
+import tempest.protos.Command;
 
 public class GrepHandler implements CommandHandler<Grep, String, String> {
     private final Logger logger;
@@ -12,22 +13,25 @@ public class GrepHandler implements CommandHandler<Grep, String, String> {
         this.logger = logger;
     }
 
-    public String getCommandId() {
-        return Grep.id;
+    public boolean canHandle(Command.Message.Type type) {
+        return Grep.type == type;
     }
 
-    public boolean canHandle(String commandId) {
-        return getCommandId().equals(commandId);
+    public Command.Message serialize(Grep command) {
+        Command.Message message = Command.Message.newBuilder()
+                .setType(Command.Message.Type.GREP)
+                .setGrep(Command.Grep.newBuilder()
+                        .setRequest(command.getRequest())
+                        .setResponse(command.getResponse()))
+                .build();
+        return message;
     }
 
-    public String serialize(Grep command) {
-        return command.getRequest() + System.lineSeparator() + command.getResponse();
-    }
-
-    public Grep deserialize(String request, String response) {
+    public Grep deserialize(Command.Message message) {
         Grep grep = new Grep();
-        grep.setRequest(request);
-        grep.setResponse(response);
+        grep.setRequest(message.getGrep().getRequest());
+        if (message.getGrep().hasResponse())
+        grep.setResponse(message.getGrep().getResponse());
         return grep;
     }
 

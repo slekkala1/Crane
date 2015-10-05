@@ -5,12 +5,12 @@ import tempest.protos.Membership;
 import tempest.services.MembershipListUtil;
 
 public class Introduce implements Command<Membership.Member, Membership.MembershipList> {
-    public static final String id = "introduce";
+    public static final tempest.protos.Command.Message.Type type = tempest.protos.Command.Message.Type.INTRODUCE;
     private Membership.Member request;
     private Membership.MembershipList response;
 
-    public String getCommandId() {
-        return id;
+    public tempest.protos.Command.Message.Type getType() {
+        return type;
     }
 
     public Membership.Member getRequest() {

@@ -3,14 +3,14 @@ package tempest.networking;
 import tempest.commands.Response;
 import tempest.commands.ResponseData;
 import tempest.interfaces.*;
-import tempest.protos.Membership;
+import tempest.interfaces.Command;
+import tempest.protos.*;
 import tempest.services.DefaultLogger;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Arrays;
 
 public class UdpClientCommandExecutor<TCommand extends Command<TRequest, TResponse>, TRequest, TResponse> implements ClientCommandExecutor<TResponse> {
     private final Membership.Member server;
@@ -36,34 +36,27 @@ public class UdpClientCommandExecutor<TCommand extends Command<TRequest, TRespon
             DatagramSocket socket = new DatagramSocket(0);
             socket.setSoTimeout(500);
 
-            byte[] requestData = (createHeader(command) + commandHandler.serialize(command)).getBytes();
+            byte[] requestData = commandHandler.serialize(command).toByteArray();
             DatagramPacket udpRequest = new DatagramPacket(requestData, requestData.length, InetAddress.getByName(server.getHost()), server.getPort());
             DatagramPacket udpResponse = new DatagramPacket(new byte[1024], 1024);
 
             socket.send(udpRequest);
             socket.receive(udpResponse);
 
-            String[] data = new String(udpResponse.getData(), 0, udpResponse.getLength()).split(System.lineSeparator());
-            String request = data[1];
-            String response = Arrays.toString(Arrays.copyOfRange(data, 2, data.length));
-            Command<TRequest, TResponse> responseCommand = commandHandler.deserialize(request, response);
+            tempest.protos.Command.Message message = tempest.protos.Command.Message.parseFrom(udpResponse.getData());
+            Command<TRequest, TResponse> responseCommand = commandHandler.deserialize(message);
 
-            int lineCount = data.length - 2;
             long stopTime = System.currentTimeMillis();
             long elapsedTime = stopTime - startTime;
 
             Response<TResponse> result = new Response<>();
             result.setResponse(responseCommand.getResponse());
-            result.setResponseData(new ResponseData(lineCount, elapsedTime));
+            result.setResponseData(new ResponseData(elapsedTime));
 
             return result;
         } catch (IOException e) {
             logger.logLine(DefaultLogger.WARNING, "Client failed " + server + e);
             return null;
         }
-    }
-
-    private String createHeader(Command command) {
-        return command.getCommandId() + System.lineSeparator();
     }
 }

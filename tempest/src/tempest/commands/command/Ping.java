@@ -1,14 +1,15 @@
 package tempest.commands.command;
 
 import tempest.interfaces.UdpCommand;
+import tempest.protos.Command;
 
 public class Ping implements UdpCommand<Object, String> {
-    public static final String id = "ping";
+    public static final Command.Message.Type type = Command.Message.Type.PING;
     private Object request;
     private String response;
 
-    public String getCommandId() {
-        return id;
+    public Command.Message.Type getType() {
+        return type;
     }
 
     public Object getRequest() {

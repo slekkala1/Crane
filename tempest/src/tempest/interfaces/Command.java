@@ -1,7 +1,7 @@
 package tempest.interfaces;
 
 public interface Command<TRequest, TResponse> {
-    String getCommandId();
+    tempest.protos.Command.Message.Type getType();
     TRequest getRequest();
     void setRequest(TRequest response);
     TResponse getResponse();

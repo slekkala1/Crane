@@ -1,10 +1,10 @@
 package tempest.commands.handler;
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import tempest.MembershipService;
 import tempest.commands.command.Introduce;
 import tempest.interfaces.CommandHandler;
 import tempest.interfaces.Logger;
+import tempest.protos.Command;
 import tempest.protos.Membership;
 
 public class IntroduceHandler implements CommandHandler<Introduce, Membership.Member, Membership.MembershipList> {
@@ -16,30 +16,26 @@ public class IntroduceHandler implements CommandHandler<Introduce, Membership.Me
         this.logger = logger;
     }
 
-    public String getCommandId() {
-        return Introduce.id;
+    public boolean canHandle(Command.Message.Type type) {
+        return Introduce.type == type;
     }
 
-    public boolean canHandle(String commandId) {
-        return getCommandId().equals(commandId);
+    public Command.Message serialize(Introduce command) {
+        Command.Message message = Command.Message.newBuilder()
+                .setType(Command.Message.Type.INTRODUCE)
+                .setIntroduce(Command.Introduce.newBuilder()
+                        .setRequest(command.getRequest())
+                        .setResponse(command.getResponse()).build())
+                .build();
+        return message;
     }
 
-    public String serialize(Introduce command) {
-        return command.getRequest() + System.lineSeparator()
-                + command.getResponse();
-    }
-
-    public Introduce deserialize(String request, String response) {
+    public Introduce deserialize(Command.Message message) {
         Introduce introduce = new Introduce();
-        try {
-            introduce.setRequest(Membership.Member.parseFrom(request.getBytes()));
-            introduce.setResponse(Membership.MembershipList.parseFrom(response.getBytes()));
-            return introduce;
-
-        } catch (InvalidProtocolBufferException e) {
-            logger.logLine(Logger.SEVERE, "Protobuf failed to deserialize Introduce");
-        }
-        return null;
+        introduce.setRequest(message.getIntroduce().getRequest());
+        if (message.getIntroduce().hasResponse())
+            introduce.setResponse(message.getIntroduce().getResponse());
+        return introduce;
     }
 
     public Membership.MembershipList execute(Membership.Member request) {

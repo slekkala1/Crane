@@ -117,8 +117,6 @@ public class Console {
     private String formatResponseStatistics(ResponseData response) {
         StringBuilder resultBuilder = new StringBuilder("------------------------------");
         resultBuilder.append(System.getProperty("line.separator"));
-        resultBuilder.append("Lines: ").append(response.getLineCount());
-        resultBuilder.append(System.getProperty("line.separator"));
         resultBuilder.append("Latency: ").append(response.getQueryLatency()).append("ms");
         resultBuilder.append(System.getProperty("line.separator"));
         return resultBuilder.toString();

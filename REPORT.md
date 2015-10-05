@@ -7,7 +7,8 @@ Overview
 A tempest is a like a storm but more windy and usually louder.  This is just what TheTribeHasSpoken Inc. needs!
 We think you'll agree once you finish this brief architectural document.
 
-Tempest consists of a socket **Gossip Server** and **Gossip Client** that use UDP sockets to Gossip, **Client** and **Server** for communication, a **Logger** which performs the ability to
+Tempest consists of a socket **Gossip Server** and **Gossip Client** that use UDP sockets to Gossip, **Client** 
+and **Server** for communication, a **Logger** which performs the ability to
 write logs and to grep them, and there is a convenient **Console** built on Cliche(our only third party library
 in the application module). The **TempestApp** is the entry point for the application and ties all of these classes
 together in to a convenient application.
@@ -21,17 +22,30 @@ get the application and test compiled and running using Maven.
 
 
 Gossip protocol
----
-**Introduce** command is executed when a member first starts the membership and the member is added to the membershipList of Introducer.
-Gossiping of membershipList happens through **Gossip Server** and **Gossip Client** once the member joing the membership group.
-**Leave** command is executed when a member stops it's membership, this status is sent to a random machine first and then the Node status propagates
-through to all machines. The member who left will be removed from the membershipList after a Cleanup time, so everyone has received the Gossip by then.
-When a machine crashes, the hearbeats from the crashed machine are not received and the machine's status is marked Fail
-and clean up is done after 2 times cleanup
+---------------
+An **Introduce** command is sent over TCP to the introducer when a member first starts the **MembershipService** and the member is added to the 
+membership list of introducer. The introducer returns it's current membership list to the member and the member starts gossiping.
+Gossiping of the membership list happens through **HeartBeat**, which increments the members heartbeat in the membership list and sends
+the membership list using the **GossipClient** over UDP to a random member of the membership list other than itself every 250ms. 
+A **GossipServer** runs on each member and recieves heartbeats. 
+
+The **Leave** command is executed when a member stops it's membership, **Leave** is sent as over TCP to 
+all known members so that a member can leave the group immedeatly. All members recieving a **Leave** message 
+mark the leaving member as having left.  This prevents the leaving member from being further gossiped about.
+The member who left will be removed from the membership list due to its heartbeat stopping the same as a crashed machine.
+
+When a machine crashes, the hearbeats from the crashed machine are not received and the machine's 
+status is marked as having failed after 2750ms. Once marked as failed on a member the marking member stops gossiping 
+about the failed member. After 5500ms of not receiving heartbeats the member is removed from the membership list.
+
+This ensures that a failure is detected in 3000ms and will be completed across the group in 5750ms. Using Google
+Protocol Buffers a member message in the membership list uses X bytes. With our group size of 7 each member gossips
+7*X*4 b/s and recieves a similar amount. This is near linear growth in traffic as the member count increases
+since the message frequency is constant and the membership list gossiped grows linearly with the number of members.
 
 
 Gossip Client and Gossip Server
------
+-------------------------------
 **Gossip Client** and **Gossip Server** communicate using UDP socktes to send membershipList and receive membershipList from machines.
 Google protobufs are used to serialize/deserialize the sent/recieved DatagramPacket respectively.
 
@@ -40,7 +54,7 @@ the **Gossip Server** in a Synchronized manner. **Gossip Server** and **Gossip C
 and so care is taken to see that membershipList is manipulated in a Synchronized way whereever appropriate.
 
 Protos Package in src/tempest
-----
+-----------------------------
 
 Protos package has the **Membership** java class genereted from Google Protocol buffer **Membership.proto** in protos package that are used in
 serializing/deserializing the membership lists.  

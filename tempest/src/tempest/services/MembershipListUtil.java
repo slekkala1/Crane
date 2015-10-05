@@ -40,11 +40,8 @@ public class MembershipListUtil {
         return toProtobuf(currentMap);
     }
 
-    public static synchronized Membership.MembershipList addMemberToMembershipList(Membership.Member member, Membership.MembershipList membershipList) {
-        Membership.MembershipList.Builder membershipListBuilder = membershipList.toBuilder();
-
+    public static synchronized Membership.MembershipList addMemberToMembershipList(Membership.Member member, Membership.MembershipList.Builder membershipListBuilder) {
         membershipListBuilder.addMember(member);
-
         return membershipListBuilder.build();
     }
 

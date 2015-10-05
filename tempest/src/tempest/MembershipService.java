@@ -51,7 +51,13 @@ public class MembershipService {
     }
 
     public synchronized void addMember(Membership.Member member) {
-        membershipList = MembershipListUtil.addMemberToMembershipList(member, membershipList);
+        Membership.MembershipList.Builder membershipListBuilder;
+        if(membershipList==null) {
+            membershipListBuilder = Membership.MembershipList.newBuilder();
+        } else {
+            membershipListBuilder = membershipList.toBuilder();
+        }
+        membershipList = MembershipListUtil.addMemberToMembershipList(member, membershipListBuilder);
     }
 
     public synchronized void memberLeft(Membership.Member memberLeft) {

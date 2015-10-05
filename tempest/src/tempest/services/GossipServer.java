@@ -31,7 +31,7 @@ public class GossipServer {
         if (gossipClient !=null)
             return;
         try {
-            gossipClient = new GossipClient(new MembershipService(), logger);
+            gossipClient = new GossipClient(new MembershipService(this.logger), logger);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

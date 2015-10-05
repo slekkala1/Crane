@@ -21,9 +21,9 @@ public class TempestApp implements Runnable {
     private final CommandHandler[] commandHandlers;
 
     public TempestApp() throws IOException {
-        membershipService = new MembershipService();
         String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
         Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
+        membershipService = new MembershipService(logger);
         commandHandlers = new CommandHandler[] { new PingHandler(), new GrepHandler(logger), new IntroduceHandler(membershipService, logger), new LeaveHandler(membershipService)};
         Client client = new Client(membershipService, logger, commandHandlers);
         server = new Server(logger, 4444, commandHandlers);

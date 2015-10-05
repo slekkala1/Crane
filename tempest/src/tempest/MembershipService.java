@@ -30,6 +30,7 @@ public class MembershipService {
         localMember = Membership.Member.newBuilder().setHost(Inet4Address.getLocalHost().getHostName())
                 .setPort(localPort)
                 .setTimestamp(new Date().getTime())
+                .setNodeStatus(NodeStatus.ACTIVE.name())
                 .build();
     }
 
@@ -51,7 +52,11 @@ public class MembershipService {
     }
 
     public synchronized void addMember(Membership.Member member) {
-        membershipList = membershipList.toBuilder().addMember(member).build();
+        if(membershipList != null) {
+            membershipList = membershipList.toBuilder().addMember(member).build();
+        } else {
+            membershipList = Membership.MembershipList.newBuilder().addMember(member).build();
+        }
     }
 
     public synchronized void memberLeft(Membership.Member memberLeft) {

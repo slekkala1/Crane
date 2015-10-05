@@ -8,13 +8,13 @@ How to run?
 2) Go to the machine from which you want join the membership and type ‘?list’ at the >Tempest prompt to see the function calls that can be made from Client end
 
 3) Introducer which is VM 'fa15-cs425-g03-01.cs.illinois.edu' needs to be up for members to join the group.
-Type 'sm' or 'start-membership'  at >Tempest to Join the membership/Gossip group and 'stme' or 'stop-membership' to Leave the membership/Gossip group.  
+Type 'sm' or 'start-membership'(and Enter) at >Tempest to Join the membership/Gossip group and 'stme' or 'stop-membership'(and Enter) to Leave the membership/Gossip group.  
 
-4) 'sm' at introducer 'fa15-cs425-g03-01.cs.illinois.edu' so others machines can join and execute 'sm' on all machines at >Tempest command prompt to join the group.
+4) Type 'sm'(and Enter) at introducer 'fa15-cs425-g03-01.cs.illinois.edu' so others machines can join and similarly execute 'sm' on all machines at >Tempest command prompt to join the group.
 
-5) 'stme' on the machine you want to leave.
+5) Type 'stme'(and Enter) on the machine you want to leave.
 
-6) 'gml' or 'get-membership-list' at >Tempest command prompt to get the latest membership list on the machine. 
+6) Type 'gml'(and Enter) or 'get-membership-list' at >Tempest command prompt to get the latest membership list on the machine. 
 
 
 Install

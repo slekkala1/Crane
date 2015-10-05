@@ -54,7 +54,14 @@ If a member joins usage increases to 580B/s
 A member leaving will decrease usage to 384B/s  
 After detection and removal a failure will be the same 384B/s as the member leaving  
 
+A member is marked as failed if an update hasn't been seen for 11 rounds of gossiping.
+So to consider the impact of false positives from 3%, 10%, and 30% for N = 2 and 4.
 
+When N = 2 we don't gossip to ourselves, we always gossip to another node so the probability of 
+a false detection is the same as the probability for failing 11 times to send a message. 
+So at 3%, the probability of a false detection is 0.0000000000000000177147
+  at 10%, 0.00000000001
+  and at 30%, 0.00000177147
 
 Gossip Client and Gossip Server
 -------------------------------

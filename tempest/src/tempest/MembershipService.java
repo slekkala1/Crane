@@ -16,6 +16,7 @@ import java.util.Properties;
 public class MembershipService {
     private final Logger logger;
     private final String introducer;
+    private final int localPort;
     private MemberHealth localMemberHealth;
     private Heartbeat heartbeat;
     private Client client;
@@ -28,16 +29,18 @@ public class MembershipService {
     public MembershipService(Logger logger, String introducer, int localPort) throws UnknownHostException {
         this.logger = logger;
         this.introducer = introducer;
+        this.localPort = localPort;
         localMemberHealth = new MemberHealth(Inet4Address.getLocalHost().getHostName(), localPort, System.currentTimeMillis(), 0);
     }
 
-    public void start(Client client, GossipClient gossipClient) {
+    public void start(Client client, GossipClient gossipClient) throws UnknownHostException {
         this.client = client;
         this.heartbeat = new Heartbeat(gossipClient);
         Membership.Member introduceMember = Membership.Member.newBuilder()
                 .setHost(introducer.split(":")[0])
                 .setPort(Integer.parseInt(introducer.split(":")[1]))
                 .build();
+        localMemberHealth = new MemberHealth(Inet4Address.getLocalHost().getHostName(), localPort, System.currentTimeMillis(), 0);
         Response<Membership.MembershipList> introduceResponse = client.introduce(introduceMember, localMemberHealth.toMember());
         merge(introduceResponse.getResponse());
         heartbeat.start();
@@ -46,6 +49,8 @@ public class MembershipService {
     public void stop() {
         heartbeat.stop();
         client.leave(localMemberHealth.toMember());
+        memberHealths.clear();
+
     }
 
     public synchronized void addMember(Membership.Member member) {

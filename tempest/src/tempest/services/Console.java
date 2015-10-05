@@ -8,6 +8,7 @@ import tempest.commands.ResponseData;
 import tempest.interfaces.Logger;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 
@@ -29,7 +30,7 @@ public class Console {
     }
 
     @Command(abbrev="sm")
-    public void startMembership() {
+    public void startMembership() throws UnknownHostException {
         membershipService.start(client, gossipClient);
         gossipServer.start();
     }

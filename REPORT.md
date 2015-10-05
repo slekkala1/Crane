@@ -46,6 +46,16 @@ constant and the membership list gossiped grows linearly with the number of memb
 rate will need to be increased logarithmicly with the increase in membership size to maintain the same
 false detection rate.
 
+As currently constructed, adding a node will increase network send and recieve traffic by 116B/s. Removing a node will 
+cause a decrease of the same 116B/s.
+
+The background network usage for 4 members is 116B/s * 4nodes = 464B/s  
+If a member joins usage increases to 580B/s  
+A member leaving will decrease usage to 384B/s  
+After detection and removal a failure will be the same 384B/s as the member leaving  
+
+
+
 Gossip Client and Gossip Server
 -------------------------------
 **Gossip Client** and **Gossip Server** communicate using UDP socktes to send membershipList and receive membershipList from machines.

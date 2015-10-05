@@ -42,8 +42,8 @@ public class Console {
     }
 
     @Command
-    public void getMembershipList() {
-        logger.logLine(membershipService.getMembershipList().toString(),logger.INFO);
+    public String getMembershipList() {
+        return membershipService.getMembershipList().toString();
     }
 
     @Command

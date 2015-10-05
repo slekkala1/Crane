@@ -14,7 +14,7 @@ public class Heartbeat {
     }
 
     public void start() {
-        scheduler.scheduleAtFixedRate(client, 0, 250, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(client, 0, 400, TimeUnit.MILLISECONDS);
     }
 
     public void stop() {

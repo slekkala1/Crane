@@ -129,10 +129,10 @@ public class MembershipService {
         long currentTime = System.currentTimeMillis();
         List<MemberHealth> removals = new ArrayList<>();
         for (MemberHealth memberHealth : memberHealths) {
-            if (currentTime - memberHealth.getLastSeen() > 5750) {
+            if (currentTime - memberHealth.getLastSeen() > 5200) {
                 removals.add(memberHealth);
             }
-            else if (currentTime - memberHealth.getLastSeen() > 2750) {
+            else if (currentTime - memberHealth.getLastSeen() > 2600) {
                 if (!memberHealth.hasFailed() && !memberHealth.hasLeft()) {
                     memberHealth.setHasFailed(true);
                     logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has failed");

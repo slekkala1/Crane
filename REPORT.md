@@ -39,10 +39,12 @@ status is marked as having failed after 2750ms. Once marked as failed on a membe
 about the failed member. After 5500ms of not receiving heartbeats the member is removed from the membership list.
 
 This ensures that a failure is detected in 3000ms and will be completed across the group in 5750ms. Using Google
-Protocol Buffers a member message in the membership list uses X bytes. With our group size of 7 each member gossips
-7*X*4 b/s and recieves a similar amount. This is near linear growth in traffic as the member count increases
-since the message frequency is constant and the membership list gossiped grows linearly with the number of members.
-
+Protocol Buffers a member message in the membership list uses 29 bytes. With our group size of 7 each member gossips
+7members*29bytes*4gossips/second = 812B/s, not counting overhead from UDP, and recieves a similar amount. This is 
+near linear growth in traffic as the member count increases since the message frequency is 
+constant and the membership list gossiped grows linearly with the number of members. However, the failure detection
+rate will need to be increased logarithmicly with the increase in membership size to maintain the same
+false detection rate.
 
 Gossip Client and Gossip Server
 -------------------------------
@@ -57,7 +59,9 @@ Protos Package in src/tempest
 -----------------------------
 
 Protos package has the **Membership** java class genereted from Google Protocol buffer **Membership.proto** in protos package that are used in
-serializing/deserializing the membership lists.  
+serializing/deserializing the membership lists.
+
+Additionally, **Command.proto** contains the structures used to generate java classes for all other command's messaging.
 
 
 Client and Server

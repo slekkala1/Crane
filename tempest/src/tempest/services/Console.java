@@ -28,13 +28,13 @@ public class Console {
         this.membershipService = membershipService;
     }
 
-    @Command
+    @Command(abbrev="sm")
     public void startMembership() {
         membershipService.start(client, gossipClient);
         gossipServer.start();
     }
 
-    @Command
+    @Command(abbrev="stme")
     public void stopMembership() {
         membershipService.stop();
         gossipServer.stop();
@@ -50,12 +50,12 @@ public class Console {
         //todo: return self ID as in demo instructions
     }
 
-    @Command
+    @Command(abbrev="ss")
     public void serviceStart() {
         server.start();
     }
 
-    @Command
+    @Command(abbrev="sest")
     public void serviceStop() {
         server.stop();
     }

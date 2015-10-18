@@ -1,9 +1,10 @@
 package tempest.commands.command;
 
-import tempest.interfaces.Command;
+import tempest.commands.interfaces.ResponseCommand;
+import tempest.commands.interfaces.Tcp;
 import tempest.protos.Membership;
 
-public class Introduce implements Command<Membership.Member, Membership.MembershipList> {
+public class Introduce implements ResponseCommand<Membership.Member, Membership.MembershipList>, Tcp {
     public static final tempest.protos.Command.Message.Type type = tempest.protos.Command.Message.Type.INTRODUCE;
     private Membership.Member request;
     private Membership.MembershipList response;

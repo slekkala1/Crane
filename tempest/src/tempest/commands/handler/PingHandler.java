@@ -1,10 +1,10 @@
 package tempest.commands.handler;
 
 import tempest.commands.command.Ping;
-import tempest.interfaces.CommandHandler;
+import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.protos.Command;
 
-public class PingHandler implements CommandHandler<Ping, Object, String> {
+public class PingHandler implements ResponseCommandExecutor<Ping, Object, String> {
     public boolean canHandle(Command.Message.Type type) {
         return type == Ping.type;
     }

@@ -1,8 +1,10 @@
 package tempest.networking;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import tempest.interfaces.Command;
-import tempest.interfaces.CommandHandler;
+import tempest.commands.interfaces.Command;
+import tempest.commands.interfaces.CommandHandler;
+import tempest.commands.interfaces.ResponseCommand;
+import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 
 import java.io.IOException;
@@ -12,10 +14,10 @@ import java.net.DatagramSocket;
 public class UdpServiceWorker implements Runnable {
     private final DatagramPacket packet;
     private final DatagramSocket socket;
-    private final CommandHandler[] commandHandlers;
+    private final ResponseCommandExecutor[] commandHandlers;
     private final Logger logger;
 
-    UdpServiceWorker(DatagramPacket packet, DatagramSocket socket, CommandHandler[] commandHandlers, Logger logger) {
+    UdpServiceWorker(DatagramPacket packet, DatagramSocket socket, ResponseCommandExecutor[] commandHandlers, Logger logger) {
         this.packet = packet;
         this.socket = socket;
         this.commandHandlers = commandHandlers;
@@ -26,9 +28,9 @@ public class UdpServiceWorker implements Runnable {
         tempest.protos.Command.Message message;
         try {
             message = tempest.protos.Command.Message.parseFrom(packet.getData());
-            for (CommandHandler commandHandler : commandHandlers) {
+            for (ResponseCommandExecutor commandHandler : commandHandlers) {
                 if (commandHandler.canHandle(message.getType())) {
-                    Command command = commandHandler.deserialize(message);
+                    ResponseCommand command = (ResponseCommand)commandHandler.deserialize(message);
                     command.setResponse(commandHandler.execute(command.getRequest()));
                     sendResponse(commandHandler.serialize(command));
                 }

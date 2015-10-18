@@ -1,7 +1,7 @@
 package tempest.networking;
 
-import tempest.interfaces.Command;
-import tempest.interfaces.CommandHandler;
+import tempest.commands.interfaces.ResponseCommand;
+import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.services.DefaultLogger;
 
@@ -11,9 +11,9 @@ import java.net.Socket;
 public class TcpServiceWorker implements Runnable {
     private final Socket client;
     private final Logger logger;
-    private final CommandHandler[] commandHandlers;
+    private final ResponseCommandExecutor[] commandHandlers;
 
-    TcpServiceWorker(Socket client, Logger logger, CommandHandler[] commandHandlers) {
+    TcpServiceWorker(Socket client, Logger logger, ResponseCommandExecutor[] commandHandlers) {
         this.client = client;
         this.logger = logger;
         this.commandHandlers = commandHandlers;
@@ -23,9 +23,9 @@ public class TcpServiceWorker implements Runnable {
         try{
             tempest.protos.Command.Message message = tempest.protos.Command.Message.parseFrom(client.getInputStream());
 
-            for (CommandHandler commandHandler : commandHandlers) {
+            for (ResponseCommandExecutor commandHandler : commandHandlers) {
                 if (commandHandler.canHandle(message.getType())) {
-                    Command command = commandHandler.deserialize(message);
+                    ResponseCommand command = (ResponseCommand)commandHandler.deserialize(message);
                     command.setResponse(commandHandler.execute(command.getRequest()));
                     commandHandler.serialize(command).writeTo(client.getOutputStream());
                 }

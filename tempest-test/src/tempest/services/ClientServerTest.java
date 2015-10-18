@@ -1,19 +1,5 @@
 package tempest.services;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import tempest.MembershipService;
-import tempest.commands.Response;
-import tempest.commands.handler.GrepHandler;
-import tempest.commands.handler.PingHandler;
-import tempest.interfaces.CommandHandler;
-import tempest.interfaces.Logger;
-import tempest.mocks.MockLogger;
-
-import java.io.IOException;
-import java.net.Inet4Address;
-
 public class ClientServerTest {
     private final String log1 = "the";
     private final String log2 = "quick";

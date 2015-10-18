@@ -2,12 +2,13 @@ package tempest.commands.handler;
 
 import tempest.MembershipService;
 import tempest.commands.command.Introduce;
-import tempest.interfaces.CommandHandler;
+import tempest.commands.interfaces.CommandHandler;
+import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.protos.Command;
 import tempest.protos.Membership;
 
-public class IntroduceHandler implements CommandHandler<Introduce, Membership.Member, Membership.MembershipList> {
+public class IntroduceHandler implements ResponseCommandExecutor<Introduce, Membership.Member, Membership.MembershipList> {
     private final MembershipService membershipService;
     private final Logger logger;
 

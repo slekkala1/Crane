@@ -1,11 +1,12 @@
 package tempest.commands.handler;
 
 import tempest.commands.command.Grep;
-import tempest.interfaces.CommandHandler;
+import tempest.commands.interfaces.CommandHandler;
+import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.protos.Command;
 
-public class GrepHandler implements CommandHandler<Grep, String, String> {
+public class GrepHandler implements ResponseCommandExecutor<Grep, String, String> {
     private final Logger logger;
 
     public GrepHandler(Logger logger) {

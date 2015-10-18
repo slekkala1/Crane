@@ -1,6 +1,6 @@
 package tempest.networking;
 
-import tempest.interfaces.CommandHandler;
+import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.services.DefaultLogger;
 
@@ -13,9 +13,9 @@ public class UdpServiceRunner implements Runnable {
     private final int port;
     private boolean isRunning = true;
     private DatagramSocket server;
-    private final CommandHandler[] commandHandlers;
+    private final ResponseCommandExecutor[] commandHandlers;
 
-    public UdpServiceRunner(Logger logger, int port, CommandHandler[] commandHandlers) {
+    public UdpServiceRunner(Logger logger, int port, ResponseCommandExecutor[] commandHandlers) {
         this.logger = logger;
         this.port = port;
         this.commandHandlers = commandHandlers;

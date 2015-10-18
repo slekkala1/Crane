@@ -2,8 +2,11 @@ package tempest.networking;
 
 import tempest.commands.Response;
 import tempest.commands.ResponseData;
+import tempest.commands.interfaces.CommandHandler;
+import tempest.commands.interfaces.ResponseCommand;
+import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.*;
-import tempest.interfaces.Command;
+import tempest.commands.interfaces.Command;
 import tempest.protos.*;
 import tempest.services.DefaultLogger;
 
@@ -12,13 +15,13 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-public class UdpClientCommandExecutor<TCommand extends Command<TRequest, TResponse>, TRequest, TResponse> implements ClientCommandExecutor<TResponse> {
+public class UdpClientCommandExecutor<TCommand extends ResponseCommand<TRequest, TResponse>, TRequest, TResponse> implements ClientCommandExecutor<TResponse> {
     private final Membership.Member server;
     private final TCommand command;
-    private final CommandHandler<TCommand, TRequest, TResponse> commandHandler;
+    private final ResponseCommandExecutor<TCommand, TRequest, TResponse> commandHandler;
     private final Logger logger;
 
-    public UdpClientCommandExecutor(Membership.Member server, TCommand command, CommandHandler<TCommand, TRequest, TResponse> commandHandler, Logger logger) {
+    public UdpClientCommandExecutor(Membership.Member server, TCommand command, ResponseCommandExecutor<TCommand, TRequest, TResponse> commandHandler, Logger logger) {
 
         this.server = server;
         this.command = command;
@@ -44,7 +47,7 @@ public class UdpClientCommandExecutor<TCommand extends Command<TRequest, TRespon
             socket.receive(udpResponse);
 
             tempest.protos.Command.Message message = tempest.protos.Command.Message.parseFrom(udpResponse.getData());
-            Command<TRequest, TResponse> responseCommand = commandHandler.deserialize(message);
+            ResponseCommand<TRequest, TResponse> responseCommand = commandHandler.deserialize(message);
 
             long stopTime = System.currentTimeMillis();
             long elapsedTime = stopTime - startTime;

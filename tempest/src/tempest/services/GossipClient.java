@@ -58,11 +58,7 @@ public class GossipClient implements Runnable {
         }
 
         public void execute() {
-            String line;
-            long localtimeStamp = System.currentTimeMillis();
             try {
-                //logger.logLine(Logger.INFO, "Sending membershipList to GossipServer server on machine " + server.getHostName());
-
                 DatagramSocket aClientSocket = new DatagramSocket();
                 ByteArrayOutputStream aOutput = new ByteArrayOutputStream(1024);
 

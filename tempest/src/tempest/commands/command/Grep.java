@@ -1,8 +1,9 @@
 package tempest.commands.command;
 
-import tempest.interfaces.Command;
+import tempest.commands.interfaces.ResponseCommand;
+import tempest.commands.interfaces.Tcp;
 
-public class Grep implements Command<String, String> {
+public class Grep implements ResponseCommand<String, String>, Tcp {
     public static final tempest.protos.Command.Message.Type type = tempest.protos.Command.Message.Type.GREP;
     private String request;
     private String response;

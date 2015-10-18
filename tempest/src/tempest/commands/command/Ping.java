@@ -1,14 +1,14 @@
 package tempest.commands.command;
 
-import tempest.interfaces.UdpCommand;
-import tempest.protos.Command;
+import tempest.commands.interfaces.ResponseCommand;
+import tempest.commands.interfaces.Udp;
 
-public class Ping implements UdpCommand<Object, String> {
-    public static final Command.Message.Type type = Command.Message.Type.PING;
+public class Ping implements ResponseCommand<Object, String>, Udp {
+    public static final tempest.protos.Command.Message.Type type = tempest.protos.Command.Message.Type.PING;
     private Object request;
     private String response;
 
-    public Command.Message.Type getType() {
+    public tempest.protos.Command.Message.Type getType() {
         return type;
     }
 

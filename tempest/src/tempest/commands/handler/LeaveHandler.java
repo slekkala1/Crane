@@ -2,11 +2,12 @@ package tempest.commands.handler;
 
 import tempest.MembershipService;
 import tempest.commands.command.Leave;
-import tempest.interfaces.CommandHandler;
+import tempest.commands.interfaces.CommandHandler;
+import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.protos.Command;
 import tempest.protos.Membership;
 
-public class LeaveHandler implements CommandHandler<Leave, Membership.Member, String> {
+public class LeaveHandler implements ResponseCommandExecutor<Leave, Membership.Member, String> {
     private final MembershipService membershipService;
 
     public LeaveHandler(MembershipService membershipService) {

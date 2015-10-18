@@ -1,6 +1,7 @@
 package tempest.services;
 
-import tempest.interfaces.CommandHandler;
+import tempest.commands.interfaces.CommandHandler;
+import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.networking.TcpServiceRunner;
 import tempest.networking.UdpServiceRunner;
@@ -8,11 +9,11 @@ import tempest.networking.UdpServiceRunner;
 public class Server {
     private final Logger logger;
     private final int port;
-    private final CommandHandler[] commandHandlers;
+    private final ResponseCommandExecutor[] commandHandlers;
     private TcpServiceRunner tcpRunner;
     private UdpServiceRunner udpRunner;
 
-    public Server(Logger logger, int port, CommandHandler[] commandHandlers) {
+    public Server(Logger logger, int port, ResponseCommandExecutor[] commandHandlers) {
         this.logger = logger;
         this.port = port;
         this.commandHandlers = commandHandlers;

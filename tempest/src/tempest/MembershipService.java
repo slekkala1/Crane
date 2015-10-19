@@ -33,9 +33,9 @@ public class MembershipService {
         localMemberHealth = new MemberHealth(Inet4Address.getLocalHost().getHostName(), localPort, System.currentTimeMillis(), 0);
     }
 
-    public void start(Client client, GossipClient gossipClient) throws UnknownHostException {
+    public void start(Client client) throws UnknownHostException {
         this.client = client;
-        this.heartbeat = new Heartbeat(gossipClient);
+        this.heartbeat = new Heartbeat(client, this);
         Membership.Member introduceMember = Membership.Member.newBuilder()
                 .setHost(introducer.split(":")[0])
                 .setPort(Integer.parseInt(introducer.split(":")[1]))

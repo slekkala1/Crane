@@ -15,29 +15,23 @@ import java.nio.file.Files;
 public class Console {
     private final Logger logger;
     private final Client client;
-    private final GossipClient gossipClient;
     private final Server server;
-    private final GossipServer gossipServer;
     private final MembershipService membershipService;
 
-    public Console(Logger logger, Client client, GossipClient gossipClient, Server server, GossipServer gossipServer, MembershipService membershipService) {
+    public Console(Logger logger, Client client, Server server, MembershipService membershipService) {
         this.logger = logger;
         this.client = client;
-        this.gossipClient = gossipClient;
         this.server = server;
-        this.gossipServer = gossipServer;
         this.membershipService = membershipService;
     }
 
     @Command(abbrev="sm")
     public void startMembership() throws UnknownHostException {
-        gossipServer.start();
-        membershipService.start(client, gossipClient);
+        membershipService.start(client);
     }
 
     @Command(abbrev="stme")
     public void stopMembership() {
-        gossipServer.stop();
         membershipService.stop();
     }
 

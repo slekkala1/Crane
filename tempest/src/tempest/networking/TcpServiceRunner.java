@@ -12,12 +12,12 @@ public class TcpServiceRunner implements Runnable {
     private final int port;
     private boolean isRunning = true;
     private ServerSocket server;
-    private final ResponseCommandExecutor[] commandHandlers;
+    private final ResponseCommandExecutor[] responseCommandHandlers;
 
-    public TcpServiceRunner(Logger logger, int port, ResponseCommandExecutor[] commandHandlers) {
+    public TcpServiceRunner(Logger logger, int port, ResponseCommandExecutor[] responseCommandHandlers) {
         this.logger = logger;
         this.port = port;
-        this.commandHandlers = commandHandlers;
+        this.responseCommandHandlers = responseCommandHandlers;
     }
 
     public void run() {
@@ -26,7 +26,7 @@ public class TcpServiceRunner implements Runnable {
 
             while(isRunning){
                 TcpServiceWorker worker;
-                worker = new TcpServiceWorker(server.accept(), logger, commandHandlers);
+                worker = new TcpServiceWorker(server.accept(), logger, responseCommandHandlers);
                 new Thread(worker).start();
             }
         } catch (IOException e) {

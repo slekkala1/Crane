@@ -1,23 +1,31 @@
 package tempest.services;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import tempest.MembershipService;
+import java.util.concurrent.*;
 
-public class Heartbeat {
+public class Heartbeat implements Runnable {
     private final ScheduledExecutorService scheduler;
-    private final GossipClient client;
+    private final Client client;
+    private MembershipService membershipService;
 
-    public Heartbeat(GossipClient gossipClient) {
+    public Heartbeat(Client client, MembershipService membershipService) {
         scheduler =  Executors.newScheduledThreadPool(1);
-        this.client = gossipClient;
+        this.client = client;
+        this.membershipService = membershipService;
     }
 
     public void start() {
-        scheduler.scheduleAtFixedRate(client, 0, 250, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(this, 0, 250, TimeUnit.MILLISECONDS);
     }
 
     public void stop() {
         scheduler.shutdown();
+    }
+
+    public void run() {
+        if (membershipService.getMembershipList().getMemberCount() < 2)
+            return;
+        membershipService.update();
+        client.membership(membershipService.getRandomMachine(), membershipService.getMembershipList());
     }
 }

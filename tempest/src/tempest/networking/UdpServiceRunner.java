@@ -1,5 +1,6 @@
 package tempest.networking;
 
+import tempest.commands.interfaces.CommandExecutor;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.services.DefaultLogger;
@@ -13,12 +14,14 @@ public class UdpServiceRunner implements Runnable {
     private final int port;
     private boolean isRunning = true;
     private DatagramSocket server;
-    private final ResponseCommandExecutor[] commandHandlers;
+    private final CommandExecutor[] commandHandlers;
+    private final ResponseCommandExecutor[] responseCommandHandlers;
 
-    public UdpServiceRunner(Logger logger, int port, ResponseCommandExecutor[] commandHandlers) {
+    public UdpServiceRunner(Logger logger, int port, CommandExecutor[] commandHandlers, ResponseCommandExecutor[] responseCommandHandlers) {
         this.logger = logger;
         this.port = port;
         this.commandHandlers = commandHandlers;
+        this.responseCommandHandlers = responseCommandHandlers;
     }
 
     public void run() {
@@ -30,7 +33,7 @@ public class UdpServiceRunner implements Runnable {
                 byte[] data = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(data, data.length);
                 server.receive(packet);
-                worker = new UdpServiceWorker(packet, server, commandHandlers, logger);
+                worker = new UdpServiceWorker(packet, server, commandHandlers, responseCommandHandlers, logger);
                 new Thread(worker).start();
             }
         } catch (IOException e) {

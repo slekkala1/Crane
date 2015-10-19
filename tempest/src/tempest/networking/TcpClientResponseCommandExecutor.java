@@ -2,18 +2,16 @@ package tempest.networking;
 
 import tempest.commands.Response;
 import tempest.commands.ResponseData;
-import tempest.commands.interfaces.CommandHandler;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.*;
-import tempest.commands.interfaces.Command;
 import tempest.protos.*;
 import tempest.services.DefaultLogger;
 
 import java.io.IOException;
 import java.net.Socket;
 
-public class TcpClientResponseCommandExecutor<TCommand extends ResponseCommand<TRequest, TResponse>, TRequest, TResponse> implements ClientCommandExecutor<TResponse> {
+public class TcpClientResponseCommandExecutor<TCommand extends ResponseCommand<TRequest, TResponse>, TRequest, TResponse> implements ClientResponseCommandExecutor<TResponse> {
     private final Membership.Member server;
     private final TCommand command;
     private final ResponseCommandExecutor<TCommand, TRequest, TResponse> commandHandler;

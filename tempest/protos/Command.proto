@@ -9,6 +9,7 @@ message Message {
         GREP = 2;
         INTRODUCE = 3;
         LEAVE = 4;
+        MEMBERSHIP = 5;
     }
 
     required Type type = 1;
@@ -16,6 +17,7 @@ message Message {
     optional Grep grep = 3;
     optional Introduce introduce = 4;
     optional Leave leave = 5;
+    optional Membership membership = 6;
 }
 
 message Ping {
@@ -35,4 +37,8 @@ message Introduce {
 message Leave {
     required Member request = 1;
     optional string response = 2;
+}
+
+message Membership {
+    required MembershipList request = 1;
 }

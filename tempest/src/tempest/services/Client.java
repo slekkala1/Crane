@@ -8,8 +8,8 @@ import tempest.commands.command.Leave;
 import tempest.commands.command.Ping;
 import tempest.commands.interfaces.*;
 import tempest.interfaces.*;
-import tempest.networking.TcpClientCommandExecutor;
-import tempest.networking.UdpClientCommandExecutor;
+import tempest.networking.TcpClientResponseCommandExecutor;
+import tempest.networking.UdpClientResponseCommandExecutor;
 import tempest.protos.Membership;
 
 import java.util.ArrayList;
@@ -105,7 +105,7 @@ public class Client {
                 commandHandler = ch;
         }
         if (command instanceof Udp)
-            return new UdpClientCommandExecutor<>(member, command, commandHandler, logger);
-        return new TcpClientCommandExecutor<>(member, command, commandHandler, logger);
+            return new UdpClientResponseCommandExecutor<>(member, command, commandHandler, logger);
+        return new TcpClientResponseCommandExecutor<>(member, command, commandHandler, logger);
     }
 }

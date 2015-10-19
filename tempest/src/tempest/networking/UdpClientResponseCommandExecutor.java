@@ -2,11 +2,12 @@ package tempest.networking;
 
 import tempest.commands.Response;
 import tempest.commands.ResponseData;
+import tempest.commands.interfaces.CommandHandler;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
-import tempest.interfaces.ClientCommandExecutor;
-import tempest.interfaces.Logger;
-import tempest.protos.Membership;
+import tempest.interfaces.*;
+import tempest.commands.interfaces.Command;
+import tempest.protos.*;
 import tempest.services.DefaultLogger;
 
 import java.io.IOException;
@@ -14,13 +15,13 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-public class UdpClientCommandExecutor<TCommand extends ResponseCommand<TRequest, TResponse>, TRequest, TResponse> implements ClientCommandExecutor<TResponse> {
+public class UdpClientResponseCommandExecutor<TCommand extends ResponseCommand<TRequest, TResponse>, TRequest, TResponse> implements ClientCommandExecutor<TResponse> {
     private final Membership.Member server;
     private final TCommand command;
     private final ResponseCommandExecutor<TCommand, TRequest, TResponse> commandHandler;
     private final Logger logger;
 
-    public UdpClientCommandExecutor(Membership.Member server, TCommand command, ResponseCommandExecutor<TCommand, TRequest, TResponse> commandHandler, Logger logger) {
+    public UdpClientResponseCommandExecutor(Membership.Member server, TCommand command, ResponseCommandExecutor<TCommand, TRequest, TResponse> commandHandler, Logger logger) {
 
         this.server = server;
         this.command = command;

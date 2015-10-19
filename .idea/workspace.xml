@@ -2,37 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4384d22b-ef8e-41b7-afbd-825b3f25b214" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/Command.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/CommandExecutor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/ResponseCommand.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/ResponseCommandExecutor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/Tcp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/Udp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="DELETED" beforePath="C:\Users\loren\Documents\cs425-mp-g3\tempest\src\tempest\interfaces\Command.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\loren\Documents\cs425-mp-g3\tempest\src\tempest\interfaces\UdpCommand.java" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\loren\Documents\cs425-mp-g3\tempest\src\tempest\interfaces\CommandHandler.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/CommandHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/command/Membership.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/handler/MembershipHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientResponseCommandExecutor.java" />
+      <change type="MOVED" beforePath="C:\Users\loren\Documents\cs425-mp-g3\tempest\src\tempest\networking\TcpClientCommandExecutor.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/networking/TcpClientResponseCommandExecutor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/services/Client.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/services/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest-test/src/tempest/services/ClientServerTest.java" afterPath="$PROJECT_DIR$/tempest-test/src/tempest/services/ClientServerTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/services/GossipClient.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/services/GossipClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/commands/command/Grep.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/command/Grep.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/protos/Command.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/protos/Command.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/protos/Command.proto" afterPath="$PROJECT_DIR$/tempest/protos/Command.proto" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/commands/handler/GrepHandler.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/handler/GrepHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/commands/command/Introduce.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/command/Introduce.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/commands/handler/IntroduceHandler.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/handler/IntroduceHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/commands/command/Leave.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/command/Leave.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/commands/handler/LeaveHandler.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/handler/LeaveHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/commands/command/Ping.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/command/Ping.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/commands/handler/PingHandler.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/commands/handler/PingHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/services/Server.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/services/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/networking/TcpClientCommandExecutor.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/networking/TcpClientCommandExecutor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/networking/TcpServiceRunner.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/networking/TcpServiceRunner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/networking/TcpServiceWorker.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/networking/TcpServiceWorker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/TempestApp.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/TempestApp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/protos/Membership.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/protos/Membership.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientCommandExecutor.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientCommandExecutor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/networking/UdpServiceRunner.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/networking/UdpServiceRunner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tempest/src/tempest/networking/UdpServiceWorker.java" afterPath="$PROJECT_DIR$/tempest/src/tempest/networking/UdpServiceWorker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="cs425-mp-lekkala-morrow.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -55,179 +35,124 @@
     <favorites_list name="cs425-mp-lekkala-morrow" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/Client.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="107" column="60" selection-start-line="107" selection-start-column="60" selection-end-line="107" selection-end-column="60" />
-                  <folding>
-                    <element signature="e#2019#2020#0" expanded="true" />
-                    <element signature="e#2079#2080#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/Server.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="TempestApp.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/TempestApp.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.36097068">
-                  <caret line="32" column="101" selection-start-line="32" selection-start-column="101" selection-end-line="32" selection-end-column="101" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="TcpServiceRunner.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/TcpServiceRunner.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="27" column="23" selection-start-line="27" selection-start-column="23" selection-end-line="28" selection-end-column="24" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="UdpServiceRunner.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/UdpServiceRunner.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="UdpServiceWorker.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/UdpServiceWorker.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="32" column="88" selection-start-line="32" selection-start-column="88" selection-end-line="32" selection-end-column="88" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="PingHandler.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/handler/PingHandler.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="6" column="66" selection-start-line="6" selection-start-column="66" selection-end-line="6" selection-end-column="66" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#1066#1067#0" expanded="true" />
-                    <element signature="e#1096#1097#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="GrepHandler.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/handler/GrepHandler.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="20" column="52" selection-start-line="20" selection-start-column="52" selection-end-line="20" selection-end-column="52" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="IntroduceHandler.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/handler/IntroduceHandler.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="10" column="76" selection-start-line="10" selection-start-column="76" selection-end-line="10" selection-end-column="76" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="LeaveHandler.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/handler/LeaveHandler.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="9" column="37" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="ResponseCommandExecutor.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/ResponseCommandExecutor.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="UdpClientCommandExecutor.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientCommandExecutor.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Tcp.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/Tcp.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="2" column="20" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="20" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Grep.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/command/Grep.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0859454">
-                  <caret line="5" column="65" selection-start-line="5" selection-start-column="65" selection-end-line="5" selection-end-column="65" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="TcpServiceWorker.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/TcpServiceWorker.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="15" column="74" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="74" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/Client.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="107" column="68" selection-start-line="107" selection-start-column="68" selection-end-line="107" selection-end-column="68" />
+              <folding>
+                <element signature="e#2035#2036#0" expanded="true" />
+                <element signature="e#2095#2096#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UdpClientCommandExecutor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientCommandExecutor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="38" column="35" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TcpClientResponseCommandExecutor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/TcpClientResponseCommandExecutor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Command.proto" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tempest/protos/Command.proto">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="17" column="37" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Membership.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/command/Membership.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="113" selection-start-line="7" selection-start-column="113" selection-end-line="7" selection-end-column="113" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MembershipHandler.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/handler/MembershipHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.41382667">
+              <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#545#546#0" expanded="true" />
+                <element signature="e#591#592#0" expanded="true" />
+                <element signature="e#1398#1399#0" expanded="true" />
+                <element signature="e#1446#1447#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Ping.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/command/Ping.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="61" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MembershipService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tempest/src/tempest/MembershipService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="19" column="43" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GossipServer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/GossipServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="61" column="40" selection-start-line="61" selection-start-column="40" selection-end-line="61" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MemberHealth.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/MemberHealth.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+              <folding>
+                <element signature="e#1289#1290#0" expanded="true" />
+                <element signature="e#1321#1322#0" expanded="true" />
+                <element signature="e#1368#1369#0" expanded="true" />
+                <element signature="e#1410#1411#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -259,13 +184,11 @@
         <option value="$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/CommandExecutor.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/networking/TcpClientCommandExecutor.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/ResponseCommandExecutor.java" />
-        <option value="$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientCommandExecutor.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/networking/TcpServiceWorker.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/networking/UdpServiceWorker.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/networking/UdpServiceRunner.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/networking/TcpServiceRunner.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/services/Client.java" />
-        <option value="$PROJECT_DIR$/tempest/src/tempest/commands/handler/GrepHandler.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/commands/handler/PingHandler.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/commands/handler/IntroduceHandler.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/commands/handler/LeaveHandler.java" />
@@ -275,6 +198,12 @@
         <option value="$PROJECT_DIR$/tempest/src/tempest/commands/command/Grep.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/commands/command/Introduce.java" />
         <option value="$PROJECT_DIR$/tempest/src/tempest/commands/command/Leave.java" />
+        <option value="$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientResponseCommandExecutor.java" />
+        <option value="$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientCommandExecutor.java" />
+        <option value="$PROJECT_DIR$/tempest/src/tempest/commands/handler/GrepHandler.java" />
+        <option value="$PROJECT_DIR$/tempest/protos/Command.proto" />
+        <option value="$PROJECT_DIR$/tempest/src/tempest/commands/command/Membership.java" />
+        <option value="$PROJECT_DIR$/tempest/src/tempest/commands/handler/MembershipHandler.java" />
       </list>
     </option>
   </component>
@@ -634,6 +563,24 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cs425-mp-lekkala-morrow" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tempest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="protos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -653,6 +600,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="tempest.commands.handler" />
+      <recent name="tempest.commands.command" />
+      <recent name="tempest.networking" />
       <recent name="tempest.commands.interfaces" />
     </key>
   </component>
@@ -955,12 +905,12 @@
       <created>1445194444532</created>
       <option name="number" value="Default" />
       <updated>1445194444532</updated>
-      <workItem from="1445194445115" duration="10086000" />
+      <workItem from="1445194445115" duration="14845000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10086000" />
+    <option name="totallyTimeSpent" value="14845000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="3456" height="1416" extended-state="6" />
@@ -972,12 +922,12 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.098351" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18586533" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20794393" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1992528" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17834891" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13250883" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.08303887" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294509" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -996,7 +946,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -1008,14 +960,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/GossipServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1041,17 +985,6 @@
         <state vertical-scroll-proportion="0.112458654">
           <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/GossipClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="75" selection-start-line="64" selection-start-column="75" selection-end-line="64" selection-end-column="75" />
-          <folding>
-            <element signature="e#1778#1779#0" expanded="false" />
-            <element signature="e#1822#1823#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1103,26 +1036,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/TcpClientCommandExecutor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="80" selection-start-line="37" selection-start-column="80" selection-end-line="37" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/UdpServiceWorker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="88" selection-start-line="32" selection-start-column="88" selection-end-line="32" selection-end-column="88" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/ResponseCommandExecutor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -1132,7 +1049,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1142,35 +1059,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="27" column="23" selection-start-line="27" selection-start-column="23" selection-end-line="28" selection-end-column="24" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/TcpServiceWorker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="74" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="107" column="60" selection-start-line="107" selection-start-column="60" selection-end-line="107" selection-end-column="60" />
-          <folding>
-            <element signature="e#2019#2020#0" expanded="true" />
-            <element signature="e#2079#2080#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/handler/GrepHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="52" selection-start-line="20" selection-start-column="52" selection-end-line="20" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1210,40 +1100,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientCommandExecutor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/TempestApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36097068">
-          <caret line="32" column="101" selection-start-line="32" selection-start-column="101" selection-end-line="32" selection-end-column="101" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/Tcp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="20" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/command/Ping.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0859454">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/command/Leave.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.103134476">
@@ -1264,12 +1120,190 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/TempestApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="101" selection-start-line="32" selection-start-column="101" selection-end-line="32" selection-end-column="101" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientResponseCommandExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30584708">
+          <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/ResponseCommandExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.050974514">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/interfaces/Tcp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.050974514">
+          <caret line="2" column="20" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/TcpServiceWorker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2293853">
+          <caret line="15" column="74" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/command/Grep.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0859454">
-          <caret line="5" column="65" selection-start-line="5" selection-start-column="65" selection-end-line="5" selection-end-column="65" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="20" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/handler/GrepHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#451#452#0" expanded="true" />
+            <element signature="e#491#492#0" expanded="true" />
+            <element signature="e#1281#1282#0" expanded="true" />
+            <element signature="e#1324#1325#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/Heartbeat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="24" />
+          <folding>
+            <element signature="e#453#454#0" expanded="true" />
+            <element signature="e#537#538#0" expanded="true" />
+            <element signature="e#563#564#0" expanded="true" />
+            <element signature="e#599#600#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/main/resources/config.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="12" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/GossipClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="55" selection-start-line="34" selection-start-column="55" selection-end-line="34" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/GossipServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="40" selection-start-line="61" selection-start-column="40" selection-end-line="61" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/command/Ping.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="61" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="107" column="68" selection-start-line="107" selection-start-column="68" selection-end-line="107" selection-end-column="68" />
+          <folding>
+            <element signature="e#2035#2036#0" expanded="true" />
+            <element signature="e#2095#2096#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/UdpClientCommandExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="35" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/networking/TcpClientResponseCommandExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/MembershipService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="43" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/services/MemberHealth.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+          <folding>
+            <element signature="e#1289#1290#0" expanded="true" />
+            <element signature="e#1321#1322#0" expanded="true" />
+            <element signature="e#1368#1369#0" expanded="true" />
+            <element signature="e#1410#1411#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/protos/Command.proto">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="37" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/command/Membership.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="113" selection-start-line="7" selection-start-column="113" selection-end-line="7" selection-end-column="113" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempest/src/tempest/commands/handler/MembershipHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41382667">
+          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#545#546#0" expanded="true" />
+            <element signature="e#591#592#0" expanded="true" />
+            <element signature="e#1398#1399#0" expanded="true" />
+            <element signature="e#1446#1447#0" expanded="true" />
           </folding>
         </state>
       </provider>

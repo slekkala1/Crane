@@ -13,13 +13,13 @@ import tempest.services.DefaultLogger;
 import java.io.IOException;
 import java.net.Socket;
 
-public class TcpClientCommandExecutor<TCommand extends ResponseCommand<TRequest, TResponse>, TRequest, TResponse> implements ClientCommandExecutor<TResponse> {
+public class TcpClientResponseCommandExecutor<TCommand extends ResponseCommand<TRequest, TResponse>, TRequest, TResponse> implements ClientCommandExecutor<TResponse> {
     private final Membership.Member server;
     private final TCommand command;
     private final ResponseCommandExecutor<TCommand, TRequest, TResponse> commandHandler;
     private final Logger logger;
 
-    public TcpClientCommandExecutor(Membership.Member server, TCommand command, ResponseCommandExecutor<TCommand, TRequest, TResponse> commandHandler, Logger logger) {
+    public TcpClientResponseCommandExecutor(Membership.Member server, TCommand command, ResponseCommandExecutor<TCommand, TRequest, TResponse> commandHandler, Logger logger) {
         this.server = server;
         this.command = command;
         this.commandHandler = commandHandler;

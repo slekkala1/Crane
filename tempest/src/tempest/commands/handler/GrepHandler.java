@@ -1,7 +1,6 @@
 package tempest.commands.handler;
 
 import tempest.commands.command.Grep;
-import tempest.commands.interfaces.CommandHandler;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.protos.Command;

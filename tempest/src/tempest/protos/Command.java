@@ -76,6 +76,20 @@ public final class Command {
      * <code>optional .Leave leave = 5;</code>
      */
     tempest.protos.Command.LeaveOrBuilder getLeaveOrBuilder();
+
+    // optional .Membership membership = 6;
+    /**
+     * <code>optional .Membership membership = 6;</code>
+     */
+    boolean hasMembership();
+    /**
+     * <code>optional .Membership membership = 6;</code>
+     */
+    tempest.protos.Command.Membership getMembership();
+    /**
+     * <code>optional .Membership membership = 6;</code>
+     */
+    tempest.protos.Command.MembershipOrBuilder getMembershipOrBuilder();
   }
   /**
    * Protobuf type {@code Message}
@@ -191,6 +205,19 @@ public final class Command {
               bitField0_ |= 0x00000010;
               break;
             }
+            case 50: {
+              tempest.protos.Command.Membership.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000020) == 0x00000020)) {
+                subBuilder = membership_.toBuilder();
+              }
+              membership_ = input.readMessage(tempest.protos.Command.Membership.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(membership_);
+                membership_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000020;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -251,6 +278,10 @@ public final class Command {
        * <code>LEAVE = 4;</code>
        */
       LEAVE(3, 4),
+      /**
+       * <code>MEMBERSHIP = 5;</code>
+       */
+      MEMBERSHIP(4, 5),
       ;
 
       /**
@@ -269,6 +300,10 @@ public final class Command {
        * <code>LEAVE = 4;</code>
        */
       public static final int LEAVE_VALUE = 4;
+      /**
+       * <code>MEMBERSHIP = 5;</code>
+       */
+      public static final int MEMBERSHIP_VALUE = 5;
 
 
       public final int getNumber() { return value; }
@@ -279,6 +314,7 @@ public final class Command {
           case 2: return GREP;
           case 3: return INTRODUCE;
           case 4: return LEAVE;
+          case 5: return MEMBERSHIP;
           default: return null;
         }
       }
@@ -435,12 +471,35 @@ public final class Command {
       return leave_;
     }
 
+    // optional .Membership membership = 6;
+    public static final int MEMBERSHIP_FIELD_NUMBER = 6;
+    private tempest.protos.Command.Membership membership_;
+    /**
+     * <code>optional .Membership membership = 6;</code>
+     */
+    public boolean hasMembership() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <code>optional .Membership membership = 6;</code>
+     */
+    public tempest.protos.Command.Membership getMembership() {
+      return membership_;
+    }
+    /**
+     * <code>optional .Membership membership = 6;</code>
+     */
+    public tempest.protos.Command.MembershipOrBuilder getMembershipOrBuilder() {
+      return membership_;
+    }
+
     private void initFields() {
       type_ = tempest.protos.Command.Message.Type.PING;
       ping_ = tempest.protos.Command.Ping.getDefaultInstance();
       grep_ = tempest.protos.Command.Grep.getDefaultInstance();
       introduce_ = tempest.protos.Command.Introduce.getDefaultInstance();
       leave_ = tempest.protos.Command.Leave.getDefaultInstance();
+      membership_ = tempest.protos.Command.Membership.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -459,6 +518,12 @@ public final class Command {
       }
       if (hasLeave()) {
         if (!getLeave().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      if (hasMembership()) {
+        if (!getMembership().isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -484,6 +549,9 @@ public final class Command {
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeMessage(5, leave_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeMessage(6, membership_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -513,6 +581,10 @@ public final class Command {
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(5, leave_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, membership_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -626,6 +698,7 @@ public final class Command {
           getGrepFieldBuilder();
           getIntroduceFieldBuilder();
           getLeaveFieldBuilder();
+          getMembershipFieldBuilder();
         }
       }
       private static Builder create() {
@@ -660,6 +733,12 @@ public final class Command {
           leaveBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000010);
+        if (membershipBuilder_ == null) {
+          membership_ = tempest.protos.Command.Membership.getDefaultInstance();
+        } else {
+          membershipBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -724,6 +803,14 @@ public final class Command {
         } else {
           result.leave_ = leaveBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        if (membershipBuilder_ == null) {
+          result.membership_ = membership_;
+        } else {
+          result.membership_ = membershipBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -755,6 +842,9 @@ public final class Command {
         if (other.hasLeave()) {
           mergeLeave(other.getLeave());
         }
+        if (other.hasMembership()) {
+          mergeMembership(other.getMembership());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -772,6 +862,12 @@ public final class Command {
         }
         if (hasLeave()) {
           if (!getLeave().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasMembership()) {
+          if (!getMembership().isInitialized()) {
             
             return false;
           }
@@ -1300,6 +1396,123 @@ public final class Command {
           leave_ = null;
         }
         return leaveBuilder_;
+      }
+
+      // optional .Membership membership = 6;
+      private tempest.protos.Command.Membership membership_ = tempest.protos.Command.Membership.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Membership, tempest.protos.Command.Membership.Builder, tempest.protos.Command.MembershipOrBuilder> membershipBuilder_;
+      /**
+       * <code>optional .Membership membership = 6;</code>
+       */
+      public boolean hasMembership() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>optional .Membership membership = 6;</code>
+       */
+      public tempest.protos.Command.Membership getMembership() {
+        if (membershipBuilder_ == null) {
+          return membership_;
+        } else {
+          return membershipBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .Membership membership = 6;</code>
+       */
+      public Builder setMembership(tempest.protos.Command.Membership value) {
+        if (membershipBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          membership_ = value;
+          onChanged();
+        } else {
+          membershipBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      /**
+       * <code>optional .Membership membership = 6;</code>
+       */
+      public Builder setMembership(
+          tempest.protos.Command.Membership.Builder builderForValue) {
+        if (membershipBuilder_ == null) {
+          membership_ = builderForValue.build();
+          onChanged();
+        } else {
+          membershipBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      /**
+       * <code>optional .Membership membership = 6;</code>
+       */
+      public Builder mergeMembership(tempest.protos.Command.Membership value) {
+        if (membershipBuilder_ == null) {
+          if (((bitField0_ & 0x00000020) == 0x00000020) &&
+              membership_ != tempest.protos.Command.Membership.getDefaultInstance()) {
+            membership_ =
+              tempest.protos.Command.Membership.newBuilder(membership_).mergeFrom(value).buildPartial();
+          } else {
+            membership_ = value;
+          }
+          onChanged();
+        } else {
+          membershipBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000020;
+        return this;
+      }
+      /**
+       * <code>optional .Membership membership = 6;</code>
+       */
+      public Builder clearMembership() {
+        if (membershipBuilder_ == null) {
+          membership_ = tempest.protos.Command.Membership.getDefaultInstance();
+          onChanged();
+        } else {
+          membershipBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000020);
+        return this;
+      }
+      /**
+       * <code>optional .Membership membership = 6;</code>
+       */
+      public tempest.protos.Command.Membership.Builder getMembershipBuilder() {
+        bitField0_ |= 0x00000020;
+        onChanged();
+        return getMembershipFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .Membership membership = 6;</code>
+       */
+      public tempest.protos.Command.MembershipOrBuilder getMembershipOrBuilder() {
+        if (membershipBuilder_ != null) {
+          return membershipBuilder_.getMessageOrBuilder();
+        } else {
+          return membership_;
+        }
+      }
+      /**
+       * <code>optional .Membership membership = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Membership, tempest.protos.Command.Membership.Builder, tempest.protos.Command.MembershipOrBuilder> 
+          getMembershipFieldBuilder() {
+        if (membershipBuilder_ == null) {
+          membershipBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Command.Membership, tempest.protos.Command.Membership.Builder, tempest.protos.Command.MembershipOrBuilder>(
+                  membership_,
+                  getParentForChildren(),
+                  isClean());
+          membership_ = null;
+        }
+        return membershipBuilder_;
       }
 
       // @@protoc_insertion_point(builder_scope:Message)
@@ -3789,6 +4002,521 @@ public final class Command {
     // @@protoc_insertion_point(class_scope:Leave)
   }
 
+  public interface MembershipOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // required .MembershipList request = 1;
+    /**
+     * <code>required .MembershipList request = 1;</code>
+     */
+    boolean hasRequest();
+    /**
+     * <code>required .MembershipList request = 1;</code>
+     */
+    tempest.protos.Membership.MembershipList getRequest();
+    /**
+     * <code>required .MembershipList request = 1;</code>
+     */
+    tempest.protos.Membership.MembershipListOrBuilder getRequestOrBuilder();
+  }
+  /**
+   * Protobuf type {@code Membership}
+   */
+  public static final class Membership extends
+      com.google.protobuf.GeneratedMessage
+      implements MembershipOrBuilder {
+    // Use Membership.newBuilder() to construct.
+    private Membership(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Membership(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Membership defaultInstance;
+    public static Membership getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Membership getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Membership(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              tempest.protos.Membership.MembershipList.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                subBuilder = request_.toBuilder();
+              }
+              request_ = input.readMessage(tempest.protos.Membership.MembershipList.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(request_);
+                request_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000001;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return tempest.protos.Command.internal_static_Membership_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return tempest.protos.Command.internal_static_Membership_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              tempest.protos.Command.Membership.class, tempest.protos.Command.Membership.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Membership> PARSER =
+        new com.google.protobuf.AbstractParser<Membership>() {
+      public Membership parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Membership(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Membership> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // required .MembershipList request = 1;
+    public static final int REQUEST_FIELD_NUMBER = 1;
+    private tempest.protos.Membership.MembershipList request_;
+    /**
+     * <code>required .MembershipList request = 1;</code>
+     */
+    public boolean hasRequest() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required .MembershipList request = 1;</code>
+     */
+    public tempest.protos.Membership.MembershipList getRequest() {
+      return request_;
+    }
+    /**
+     * <code>required .MembershipList request = 1;</code>
+     */
+    public tempest.protos.Membership.MembershipListOrBuilder getRequestOrBuilder() {
+      return request_;
+    }
+
+    private void initFields() {
+      request_ = tempest.protos.Membership.MembershipList.getDefaultInstance();
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      if (!hasRequest()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, request_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, request_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static tempest.protos.Command.Membership parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.Membership parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.Membership parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.Membership parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.Membership parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.Membership parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.Membership parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static tempest.protos.Command.Membership parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.Membership parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.Membership parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(tempest.protos.Command.Membership prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Membership}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements tempest.protos.Command.MembershipOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return tempest.protos.Command.internal_static_Membership_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return tempest.protos.Command.internal_static_Membership_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                tempest.protos.Command.Membership.class, tempest.protos.Command.Membership.Builder.class);
+      }
+
+      // Construct using tempest.protos.Command.Membership.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getRequestFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        if (requestBuilder_ == null) {
+          request_ = tempest.protos.Membership.MembershipList.getDefaultInstance();
+        } else {
+          requestBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return tempest.protos.Command.internal_static_Membership_descriptor;
+      }
+
+      public tempest.protos.Command.Membership getDefaultInstanceForType() {
+        return tempest.protos.Command.Membership.getDefaultInstance();
+      }
+
+      public tempest.protos.Command.Membership build() {
+        tempest.protos.Command.Membership result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public tempest.protos.Command.Membership buildPartial() {
+        tempest.protos.Command.Membership result = new tempest.protos.Command.Membership(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        if (requestBuilder_ == null) {
+          result.request_ = request_;
+        } else {
+          result.request_ = requestBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof tempest.protos.Command.Membership) {
+          return mergeFrom((tempest.protos.Command.Membership)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(tempest.protos.Command.Membership other) {
+        if (other == tempest.protos.Command.Membership.getDefaultInstance()) return this;
+        if (other.hasRequest()) {
+          mergeRequest(other.getRequest());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasRequest()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        tempest.protos.Command.Membership parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (tempest.protos.Command.Membership) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // required .MembershipList request = 1;
+      private tempest.protos.Membership.MembershipList request_ = tempest.protos.Membership.MembershipList.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Membership.MembershipList, tempest.protos.Membership.MembershipList.Builder, tempest.protos.Membership.MembershipListOrBuilder> requestBuilder_;
+      /**
+       * <code>required .MembershipList request = 1;</code>
+       */
+      public boolean hasRequest() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required .MembershipList request = 1;</code>
+       */
+      public tempest.protos.Membership.MembershipList getRequest() {
+        if (requestBuilder_ == null) {
+          return request_;
+        } else {
+          return requestBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>required .MembershipList request = 1;</code>
+       */
+      public Builder setRequest(tempest.protos.Membership.MembershipList value) {
+        if (requestBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          request_ = value;
+          onChanged();
+        } else {
+          requestBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>required .MembershipList request = 1;</code>
+       */
+      public Builder setRequest(
+          tempest.protos.Membership.MembershipList.Builder builderForValue) {
+        if (requestBuilder_ == null) {
+          request_ = builderForValue.build();
+          onChanged();
+        } else {
+          requestBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>required .MembershipList request = 1;</code>
+       */
+      public Builder mergeRequest(tempest.protos.Membership.MembershipList value) {
+        if (requestBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
+              request_ != tempest.protos.Membership.MembershipList.getDefaultInstance()) {
+            request_ =
+              tempest.protos.Membership.MembershipList.newBuilder(request_).mergeFrom(value).buildPartial();
+          } else {
+            request_ = value;
+          }
+          onChanged();
+        } else {
+          requestBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>required .MembershipList request = 1;</code>
+       */
+      public Builder clearRequest() {
+        if (requestBuilder_ == null) {
+          request_ = tempest.protos.Membership.MembershipList.getDefaultInstance();
+          onChanged();
+        } else {
+          requestBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+      /**
+       * <code>required .MembershipList request = 1;</code>
+       */
+      public tempest.protos.Membership.MembershipList.Builder getRequestBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return getRequestFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>required .MembershipList request = 1;</code>
+       */
+      public tempest.protos.Membership.MembershipListOrBuilder getRequestOrBuilder() {
+        if (requestBuilder_ != null) {
+          return requestBuilder_.getMessageOrBuilder();
+        } else {
+          return request_;
+        }
+      }
+      /**
+       * <code>required .MembershipList request = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Membership.MembershipList, tempest.protos.Membership.MembershipList.Builder, tempest.protos.Membership.MembershipListOrBuilder> 
+          getRequestFieldBuilder() {
+        if (requestBuilder_ == null) {
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Membership.MembershipList, tempest.protos.Membership.MembershipList.Builder, tempest.protos.Membership.MembershipListOrBuilder>(
+                  request_,
+                  getParentForChildren(),
+                  isClean());
+          request_ = null;
+        }
+        return requestBuilder_;
+      }
+
+      // @@protoc_insertion_point(builder_scope:Membership)
+    }
+
+    static {
+      defaultInstance = new Membership(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:Membership)
+  }
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_Message_descriptor;
   private static
@@ -3814,6 +4542,11 @@ public final class Command {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Leave_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_Membership_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Membership_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3823,18 +4556,20 @@ public final class Command {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rCommand.proto\032\020Membership.proto\"\274\001\n\007Me" +
+      "\n\rCommand.proto\032\020Membership.proto\"\355\001\n\007Me" +
       "ssage\022\033\n\004type\030\001 \002(\0162\r.Message.Type\022\023\n\004pi" +
       "ng\030\002 \001(\0132\005.Ping\022\023\n\004grep\030\003 \001(\0132\005.Grep\022\035\n\t" +
       "introduce\030\004 \001(\0132\n.Introduce\022\025\n\005leave\030\005 \001" +
-      "(\0132\006.Leave\"4\n\004Type\022\010\n\004PING\020\001\022\010\n\004GREP\020\002\022\r" +
-      "\n\tINTRODUCE\020\003\022\t\n\005LEAVE\020\004\"\030\n\004Ping\022\020\n\010resp" +
-      "onse\030\001 \001(\t\")\n\004Grep\022\017\n\007request\030\001 \001(\t\022\020\n\010r" +
-      "esponse\030\002 \001(\t\"H\n\tIntroduce\022\030\n\007request\030\001 " +
-      "\002(\0132\007.Member\022!\n\010response\030\002 \001(\0132\017.Members" +
-      "hipList\"3\n\005Leave\022\030\n\007request\030\001 \002(\0132\007.Memb",
-      "er\022\020\n\010response\030\002 \001(\tB\031\n\016tempest.protosB\007" +
-      "Command"
+      "(\0132\006.Leave\022\037\n\nmembership\030\006 \001(\0132\013.Members" +
+      "hip\"D\n\004Type\022\010\n\004PING\020\001\022\010\n\004GREP\020\002\022\r\n\tINTRO" +
+      "DUCE\020\003\022\t\n\005LEAVE\020\004\022\016\n\nMEMBERSHIP\020\005\"\030\n\004Pin" +
+      "g\022\020\n\010response\030\001 \001(\t\")\n\004Grep\022\017\n\007request\030\001" +
+      " \001(\t\022\020\n\010response\030\002 \001(\t\"H\n\tIntroduce\022\030\n\007r" +
+      "equest\030\001 \002(\0132\007.Member\022!\n\010response\030\002 \001(\0132",
+      "\017.MembershipList\"3\n\005Leave\022\030\n\007request\030\001 \002" +
+      "(\0132\007.Member\022\020\n\010response\030\002 \001(\t\".\n\nMembers" +
+      "hip\022 \n\007request\030\001 \002(\0132\017.MembershipListB\031\n" +
+      "\016tempest.protosB\007Command"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -3846,7 +4581,7 @@ public final class Command {
           internal_static_Message_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Message_descriptor,
-              new java.lang.String[] { "Type", "Ping", "Grep", "Introduce", "Leave", });
+              new java.lang.String[] { "Type", "Ping", "Grep", "Introduce", "Leave", "Membership", });
           internal_static_Ping_descriptor =
             getDescriptor().getMessageTypes().get(1);
           internal_static_Ping_fieldAccessorTable = new
@@ -3871,6 +4606,12 @@ public final class Command {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Leave_descriptor,
               new java.lang.String[] { "Request", "Response", });
+          internal_static_Membership_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_Membership_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_Membership_descriptor,
+              new java.lang.String[] { "Request", });
           return null;
         }
       };

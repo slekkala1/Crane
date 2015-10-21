@@ -1,6 +1,5 @@
 package tempest.services;
 
-import tempest.MembershipService;
 import tempest.commands.Response;
 import tempest.commands.command.Grep;
 import tempest.commands.command.Introduce;

@@ -1,6 +1,6 @@
 package tempest.commands.handler;
 
-import tempest.MembershipService;
+import tempest.services.MembershipService;
 import tempest.commands.command.Membership;
 import tempest.commands.interfaces.CommandExecutor;
 import tempest.protos.Command;

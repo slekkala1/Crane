@@ -115,7 +115,7 @@ public class ClientServerTest {
 //        Response<String> response = client.grepAll("catalog");
 //
 //        Client clientFull = new Client(membershipServiceFull, loggerFull, commandHandlersFull);
-//        Response<String> responseFull = clientFull.grep(membershipServiceFull.getLocalMachine(), "catalog");
+//        Response<String> responseFull = clientFull.grep(membershipServiceFull.getLocalMember(), "catalog");
 //
 //        assertEquals(responseFull.getResponseData().getLineCount(), response.getResponseData().getLineCount());
 //

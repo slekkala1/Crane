@@ -37,7 +37,7 @@ public class DefaultLogger implements tempest.interfaces.Logger {
     }
 
     public String grep(String options) {
-        String[] results = executor.exec("grep", options + " " + grepFile);
+        String[] results = executor.execute("grep", options + " " + grepFile);
         StringBuilder resultBuilder = new StringBuilder();
         for (String line : results) {
             resultBuilder.append(line).append(System.lineSeparator());

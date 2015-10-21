@@ -1,6 +1,5 @@
 package tempest.services;
 
-import tempest.MembershipService;
 import java.util.concurrent.*;
 
 public class Heartbeat implements Runnable {
@@ -26,6 +25,6 @@ public class Heartbeat implements Runnable {
         if (membershipService.getMembershipList().getMemberCount() < 2)
             return;
         membershipService.update();
-        client.membership(membershipService.getRandomMachine(), membershipService.getMembershipList());
+        client.membership(membershipService.getRandomMember(), membershipService.getMembershipList());
     }
 }

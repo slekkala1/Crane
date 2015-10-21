@@ -1,9 +1,8 @@
-package tempest;
+package tempest.services;
 
 import tempest.commands.Response;
 import tempest.interfaces.Logger;
 import tempest.protos.Membership;
-import tempest.services.*;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -13,6 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * MembershipService is the main component of our gossip style
+ * membership implementation.
+ *
+ * It's main function is to provide a wrapper around a list of
+ * MemberHealth. There is a MemberHealth to represent each known
+ * member of our group.  MembershipService keeps this list up to date
+ * based on gossips that it receives from other members of the group.
+ * Upon request MembershipService provides the authoritative
+ * membership list for this member.
+ *
+ * Methods which access or change the list of MemberHealths are
+ * synchronized to avoid threading issues since Server is multi threaded
+ * and receives random updates to the membership list.
+ */
 public class MembershipService {
     private final Logger logger;
     private final String introducer;
@@ -33,6 +47,12 @@ public class MembershipService {
         localMemberHealth = new MemberHealth(Inet4Address.getLocalHost().getHostName(), localPort, System.currentTimeMillis(), 0);
     }
 
+    /**
+     * start introduces this member to the introducer and starts a Heartbeat that periodically
+     * sends the current membership list to a random member of the membership list.
+     * @param client
+     * @throws UnknownHostException
+     */
     public void start(Client client) throws UnknownHostException {
         this.client = client;
         this.heartbeat = new Heartbeat(client, this);
@@ -70,6 +90,11 @@ public class MembershipService {
         }
     }
 
+    /**
+     * merges a given membership list with our list of MemberHealths and updates them to
+     * reflect the newest known states.
+     * @param membershipList
+     */
     public synchronized void merge(Membership.MembershipList membershipList) {
         for (Membership.Member member : membershipList.getMemberList()) {
             if (localMemberHealth.matches(member)) {
@@ -91,6 +116,11 @@ public class MembershipService {
         }
     }
 
+    /**
+     * builds an immutable membership list that reflects the current state of our list
+     * of MemberHealths
+     * @return
+     */
     public synchronized Membership.MembershipList getMembershipList() {
         Membership.MembershipList.Builder builder = Membership.MembershipList.newBuilder().addMember(localMemberHealth.toMember());
         for (MemberHealth memberHealth : memberHealths) {
@@ -111,7 +141,11 @@ public class MembershipService {
         return builder.build();
     }
 
-    public synchronized Membership.Member getRandomMachine() {
+    public synchronized String getLocalId() {
+        return localMemberHealth.getId();
+    }
+
+    public synchronized Membership.Member getRandomMember() {
         int index = (int) (Math.random() * memberHealths.size());
         return memberHealths.toArray(new MemberHealth[memberHealths.size()])[index].toMember();
     }
@@ -124,6 +158,11 @@ public class MembershipService {
         return null;
     }
 
+    /**
+     * update is called before sending a heartbeat to a random member. The
+     * MemberHealth that represents the local machine gets it's heartbeat incremented and
+     * all other MemberHealths are checked for liveness and have their states updated accordingly.
+     */
     public synchronized void update() {
         localMemberHealth.setHeartbeat(localMemberHealth.getHeartbeat() + 1);
         long currentTime = System.currentTimeMillis();
@@ -151,6 +190,10 @@ public class MembershipService {
         }
     }
 
+    /**
+     * we keep the address and port of the introducer in a properties file which this method reads.
+     * @return
+     */
     private static String readPropertiesFile() {
         Properties prop = new Properties();
 
@@ -165,5 +208,114 @@ public class MembershipService {
             return "";
         }
         return prop.getProperty("introducer");
+    }
+}
+
+/**
+ * MemberHealth is a mutable and slightly more robust version our Protobuf Member.
+ * It holds all the information we need to know about members in our group for
+ * failure detection.
+ *
+ * MemberHealth is deliberately not a public class so that nothing outside of
+ * MembershipService can access or change instances.  This provides safety from
+ * bugs where MemberHealth may be accidentally modified elsewhere and cause failure
+ * detection to break.
+ */
+class MemberHealth {
+    private final String host;
+    private final int port;
+    private final long timestamp;
+    private long lastSeen;
+    private int heartbeat;
+    private boolean hasLeft;
+    private boolean hasFailed;
+
+    public MemberHealth(Membership.Member member) {
+        this(member.getHost(), member.getPort(), member.getTimestamp(), member.getHearbeat());
+    }
+
+    public MemberHealth(String host, int port, long timestamp, int heartbeat) {
+        this.host = host;
+        this.port = port;
+        this.timestamp = timestamp;
+        lastSeen = System.currentTimeMillis();
+        this.heartbeat = heartbeat;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public long getLastSeen() {
+        return lastSeen;
+    }
+
+    public boolean hasLeft() {
+        return hasLeft;
+    }
+
+    public void setHasLeft(boolean hasLeft) {
+        this.hasLeft = hasLeft;
+    }
+
+    public boolean hasFailed() {
+        return hasFailed;
+    }
+
+    public void setHasFailed(boolean hasFailed) {
+        this.hasFailed = hasFailed;
+    }
+
+    public int getHeartbeat() {
+        return heartbeat;
+    }
+
+    public void setHeartbeat(int heartbeat) {
+        this.heartbeat = heartbeat;
+    }
+
+    public boolean matches(Membership.Member member) {
+        return host.equals(member.getHost())
+                && port == member.getPort()
+                && timestamp == member.getTimestamp();
+    }
+
+    /**
+     * Updates the heartbeat and last seen values of a matching member when needed
+     * @param member
+     */
+    public void merge(Membership.Member member) {
+        if (!matches(member)) {
+            return;
+        }
+        if (heartbeat < member.getHearbeat()) {
+            heartbeat = member.getHearbeat();
+            lastSeen = System.currentTimeMillis();
+        }
+    }
+
+    /**
+     *
+     * @return an immutable Member that represents this MemberHealth
+     */
+    public Membership.Member toMember() {
+        return Membership.Member.newBuilder()
+                .setHost(host)
+                .setPort(port)
+                .setTimestamp(timestamp)
+                .setHearbeat(heartbeat)
+                .build();
+    }
+
+    public String getId() {
+        return getHost() + ":" + getPort() + ":" + getTimestamp();
     }
 }

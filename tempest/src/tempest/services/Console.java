@@ -2,7 +2,6 @@ package tempest.services;
 
 import asg.cliche.Command;
 import asg.cliche.Param;
-import tempest.MembershipService;
 import tempest.commands.Response;
 import tempest.commands.ResponseData;
 import tempest.interfaces.Logger;
@@ -12,6 +11,9 @@ import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 
+/**
+ * Console provides a command console using the Cliche library
+ */
 public class Console {
     private final Logger logger;
     private final Client client;
@@ -25,12 +27,12 @@ public class Console {
         this.membershipService = membershipService;
     }
 
-    @Command(abbrev="sm")
+    @Command(abbrev="mstart")
     public void startMembership() throws UnknownHostException {
         membershipService.start(client);
     }
 
-    @Command(abbrev="stme")
+    @Command(abbrev="mstop")
     public void stopMembership() {
         membershipService.stop();
     }
@@ -40,9 +42,9 @@ public class Console {
         return membershipService.getMembershipList().toString();
     }
 
-    @Command
-    public void getSelfId() {
-        //todo: return self ID as in demo instructions
+    @Command(abbrev="id")
+    public String getSelfId() {
+        return membershipService.getLocalId();
     }
 
     @Command(abbrev="ss")

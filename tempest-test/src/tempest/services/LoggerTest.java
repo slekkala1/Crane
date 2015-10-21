@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import tempest.MembershipService;
 import tempest.interfaces.Logger;
 import tempest.mocks.MockExecutor;
 import tempest.mocks.MockLogWrapper;

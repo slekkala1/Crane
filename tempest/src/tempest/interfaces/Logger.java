@@ -1,5 +1,9 @@
 package tempest.interfaces;
 
+/**
+ * Logger implementations provide simple logging and searching of logs via grep
+ * functionality.
+ */
 public interface Logger {
     String INFO = "info";
     String WARNING = "warning";

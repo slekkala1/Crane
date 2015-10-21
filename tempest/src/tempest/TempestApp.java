@@ -1,10 +1,8 @@
 package tempest;
 
 import asg.cliche.ShellFactory;
-import tempest.commands.command.Membership;
 import tempest.commands.handler.*;
 import tempest.commands.interfaces.CommandExecutor;
-import tempest.commands.interfaces.CommandHandler;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.services.*;
@@ -12,6 +10,14 @@ import tempest.services.*;
 import java.io.IOException;
 import java.net.Inet4Address;
 
+/**
+ * This is the entry point for Tempest and provides the lifecycle for most of the
+ * players in the application.
+ *
+ * Currently, TempestApp is fairly clean and doing manual constructor
+ * injection isn't too messy. However, if things start to get ugly, some kind
+ * of IoC/DI framework may be nice if Java has a decent lightweight one.
+ */
 public class TempestApp implements Runnable {
     private final Console console;
     private final Server server;
@@ -30,6 +36,9 @@ public class TempestApp implements Runnable {
         console = new Console(logger, client, server, membershipService);
     }
 
+    /**
+     * Start our server and launch the command console
+     */
     public void run() {
         try {
             server.start();

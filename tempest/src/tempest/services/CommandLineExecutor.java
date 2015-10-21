@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandLineExecutor implements Executor {
-    public String[] exec(String command, String options) {
+    public String[] execute(String command, String options) {
         try {
             List<String> results = new ArrayList<>();
             String commandWithOptions = command + " " + options;

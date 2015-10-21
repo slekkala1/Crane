@@ -8,7 +8,7 @@ public class MockExecutor implements Executor {
     public String options;
     public String[] result = new String[0];
 
-    public String[] exec(String command, String options) {
+    public String[] execute(String command, String options) {
         ++execCallCount;
         this.command = command;
         this.options = options;

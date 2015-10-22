@@ -8,6 +8,8 @@ import tempest.interfaces.*;
 import tempest.protos.*;
 import tempest.services.DefaultLogger;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -37,14 +39,19 @@ public class UdpClientResponseCommandExecutor<TCommand extends ResponseCommand<T
             DatagramSocket socket = new DatagramSocket(0);
             socket.setSoTimeout(500);
 
-            byte[] requestData = commandHandler.serialize(command).toByteArray();
+            tempest.protos.Command.Message requestMessage = commandHandler.serialize(command);
+            ByteArrayOutputStream output = new ByteArrayOutputStream(1024);
+            requestMessage.writeDelimitedTo(output);
+            byte[] requestData = output.toByteArray();
             DatagramPacket udpRequest = new DatagramPacket(requestData, requestData.length, InetAddress.getByName(server.getHost()), server.getPort());
-            DatagramPacket udpResponse = new DatagramPacket(new byte[1024], 1024);
+            byte[] responseData = new byte[1024];
+            DatagramPacket udpResponse = new DatagramPacket(responseData, 1024);
 
             socket.send(udpRequest);
             socket.receive(udpResponse);
 
-            tempest.protos.Command.Message message = tempest.protos.Command.Message.parseFrom(udpResponse.getData());
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(responseData);
+            tempest.protos.Command.Message message = tempest.protos.Command.Message.parseDelimitedFrom(inputStream);
             ResponseCommand<TRequest, TResponse> responseCommand = commandHandler.deserialize(message);
 
             long stopTime = System.currentTimeMillis();

@@ -4,6 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import tempest.commands.interfaces.*;
 import tempest.interfaces.Logger;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -26,7 +27,8 @@ public class UdpServiceWorker implements Runnable {
     public void run(){
         tempest.protos.Command.Message message;
         try {
-            message = tempest.protos.Command.Message.parseFrom(packet.getData());
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(packet.getData());
+            message = tempest.protos.Command.Message.parseFrom(inputStream);
             for (CommandExecutor commandHandler : commandHandlers) {
                 if (commandHandler.canHandle(message.getType())) {
                     ResponseCommand command = (ResponseCommand)commandHandler.deserialize(message);
@@ -41,6 +43,8 @@ public class UdpServiceWorker implements Runnable {
                 }
             }
         } catch (InvalidProtocolBufferException e) {
+            logger.logLine(Logger.SEVERE, "Unable to deserialize message");
+        } catch (IOException e) {
             logger.logLine(Logger.SEVERE, "Unable to deserialize message");
         }
     }

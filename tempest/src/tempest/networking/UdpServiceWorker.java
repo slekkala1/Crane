@@ -15,8 +15,10 @@ public class UdpServiceWorker implements Runnable {
     private final CommandExecutor[] commandHandlers;
     private final ResponseCommandExecutor[] responseCommandHandlers;
     private final Logger logger;
+    private final byte[] data;
 
-    UdpServiceWorker(DatagramPacket packet, DatagramSocket socket, CommandExecutor[] commandHandlers, ResponseCommandExecutor[] responseCommandHandlers, Logger logger) {
+    UdpServiceWorker(byte[] data, DatagramPacket packet, DatagramSocket socket, CommandExecutor[] commandHandlers, ResponseCommandExecutor[] responseCommandHandlers, Logger logger) {
+        this.data = data;
         this.packet = packet;
         this.socket = socket;
         this.commandHandlers = commandHandlers;
@@ -27,7 +29,7 @@ public class UdpServiceWorker implements Runnable {
     public void run(){
         tempest.protos.Command.Message message;
         try {
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(packet.getData());
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
             message = tempest.protos.Command.Message.parseDelimitedFrom(inputStream);
             for (CommandExecutor commandHandler : commandHandlers) {
                 if (commandHandler.canHandle(message.getType())) {

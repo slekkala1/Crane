@@ -5,6 +5,7 @@ import tempest.commands.interfaces.*;
 import tempest.interfaces.Logger;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -51,8 +52,10 @@ public class UdpServiceWorker implements Runnable {
         }
     }
 
-    private void sendResponse(tempest.protos.Command.Message message) {
-        byte[] data = message.toByteArray();
+    private void sendResponse(tempest.protos.Command.Message message) throws IOException {
+        ByteArrayOutputStream output = new ByteArrayOutputStream(1024);
+        message.writeDelimitedTo(output);
+        byte[] data = output.toByteArray();
         DatagramPacket responsePacket = new DatagramPacket(data, data.length, packet.getAddress(), packet.getPort());
         try {
             socket.send(responsePacket);

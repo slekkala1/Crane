@@ -39,7 +39,7 @@ public class UdpClientCommandExecutor<TCommand extends Command<TRequest>, TReque
 
             tempest.protos.Command.Message message = commandHandler.serialize(command);
             ByteArrayOutputStream output = new ByteArrayOutputStream(1024);
-            message.writeTo(output);
+            message.writeDelimitedTo(output);
             byte[] requestData = output.toByteArray();
             DatagramPacket udpRequest = new DatagramPacket(requestData, requestData.length, InetAddress.getByName(server.getHost()), server.getPort());
             socket.send(udpRequest);

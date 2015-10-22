@@ -29,7 +29,8 @@ public class UdpServiceWorker implements Runnable {
     public void run(){
         tempest.protos.Command.Message message;
         try {
-            message = tempest.protos.Command.Message.parseFrom(data);
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
+            message = tempest.protos.Command.Message.parseFrom(inputStream);
             for (CommandExecutor commandHandler : commandHandlers) {
                 if (commandHandler.canHandle(message.getType())) {
                     Command command = commandHandler.deserialize(message);

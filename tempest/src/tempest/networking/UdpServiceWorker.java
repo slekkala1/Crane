@@ -4,6 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import tempest.commands.interfaces.*;
 import tempest.interfaces.Logger;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -14,8 +15,10 @@ public class UdpServiceWorker implements Runnable {
     private final CommandExecutor[] commandHandlers;
     private final ResponseCommandExecutor[] responseCommandHandlers;
     private final Logger logger;
+    private final byte[] data;
 
-    UdpServiceWorker(DatagramPacket packet, DatagramSocket socket, CommandExecutor[] commandHandlers, ResponseCommandExecutor[] responseCommandHandlers, Logger logger) {
+    UdpServiceWorker(byte[] data, DatagramPacket packet, DatagramSocket socket, CommandExecutor[] commandHandlers, ResponseCommandExecutor[] responseCommandHandlers, Logger logger) {
+        this.data = data;
         this.packet = packet;
         this.socket = socket;
         this.commandHandlers = commandHandlers;
@@ -26,9 +29,8 @@ public class UdpServiceWorker implements Runnable {
     public void run(){
         tempest.protos.Command.Message message;
         try {
-            logger.logLine(Logger.INFO, "Before parseFrom");
-            message = tempest.protos.Command.Message.parseFrom(packet.getData());
-            logger.logLine(Logger.INFO, "After parseFrom");
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
+            message = tempest.protos.Command.Message.parseDelimitedFrom(inputStream);
             for (CommandExecutor commandHandler : commandHandlers) {
                 if (commandHandler.canHandle(message.getType())) {
                     ResponseCommand command = (ResponseCommand)commandHandler.deserialize(message);
@@ -43,6 +45,8 @@ public class UdpServiceWorker implements Runnable {
                 }
             }
         } catch (InvalidProtocolBufferException e) {
+            logger.logLine(Logger.SEVERE, "Unable to deserialize message");
+        } catch (IOException e) {
             logger.logLine(Logger.SEVERE, "Unable to deserialize message");
         }
     }

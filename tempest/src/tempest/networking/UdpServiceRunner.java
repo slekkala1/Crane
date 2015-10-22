@@ -33,7 +33,7 @@ public class UdpServiceRunner implements Runnable {
                 byte[] data = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(data, data.length);
                 server.receive(packet);
-                worker = new UdpServiceWorker(packet, server, commandHandlers, responseCommandHandlers, logger);
+                worker = new UdpServiceWorker(data, packet, server, commandHandlers, responseCommandHandlers, logger);
                 new Thread(worker).start();
             }
         } catch (IOException e) {

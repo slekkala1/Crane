@@ -7,6 +7,7 @@ import tempest.interfaces.Logger;
 import tempest.protos.Membership;
 import tempest.services.DefaultLogger;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -36,7 +37,10 @@ public class UdpClientCommandExecutor<TCommand extends Command<TRequest>, TReque
             DatagramSocket socket = new DatagramSocket(0);
             socket.setSoTimeout(500);
 
-            byte[] requestData = commandHandler.serialize(command).toByteArray();
+            tempest.protos.Command.Message message = commandHandler.serialize(command);
+            ByteArrayOutputStream output = new ByteArrayOutputStream(1024);
+            message.writeDelimitedTo(output);
+            byte[] requestData = output.toByteArray();
             DatagramPacket udpRequest = new DatagramPacket(requestData, requestData.length, InetAddress.getByName(server.getHost()), server.getPort());
             socket.send(udpRequest);
 

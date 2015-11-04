@@ -6,6 +6,8 @@ import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.protos.Command;
 import tempest.protos.Membership;
 
+import java.net.Socket;
+
 public class LeaveHandler implements ResponseCommandExecutor<Leave, Membership.Member, String> {
     private final MembershipService membershipService;
 
@@ -36,7 +38,7 @@ public class LeaveHandler implements ResponseCommandExecutor<Leave, Membership.M
         return leave;
     }
 
-    public String execute(Membership.Member request) {
+    public String execute(Socket socket,Membership.Member request) {
         membershipService.memberLeft(request);
         return "Bye";
     }

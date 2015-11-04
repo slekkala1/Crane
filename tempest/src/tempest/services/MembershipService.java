@@ -27,6 +27,7 @@ import java.util.Properties;
  * synchronized to avoid threading issues since Server is multi threaded
  * and receives random updates to the membership list.
  */
+
 public class MembershipService {
     private final Logger logger;
     private final String introducer;
@@ -34,6 +35,7 @@ public class MembershipService {
     private MemberHealth localMemberHealth;
     private Heartbeat heartbeat;
     private Client client;
+    private String master;
     private final List<MemberHealth> memberHealths = new ArrayList<>();
 
     public MembershipService(Logger logger) throws UnknownHostException {

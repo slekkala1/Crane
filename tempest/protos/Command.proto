@@ -10,6 +10,12 @@ message Message {
         INTRODUCE = 3;
         LEAVE = 4;
         MEMBERSHIP = 5;
+        PUT = 6;
+        GET = 7;
+        DELETE = 8;
+        PUTCHUNK = 9;
+        GETCHUNK = 10;
+        DELETECHUNK = 11;
     }
 
     required Type type = 1;
@@ -18,6 +24,12 @@ message Message {
     optional Introduce introduce = 4;
     optional Leave leave = 5;
     optional Membership membership = 6;
+    optional Put put = 7;
+    optional Get get = 8;
+    optional Delete delete = 9;
+    optional PutChunk putChunk = 10;
+    optional GetChunk getChunk = 11;
+    optional DeleteChunk deleteChunk = 12;
 }
 
 message Ping {
@@ -41,4 +53,35 @@ message Leave {
 
 message Membership {
     required MembershipList request = 1;
+}
+
+message Put {
+    optional string request = 1;
+    optional string response =2;
+    optional string localFileName = 3;
+}
+
+message Get {
+    optional string request = 1;
+    optional string response =2;
+}
+
+message Delete {
+    optional string request = 1;
+    optional string response =2;
+}
+
+message PutChunk {
+    optional string request = 1;
+    optional string response = 2;
+}
+
+message GetChunk {
+    optional string request = 1;
+    optional string response = 2;
+}
+
+message DeleteChunk {
+    optional string request = 1;
+    optional string response = 2;
 }

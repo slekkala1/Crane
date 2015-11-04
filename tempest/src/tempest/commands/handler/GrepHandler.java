@@ -5,6 +5,8 @@ import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.protos.Command;
 
+import java.net.Socket;
+
 public class GrepHandler implements ResponseCommandExecutor<Grep, String, String> {
     private final Logger logger;
 
@@ -36,7 +38,7 @@ public class GrepHandler implements ResponseCommandExecutor<Grep, String, String
         return grep;
     }
 
-    public String execute(String request) {
+    public String execute(Socket socket,String request) {
         return logger.grep(request);
     }
 }

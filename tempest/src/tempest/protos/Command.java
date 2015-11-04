@@ -8,10 +8,10 @@ public final class Command {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface MessageOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface MessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Message)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required .Message.Type type = 1;
     /**
      * <code>required .Message.Type type = 1;</code>
      */
@@ -21,7 +21,6 @@ public final class Command {
      */
     tempest.protos.Command.Message.Type getType();
 
-    // optional .Ping ping = 2;
     /**
      * <code>optional .Ping ping = 2;</code>
      */
@@ -35,7 +34,6 @@ public final class Command {
      */
     tempest.protos.Command.PingOrBuilder getPingOrBuilder();
 
-    // optional .Grep grep = 3;
     /**
      * <code>optional .Grep grep = 3;</code>
      */
@@ -49,7 +47,6 @@ public final class Command {
      */
     tempest.protos.Command.GrepOrBuilder getGrepOrBuilder();
 
-    // optional .Introduce introduce = 4;
     /**
      * <code>optional .Introduce introduce = 4;</code>
      */
@@ -63,7 +60,6 @@ public final class Command {
      */
     tempest.protos.Command.IntroduceOrBuilder getIntroduceOrBuilder();
 
-    // optional .Leave leave = 5;
     /**
      * <code>optional .Leave leave = 5;</code>
      */
@@ -77,7 +73,6 @@ public final class Command {
      */
     tempest.protos.Command.LeaveOrBuilder getLeaveOrBuilder();
 
-    // optional .Membership membership = 6;
     /**
      * <code>optional .Membership membership = 6;</code>
      */
@@ -90,13 +85,92 @@ public final class Command {
      * <code>optional .Membership membership = 6;</code>
      */
     tempest.protos.Command.MembershipOrBuilder getMembershipOrBuilder();
+
+    /**
+     * <code>optional .Put put = 7;</code>
+     */
+    boolean hasPut();
+    /**
+     * <code>optional .Put put = 7;</code>
+     */
+    tempest.protos.Command.Put getPut();
+    /**
+     * <code>optional .Put put = 7;</code>
+     */
+    tempest.protos.Command.PutOrBuilder getPutOrBuilder();
+
+    /**
+     * <code>optional .Get get = 8;</code>
+     */
+    boolean hasGet();
+    /**
+     * <code>optional .Get get = 8;</code>
+     */
+    tempest.protos.Command.Get getGet();
+    /**
+     * <code>optional .Get get = 8;</code>
+     */
+    tempest.protos.Command.GetOrBuilder getGetOrBuilder();
+
+    /**
+     * <code>optional .Delete delete = 9;</code>
+     */
+    boolean hasDelete();
+    /**
+     * <code>optional .Delete delete = 9;</code>
+     */
+    tempest.protos.Command.Delete getDelete();
+    /**
+     * <code>optional .Delete delete = 9;</code>
+     */
+    tempest.protos.Command.DeleteOrBuilder getDeleteOrBuilder();
+
+    /**
+     * <code>optional .PutChunk putChunk = 10;</code>
+     */
+    boolean hasPutChunk();
+    /**
+     * <code>optional .PutChunk putChunk = 10;</code>
+     */
+    tempest.protos.Command.PutChunk getPutChunk();
+    /**
+     * <code>optional .PutChunk putChunk = 10;</code>
+     */
+    tempest.protos.Command.PutChunkOrBuilder getPutChunkOrBuilder();
+
+    /**
+     * <code>optional .GetChunk getChunk = 11;</code>
+     */
+    boolean hasGetChunk();
+    /**
+     * <code>optional .GetChunk getChunk = 11;</code>
+     */
+    tempest.protos.Command.GetChunk getGetChunk();
+    /**
+     * <code>optional .GetChunk getChunk = 11;</code>
+     */
+    tempest.protos.Command.GetChunkOrBuilder getGetChunkOrBuilder();
+
+    /**
+     * <code>optional .DeleteChunk deleteChunk = 12;</code>
+     */
+    boolean hasDeleteChunk();
+    /**
+     * <code>optional .DeleteChunk deleteChunk = 12;</code>
+     */
+    tempest.protos.Command.DeleteChunk getDeleteChunk();
+    /**
+     * <code>optional .DeleteChunk deleteChunk = 12;</code>
+     */
+    tempest.protos.Command.DeleteChunkOrBuilder getDeleteChunkOrBuilder();
   }
   /**
    * Protobuf type {@code Message}
    */
   public static final class Message extends
-      com.google.protobuf.GeneratedMessage
-      implements MessageOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Message)
+      MessageOrBuilder {
     // Use Message.newBuilder() to construct.
     private Message(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -218,6 +292,84 @@ public final class Command {
               bitField0_ |= 0x00000020;
               break;
             }
+            case 58: {
+              tempest.protos.Command.Put.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000040) == 0x00000040)) {
+                subBuilder = put_.toBuilder();
+              }
+              put_ = input.readMessage(tempest.protos.Command.Put.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(put_);
+                put_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000040;
+              break;
+            }
+            case 66: {
+              tempest.protos.Command.Get.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000080) == 0x00000080)) {
+                subBuilder = get_.toBuilder();
+              }
+              get_ = input.readMessage(tempest.protos.Command.Get.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(get_);
+                get_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000080;
+              break;
+            }
+            case 74: {
+              tempest.protos.Command.Delete.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000100) == 0x00000100)) {
+                subBuilder = delete_.toBuilder();
+              }
+              delete_ = input.readMessage(tempest.protos.Command.Delete.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(delete_);
+                delete_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000100;
+              break;
+            }
+            case 82: {
+              tempest.protos.Command.PutChunk.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000200) == 0x00000200)) {
+                subBuilder = putChunk_.toBuilder();
+              }
+              putChunk_ = input.readMessage(tempest.protos.Command.PutChunk.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(putChunk_);
+                putChunk_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000200;
+              break;
+            }
+            case 90: {
+              tempest.protos.Command.GetChunk.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000400) == 0x00000400)) {
+                subBuilder = getChunk_.toBuilder();
+              }
+              getChunk_ = input.readMessage(tempest.protos.Command.GetChunk.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(getChunk_);
+                getChunk_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000400;
+              break;
+            }
+            case 98: {
+              tempest.protos.Command.DeleteChunk.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000800) == 0x00000800)) {
+                subBuilder = deleteChunk_.toBuilder();
+              }
+              deleteChunk_ = input.readMessage(tempest.protos.Command.DeleteChunk.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(deleteChunk_);
+                deleteChunk_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000800;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -282,6 +434,30 @@ public final class Command {
        * <code>MEMBERSHIP = 5;</code>
        */
       MEMBERSHIP(4, 5),
+      /**
+       * <code>PUT = 6;</code>
+       */
+      PUT(5, 6),
+      /**
+       * <code>GET = 7;</code>
+       */
+      GET(6, 7),
+      /**
+       * <code>DELETE = 8;</code>
+       */
+      DELETE(7, 8),
+      /**
+       * <code>PUTCHUNK = 9;</code>
+       */
+      PUTCHUNK(8, 9),
+      /**
+       * <code>GETCHUNK = 10;</code>
+       */
+      GETCHUNK(9, 10),
+      /**
+       * <code>DELETECHUNK = 11;</code>
+       */
+      DELETECHUNK(10, 11),
       ;
 
       /**
@@ -304,6 +480,30 @@ public final class Command {
        * <code>MEMBERSHIP = 5;</code>
        */
       public static final int MEMBERSHIP_VALUE = 5;
+      /**
+       * <code>PUT = 6;</code>
+       */
+      public static final int PUT_VALUE = 6;
+      /**
+       * <code>GET = 7;</code>
+       */
+      public static final int GET_VALUE = 7;
+      /**
+       * <code>DELETE = 8;</code>
+       */
+      public static final int DELETE_VALUE = 8;
+      /**
+       * <code>PUTCHUNK = 9;</code>
+       */
+      public static final int PUTCHUNK_VALUE = 9;
+      /**
+       * <code>GETCHUNK = 10;</code>
+       */
+      public static final int GETCHUNK_VALUE = 10;
+      /**
+       * <code>DELETECHUNK = 11;</code>
+       */
+      public static final int DELETECHUNK_VALUE = 11;
 
 
       public final int getNumber() { return value; }
@@ -315,6 +515,12 @@ public final class Command {
           case 3: return INTRODUCE;
           case 4: return LEAVE;
           case 5: return MEMBERSHIP;
+          case 6: return PUT;
+          case 7: return GET;
+          case 8: return DELETE;
+          case 9: return PUTCHUNK;
+          case 10: return GETCHUNK;
+          case 11: return DELETECHUNK;
           default: return null;
         }
       }
@@ -367,7 +573,6 @@ public final class Command {
     }
 
     private int bitField0_;
-    // required .Message.Type type = 1;
     public static final int TYPE_FIELD_NUMBER = 1;
     private tempest.protos.Command.Message.Type type_;
     /**
@@ -383,7 +588,6 @@ public final class Command {
       return type_;
     }
 
-    // optional .Ping ping = 2;
     public static final int PING_FIELD_NUMBER = 2;
     private tempest.protos.Command.Ping ping_;
     /**
@@ -405,7 +609,6 @@ public final class Command {
       return ping_;
     }
 
-    // optional .Grep grep = 3;
     public static final int GREP_FIELD_NUMBER = 3;
     private tempest.protos.Command.Grep grep_;
     /**
@@ -427,7 +630,6 @@ public final class Command {
       return grep_;
     }
 
-    // optional .Introduce introduce = 4;
     public static final int INTRODUCE_FIELD_NUMBER = 4;
     private tempest.protos.Command.Introduce introduce_;
     /**
@@ -449,7 +651,6 @@ public final class Command {
       return introduce_;
     }
 
-    // optional .Leave leave = 5;
     public static final int LEAVE_FIELD_NUMBER = 5;
     private tempest.protos.Command.Leave leave_;
     /**
@@ -471,7 +672,6 @@ public final class Command {
       return leave_;
     }
 
-    // optional .Membership membership = 6;
     public static final int MEMBERSHIP_FIELD_NUMBER = 6;
     private tempest.protos.Command.Membership membership_;
     /**
@@ -493,6 +693,132 @@ public final class Command {
       return membership_;
     }
 
+    public static final int PUT_FIELD_NUMBER = 7;
+    private tempest.protos.Command.Put put_;
+    /**
+     * <code>optional .Put put = 7;</code>
+     */
+    public boolean hasPut() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    /**
+     * <code>optional .Put put = 7;</code>
+     */
+    public tempest.protos.Command.Put getPut() {
+      return put_;
+    }
+    /**
+     * <code>optional .Put put = 7;</code>
+     */
+    public tempest.protos.Command.PutOrBuilder getPutOrBuilder() {
+      return put_;
+    }
+
+    public static final int GET_FIELD_NUMBER = 8;
+    private tempest.protos.Command.Get get_;
+    /**
+     * <code>optional .Get get = 8;</code>
+     */
+    public boolean hasGet() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    /**
+     * <code>optional .Get get = 8;</code>
+     */
+    public tempest.protos.Command.Get getGet() {
+      return get_;
+    }
+    /**
+     * <code>optional .Get get = 8;</code>
+     */
+    public tempest.protos.Command.GetOrBuilder getGetOrBuilder() {
+      return get_;
+    }
+
+    public static final int DELETE_FIELD_NUMBER = 9;
+    private tempest.protos.Command.Delete delete_;
+    /**
+     * <code>optional .Delete delete = 9;</code>
+     */
+    public boolean hasDelete() {
+      return ((bitField0_ & 0x00000100) == 0x00000100);
+    }
+    /**
+     * <code>optional .Delete delete = 9;</code>
+     */
+    public tempest.protos.Command.Delete getDelete() {
+      return delete_;
+    }
+    /**
+     * <code>optional .Delete delete = 9;</code>
+     */
+    public tempest.protos.Command.DeleteOrBuilder getDeleteOrBuilder() {
+      return delete_;
+    }
+
+    public static final int PUTCHUNK_FIELD_NUMBER = 10;
+    private tempest.protos.Command.PutChunk putChunk_;
+    /**
+     * <code>optional .PutChunk putChunk = 10;</code>
+     */
+    public boolean hasPutChunk() {
+      return ((bitField0_ & 0x00000200) == 0x00000200);
+    }
+    /**
+     * <code>optional .PutChunk putChunk = 10;</code>
+     */
+    public tempest.protos.Command.PutChunk getPutChunk() {
+      return putChunk_;
+    }
+    /**
+     * <code>optional .PutChunk putChunk = 10;</code>
+     */
+    public tempest.protos.Command.PutChunkOrBuilder getPutChunkOrBuilder() {
+      return putChunk_;
+    }
+
+    public static final int GETCHUNK_FIELD_NUMBER = 11;
+    private tempest.protos.Command.GetChunk getChunk_;
+    /**
+     * <code>optional .GetChunk getChunk = 11;</code>
+     */
+    public boolean hasGetChunk() {
+      return ((bitField0_ & 0x00000400) == 0x00000400);
+    }
+    /**
+     * <code>optional .GetChunk getChunk = 11;</code>
+     */
+    public tempest.protos.Command.GetChunk getGetChunk() {
+      return getChunk_;
+    }
+    /**
+     * <code>optional .GetChunk getChunk = 11;</code>
+     */
+    public tempest.protos.Command.GetChunkOrBuilder getGetChunkOrBuilder() {
+      return getChunk_;
+    }
+
+    public static final int DELETECHUNK_FIELD_NUMBER = 12;
+    private tempest.protos.Command.DeleteChunk deleteChunk_;
+    /**
+     * <code>optional .DeleteChunk deleteChunk = 12;</code>
+     */
+    public boolean hasDeleteChunk() {
+      return ((bitField0_ & 0x00000800) == 0x00000800);
+    }
+    /**
+     * <code>optional .DeleteChunk deleteChunk = 12;</code>
+     */
+    public tempest.protos.Command.DeleteChunk getDeleteChunk() {
+      return deleteChunk_;
+    }
+    /**
+     * <code>optional .DeleteChunk deleteChunk = 12;</code>
+     */
+    public tempest.protos.Command.DeleteChunkOrBuilder getDeleteChunkOrBuilder() {
+      return deleteChunk_;
+    }
+
     private void initFields() {
       type_ = tempest.protos.Command.Message.Type.PING;
       ping_ = tempest.protos.Command.Ping.getDefaultInstance();
@@ -500,11 +826,18 @@ public final class Command {
       introduce_ = tempest.protos.Command.Introduce.getDefaultInstance();
       leave_ = tempest.protos.Command.Leave.getDefaultInstance();
       membership_ = tempest.protos.Command.Membership.getDefaultInstance();
+      put_ = tempest.protos.Command.Put.getDefaultInstance();
+      get_ = tempest.protos.Command.Get.getDefaultInstance();
+      delete_ = tempest.protos.Command.Delete.getDefaultInstance();
+      putChunk_ = tempest.protos.Command.PutChunk.getDefaultInstance();
+      getChunk_ = tempest.protos.Command.GetChunk.getDefaultInstance();
+      deleteChunk_ = tempest.protos.Command.DeleteChunk.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasType()) {
         memoizedIsInitialized = 0;
@@ -553,6 +886,24 @@ public final class Command {
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeMessage(6, membership_);
       }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeMessage(7, put_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        output.writeMessage(8, get_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        output.writeMessage(9, delete_);
+      }
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        output.writeMessage(10, putChunk_);
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeMessage(11, getChunk_);
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        output.writeMessage(12, deleteChunk_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -585,6 +936,30 @@ public final class Command {
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(6, membership_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, put_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(8, get_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(9, delete_);
+      }
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(10, putChunk_);
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(11, getChunk_);
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(12, deleteChunk_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -668,8 +1043,9 @@ public final class Command {
      * Protobuf type {@code Message}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements tempest.protos.Command.MessageOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Message)
+        tempest.protos.Command.MessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return tempest.protos.Command.internal_static_Message_descriptor;
@@ -699,6 +1075,12 @@ public final class Command {
           getIntroduceFieldBuilder();
           getLeaveFieldBuilder();
           getMembershipFieldBuilder();
+          getPutFieldBuilder();
+          getGetFieldBuilder();
+          getDeleteFieldBuilder();
+          getPutChunkFieldBuilder();
+          getGetChunkFieldBuilder();
+          getDeleteChunkFieldBuilder();
         }
       }
       private static Builder create() {
@@ -739,6 +1121,42 @@ public final class Command {
           membershipBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000020);
+        if (putBuilder_ == null) {
+          put_ = tempest.protos.Command.Put.getDefaultInstance();
+        } else {
+          putBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000040);
+        if (getBuilder_ == null) {
+          get_ = tempest.protos.Command.Get.getDefaultInstance();
+        } else {
+          getBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000080);
+        if (deleteBuilder_ == null) {
+          delete_ = tempest.protos.Command.Delete.getDefaultInstance();
+        } else {
+          deleteBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000100);
+        if (putChunkBuilder_ == null) {
+          putChunk_ = tempest.protos.Command.PutChunk.getDefaultInstance();
+        } else {
+          putChunkBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000200);
+        if (getChunkBuilder_ == null) {
+          getChunk_ = tempest.protos.Command.GetChunk.getDefaultInstance();
+        } else {
+          getChunkBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000400);
+        if (deleteChunkBuilder_ == null) {
+          deleteChunk_ = tempest.protos.Command.DeleteChunk.getDefaultInstance();
+        } else {
+          deleteChunkBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000800);
         return this;
       }
 
@@ -811,6 +1229,54 @@ public final class Command {
         } else {
           result.membership_ = membershipBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        if (putBuilder_ == null) {
+          result.put_ = put_;
+        } else {
+          result.put_ = putBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+          to_bitField0_ |= 0x00000080;
+        }
+        if (getBuilder_ == null) {
+          result.get_ = get_;
+        } else {
+          result.get_ = getBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        if (deleteBuilder_ == null) {
+          result.delete_ = delete_;
+        } else {
+          result.delete_ = deleteBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000200;
+        }
+        if (putChunkBuilder_ == null) {
+          result.putChunk_ = putChunk_;
+        } else {
+          result.putChunk_ = putChunkBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
+        }
+        if (getChunkBuilder_ == null) {
+          result.getChunk_ = getChunk_;
+        } else {
+          result.getChunk_ = getChunkBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000800;
+        }
+        if (deleteChunkBuilder_ == null) {
+          result.deleteChunk_ = deleteChunk_;
+        } else {
+          result.deleteChunk_ = deleteChunkBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -844,6 +1310,24 @@ public final class Command {
         }
         if (other.hasMembership()) {
           mergeMembership(other.getMembership());
+        }
+        if (other.hasPut()) {
+          mergePut(other.getPut());
+        }
+        if (other.hasGet()) {
+          mergeGet(other.getGet());
+        }
+        if (other.hasDelete()) {
+          mergeDelete(other.getDelete());
+        }
+        if (other.hasPutChunk()) {
+          mergePutChunk(other.getPutChunk());
+        }
+        if (other.hasGetChunk()) {
+          mergeGetChunk(other.getGetChunk());
+        }
+        if (other.hasDeleteChunk()) {
+          mergeDeleteChunk(other.getDeleteChunk());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -894,7 +1378,6 @@ public final class Command {
       }
       private int bitField0_;
 
-      // required .Message.Type type = 1;
       private tempest.protos.Command.Message.Type type_ = tempest.protos.Command.Message.Type.PING;
       /**
        * <code>required .Message.Type type = 1;</code>
@@ -930,7 +1413,6 @@ public final class Command {
         return this;
       }
 
-      // optional .Ping ping = 2;
       private tempest.protos.Command.Ping ping_ = tempest.protos.Command.Ping.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           tempest.protos.Command.Ping, tempest.protos.Command.Ping.Builder, tempest.protos.Command.PingOrBuilder> pingBuilder_;
@@ -1039,7 +1521,7 @@ public final class Command {
         if (pingBuilder_ == null) {
           pingBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               tempest.protos.Command.Ping, tempest.protos.Command.Ping.Builder, tempest.protos.Command.PingOrBuilder>(
-                  ping_,
+                  getPing(),
                   getParentForChildren(),
                   isClean());
           ping_ = null;
@@ -1047,7 +1529,6 @@ public final class Command {
         return pingBuilder_;
       }
 
-      // optional .Grep grep = 3;
       private tempest.protos.Command.Grep grep_ = tempest.protos.Command.Grep.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           tempest.protos.Command.Grep, tempest.protos.Command.Grep.Builder, tempest.protos.Command.GrepOrBuilder> grepBuilder_;
@@ -1156,7 +1637,7 @@ public final class Command {
         if (grepBuilder_ == null) {
           grepBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               tempest.protos.Command.Grep, tempest.protos.Command.Grep.Builder, tempest.protos.Command.GrepOrBuilder>(
-                  grep_,
+                  getGrep(),
                   getParentForChildren(),
                   isClean());
           grep_ = null;
@@ -1164,7 +1645,6 @@ public final class Command {
         return grepBuilder_;
       }
 
-      // optional .Introduce introduce = 4;
       private tempest.protos.Command.Introduce introduce_ = tempest.protos.Command.Introduce.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           tempest.protos.Command.Introduce, tempest.protos.Command.Introduce.Builder, tempest.protos.Command.IntroduceOrBuilder> introduceBuilder_;
@@ -1273,7 +1753,7 @@ public final class Command {
         if (introduceBuilder_ == null) {
           introduceBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               tempest.protos.Command.Introduce, tempest.protos.Command.Introduce.Builder, tempest.protos.Command.IntroduceOrBuilder>(
-                  introduce_,
+                  getIntroduce(),
                   getParentForChildren(),
                   isClean());
           introduce_ = null;
@@ -1281,7 +1761,6 @@ public final class Command {
         return introduceBuilder_;
       }
 
-      // optional .Leave leave = 5;
       private tempest.protos.Command.Leave leave_ = tempest.protos.Command.Leave.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           tempest.protos.Command.Leave, tempest.protos.Command.Leave.Builder, tempest.protos.Command.LeaveOrBuilder> leaveBuilder_;
@@ -1390,7 +1869,7 @@ public final class Command {
         if (leaveBuilder_ == null) {
           leaveBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               tempest.protos.Command.Leave, tempest.protos.Command.Leave.Builder, tempest.protos.Command.LeaveOrBuilder>(
-                  leave_,
+                  getLeave(),
                   getParentForChildren(),
                   isClean());
           leave_ = null;
@@ -1398,7 +1877,6 @@ public final class Command {
         return leaveBuilder_;
       }
 
-      // optional .Membership membership = 6;
       private tempest.protos.Command.Membership membership_ = tempest.protos.Command.Membership.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           tempest.protos.Command.Membership, tempest.protos.Command.Membership.Builder, tempest.protos.Command.MembershipOrBuilder> membershipBuilder_;
@@ -1507,12 +1985,708 @@ public final class Command {
         if (membershipBuilder_ == null) {
           membershipBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               tempest.protos.Command.Membership, tempest.protos.Command.Membership.Builder, tempest.protos.Command.MembershipOrBuilder>(
-                  membership_,
+                  getMembership(),
                   getParentForChildren(),
                   isClean());
           membership_ = null;
         }
         return membershipBuilder_;
+      }
+
+      private tempest.protos.Command.Put put_ = tempest.protos.Command.Put.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Put, tempest.protos.Command.Put.Builder, tempest.protos.Command.PutOrBuilder> putBuilder_;
+      /**
+       * <code>optional .Put put = 7;</code>
+       */
+      public boolean hasPut() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>optional .Put put = 7;</code>
+       */
+      public tempest.protos.Command.Put getPut() {
+        if (putBuilder_ == null) {
+          return put_;
+        } else {
+          return putBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .Put put = 7;</code>
+       */
+      public Builder setPut(tempest.protos.Command.Put value) {
+        if (putBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          put_ = value;
+          onChanged();
+        } else {
+          putBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000040;
+        return this;
+      }
+      /**
+       * <code>optional .Put put = 7;</code>
+       */
+      public Builder setPut(
+          tempest.protos.Command.Put.Builder builderForValue) {
+        if (putBuilder_ == null) {
+          put_ = builderForValue.build();
+          onChanged();
+        } else {
+          putBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000040;
+        return this;
+      }
+      /**
+       * <code>optional .Put put = 7;</code>
+       */
+      public Builder mergePut(tempest.protos.Command.Put value) {
+        if (putBuilder_ == null) {
+          if (((bitField0_ & 0x00000040) == 0x00000040) &&
+              put_ != tempest.protos.Command.Put.getDefaultInstance()) {
+            put_ =
+              tempest.protos.Command.Put.newBuilder(put_).mergeFrom(value).buildPartial();
+          } else {
+            put_ = value;
+          }
+          onChanged();
+        } else {
+          putBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000040;
+        return this;
+      }
+      /**
+       * <code>optional .Put put = 7;</code>
+       */
+      public Builder clearPut() {
+        if (putBuilder_ == null) {
+          put_ = tempest.protos.Command.Put.getDefaultInstance();
+          onChanged();
+        } else {
+          putBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000040);
+        return this;
+      }
+      /**
+       * <code>optional .Put put = 7;</code>
+       */
+      public tempest.protos.Command.Put.Builder getPutBuilder() {
+        bitField0_ |= 0x00000040;
+        onChanged();
+        return getPutFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .Put put = 7;</code>
+       */
+      public tempest.protos.Command.PutOrBuilder getPutOrBuilder() {
+        if (putBuilder_ != null) {
+          return putBuilder_.getMessageOrBuilder();
+        } else {
+          return put_;
+        }
+      }
+      /**
+       * <code>optional .Put put = 7;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Put, tempest.protos.Command.Put.Builder, tempest.protos.Command.PutOrBuilder> 
+          getPutFieldBuilder() {
+        if (putBuilder_ == null) {
+          putBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Command.Put, tempest.protos.Command.Put.Builder, tempest.protos.Command.PutOrBuilder>(
+                  getPut(),
+                  getParentForChildren(),
+                  isClean());
+          put_ = null;
+        }
+        return putBuilder_;
+      }
+
+      private tempest.protos.Command.Get get_ = tempest.protos.Command.Get.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Get, tempest.protos.Command.Get.Builder, tempest.protos.Command.GetOrBuilder> getBuilder_;
+      /**
+       * <code>optional .Get get = 8;</code>
+       */
+      public boolean hasGet() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      /**
+       * <code>optional .Get get = 8;</code>
+       */
+      public tempest.protos.Command.Get getGet() {
+        if (getBuilder_ == null) {
+          return get_;
+        } else {
+          return getBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .Get get = 8;</code>
+       */
+      public Builder setGet(tempest.protos.Command.Get value) {
+        if (getBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          get_ = value;
+          onChanged();
+        } else {
+          getBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000080;
+        return this;
+      }
+      /**
+       * <code>optional .Get get = 8;</code>
+       */
+      public Builder setGet(
+          tempest.protos.Command.Get.Builder builderForValue) {
+        if (getBuilder_ == null) {
+          get_ = builderForValue.build();
+          onChanged();
+        } else {
+          getBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000080;
+        return this;
+      }
+      /**
+       * <code>optional .Get get = 8;</code>
+       */
+      public Builder mergeGet(tempest.protos.Command.Get value) {
+        if (getBuilder_ == null) {
+          if (((bitField0_ & 0x00000080) == 0x00000080) &&
+              get_ != tempest.protos.Command.Get.getDefaultInstance()) {
+            get_ =
+              tempest.protos.Command.Get.newBuilder(get_).mergeFrom(value).buildPartial();
+          } else {
+            get_ = value;
+          }
+          onChanged();
+        } else {
+          getBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000080;
+        return this;
+      }
+      /**
+       * <code>optional .Get get = 8;</code>
+       */
+      public Builder clearGet() {
+        if (getBuilder_ == null) {
+          get_ = tempest.protos.Command.Get.getDefaultInstance();
+          onChanged();
+        } else {
+          getBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000080);
+        return this;
+      }
+      /**
+       * <code>optional .Get get = 8;</code>
+       */
+      public tempest.protos.Command.Get.Builder getGetBuilder() {
+        bitField0_ |= 0x00000080;
+        onChanged();
+        return getGetFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .Get get = 8;</code>
+       */
+      public tempest.protos.Command.GetOrBuilder getGetOrBuilder() {
+        if (getBuilder_ != null) {
+          return getBuilder_.getMessageOrBuilder();
+        } else {
+          return get_;
+        }
+      }
+      /**
+       * <code>optional .Get get = 8;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Get, tempest.protos.Command.Get.Builder, tempest.protos.Command.GetOrBuilder> 
+          getGetFieldBuilder() {
+        if (getBuilder_ == null) {
+          getBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Command.Get, tempest.protos.Command.Get.Builder, tempest.protos.Command.GetOrBuilder>(
+                  getGet(),
+                  getParentForChildren(),
+                  isClean());
+          get_ = null;
+        }
+        return getBuilder_;
+      }
+
+      private tempest.protos.Command.Delete delete_ = tempest.protos.Command.Delete.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Delete, tempest.protos.Command.Delete.Builder, tempest.protos.Command.DeleteOrBuilder> deleteBuilder_;
+      /**
+       * <code>optional .Delete delete = 9;</code>
+       */
+      public boolean hasDelete() {
+        return ((bitField0_ & 0x00000100) == 0x00000100);
+      }
+      /**
+       * <code>optional .Delete delete = 9;</code>
+       */
+      public tempest.protos.Command.Delete getDelete() {
+        if (deleteBuilder_ == null) {
+          return delete_;
+        } else {
+          return deleteBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .Delete delete = 9;</code>
+       */
+      public Builder setDelete(tempest.protos.Command.Delete value) {
+        if (deleteBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          delete_ = value;
+          onChanged();
+        } else {
+          deleteBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000100;
+        return this;
+      }
+      /**
+       * <code>optional .Delete delete = 9;</code>
+       */
+      public Builder setDelete(
+          tempest.protos.Command.Delete.Builder builderForValue) {
+        if (deleteBuilder_ == null) {
+          delete_ = builderForValue.build();
+          onChanged();
+        } else {
+          deleteBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000100;
+        return this;
+      }
+      /**
+       * <code>optional .Delete delete = 9;</code>
+       */
+      public Builder mergeDelete(tempest.protos.Command.Delete value) {
+        if (deleteBuilder_ == null) {
+          if (((bitField0_ & 0x00000100) == 0x00000100) &&
+              delete_ != tempest.protos.Command.Delete.getDefaultInstance()) {
+            delete_ =
+              tempest.protos.Command.Delete.newBuilder(delete_).mergeFrom(value).buildPartial();
+          } else {
+            delete_ = value;
+          }
+          onChanged();
+        } else {
+          deleteBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000100;
+        return this;
+      }
+      /**
+       * <code>optional .Delete delete = 9;</code>
+       */
+      public Builder clearDelete() {
+        if (deleteBuilder_ == null) {
+          delete_ = tempest.protos.Command.Delete.getDefaultInstance();
+          onChanged();
+        } else {
+          deleteBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000100);
+        return this;
+      }
+      /**
+       * <code>optional .Delete delete = 9;</code>
+       */
+      public tempest.protos.Command.Delete.Builder getDeleteBuilder() {
+        bitField0_ |= 0x00000100;
+        onChanged();
+        return getDeleteFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .Delete delete = 9;</code>
+       */
+      public tempest.protos.Command.DeleteOrBuilder getDeleteOrBuilder() {
+        if (deleteBuilder_ != null) {
+          return deleteBuilder_.getMessageOrBuilder();
+        } else {
+          return delete_;
+        }
+      }
+      /**
+       * <code>optional .Delete delete = 9;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Delete, tempest.protos.Command.Delete.Builder, tempest.protos.Command.DeleteOrBuilder> 
+          getDeleteFieldBuilder() {
+        if (deleteBuilder_ == null) {
+          deleteBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Command.Delete, tempest.protos.Command.Delete.Builder, tempest.protos.Command.DeleteOrBuilder>(
+                  getDelete(),
+                  getParentForChildren(),
+                  isClean());
+          delete_ = null;
+        }
+        return deleteBuilder_;
+      }
+
+      private tempest.protos.Command.PutChunk putChunk_ = tempest.protos.Command.PutChunk.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.PutChunk, tempest.protos.Command.PutChunk.Builder, tempest.protos.Command.PutChunkOrBuilder> putChunkBuilder_;
+      /**
+       * <code>optional .PutChunk putChunk = 10;</code>
+       */
+      public boolean hasPutChunk() {
+        return ((bitField0_ & 0x00000200) == 0x00000200);
+      }
+      /**
+       * <code>optional .PutChunk putChunk = 10;</code>
+       */
+      public tempest.protos.Command.PutChunk getPutChunk() {
+        if (putChunkBuilder_ == null) {
+          return putChunk_;
+        } else {
+          return putChunkBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .PutChunk putChunk = 10;</code>
+       */
+      public Builder setPutChunk(tempest.protos.Command.PutChunk value) {
+        if (putChunkBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          putChunk_ = value;
+          onChanged();
+        } else {
+          putChunkBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000200;
+        return this;
+      }
+      /**
+       * <code>optional .PutChunk putChunk = 10;</code>
+       */
+      public Builder setPutChunk(
+          tempest.protos.Command.PutChunk.Builder builderForValue) {
+        if (putChunkBuilder_ == null) {
+          putChunk_ = builderForValue.build();
+          onChanged();
+        } else {
+          putChunkBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000200;
+        return this;
+      }
+      /**
+       * <code>optional .PutChunk putChunk = 10;</code>
+       */
+      public Builder mergePutChunk(tempest.protos.Command.PutChunk value) {
+        if (putChunkBuilder_ == null) {
+          if (((bitField0_ & 0x00000200) == 0x00000200) &&
+              putChunk_ != tempest.protos.Command.PutChunk.getDefaultInstance()) {
+            putChunk_ =
+              tempest.protos.Command.PutChunk.newBuilder(putChunk_).mergeFrom(value).buildPartial();
+          } else {
+            putChunk_ = value;
+          }
+          onChanged();
+        } else {
+          putChunkBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000200;
+        return this;
+      }
+      /**
+       * <code>optional .PutChunk putChunk = 10;</code>
+       */
+      public Builder clearPutChunk() {
+        if (putChunkBuilder_ == null) {
+          putChunk_ = tempest.protos.Command.PutChunk.getDefaultInstance();
+          onChanged();
+        } else {
+          putChunkBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000200);
+        return this;
+      }
+      /**
+       * <code>optional .PutChunk putChunk = 10;</code>
+       */
+      public tempest.protos.Command.PutChunk.Builder getPutChunkBuilder() {
+        bitField0_ |= 0x00000200;
+        onChanged();
+        return getPutChunkFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .PutChunk putChunk = 10;</code>
+       */
+      public tempest.protos.Command.PutChunkOrBuilder getPutChunkOrBuilder() {
+        if (putChunkBuilder_ != null) {
+          return putChunkBuilder_.getMessageOrBuilder();
+        } else {
+          return putChunk_;
+        }
+      }
+      /**
+       * <code>optional .PutChunk putChunk = 10;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.PutChunk, tempest.protos.Command.PutChunk.Builder, tempest.protos.Command.PutChunkOrBuilder> 
+          getPutChunkFieldBuilder() {
+        if (putChunkBuilder_ == null) {
+          putChunkBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Command.PutChunk, tempest.protos.Command.PutChunk.Builder, tempest.protos.Command.PutChunkOrBuilder>(
+                  getPutChunk(),
+                  getParentForChildren(),
+                  isClean());
+          putChunk_ = null;
+        }
+        return putChunkBuilder_;
+      }
+
+      private tempest.protos.Command.GetChunk getChunk_ = tempest.protos.Command.GetChunk.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.GetChunk, tempest.protos.Command.GetChunk.Builder, tempest.protos.Command.GetChunkOrBuilder> getChunkBuilder_;
+      /**
+       * <code>optional .GetChunk getChunk = 11;</code>
+       */
+      public boolean hasGetChunk() {
+        return ((bitField0_ & 0x00000400) == 0x00000400);
+      }
+      /**
+       * <code>optional .GetChunk getChunk = 11;</code>
+       */
+      public tempest.protos.Command.GetChunk getGetChunk() {
+        if (getChunkBuilder_ == null) {
+          return getChunk_;
+        } else {
+          return getChunkBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .GetChunk getChunk = 11;</code>
+       */
+      public Builder setGetChunk(tempest.protos.Command.GetChunk value) {
+        if (getChunkBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          getChunk_ = value;
+          onChanged();
+        } else {
+          getChunkBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000400;
+        return this;
+      }
+      /**
+       * <code>optional .GetChunk getChunk = 11;</code>
+       */
+      public Builder setGetChunk(
+          tempest.protos.Command.GetChunk.Builder builderForValue) {
+        if (getChunkBuilder_ == null) {
+          getChunk_ = builderForValue.build();
+          onChanged();
+        } else {
+          getChunkBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000400;
+        return this;
+      }
+      /**
+       * <code>optional .GetChunk getChunk = 11;</code>
+       */
+      public Builder mergeGetChunk(tempest.protos.Command.GetChunk value) {
+        if (getChunkBuilder_ == null) {
+          if (((bitField0_ & 0x00000400) == 0x00000400) &&
+              getChunk_ != tempest.protos.Command.GetChunk.getDefaultInstance()) {
+            getChunk_ =
+              tempest.protos.Command.GetChunk.newBuilder(getChunk_).mergeFrom(value).buildPartial();
+          } else {
+            getChunk_ = value;
+          }
+          onChanged();
+        } else {
+          getChunkBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000400;
+        return this;
+      }
+      /**
+       * <code>optional .GetChunk getChunk = 11;</code>
+       */
+      public Builder clearGetChunk() {
+        if (getChunkBuilder_ == null) {
+          getChunk_ = tempest.protos.Command.GetChunk.getDefaultInstance();
+          onChanged();
+        } else {
+          getChunkBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000400);
+        return this;
+      }
+      /**
+       * <code>optional .GetChunk getChunk = 11;</code>
+       */
+      public tempest.protos.Command.GetChunk.Builder getGetChunkBuilder() {
+        bitField0_ |= 0x00000400;
+        onChanged();
+        return getGetChunkFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .GetChunk getChunk = 11;</code>
+       */
+      public tempest.protos.Command.GetChunkOrBuilder getGetChunkOrBuilder() {
+        if (getChunkBuilder_ != null) {
+          return getChunkBuilder_.getMessageOrBuilder();
+        } else {
+          return getChunk_;
+        }
+      }
+      /**
+       * <code>optional .GetChunk getChunk = 11;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.GetChunk, tempest.protos.Command.GetChunk.Builder, tempest.protos.Command.GetChunkOrBuilder> 
+          getGetChunkFieldBuilder() {
+        if (getChunkBuilder_ == null) {
+          getChunkBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Command.GetChunk, tempest.protos.Command.GetChunk.Builder, tempest.protos.Command.GetChunkOrBuilder>(
+                  getGetChunk(),
+                  getParentForChildren(),
+                  isClean());
+          getChunk_ = null;
+        }
+        return getChunkBuilder_;
+      }
+
+      private tempest.protos.Command.DeleteChunk deleteChunk_ = tempest.protos.Command.DeleteChunk.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.DeleteChunk, tempest.protos.Command.DeleteChunk.Builder, tempest.protos.Command.DeleteChunkOrBuilder> deleteChunkBuilder_;
+      /**
+       * <code>optional .DeleteChunk deleteChunk = 12;</code>
+       */
+      public boolean hasDeleteChunk() {
+        return ((bitField0_ & 0x00000800) == 0x00000800);
+      }
+      /**
+       * <code>optional .DeleteChunk deleteChunk = 12;</code>
+       */
+      public tempest.protos.Command.DeleteChunk getDeleteChunk() {
+        if (deleteChunkBuilder_ == null) {
+          return deleteChunk_;
+        } else {
+          return deleteChunkBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .DeleteChunk deleteChunk = 12;</code>
+       */
+      public Builder setDeleteChunk(tempest.protos.Command.DeleteChunk value) {
+        if (deleteChunkBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          deleteChunk_ = value;
+          onChanged();
+        } else {
+          deleteChunkBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000800;
+        return this;
+      }
+      /**
+       * <code>optional .DeleteChunk deleteChunk = 12;</code>
+       */
+      public Builder setDeleteChunk(
+          tempest.protos.Command.DeleteChunk.Builder builderForValue) {
+        if (deleteChunkBuilder_ == null) {
+          deleteChunk_ = builderForValue.build();
+          onChanged();
+        } else {
+          deleteChunkBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000800;
+        return this;
+      }
+      /**
+       * <code>optional .DeleteChunk deleteChunk = 12;</code>
+       */
+      public Builder mergeDeleteChunk(tempest.protos.Command.DeleteChunk value) {
+        if (deleteChunkBuilder_ == null) {
+          if (((bitField0_ & 0x00000800) == 0x00000800) &&
+              deleteChunk_ != tempest.protos.Command.DeleteChunk.getDefaultInstance()) {
+            deleteChunk_ =
+              tempest.protos.Command.DeleteChunk.newBuilder(deleteChunk_).mergeFrom(value).buildPartial();
+          } else {
+            deleteChunk_ = value;
+          }
+          onChanged();
+        } else {
+          deleteChunkBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000800;
+        return this;
+      }
+      /**
+       * <code>optional .DeleteChunk deleteChunk = 12;</code>
+       */
+      public Builder clearDeleteChunk() {
+        if (deleteChunkBuilder_ == null) {
+          deleteChunk_ = tempest.protos.Command.DeleteChunk.getDefaultInstance();
+          onChanged();
+        } else {
+          deleteChunkBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000800);
+        return this;
+      }
+      /**
+       * <code>optional .DeleteChunk deleteChunk = 12;</code>
+       */
+      public tempest.protos.Command.DeleteChunk.Builder getDeleteChunkBuilder() {
+        bitField0_ |= 0x00000800;
+        onChanged();
+        return getDeleteChunkFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .DeleteChunk deleteChunk = 12;</code>
+       */
+      public tempest.protos.Command.DeleteChunkOrBuilder getDeleteChunkOrBuilder() {
+        if (deleteChunkBuilder_ != null) {
+          return deleteChunkBuilder_.getMessageOrBuilder();
+        } else {
+          return deleteChunk_;
+        }
+      }
+      /**
+       * <code>optional .DeleteChunk deleteChunk = 12;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.DeleteChunk, tempest.protos.Command.DeleteChunk.Builder, tempest.protos.Command.DeleteChunkOrBuilder> 
+          getDeleteChunkFieldBuilder() {
+        if (deleteChunkBuilder_ == null) {
+          deleteChunkBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Command.DeleteChunk, tempest.protos.Command.DeleteChunk.Builder, tempest.protos.Command.DeleteChunkOrBuilder>(
+                  getDeleteChunk(),
+                  getParentForChildren(),
+                  isClean());
+          deleteChunk_ = null;
+        }
+        return deleteChunkBuilder_;
       }
 
       // @@protoc_insertion_point(builder_scope:Message)
@@ -1526,10 +2700,10 @@ public final class Command {
     // @@protoc_insertion_point(class_scope:Message)
   }
 
-  public interface PingOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface PingOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Ping)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string response = 1;
     /**
      * <code>optional string response = 1;</code>
      */
@@ -1548,8 +2722,9 @@ public final class Command {
    * Protobuf type {@code Ping}
    */
   public static final class Ping extends
-      com.google.protobuf.GeneratedMessage
-      implements PingOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Ping)
+      PingOrBuilder {
     // Use Ping.newBuilder() to construct.
     private Ping(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1596,8 +2771,9 @@ public final class Command {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              response_ = input.readBytes();
+              response_ = bs;
               break;
             }
           }
@@ -1640,7 +2816,6 @@ public final class Command {
     }
 
     private int bitField0_;
-    // optional string response = 1;
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private java.lang.Object response_;
     /**
@@ -1689,7 +2864,8 @@ public final class Command {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1796,8 +2972,9 @@ public final class Command {
      * Protobuf type {@code Ping}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements tempest.protos.Command.PingOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Ping)
+        tempest.protos.Command.PingOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return tempest.protos.Command.internal_static_Ping_descriptor;
@@ -1912,7 +3089,6 @@ public final class Command {
       }
       private int bitField0_;
 
-      // optional string response = 1;
       private java.lang.Object response_ = "";
       /**
        * <code>optional string response = 1;</code>
@@ -1926,9 +3102,12 @@ public final class Command {
       public java.lang.String getResponse() {
         java.lang.Object ref = response_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          response_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            response_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1997,10 +3176,10 @@ public final class Command {
     // @@protoc_insertion_point(class_scope:Ping)
   }
 
-  public interface GrepOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface GrepOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Grep)
+      com.google.protobuf.MessageOrBuilder {
 
-    // optional string request = 1;
     /**
      * <code>optional string request = 1;</code>
      */
@@ -2015,7 +3194,6 @@ public final class Command {
     com.google.protobuf.ByteString
         getRequestBytes();
 
-    // optional string response = 2;
     /**
      * <code>optional string response = 2;</code>
      */
@@ -2034,8 +3212,9 @@ public final class Command {
    * Protobuf type {@code Grep}
    */
   public static final class Grep extends
-      com.google.protobuf.GeneratedMessage
-      implements GrepOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Grep)
+      GrepOrBuilder {
     // Use Grep.newBuilder() to construct.
     private Grep(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2082,13 +3261,15 @@ public final class Command {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              request_ = input.readBytes();
+              request_ = bs;
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              response_ = input.readBytes();
+              response_ = bs;
               break;
             }
           }
@@ -2131,7 +3312,6 @@ public final class Command {
     }
 
     private int bitField0_;
-    // optional string request = 1;
     public static final int REQUEST_FIELD_NUMBER = 1;
     private java.lang.Object request_;
     /**
@@ -2174,7 +3354,6 @@ public final class Command {
       }
     }
 
-    // optional string response = 2;
     public static final int RESPONSE_FIELD_NUMBER = 2;
     private java.lang.Object response_;
     /**
@@ -2224,7 +3403,8 @@ public final class Command {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -2338,8 +3518,9 @@ public final class Command {
      * Protobuf type {@code Grep}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements tempest.protos.Command.GrepOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Grep)
+        tempest.protos.Command.GrepOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return tempest.protos.Command.internal_static_Grep_descriptor;
@@ -2465,7 +3646,6 @@ public final class Command {
       }
       private int bitField0_;
 
-      // optional string request = 1;
       private java.lang.Object request_ = "";
       /**
        * <code>optional string request = 1;</code>
@@ -2479,9 +3659,12 @@ public final class Command {
       public java.lang.String getRequest() {
         java.lang.Object ref = request_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          request_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            request_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2539,7 +3722,6 @@ public final class Command {
         return this;
       }
 
-      // optional string response = 2;
       private java.lang.Object response_ = "";
       /**
        * <code>optional string response = 2;</code>
@@ -2553,9 +3735,12 @@ public final class Command {
       public java.lang.String getResponse() {
         java.lang.Object ref = response_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          response_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            response_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2624,10 +3809,10 @@ public final class Command {
     // @@protoc_insertion_point(class_scope:Grep)
   }
 
-  public interface IntroduceOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface IntroduceOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Introduce)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required .Member request = 1;
     /**
      * <code>required .Member request = 1;</code>
      */
@@ -2641,7 +3826,6 @@ public final class Command {
      */
     tempest.protos.Membership.MemberOrBuilder getRequestOrBuilder();
 
-    // optional .MembershipList response = 2;
     /**
      * <code>optional .MembershipList response = 2;</code>
      */
@@ -2659,8 +3843,9 @@ public final class Command {
    * Protobuf type {@code Introduce}
    */
   public static final class Introduce extends
-      com.google.protobuf.GeneratedMessage
-      implements IntroduceOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Introduce)
+      IntroduceOrBuilder {
     // Use Introduce.newBuilder() to construct.
     private Introduce(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2772,7 +3957,6 @@ public final class Command {
     }
 
     private int bitField0_;
-    // required .Member request = 1;
     public static final int REQUEST_FIELD_NUMBER = 1;
     private tempest.protos.Membership.Member request_;
     /**
@@ -2794,7 +3978,6 @@ public final class Command {
       return request_;
     }
 
-    // optional .MembershipList response = 2;
     public static final int RESPONSE_FIELD_NUMBER = 2;
     private tempest.protos.Membership.MembershipList response_;
     /**
@@ -2823,7 +4006,8 @@ public final class Command {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasRequest()) {
         memoizedIsInitialized = 0;
@@ -2941,8 +4125,9 @@ public final class Command {
      * Protobuf type {@code Introduce}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements tempest.protos.Command.IntroduceOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Introduce)
+        tempest.protos.Command.IntroduceOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return tempest.protos.Command.internal_static_Introduce_descriptor;
@@ -3086,7 +4271,6 @@ public final class Command {
       }
       private int bitField0_;
 
-      // required .Member request = 1;
       private tempest.protos.Membership.Member request_ = tempest.protos.Membership.Member.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> requestBuilder_;
@@ -3195,7 +4379,7 @@ public final class Command {
         if (requestBuilder_ == null) {
           requestBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder>(
-                  request_,
+                  getRequest(),
                   getParentForChildren(),
                   isClean());
           request_ = null;
@@ -3203,7 +4387,6 @@ public final class Command {
         return requestBuilder_;
       }
 
-      // optional .MembershipList response = 2;
       private tempest.protos.Membership.MembershipList response_ = tempest.protos.Membership.MembershipList.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           tempest.protos.Membership.MembershipList, tempest.protos.Membership.MembershipList.Builder, tempest.protos.Membership.MembershipListOrBuilder> responseBuilder_;
@@ -3312,7 +4495,7 @@ public final class Command {
         if (responseBuilder_ == null) {
           responseBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               tempest.protos.Membership.MembershipList, tempest.protos.Membership.MembershipList.Builder, tempest.protos.Membership.MembershipListOrBuilder>(
-                  response_,
+                  getResponse(),
                   getParentForChildren(),
                   isClean());
           response_ = null;
@@ -3331,10 +4514,10 @@ public final class Command {
     // @@protoc_insertion_point(class_scope:Introduce)
   }
 
-  public interface LeaveOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface LeaveOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Leave)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required .Member request = 1;
     /**
      * <code>required .Member request = 1;</code>
      */
@@ -3348,7 +4531,6 @@ public final class Command {
      */
     tempest.protos.Membership.MemberOrBuilder getRequestOrBuilder();
 
-    // optional string response = 2;
     /**
      * <code>optional string response = 2;</code>
      */
@@ -3367,8 +4549,9 @@ public final class Command {
    * Protobuf type {@code Leave}
    */
   public static final class Leave extends
-      com.google.protobuf.GeneratedMessage
-      implements LeaveOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Leave)
+      LeaveOrBuilder {
     // Use Leave.newBuilder() to construct.
     private Leave(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -3428,8 +4611,9 @@ public final class Command {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              response_ = input.readBytes();
+              response_ = bs;
               break;
             }
           }
@@ -3472,7 +4656,6 @@ public final class Command {
     }
 
     private int bitField0_;
-    // required .Member request = 1;
     public static final int REQUEST_FIELD_NUMBER = 1;
     private tempest.protos.Membership.Member request_;
     /**
@@ -3494,7 +4677,6 @@ public final class Command {
       return request_;
     }
 
-    // optional string response = 2;
     public static final int RESPONSE_FIELD_NUMBER = 2;
     private java.lang.Object response_;
     /**
@@ -3544,7 +4726,8 @@ public final class Command {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasRequest()) {
         memoizedIsInitialized = 0;
@@ -3662,8 +4845,9 @@ public final class Command {
      * Protobuf type {@code Leave}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements tempest.protos.Command.LeaveOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Leave)
+        tempest.protos.Command.LeaveOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return tempest.protos.Command.internal_static_Leave_descriptor;
@@ -3800,7 +4984,6 @@ public final class Command {
       }
       private int bitField0_;
 
-      // required .Member request = 1;
       private tempest.protos.Membership.Member request_ = tempest.protos.Membership.Member.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> requestBuilder_;
@@ -3909,7 +5092,7 @@ public final class Command {
         if (requestBuilder_ == null) {
           requestBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder>(
-                  request_,
+                  getRequest(),
                   getParentForChildren(),
                   isClean());
           request_ = null;
@@ -3917,7 +5100,6 @@ public final class Command {
         return requestBuilder_;
       }
 
-      // optional string response = 2;
       private java.lang.Object response_ = "";
       /**
        * <code>optional string response = 2;</code>
@@ -3931,9 +5113,12 @@ public final class Command {
       public java.lang.String getResponse() {
         java.lang.Object ref = response_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          response_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            response_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -4002,10 +5187,10 @@ public final class Command {
     // @@protoc_insertion_point(class_scope:Leave)
   }
 
-  public interface MembershipOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface MembershipOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Membership)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required .MembershipList request = 1;
     /**
      * <code>required .MembershipList request = 1;</code>
      */
@@ -4023,8 +5208,9 @@ public final class Command {
    * Protobuf type {@code Membership}
    */
   public static final class Membership extends
-      com.google.protobuf.GeneratedMessage
-      implements MembershipOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Membership)
+      MembershipOrBuilder {
     // Use Membership.newBuilder() to construct.
     private Membership(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -4123,7 +5309,6 @@ public final class Command {
     }
 
     private int bitField0_;
-    // required .MembershipList request = 1;
     public static final int REQUEST_FIELD_NUMBER = 1;
     private tempest.protos.Membership.MembershipList request_;
     /**
@@ -4151,7 +5336,8 @@ public final class Command {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasRequest()) {
         memoizedIsInitialized = 0;
@@ -4262,8 +5448,9 @@ public final class Command {
      * Protobuf type {@code Membership}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements tempest.protos.Command.MembershipOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Membership)
+        tempest.protos.Command.MembershipOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return tempest.protos.Command.internal_static_Membership_descriptor;
@@ -4389,7 +5576,6 @@ public final class Command {
       }
       private int bitField0_;
 
-      // required .MembershipList request = 1;
       private tempest.protos.Membership.MembershipList request_ = tempest.protos.Membership.MembershipList.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           tempest.protos.Membership.MembershipList, tempest.protos.Membership.MembershipList.Builder, tempest.protos.Membership.MembershipListOrBuilder> requestBuilder_;
@@ -4498,7 +5684,7 @@ public final class Command {
         if (requestBuilder_ == null) {
           requestBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               tempest.protos.Membership.MembershipList, tempest.protos.Membership.MembershipList.Builder, tempest.protos.Membership.MembershipListOrBuilder>(
-                  request_,
+                  getRequest(),
                   getParentForChildren(),
                   isClean());
           request_ = null;
@@ -4517,36 +5703,4021 @@ public final class Command {
     // @@protoc_insertion_point(class_scope:Membership)
   }
 
-  private static com.google.protobuf.Descriptors.Descriptor
+  public interface PutOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Put)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    boolean hasRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    java.lang.String getRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getRequestBytes();
+
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    boolean hasResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    java.lang.String getResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getResponseBytes();
+
+    /**
+     * <code>optional string localFileName = 3;</code>
+     */
+    boolean hasLocalFileName();
+    /**
+     * <code>optional string localFileName = 3;</code>
+     */
+    java.lang.String getLocalFileName();
+    /**
+     * <code>optional string localFileName = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getLocalFileNameBytes();
+  }
+  /**
+   * Protobuf type {@code Put}
+   */
+  public static final class Put extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Put)
+      PutOrBuilder {
+    // Use Put.newBuilder() to construct.
+    private Put(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Put(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Put defaultInstance;
+    public static Put getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Put getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Put(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              request_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              response_ = bs;
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              localFileName_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return tempest.protos.Command.internal_static_Put_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return tempest.protos.Command.internal_static_Put_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              tempest.protos.Command.Put.class, tempest.protos.Command.Put.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Put> PARSER =
+        new com.google.protobuf.AbstractParser<Put>() {
+      public Put parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Put(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Put> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int REQUEST_FIELD_NUMBER = 1;
+    private java.lang.Object request_;
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public boolean hasRequest() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public java.lang.String getRequest() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          request_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRequestBytes() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        request_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int RESPONSE_FIELD_NUMBER = 2;
+    private java.lang.Object response_;
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public boolean hasResponse() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public java.lang.String getResponse() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          response_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getResponseBytes() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        response_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int LOCALFILENAME_FIELD_NUMBER = 3;
+    private java.lang.Object localFileName_;
+    /**
+     * <code>optional string localFileName = 3;</code>
+     */
+    public boolean hasLocalFileName() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional string localFileName = 3;</code>
+     */
+    public java.lang.String getLocalFileName() {
+      java.lang.Object ref = localFileName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          localFileName_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string localFileName = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getLocalFileNameBytes() {
+      java.lang.Object ref = localFileName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        localFileName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      request_ = "";
+      response_ = "";
+      localFileName_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getResponseBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getLocalFileNameBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getResponseBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getLocalFileNameBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static tempest.protos.Command.Put parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.Put parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.Put parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.Put parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.Put parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.Put parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.Put parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static tempest.protos.Command.Put parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.Put parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.Put parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(tempest.protos.Command.Put prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Put}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Put)
+        tempest.protos.Command.PutOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return tempest.protos.Command.internal_static_Put_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return tempest.protos.Command.internal_static_Put_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                tempest.protos.Command.Put.class, tempest.protos.Command.Put.Builder.class);
+      }
+
+      // Construct using tempest.protos.Command.Put.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        request_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        response_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        localFileName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return tempest.protos.Command.internal_static_Put_descriptor;
+      }
+
+      public tempest.protos.Command.Put getDefaultInstanceForType() {
+        return tempest.protos.Command.Put.getDefaultInstance();
+      }
+
+      public tempest.protos.Command.Put build() {
+        tempest.protos.Command.Put result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public tempest.protos.Command.Put buildPartial() {
+        tempest.protos.Command.Put result = new tempest.protos.Command.Put(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.request_ = request_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.response_ = response_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.localFileName_ = localFileName_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof tempest.protos.Command.Put) {
+          return mergeFrom((tempest.protos.Command.Put)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(tempest.protos.Command.Put other) {
+        if (other == tempest.protos.Command.Put.getDefaultInstance()) return this;
+        if (other.hasRequest()) {
+          bitField0_ |= 0x00000001;
+          request_ = other.request_;
+          onChanged();
+        }
+        if (other.hasResponse()) {
+          bitField0_ |= 0x00000002;
+          response_ = other.response_;
+          onChanged();
+        }
+        if (other.hasLocalFileName()) {
+          bitField0_ |= 0x00000004;
+          localFileName_ = other.localFileName_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        tempest.protos.Command.Put parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (tempest.protos.Command.Put) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object request_ = "";
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public boolean hasRequest() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public java.lang.String getRequest() {
+        java.lang.Object ref = request_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            request_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRequestBytes() {
+        java.lang.Object ref = request_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          request_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequest(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder clearRequest() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        request_ = getDefaultInstance().getRequest();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequestBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object response_ = "";
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public boolean hasResponse() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public java.lang.String getResponse() {
+        java.lang.Object ref = response_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            response_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getResponseBytes() {
+        java.lang.Object ref = response_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          response_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponse(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder clearResponse() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        response_ = getDefaultInstance().getResponse();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponseBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object localFileName_ = "";
+      /**
+       * <code>optional string localFileName = 3;</code>
+       */
+      public boolean hasLocalFileName() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional string localFileName = 3;</code>
+       */
+      public java.lang.String getLocalFileName() {
+        java.lang.Object ref = localFileName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            localFileName_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string localFileName = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getLocalFileNameBytes() {
+        java.lang.Object ref = localFileName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          localFileName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string localFileName = 3;</code>
+       */
+      public Builder setLocalFileName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        localFileName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string localFileName = 3;</code>
+       */
+      public Builder clearLocalFileName() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        localFileName_ = getDefaultInstance().getLocalFileName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string localFileName = 3;</code>
+       */
+      public Builder setLocalFileNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        localFileName_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:Put)
+    }
+
+    static {
+      defaultInstance = new Put(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:Put)
+  }
+
+  public interface GetOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Get)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    boolean hasRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    java.lang.String getRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getRequestBytes();
+
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    boolean hasResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    java.lang.String getResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getResponseBytes();
+  }
+  /**
+   * Protobuf type {@code Get}
+   */
+  public static final class Get extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Get)
+      GetOrBuilder {
+    // Use Get.newBuilder() to construct.
+    private Get(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Get(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Get defaultInstance;
+    public static Get getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Get getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Get(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              request_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              response_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return tempest.protos.Command.internal_static_Get_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return tempest.protos.Command.internal_static_Get_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              tempest.protos.Command.Get.class, tempest.protos.Command.Get.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Get> PARSER =
+        new com.google.protobuf.AbstractParser<Get>() {
+      public Get parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Get(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Get> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int REQUEST_FIELD_NUMBER = 1;
+    private java.lang.Object request_;
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public boolean hasRequest() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public java.lang.String getRequest() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          request_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRequestBytes() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        request_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int RESPONSE_FIELD_NUMBER = 2;
+    private java.lang.Object response_;
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public boolean hasResponse() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public java.lang.String getResponse() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          response_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getResponseBytes() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        response_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      request_ = "";
+      response_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getResponseBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getResponseBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static tempest.protos.Command.Get parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.Get parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.Get parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.Get parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.Get parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.Get parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.Get parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static tempest.protos.Command.Get parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.Get parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.Get parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(tempest.protos.Command.Get prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Get}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Get)
+        tempest.protos.Command.GetOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return tempest.protos.Command.internal_static_Get_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return tempest.protos.Command.internal_static_Get_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                tempest.protos.Command.Get.class, tempest.protos.Command.Get.Builder.class);
+      }
+
+      // Construct using tempest.protos.Command.Get.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        request_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        response_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return tempest.protos.Command.internal_static_Get_descriptor;
+      }
+
+      public tempest.protos.Command.Get getDefaultInstanceForType() {
+        return tempest.protos.Command.Get.getDefaultInstance();
+      }
+
+      public tempest.protos.Command.Get build() {
+        tempest.protos.Command.Get result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public tempest.protos.Command.Get buildPartial() {
+        tempest.protos.Command.Get result = new tempest.protos.Command.Get(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.request_ = request_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.response_ = response_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof tempest.protos.Command.Get) {
+          return mergeFrom((tempest.protos.Command.Get)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(tempest.protos.Command.Get other) {
+        if (other == tempest.protos.Command.Get.getDefaultInstance()) return this;
+        if (other.hasRequest()) {
+          bitField0_ |= 0x00000001;
+          request_ = other.request_;
+          onChanged();
+        }
+        if (other.hasResponse()) {
+          bitField0_ |= 0x00000002;
+          response_ = other.response_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        tempest.protos.Command.Get parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (tempest.protos.Command.Get) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object request_ = "";
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public boolean hasRequest() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public java.lang.String getRequest() {
+        java.lang.Object ref = request_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            request_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRequestBytes() {
+        java.lang.Object ref = request_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          request_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequest(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder clearRequest() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        request_ = getDefaultInstance().getRequest();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequestBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object response_ = "";
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public boolean hasResponse() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public java.lang.String getResponse() {
+        java.lang.Object ref = response_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            response_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getResponseBytes() {
+        java.lang.Object ref = response_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          response_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponse(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder clearResponse() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        response_ = getDefaultInstance().getResponse();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponseBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:Get)
+    }
+
+    static {
+      defaultInstance = new Get(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:Get)
+  }
+
+  public interface DeleteOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Delete)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    boolean hasRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    java.lang.String getRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getRequestBytes();
+
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    boolean hasResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    java.lang.String getResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getResponseBytes();
+  }
+  /**
+   * Protobuf type {@code Delete}
+   */
+  public static final class Delete extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Delete)
+      DeleteOrBuilder {
+    // Use Delete.newBuilder() to construct.
+    private Delete(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Delete(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Delete defaultInstance;
+    public static Delete getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Delete getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Delete(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              request_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              response_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return tempest.protos.Command.internal_static_Delete_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return tempest.protos.Command.internal_static_Delete_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              tempest.protos.Command.Delete.class, tempest.protos.Command.Delete.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Delete> PARSER =
+        new com.google.protobuf.AbstractParser<Delete>() {
+      public Delete parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Delete(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Delete> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int REQUEST_FIELD_NUMBER = 1;
+    private java.lang.Object request_;
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public boolean hasRequest() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public java.lang.String getRequest() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          request_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRequestBytes() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        request_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int RESPONSE_FIELD_NUMBER = 2;
+    private java.lang.Object response_;
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public boolean hasResponse() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public java.lang.String getResponse() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          response_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getResponseBytes() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        response_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      request_ = "";
+      response_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getResponseBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getResponseBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static tempest.protos.Command.Delete parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.Delete parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.Delete parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.Delete parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.Delete parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.Delete parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.Delete parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static tempest.protos.Command.Delete parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.Delete parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.Delete parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(tempest.protos.Command.Delete prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Delete}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Delete)
+        tempest.protos.Command.DeleteOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return tempest.protos.Command.internal_static_Delete_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return tempest.protos.Command.internal_static_Delete_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                tempest.protos.Command.Delete.class, tempest.protos.Command.Delete.Builder.class);
+      }
+
+      // Construct using tempest.protos.Command.Delete.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        request_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        response_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return tempest.protos.Command.internal_static_Delete_descriptor;
+      }
+
+      public tempest.protos.Command.Delete getDefaultInstanceForType() {
+        return tempest.protos.Command.Delete.getDefaultInstance();
+      }
+
+      public tempest.protos.Command.Delete build() {
+        tempest.protos.Command.Delete result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public tempest.protos.Command.Delete buildPartial() {
+        tempest.protos.Command.Delete result = new tempest.protos.Command.Delete(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.request_ = request_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.response_ = response_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof tempest.protos.Command.Delete) {
+          return mergeFrom((tempest.protos.Command.Delete)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(tempest.protos.Command.Delete other) {
+        if (other == tempest.protos.Command.Delete.getDefaultInstance()) return this;
+        if (other.hasRequest()) {
+          bitField0_ |= 0x00000001;
+          request_ = other.request_;
+          onChanged();
+        }
+        if (other.hasResponse()) {
+          bitField0_ |= 0x00000002;
+          response_ = other.response_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        tempest.protos.Command.Delete parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (tempest.protos.Command.Delete) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object request_ = "";
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public boolean hasRequest() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public java.lang.String getRequest() {
+        java.lang.Object ref = request_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            request_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRequestBytes() {
+        java.lang.Object ref = request_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          request_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequest(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder clearRequest() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        request_ = getDefaultInstance().getRequest();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequestBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object response_ = "";
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public boolean hasResponse() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public java.lang.String getResponse() {
+        java.lang.Object ref = response_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            response_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getResponseBytes() {
+        java.lang.Object ref = response_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          response_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponse(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder clearResponse() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        response_ = getDefaultInstance().getResponse();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponseBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:Delete)
+    }
+
+    static {
+      defaultInstance = new Delete(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:Delete)
+  }
+
+  public interface PutChunkOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:PutChunk)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    boolean hasRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    java.lang.String getRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getRequestBytes();
+
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    boolean hasResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    java.lang.String getResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getResponseBytes();
+  }
+  /**
+   * Protobuf type {@code PutChunk}
+   */
+  public static final class PutChunk extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:PutChunk)
+      PutChunkOrBuilder {
+    // Use PutChunk.newBuilder() to construct.
+    private PutChunk(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private PutChunk(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final PutChunk defaultInstance;
+    public static PutChunk getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public PutChunk getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PutChunk(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              request_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              response_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return tempest.protos.Command.internal_static_PutChunk_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return tempest.protos.Command.internal_static_PutChunk_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              tempest.protos.Command.PutChunk.class, tempest.protos.Command.PutChunk.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<PutChunk> PARSER =
+        new com.google.protobuf.AbstractParser<PutChunk>() {
+      public PutChunk parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PutChunk(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PutChunk> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int REQUEST_FIELD_NUMBER = 1;
+    private java.lang.Object request_;
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public boolean hasRequest() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public java.lang.String getRequest() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          request_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRequestBytes() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        request_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int RESPONSE_FIELD_NUMBER = 2;
+    private java.lang.Object response_;
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public boolean hasResponse() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public java.lang.String getResponse() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          response_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getResponseBytes() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        response_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      request_ = "";
+      response_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getResponseBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getResponseBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static tempest.protos.Command.PutChunk parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.PutChunk parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.PutChunk parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.PutChunk parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.PutChunk parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.PutChunk parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.PutChunk parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static tempest.protos.Command.PutChunk parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.PutChunk parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.PutChunk parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(tempest.protos.Command.PutChunk prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code PutChunk}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:PutChunk)
+        tempest.protos.Command.PutChunkOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return tempest.protos.Command.internal_static_PutChunk_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return tempest.protos.Command.internal_static_PutChunk_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                tempest.protos.Command.PutChunk.class, tempest.protos.Command.PutChunk.Builder.class);
+      }
+
+      // Construct using tempest.protos.Command.PutChunk.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        request_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        response_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return tempest.protos.Command.internal_static_PutChunk_descriptor;
+      }
+
+      public tempest.protos.Command.PutChunk getDefaultInstanceForType() {
+        return tempest.protos.Command.PutChunk.getDefaultInstance();
+      }
+
+      public tempest.protos.Command.PutChunk build() {
+        tempest.protos.Command.PutChunk result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public tempest.protos.Command.PutChunk buildPartial() {
+        tempest.protos.Command.PutChunk result = new tempest.protos.Command.PutChunk(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.request_ = request_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.response_ = response_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof tempest.protos.Command.PutChunk) {
+          return mergeFrom((tempest.protos.Command.PutChunk)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(tempest.protos.Command.PutChunk other) {
+        if (other == tempest.protos.Command.PutChunk.getDefaultInstance()) return this;
+        if (other.hasRequest()) {
+          bitField0_ |= 0x00000001;
+          request_ = other.request_;
+          onChanged();
+        }
+        if (other.hasResponse()) {
+          bitField0_ |= 0x00000002;
+          response_ = other.response_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        tempest.protos.Command.PutChunk parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (tempest.protos.Command.PutChunk) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object request_ = "";
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public boolean hasRequest() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public java.lang.String getRequest() {
+        java.lang.Object ref = request_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            request_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRequestBytes() {
+        java.lang.Object ref = request_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          request_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequest(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder clearRequest() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        request_ = getDefaultInstance().getRequest();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequestBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object response_ = "";
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public boolean hasResponse() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public java.lang.String getResponse() {
+        java.lang.Object ref = response_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            response_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getResponseBytes() {
+        java.lang.Object ref = response_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          response_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponse(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder clearResponse() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        response_ = getDefaultInstance().getResponse();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponseBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:PutChunk)
+    }
+
+    static {
+      defaultInstance = new PutChunk(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:PutChunk)
+  }
+
+  public interface GetChunkOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:GetChunk)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    boolean hasRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    java.lang.String getRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getRequestBytes();
+
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    boolean hasResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    java.lang.String getResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getResponseBytes();
+  }
+  /**
+   * Protobuf type {@code GetChunk}
+   */
+  public static final class GetChunk extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:GetChunk)
+      GetChunkOrBuilder {
+    // Use GetChunk.newBuilder() to construct.
+    private GetChunk(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private GetChunk(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetChunk defaultInstance;
+    public static GetChunk getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public GetChunk getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GetChunk(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              request_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              response_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return tempest.protos.Command.internal_static_GetChunk_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return tempest.protos.Command.internal_static_GetChunk_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              tempest.protos.Command.GetChunk.class, tempest.protos.Command.GetChunk.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<GetChunk> PARSER =
+        new com.google.protobuf.AbstractParser<GetChunk>() {
+      public GetChunk parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetChunk(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetChunk> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int REQUEST_FIELD_NUMBER = 1;
+    private java.lang.Object request_;
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public boolean hasRequest() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public java.lang.String getRequest() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          request_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRequestBytes() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        request_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int RESPONSE_FIELD_NUMBER = 2;
+    private java.lang.Object response_;
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public boolean hasResponse() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public java.lang.String getResponse() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          response_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getResponseBytes() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        response_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      request_ = "";
+      response_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getResponseBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getResponseBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static tempest.protos.Command.GetChunk parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.GetChunk parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.GetChunk parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.GetChunk parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.GetChunk parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.GetChunk parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.GetChunk parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static tempest.protos.Command.GetChunk parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.GetChunk parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.GetChunk parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(tempest.protos.Command.GetChunk prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code GetChunk}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:GetChunk)
+        tempest.protos.Command.GetChunkOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return tempest.protos.Command.internal_static_GetChunk_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return tempest.protos.Command.internal_static_GetChunk_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                tempest.protos.Command.GetChunk.class, tempest.protos.Command.GetChunk.Builder.class);
+      }
+
+      // Construct using tempest.protos.Command.GetChunk.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        request_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        response_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return tempest.protos.Command.internal_static_GetChunk_descriptor;
+      }
+
+      public tempest.protos.Command.GetChunk getDefaultInstanceForType() {
+        return tempest.protos.Command.GetChunk.getDefaultInstance();
+      }
+
+      public tempest.protos.Command.GetChunk build() {
+        tempest.protos.Command.GetChunk result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public tempest.protos.Command.GetChunk buildPartial() {
+        tempest.protos.Command.GetChunk result = new tempest.protos.Command.GetChunk(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.request_ = request_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.response_ = response_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof tempest.protos.Command.GetChunk) {
+          return mergeFrom((tempest.protos.Command.GetChunk)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(tempest.protos.Command.GetChunk other) {
+        if (other == tempest.protos.Command.GetChunk.getDefaultInstance()) return this;
+        if (other.hasRequest()) {
+          bitField0_ |= 0x00000001;
+          request_ = other.request_;
+          onChanged();
+        }
+        if (other.hasResponse()) {
+          bitField0_ |= 0x00000002;
+          response_ = other.response_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        tempest.protos.Command.GetChunk parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (tempest.protos.Command.GetChunk) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object request_ = "";
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public boolean hasRequest() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public java.lang.String getRequest() {
+        java.lang.Object ref = request_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            request_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRequestBytes() {
+        java.lang.Object ref = request_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          request_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequest(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder clearRequest() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        request_ = getDefaultInstance().getRequest();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequestBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object response_ = "";
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public boolean hasResponse() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public java.lang.String getResponse() {
+        java.lang.Object ref = response_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            response_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getResponseBytes() {
+        java.lang.Object ref = response_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          response_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponse(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder clearResponse() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        response_ = getDefaultInstance().getResponse();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponseBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:GetChunk)
+    }
+
+    static {
+      defaultInstance = new GetChunk(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:GetChunk)
+  }
+
+  public interface DeleteChunkOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:DeleteChunk)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    boolean hasRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    java.lang.String getRequest();
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getRequestBytes();
+
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    boolean hasResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    java.lang.String getResponse();
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getResponseBytes();
+  }
+  /**
+   * Protobuf type {@code DeleteChunk}
+   */
+  public static final class DeleteChunk extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:DeleteChunk)
+      DeleteChunkOrBuilder {
+    // Use DeleteChunk.newBuilder() to construct.
+    private DeleteChunk(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private DeleteChunk(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final DeleteChunk defaultInstance;
+    public static DeleteChunk getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public DeleteChunk getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DeleteChunk(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              request_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              response_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return tempest.protos.Command.internal_static_DeleteChunk_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return tempest.protos.Command.internal_static_DeleteChunk_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              tempest.protos.Command.DeleteChunk.class, tempest.protos.Command.DeleteChunk.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<DeleteChunk> PARSER =
+        new com.google.protobuf.AbstractParser<DeleteChunk>() {
+      public DeleteChunk parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DeleteChunk(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DeleteChunk> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int REQUEST_FIELD_NUMBER = 1;
+    private java.lang.Object request_;
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public boolean hasRequest() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public java.lang.String getRequest() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          request_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string request = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRequestBytes() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        request_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int RESPONSE_FIELD_NUMBER = 2;
+    private java.lang.Object response_;
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public boolean hasResponse() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public java.lang.String getResponse() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          response_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getResponseBytes() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        response_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      request_ = "";
+      response_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getResponseBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getResponseBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static tempest.protos.Command.DeleteChunk parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.DeleteChunk parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.DeleteChunk parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.DeleteChunk parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.DeleteChunk parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.DeleteChunk parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.DeleteChunk parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static tempest.protos.Command.DeleteChunk parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.DeleteChunk parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.DeleteChunk parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(tempest.protos.Command.DeleteChunk prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code DeleteChunk}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:DeleteChunk)
+        tempest.protos.Command.DeleteChunkOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return tempest.protos.Command.internal_static_DeleteChunk_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return tempest.protos.Command.internal_static_DeleteChunk_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                tempest.protos.Command.DeleteChunk.class, tempest.protos.Command.DeleteChunk.Builder.class);
+      }
+
+      // Construct using tempest.protos.Command.DeleteChunk.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        request_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        response_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return tempest.protos.Command.internal_static_DeleteChunk_descriptor;
+      }
+
+      public tempest.protos.Command.DeleteChunk getDefaultInstanceForType() {
+        return tempest.protos.Command.DeleteChunk.getDefaultInstance();
+      }
+
+      public tempest.protos.Command.DeleteChunk build() {
+        tempest.protos.Command.DeleteChunk result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public tempest.protos.Command.DeleteChunk buildPartial() {
+        tempest.protos.Command.DeleteChunk result = new tempest.protos.Command.DeleteChunk(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.request_ = request_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.response_ = response_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof tempest.protos.Command.DeleteChunk) {
+          return mergeFrom((tempest.protos.Command.DeleteChunk)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(tempest.protos.Command.DeleteChunk other) {
+        if (other == tempest.protos.Command.DeleteChunk.getDefaultInstance()) return this;
+        if (other.hasRequest()) {
+          bitField0_ |= 0x00000001;
+          request_ = other.request_;
+          onChanged();
+        }
+        if (other.hasResponse()) {
+          bitField0_ |= 0x00000002;
+          response_ = other.response_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        tempest.protos.Command.DeleteChunk parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (tempest.protos.Command.DeleteChunk) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object request_ = "";
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public boolean hasRequest() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public java.lang.String getRequest() {
+        java.lang.Object ref = request_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            request_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRequestBytes() {
+        java.lang.Object ref = request_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          request_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequest(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder clearRequest() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        request_ = getDefaultInstance().getRequest();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string request = 1;</code>
+       */
+      public Builder setRequestBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        request_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object response_ = "";
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public boolean hasResponse() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public java.lang.String getResponse() {
+        java.lang.Object ref = response_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            response_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getResponseBytes() {
+        java.lang.Object ref = response_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          response_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponse(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder clearResponse() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        response_ = getDefaultInstance().getResponse();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public Builder setResponseBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:DeleteChunk)
+    }
+
+    static {
+      defaultInstance = new DeleteChunk(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:DeleteChunk)
+  }
+
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Message_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Message_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Ping_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Ping_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Grep_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Grep_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Introduce_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Introduce_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Leave_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Leave_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Membership_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Membership_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Put_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Put_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Get_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Get_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Delete_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Delete_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_PutChunk_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_PutChunk_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_GetChunk_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_GetChunk_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_DeleteChunk_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_DeleteChunk_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -4556,70 +9727,120 @@ public final class Command {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rCommand.proto\032\020Membership.proto\"\355\001\n\007Me" +
+      "\n\rCommand.proto\032\020Membership.proto\"\325\003\n\007Me" +
       "ssage\022\033\n\004type\030\001 \002(\0162\r.Message.Type\022\023\n\004pi" +
       "ng\030\002 \001(\0132\005.Ping\022\023\n\004grep\030\003 \001(\0132\005.Grep\022\035\n\t" +
       "introduce\030\004 \001(\0132\n.Introduce\022\025\n\005leave\030\005 \001" +
       "(\0132\006.Leave\022\037\n\nmembership\030\006 \001(\0132\013.Members" +
-      "hip\"D\n\004Type\022\010\n\004PING\020\001\022\010\n\004GREP\020\002\022\r\n\tINTRO" +
-      "DUCE\020\003\022\t\n\005LEAVE\020\004\022\016\n\nMEMBERSHIP\020\005\"\030\n\004Pin" +
-      "g\022\020\n\010response\030\001 \001(\t\")\n\004Grep\022\017\n\007request\030\001" +
-      " \001(\t\022\020\n\010response\030\002 \001(\t\"H\n\tIntroduce\022\030\n\007r" +
-      "equest\030\001 \002(\0132\007.Member\022!\n\010response\030\002 \001(\0132",
-      "\017.MembershipList\"3\n\005Leave\022\030\n\007request\030\001 \002" +
-      "(\0132\007.Member\022\020\n\010response\030\002 \001(\t\".\n\nMembers" +
-      "hip\022 \n\007request\030\001 \002(\0132\017.MembershipListB\031\n" +
-      "\016tempest.protosB\007Command"
+      "hip\022\021\n\003put\030\007 \001(\0132\004.Put\022\021\n\003get\030\010 \001(\0132\004.Ge" +
+      "t\022\027\n\006delete\030\t \001(\0132\007.Delete\022\033\n\010putChunk\030\n" +
+      " \001(\0132\t.PutChunk\022\033\n\010getChunk\030\013 \001(\0132\t.GetC" +
+      "hunk\022!\n\013deleteChunk\030\014 \001(\0132\014.DeleteChunk\"" +
+      "\217\001\n\004Type\022\010\n\004PING\020\001\022\010\n\004GREP\020\002\022\r\n\tINTRODUC",
+      "E\020\003\022\t\n\005LEAVE\020\004\022\016\n\nMEMBERSHIP\020\005\022\007\n\003PUT\020\006\022" +
+      "\007\n\003GET\020\007\022\n\n\006DELETE\020\010\022\014\n\010PUTCHUNK\020\t\022\014\n\010GE" +
+      "TCHUNK\020\n\022\017\n\013DELETECHUNK\020\013\"\030\n\004Ping\022\020\n\010res" +
+      "ponse\030\001 \001(\t\")\n\004Grep\022\017\n\007request\030\001 \001(\t\022\020\n\010" +
+      "response\030\002 \001(\t\"H\n\tIntroduce\022\030\n\007request\030\001" +
+      " \002(\0132\007.Member\022!\n\010response\030\002 \001(\0132\017.Member" +
+      "shipList\"3\n\005Leave\022\030\n\007request\030\001 \002(\0132\007.Mem" +
+      "ber\022\020\n\010response\030\002 \001(\t\".\n\nMembership\022 \n\007r" +
+      "equest\030\001 \002(\0132\017.MembershipList\"?\n\003Put\022\017\n\007" +
+      "request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\022\025\n\rlocal",
+      "FileName\030\003 \001(\t\"(\n\003Get\022\017\n\007request\030\001 \001(\t\022\020" +
+      "\n\010response\030\002 \001(\t\"+\n\006Delete\022\017\n\007request\030\001 " +
+      "\001(\t\022\020\n\010response\030\002 \001(\t\"-\n\010PutChunk\022\017\n\007req" +
+      "uest\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"-\n\010GetChunk" +
+      "\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"0\n\013D" +
+      "eleteChunk\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030" +
+      "\002 \001(\tB\031\n\016tempest.protosB\007Command"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_Message_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_Message_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Message_descriptor,
-              new java.lang.String[] { "Type", "Ping", "Grep", "Introduce", "Leave", "Membership", });
-          internal_static_Ping_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_Ping_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Ping_descriptor,
-              new java.lang.String[] { "Response", });
-          internal_static_Grep_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_Grep_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Grep_descriptor,
-              new java.lang.String[] { "Request", "Response", });
-          internal_static_Introduce_descriptor =
-            getDescriptor().getMessageTypes().get(3);
-          internal_static_Introduce_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Introduce_descriptor,
-              new java.lang.String[] { "Request", "Response", });
-          internal_static_Leave_descriptor =
-            getDescriptor().getMessageTypes().get(4);
-          internal_static_Leave_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Leave_descriptor,
-              new java.lang.String[] { "Request", "Response", });
-          internal_static_Membership_descriptor =
-            getDescriptor().getMessageTypes().get(5);
-          internal_static_Membership_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Membership_descriptor,
-              new java.lang.String[] { "Request", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           tempest.protos.Membership.getDescriptor(),
         }, assigner);
+    internal_static_Message_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_Message_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Message_descriptor,
+        new java.lang.String[] { "Type", "Ping", "Grep", "Introduce", "Leave", "Membership", "Put", "Get", "Delete", "PutChunk", "GetChunk", "DeleteChunk", });
+    internal_static_Ping_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_Ping_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Ping_descriptor,
+        new java.lang.String[] { "Response", });
+    internal_static_Grep_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_Grep_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Grep_descriptor,
+        new java.lang.String[] { "Request", "Response", });
+    internal_static_Introduce_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_Introduce_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Introduce_descriptor,
+        new java.lang.String[] { "Request", "Response", });
+    internal_static_Leave_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_Leave_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Leave_descriptor,
+        new java.lang.String[] { "Request", "Response", });
+    internal_static_Membership_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_Membership_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Membership_descriptor,
+        new java.lang.String[] { "Request", });
+    internal_static_Put_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_Put_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Put_descriptor,
+        new java.lang.String[] { "Request", "Response", "LocalFileName", });
+    internal_static_Get_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_Get_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Get_descriptor,
+        new java.lang.String[] { "Request", "Response", });
+    internal_static_Delete_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_Delete_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Delete_descriptor,
+        new java.lang.String[] { "Request", "Response", });
+    internal_static_PutChunk_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_PutChunk_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_PutChunk_descriptor,
+        new java.lang.String[] { "Request", "Response", });
+    internal_static_GetChunk_descriptor =
+      getDescriptor().getMessageTypes().get(10);
+    internal_static_GetChunk_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_GetChunk_descriptor,
+        new java.lang.String[] { "Request", "Response", });
+    internal_static_DeleteChunk_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_DeleteChunk_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_DeleteChunk_descriptor,
+        new java.lang.String[] { "Request", "Response", });
+    tempest.protos.Membership.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

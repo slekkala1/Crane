@@ -7,6 +7,8 @@ import tempest.interfaces.Logger;
 import tempest.protos.Command;
 import tempest.protos.Membership;
 
+import java.net.Socket;
+
 public class IntroduceHandler implements ResponseCommandExecutor<Introduce, Membership.Member, Membership.MembershipList> {
     private final MembershipService membershipService;
     private final Logger logger;
@@ -39,7 +41,7 @@ public class IntroduceHandler implements ResponseCommandExecutor<Introduce, Memb
         return introduce;
     }
 
-    public Membership.MembershipList execute(Membership.Member request) {
+    public Membership.MembershipList execute(Socket socket,Membership.Member request) {
         membershipService.addMember(request);
         return membershipService.getMembershipList();
     }

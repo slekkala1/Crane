@@ -118,4 +118,12 @@ public class Console {
         resultBuilder.append(System.getProperty("line.separator"));
         return resultBuilder.toString();
     }
+
+
+
+
+
+
+
+
 }

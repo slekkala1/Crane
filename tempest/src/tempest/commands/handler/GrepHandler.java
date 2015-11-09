@@ -1,9 +1,12 @@
 package tempest.commands.handler;
 
 import tempest.commands.command.Grep;
+import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.protos.Command;
+
+import java.net.Socket;
 
 public class GrepHandler implements ResponseCommandExecutor<Grep, String, String> {
     private final Logger logger;
@@ -32,11 +35,11 @@ public class GrepHandler implements ResponseCommandExecutor<Grep, String, String
         Grep grep = new Grep();
         grep.setRequest(message.getGrep().getRequest());
         if (message.getGrep().hasResponse())
-        grep.setResponse(message.getGrep().getResponse());
+            grep.setResponse(message.getGrep().getResponse());
         return grep;
     }
 
-    public String execute(String request) {
-        return logger.grep(request);
+    public String execute(Socket socket, ResponseCommand<String, String> command) {
+        return logger.grep(command.getRequest());
     }
 }

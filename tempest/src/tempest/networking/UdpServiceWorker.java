@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.Socket;
 
 public class UdpServiceWorker implements Runnable {
     private final DatagramPacket packet;
@@ -17,6 +18,7 @@ public class UdpServiceWorker implements Runnable {
     private final ResponseCommandExecutor[] responseCommandHandlers;
     private final Logger logger;
     private final byte[] data;
+    private final Socket serverSocket = null;
 
     UdpServiceWorker(byte[] data, DatagramPacket packet, DatagramSocket socket, CommandExecutor[] commandHandlers, ResponseCommandExecutor[] responseCommandHandlers, Logger logger) {
         this.data = data;
@@ -27,7 +29,7 @@ public class UdpServiceWorker implements Runnable {
         this.logger = logger;
     }
 
-    public void run(){
+    public void run() {
         tempest.protos.Command.Message message;
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
@@ -40,8 +42,8 @@ public class UdpServiceWorker implements Runnable {
             }
             for (ResponseCommandExecutor commandHandler : responseCommandHandlers) {
                 if (commandHandler.canHandle(message.getType())) {
-                    ResponseCommand command = (ResponseCommand)commandHandler.deserialize(message);
-                    command.setResponse(commandHandler.execute(command.getRequest()));
+                    ResponseCommand command = (ResponseCommand) commandHandler.deserialize(message);
+                    command.setResponse(commandHandler.execute(serverSocket, command));
                     sendResponse(commandHandler.serialize(command));
                 }
             }

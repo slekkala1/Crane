@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.util.ArrayList;
 
 /**
  * Console provides a command console using the Cliche library
@@ -19,20 +20,22 @@ public class Console {
     private final Client client;
     private final Server server;
     private final MembershipService membershipService;
+    private final Partitioner partitioner;
 
-    public Console(Logger logger, Client client, Server server, MembershipService membershipService) {
+    public Console(Logger logger, Client client, Server server, MembershipService membershipService, Partitioner partitioner) {
         this.logger = logger;
         this.client = client;
         this.server = server;
         this.membershipService = membershipService;
+        this.partitioner = partitioner;
     }
 
-    @Command(abbrev="mstart")
+    @Command(abbrev = "mstart")
     public void startMembership() throws UnknownHostException {
         membershipService.start(client);
     }
 
-    @Command(abbrev="mstop")
+    @Command(abbrev = "mstop")
     public void stopMembership() {
         membershipService.stop();
     }
@@ -42,19 +45,30 @@ public class Console {
         return membershipService.getMembershipList().toString();
     }
 
-    @Command(abbrev="id")
+    @Command(abbrev = "id")
     public String getSelfId() {
         return membershipService.getLocalId();
     }
 
-    @Command(abbrev="ss")
+    @Command(abbrev = "ss")
     public void serviceStart() {
         server.start();
     }
 
-    @Command(abbrev="sest")
+    @Command(abbrev = "sest")
     public void serviceStop() {
         server.stop();
+    }
+
+    @Command(abbrev = "store")
+    public String store() {
+        return this.partitioner.getsDFSFileNamesAtTheVM().toString();
+    }
+
+    @Command(abbrev = "list")
+    public String list(@Param(name = "SDFSFileName") String sDFSFileName) {
+        Response<String> response = client.list(sDFSFileName);
+        return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 
     @Command
@@ -118,4 +132,6 @@ public class Console {
         resultBuilder.append(System.getProperty("line.separator"));
         return resultBuilder.toString();
     }
+
+
 }

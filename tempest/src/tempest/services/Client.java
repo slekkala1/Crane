@@ -55,6 +55,12 @@ public class Client {
         return executeAllParallel(leave, false);
     }
 
+    public Response list(String sDFSFileName) {
+        tempest.commands.command.List list = new tempest.commands.command.List();
+        list.setRequest(sDFSFileName);
+        return executeAllParallel(list, true);
+    }
+
     public void membership(Membership.Member member, Membership.MembershipList membershipList) {
         tempest.commands.command.Membership membership = new tempest.commands.command.Membership();
         membership.setRequest(membershipList);

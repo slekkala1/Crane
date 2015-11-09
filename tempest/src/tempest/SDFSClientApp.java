@@ -16,9 +16,15 @@ import java.net.Inet4Address;
  */
 public class SDFSClientApp implements Runnable {
     private final SDFSClientConsole sDFSClientConsole;
+    private final FileIOUtils fileIOUtils;
+    private final SDFSClient sdfsClient;
 
     public SDFSClientApp() throws IOException {
-        sDFSClientConsole = new SDFSClientConsole(new SDFSClient());
+        String logFile = "machineSDFSClient." + Inet4Address.getLocalHost().getHostName() + ".log";
+        Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
+        sdfsClient = new SDFSClient(logger);
+        sDFSClientConsole = new SDFSClientConsole(logger, sdfsClient);
+        fileIOUtils = new FileIOUtils(logger);
     }
 
     /**

@@ -45,32 +45,24 @@ public class ReplicaService implements Runnable {
     public void run() {
         for (Map.Entry<String, FileReplica> entry : this.partitioner.getFileAndReplicaMap().entrySet()) {
             String sDFSFileName = this.partitioner.getsDFSFileNamesAtTheVM().get(entry.getKey());
-            logger.logLine(logger.INFO, "replica service for file " + entry.getKey());
 
             List<Integer> nodeKeyIds = this.partitioner.getServerListNodeIdsForChunkNoLocal(entry.getKey());
-            logger.logLine(logger.INFO, "replica service for file " + nodeKeyIds);
-
             int localNodeId = this.partitioner.getLocalMachineNodeId();
-            logger.logLine(logger.INFO, "replica service for file " + localNodeId);
-
-            logger.logLine(logger.INFO, "is replica 1 alive? " + nodeKeyIds.contains(entry.getValue().getReplica1()));
-            logger.logLine(logger.INFO, "is replica 2 alive? " + nodeKeyIds.contains(entry.getValue().getReplica2()));
 
             if (!nodeKeyIds.contains(entry.getValue().getReplica1()) && !nodeKeyIds.contains(entry.getValue().getReplica2())) {
-                System.out.println("condition 1");
+                logger.logLine(logger.INFO, "Both replica1 and replica2 died for sDFSFileName " + entry.getKey());
                 byte[] byteArray = FileIOUtils.sendByteArraytoReplicate(entry.getKey());
 
-                System.out.println("Replica Service send" + entry.getKey() + " to " + this.partitioner.getMachineByNodeId(nodeKeyIds.get(0)));
+                logger.logLine(logger.INFO, "Replica Service send" + entry.getKey() + " to " + this.partitioner.getMachineByNodeId(nodeKeyIds.get(0)));
                 this.sdfsClient.replicate(entry.getKey(), this.partitioner.getMachineByNodeId(nodeKeyIds.get(0)), localNodeId, nodeKeyIds.get(1), byteArray, sDFSFileName);
 
-                System.out.println("Replica Service send" + entry.getKey() + " to " + this.partitioner.getMachineByNodeId(nodeKeyIds.get(1)));
+                logger.logLine(logger.INFO, "Replica Service send" + entry.getKey() + " to " + this.partitioner.getMachineByNodeId(nodeKeyIds.get(1)));
                 this.sdfsClient.replicate(entry.getKey(), this.partitioner.getMachineByNodeId(nodeKeyIds.get(1)), localNodeId, nodeKeyIds.get(0), byteArray, sDFSFileName);
 
                 entry.getValue().setReplica1(nodeKeyIds.get(0));
-
                 entry.getValue().setReplica2(nodeKeyIds.get(1));
             } else if (!nodeKeyIds.contains(entry.getValue().getReplica1()) && nodeKeyIds.contains(entry.getValue().getReplica2())) {
-                System.out.println("condition 2");
+                logger.logLine(logger.INFO, "Only replica1 died for sDFSFileName " + entry.getKey());
 
                 byte[] byteArray = FileIOUtils.sendByteArraytoReplicate(entry.getKey());
 
@@ -78,12 +70,12 @@ public class ReplicaService implements Runnable {
                     if (nodeKeyIds.get(i).equals(entry.getValue().getReplica2())) nodeKeyIds.remove(i);
                 }
 
-                System.out.println("Replica Service send" + entry.getKey() + " to " + this.partitioner.getMachineByNodeId(nodeKeyIds.get(0)));
+                logger.logLine(logger.INFO, "Replica Service send" + entry.getKey() + " to " + this.partitioner.getMachineByNodeId(nodeKeyIds.get(0)));
                 this.sdfsClient.replicate(entry.getKey(), this.partitioner.getMachineByNodeId(nodeKeyIds.get(0)), localNodeId, entry.getValue().getReplica2(), byteArray, sDFSFileName);
 
                 entry.getValue().setReplica1(nodeKeyIds.get(0));
             } else if (nodeKeyIds.contains(entry.getValue().getReplica1()) && !nodeKeyIds.contains(entry.getValue().getReplica2())) {
-                System.out.println("condition 3");
+                logger.logLine(logger.INFO,"Only replica2 died for sDFSFileName " + entry.getKey());
 
                 byte[] byteArray = FileIOUtils.sendByteArraytoReplicate(entry.getKey());
 
@@ -91,7 +83,7 @@ public class ReplicaService implements Runnable {
                     if (nodeKeyIds.get(i).equals(entry.getValue().getReplica1())) nodeKeyIds.remove(i);
                 }
 
-                System.out.println("Replica Service send" + entry.getKey() + " to " + this.partitioner.getMachineByNodeId(nodeKeyIds.get(0)));
+                logger.logLine(logger.INFO, "Replica Service send" + entry.getKey() + " to " + this.partitioner.getMachineByNodeId(nodeKeyIds.get(0)));
                 this.sdfsClient.replicate(entry.getKey(), this.partitioner.getMachineByNodeId(nodeKeyIds.get(0)), localNodeId, entry.getValue().getReplica1(), byteArray, sDFSFileName);
 
                 entry.getValue().setReplica2(nodeKeyIds.get(0));

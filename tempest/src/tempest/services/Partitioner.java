@@ -1,13 +1,11 @@
 package tempest.services;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import tempest.interfaces.Logger;
 import tempest.protos.Membership;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by swapnalekkala on 10/30/15.
@@ -45,6 +43,7 @@ public class Partitioner {
     public void addFileAndReplicas(String sDFSFileChunkName, FileReplica fileReplica) {
         synchronized (lock) {
             this.replicas.put(sDFSFileChunkName, fileReplica);
+            logger.logLine(logger.INFO, "added replica information for " + sDFSFileChunkName);
         }
     }
 
@@ -76,7 +75,22 @@ public class Partitioner {
 
     public void setsDFSFileNamesAtTheVM(String addedSDFSFile, String sDFSFileName) {
         this.sDFSFileNamesAtTheVM.put(addedSDFSFile, sDFSFileName);
+        logger.logLine(logger.INFO, "added " + sDFSFileName + " to stored files at the machine");
     }
+
+    public String getMachineByNodeId(int nodeId) {
+        return allMachinesId.get(nodeId);
+    }
+
+    public int getNodeIdOfMachine(Membership.Member member) {
+        return HashKey.hexToKey(HashKey.hashKey(member.getHost() + ":" + member.getPort()));
+    }
+
+    public int getLocalMachineNodeId() {
+        int localNodeId = HashKey.hexToKey(HashKey.hashKey(getLocalHostName() + ":4444"));
+        return localNodeId;
+    }
+
 
     public List<Membership.Member> getServerListForChunk(String sDFSFileName) {
         int fileKey = HashKey.hexToKey(HashKey.hashKey(sDFSFileName));
@@ -92,8 +106,6 @@ public class Partitioner {
         for (int i = 0; i < aliveIds.size(); i++) {
             if (fileKey <= aliveIds.get(i)) {
                 nodeKeyIds.add(aliveIds.get(i));
-                System.out.println("nodeKey 1" + nodeKeyIds.get(0));
-                logger.logLine(Logger.INFO, "nodeKey 1 " + nodeKeyIds.get(0) + "for SDFSFileName" + sDFSFileName);
 
                 if (aliveIds.size() >= 2) {
                     if (i + 1 > aliveIds.size() - 1) {
@@ -101,7 +113,6 @@ public class Partitioner {
                     } else {
                         nodeKeyIds.add(aliveIds.get(i + 1));
                     }
-                    System.out.println("nodeKey 2" + nodeKeyIds.get(1));
                 }
                 if (aliveIds.size() >= 3) {
                     if (i + 2 > aliveIds.size() - 1) {
@@ -109,7 +120,6 @@ public class Partitioner {
                     } else {
                         nodeKeyIds.add(aliveIds.get(i + 2));
                     }
-                    System.out.println("nodeKey 3" + nodeKeyIds.get(2));
                 }
                 break;
             }
@@ -146,12 +156,6 @@ public class Partitioner {
         return memberList;
     }
 
-    public int getLocalMachineNodeId() {
-
-        int localNodeId = HashKey.hexToKey(HashKey.hashKey(getLocalHostName() + ":4444"));
-        return localNodeId;
-    }
-
     public List<Integer> getServerListNodeIdsForChunk(String sDFSFileName) {
         int fileKey = HashKey.hexToKey(HashKey.hashKey(sDFSFileName));
         List<Integer> aliveIds = new ArrayList<Integer>();
@@ -166,8 +170,6 @@ public class Partitioner {
         for (int i = 0; i < aliveIds.size(); i++) {
             if (fileKey <= aliveIds.get(i)) {
                 nodeKeyIds.add(aliveIds.get(i));
-                System.out.println("nodeKey 1 " + nodeKeyIds.get(0));
-                logger.logLine(Logger.INFO, "nodeKey 1 " + nodeKeyIds.get(0) + "for SDFSFileName" + sDFSFileName);
 
                 if (aliveIds.size() >= 2) {
                     if (i + 1 > aliveIds.size() - 1) {
@@ -175,7 +177,6 @@ public class Partitioner {
                     } else {
                         nodeKeyIds.add(aliveIds.get(i + 1));
                     }
-                    System.out.println("nodeKey 2 " + nodeKeyIds.get(1));
                 }
                 if (aliveIds.size() >= 3) {
                     if (i + 2 > aliveIds.size() - 1) {
@@ -183,7 +184,6 @@ public class Partitioner {
                     } else {
                         nodeKeyIds.add(aliveIds.get(i + 2));
                     }
-                    System.out.println("nodeKey 3 " + nodeKeyIds.get(2));
                 }
                 break;
             }
@@ -204,7 +204,6 @@ public class Partitioner {
 
         for (Membership.Member member : this.membershipService.getMembershipList().getMemberList()) {
             aliveIds.add(HashKey.hexToKey(HashKey.hashKey(member.getHost() + ":" + member.getPort())));
-            System.out.println("alive members" + member.getHost() + aliveIds.toString());
         }
 
         List<Integer> nodeKeyIds = new ArrayList<Integer>();
@@ -213,8 +212,6 @@ public class Partitioner {
         for (int i = 0; i < aliveIds.size(); i++) {
             if (fileKey <= aliveIds.get(i)) {
                 nodeKeyIds.add(aliveIds.get(i));
-                System.out.println("nodeKey 1 " + nodeKeyIds.get(0));
-                logger.logLine(Logger.INFO, "nodeKey 1 " + nodeKeyIds.get(0) + "for SDFSFileName" + sDFSFileName);
 
                 if (aliveIds.size() >= 2) {
                     if (i + 1 > aliveIds.size() - 1) {
@@ -222,7 +219,6 @@ public class Partitioner {
                     } else {
                         nodeKeyIds.add(aliveIds.get(i + 1));
                     }
-                    System.out.println("nodeKey 2 " + nodeKeyIds.get(1));
                 }
                 if (aliveIds.size() >= 3) {
                     if (i + 2 > aliveIds.size() - 1) {
@@ -230,7 +226,6 @@ public class Partitioner {
                     } else {
                         nodeKeyIds.add(aliveIds.get(i + 2));
                     }
-                    System.out.println("nodeKey 3 " + nodeKeyIds.get(2));
                 }
                 break;
             }
@@ -242,22 +237,11 @@ public class Partitioner {
             nodeKeyIds.add(aliveIds.get(2));
         }
 
-        System.out.println("NodeKeyId with localId " + nodeKeyIds.toString());
-
         int localNodeId = getLocalMachineNodeId();
         for (int i = 0; i < nodeKeyIds.size(); i++) {
             if (nodeKeyIds.get(i).equals(localNodeId)) nodeKeyIds.remove(i);
         }
 
-        System.out.println("NodeKeyId without localId " + getLocalMachineNodeId() + nodeKeyIds.toString());
         return nodeKeyIds;
-    }
-
-    public String getMachineByNodeId(int nodeId) {
-        return allMachinesId.get(nodeId);
-    }
-
-    public int getNodeIdOfMachine(Membership.Member member) {
-        return HashKey.hexToKey(HashKey.hashKey(member.getHost() + ":" + member.getPort()));
     }
 }

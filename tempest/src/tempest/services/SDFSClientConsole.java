@@ -14,10 +14,10 @@ import java.net.Inet4Address;
  */
 public class SDFSClientConsole {
     private final SDFSClient sDFSClient;
+    private final Logger logger;
 
-    public SDFSClientConsole(SDFSClient sDFSClient) throws IOException {
-        String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
-        Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
+    public SDFSClientConsole(Logger logger, SDFSClient sDFSClient) throws IOException {
+        this.logger = logger;
         this.sDFSClient = sDFSClient;
     }
 
@@ -44,5 +44,4 @@ public class SDFSClientConsole {
         if (response.getResponse().equals("Ok")) return "Successfully deleted" + sDFSFileName + "from disk";
         return "Please try again get file failed";
     }
-
 }

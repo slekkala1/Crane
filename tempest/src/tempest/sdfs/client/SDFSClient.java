@@ -49,11 +49,9 @@ public class SDFSClient {
         return randomMachine;
     }
 
-
-    public SDFSClient() throws IOException {
-        String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
-        logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
-        responseCommandHandlers = new ResponseCommandExecutor[]{new GetHandler(), new PutHandler(), new DeleteHandler(), new PutChunkHandler()};
+    public SDFSClient(Logger logger) throws IOException {
+        this.logger = logger;
+        responseCommandHandlers = new ResponseCommandExecutor[]{new GetHandler(), new PutHandler(logger), new DeleteHandler(), new PutChunkHandler(logger)};
     }
 
     public Response delete(String sDFSFileName) {

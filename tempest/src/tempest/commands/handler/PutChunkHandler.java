@@ -3,6 +3,7 @@ package tempest.commands.handler;
 import tempest.commands.command.PutChunk;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
+import tempest.interfaces.Logger;
 import tempest.protos.Command;
 import tempest.services.FileIOUtils;
 import tempest.services.FileReplica;
@@ -18,11 +19,14 @@ import java.nio.ByteBuffer;
  */
 public class PutChunkHandler implements ResponseCommandExecutor<PutChunk, String, String> {
     private Partitioner partitioner;
+    private final Logger logger;
 
-    public PutChunkHandler() {
+    public PutChunkHandler(Logger logger) {
+        this.logger = logger;
     }
 
-    public PutChunkHandler(Partitioner partitioner) {
+    public PutChunkHandler(Logger logger,Partitioner partitioner) {
+        this.logger = logger;
         this.partitioner = partitioner;
     }
 
@@ -67,7 +71,7 @@ public class PutChunkHandler implements ResponseCommandExecutor<PutChunk, String
             this.partitioner.setsDFSFileNamesAtTheVM(command.getRequest(), ((PutChunk) command).getsDFSFileName());
 
             FileReplica fileReplica = new FileReplica(((PutChunk) command).getReplica1(), ((PutChunk) command).getReplica2());
-            System.out.println("At machine" + Inet4Address.getLocalHost().getHostName().toString() + " replica 1 at "
+            logger.logLine(logger.INFO, "At machine" + Inet4Address.getLocalHost().getHostName().toString() + " replica 1 at "
                     + this.partitioner.getMachineByNodeId(((PutChunk) command).getReplica1()) + " replica 2 at "
                     + this.partitioner.getMachineByNodeId(((PutChunk) command).getReplica2()));
 

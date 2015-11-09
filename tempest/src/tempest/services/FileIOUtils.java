@@ -1,6 +1,7 @@
 package tempest.services;
 
 import org.apache.commons.io.IOUtils;
+import tempest.interfaces.Logger;
 
 import java.io.*;
 import java.net.Inet4Address;
@@ -12,18 +13,22 @@ import java.util.Arrays;
  * Created by swapnalekkala on 11/7/15.
  */
 public class FileIOUtils {
+    private static Logger logger;
+
+    public FileIOUtils(Logger logger) {
+        this.logger = logger;
+    }
 
     public static byte[] sendByteArraytoReplicate(String sDFSFileName) {
         byte[] fileByteArray = null;
         try {
-            //convert file into array of bytes
             System.out.println("replicate " + sDFSFileName + " at " + Inet4Address.getLocalHost().getHostName().toString());
             FileInputStream fileInputStream = new FileInputStream(new File("/home/lekkala2/" + sDFSFileName));
             if (new File("/home/lekkala2/" + sDFSFileName).exists()) {
-                System.out.println("File exists " + sDFSFileName + " at " + Inet4Address.getLocalHost().getHostName().toString());
+                logger.logLine(logger.INFO,"File exists " + sDFSFileName + " at " + Inet4Address.getLocalHost().getHostName().toString());
             }
             fileByteArray = IOUtils.toByteArray(fileInputStream);
-            System.out.println("filebyteArray length" + fileByteArray.length);
+            logger.logLine(logger.INFO, "filebyteArray length" + fileByteArray.length);
             fileInputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +58,7 @@ public class FileIOUtils {
                     Arrays.fill(buf, (byte) 0);
                     totalBytesRead += bytesRead;
                 } while (totalBytesRead < fileLength);
-                System.out.println("Input stream to byte array Total bytes read[" + totalBytesRead + "][ " + fileLength + "]");
+                logger.logLine(logger.INFO, "Input stream to byte array Total bytes read[" + totalBytesRead + "][ " + fileLength + "]");
                 baos.flush();
                 baos.close();
             } catch (IOException e) {
@@ -66,7 +71,7 @@ public class FileIOUtils {
     public static void writeFileToDisk(InputStream in, String sDFSfileName, int length) {
         byte[] buf = new byte[4096];
         if (new File(sDFSfileName).exists()) {
-            System.out.println("Chunk file already exists " + sDFSfileName + "return without writing");
+            logger.logLine(logger.INFO, "Chunk file already exists " + sDFSfileName + "return without writing");
             return;
         }
         if (in != null) {
@@ -88,7 +93,7 @@ public class FileIOUtils {
                     Arrays.fill(buf, (byte) 0);
                     totalBytesRead += bytesRead;
                 } while (totalBytesRead < length);
-                System.out.println("File to Disk Total bytes read[" + totalBytesRead + "][ " + length + "]");
+                logger.logLine(logger.INFO, "File to Disk Total bytes read[" + totalBytesRead + "][ " + length + "]");
                 bos.flush();
                 bos.close();
             } catch (IOException e) {
@@ -111,17 +116,14 @@ public class FileIOUtils {
     }
 
     public static void sendChunkFromDisk(Socket socket, String chunkName) {
-
         File myFile = new File("/home/lekkala2/" + chunkName);
         //File myFile = new File("/Users/swapnalekkala/cs425-mp-g3/" + chunkName);
-
-        System.out.println("File at " + "/home/lekkala2/" + chunkName);
+        logger.logLine(logger.INFO, "File at " + "/home/lekkala2/" + chunkName);
 
         try {
             BufferedOutputStream outToServer = new BufferedOutputStream(socket.getOutputStream());
             if (myFile.exists()) {
-                System.out.println("Get chunkName" + chunkName + "from Server" + Inet4Address.getLocalHost().getHostName().toString());
-                System.out.println("Get chunkName" + chunkName + "from Server" + Inet4Address.getLocalHost().getHostName().toString());
+                logger.logLine(logger.INFO,"Get chunkName " + chunkName + " from Server " + Inet4Address.getLocalHost().getHostName().toString());
                 FileInputStream fis = new FileInputStream(myFile);
                 byte[] fileByteArray = IOUtils.toByteArray(fis);
                 outToServer.write(ByteBuffer.allocate(4).putInt(fileByteArray.length).array());

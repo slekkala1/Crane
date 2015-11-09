@@ -4,8 +4,13 @@ Tempest Architecture
 Overview
 --------
 
-A tempest is a like a storm but more windy and usually louder.  This is just what TheTribeHasSpoken Inc. needs!
+A tempest is a like a storm but more windy and usually louder.  This is just what CallMeIshmaelInc. needs!
 We think you'll agree once you finish this brief architectural document.
+
+**SDFSClientApp** is implemented with the underlying failure detection in tact. It consists of **SDFSClient** that uses TCP sockets
+ to connect to SDFS server machines. A machine can choose to be just an SDFSClient and not be a part of SDFS storage servers on which
+ files are replicated. **SDFSClientApp** is the entry point for the SDFS desired operations: put,get and delete.
+ **SDFSClientApp** is implemented using Cliche much in the same way as **TempestApp**.
 
 Tempest consists of a socket **Gossip Server** and **Gossip Client** that use UDP sockets to Gossip, **Client** 
 and **Server** for communication, a **Logger** which performs the ability to
@@ -20,6 +25,48 @@ fully functional. The application module provides the fully functioning Tempest 
 Both modules use Maven for configuration management.  See the README.md file for more details about how to
 get the application and test compiled and running using Maven.
 
+
+SDFS Design
+--------
+
+Both SDFSClientApp and TempestApp are independent. SDFS file operations(put,get,delete) are performed via SDFSClientApp, while
+machines can join or leave the SDFS file storage via TempestApp.
+
+SDFS Server machines are hard coded in SDFSClient, so client can pick any random alive machines to perform
+put, get, and delete operations.
+
+Once a put command is issued, the SDFS server machine will calculate the alive nodes(in **Partitioner**)
+at which the file needs to be replicated using distributed hash table. SHA256 algorithm is used to calculate node Ids
+and file key Id. The file is replicated at first and second successors as in Cassandra Key-Value stores.
+The replica information is also piggybacked when Put command goes to the node. For example, file is replicated at node 1,
+node 2 and node 3. Node 1 recieves the replica information that node 2 and node 3 have the replicas,
+similarly node 2 receives the replica information that node 3 and node 1 have replicas and so on.
+The replica information of file stored in the machine is stored in **Partitioner**
+
+Once a get command is issued, the SDFS server machine will calculate the alive nodes at which the file is and sends get command
+to the one of the servers. If the server fails to respond 'Ok', next server with replica is tried.
+
+Once a delete command is issued, the SDFS server machine will calculate the alive nodes at which the file is and sends delete command
+ to the all of the servers.
+
+**Replica Service** runs every 5 seconds to make sure all replicas of every file at the machine are alive.
+**Replica Service**  loops through the replica information for every file stored in **Partitioner** and checks the membershiplist
+to see if the replica nodes have failed. When the failure of replica node is detected, the **Partitioner**, will give a new list
+of node Ids at which the file needs to be replicated. The failed replica is replaced with the new alive replica node Id at the machine
+and the file is sent to the alive replica node obtained from **Partitioner**.
+
+**list** and **store** commands are available on TempestApp.
+
+Chunking has been implemented, but it is set to 1 chunk currently for demo.
+Some tweaking need to be done on Chunking to perform sharding, currently not supported.
+Chunking goes as follows: Once a put command is issues,
+the file is broken into chunk size as set in PutHandler and **Partitioner** provides the node Ids based on Chunk Name(set as
+"SDFSFileName" +i +".bin" . These Chunks are sent to respective machines using PutChunk command which is internally handled.
+Similarly on get command, the chunks are obtained using get chunk commands from the respective nodeIds and merged in the **GetHandler**
+and the whole file contents of all chunks are returned to the Client machine. Also delete command, will send respective delete Chunk command
+to all servers that hold the chunks of a particular sdfsfile.
+
+All SDFS operations and commands use google protocol buffers to send and receive messages and are done using TCP connection.
 
 Gossip protocol
 ---------------
@@ -132,4 +179,4 @@ Summary
 
 In some ways the adding of tests complicated some of the architecture but at the same time made the classes more
 reusable.  The benefits of unit testing alone should justify the added classes and interfaces but knowing that
-Tempest is a platform that we will be building on throughout our relationship with TheTribeHasSpoken Inc. cements it.
+Tempest is a platform that we will be building on throughout our relationship with CallMeIshmaelInc. cements it.

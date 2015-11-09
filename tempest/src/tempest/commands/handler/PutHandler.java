@@ -25,11 +25,15 @@ import java.util.List;
 public class PutHandler implements ResponseCommandExecutor<Put, String, String> {
 
     private Partitioner partitioner;
+    private final Logger logger;
 
-    public PutHandler() {
+
+    public PutHandler(Logger logger) {
+        this.logger = logger;
     }
 
-    public PutHandler(Partitioner partitioner) {
+    public PutHandler(Logger logger, Partitioner partitioner) {
+        this.logger = logger;
         this.partitioner = partitioner;
     }
 
@@ -146,7 +150,7 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
                 System.out.println("Total Bytes Read: " + totalBytesRead);
             }
         } catch (IOException e) {
-            //logger.logLine(DefaultLogger.WARNING, "Client socket failed while connecting to " + server + e);
+//            logger.logLine(DefaultLogger.WARNING, "Client socket failed while connecting to " + server + e);
             //return null;
         }
         System.out.println(nameList.toString());
@@ -164,7 +168,7 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
 
     private <TRequest, TResponse> ClientResponseCommandExecutor<TResponse> createResponseExecutor
             (Membership.Member member, ResponseCommand<TRequest, TResponse> command) throws IOException {
-        ResponseCommandExecutor commandHandler = new PutChunkHandler();
+        ResponseCommandExecutor commandHandler = new PutChunkHandler(logger);
         String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
         Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
         return new TcpClientResponseCommandExecutor<>(member, command, commandHandler, logger);

@@ -75,7 +75,6 @@ public class DeleteHandler implements ResponseCommandExecutor<Delete, String, St
                 }
             }
         } catch (IOException e) {
-            //xyz
         }
     }
 

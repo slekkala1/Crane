@@ -52,22 +52,24 @@ public class DeleteHandler implements ResponseCommandExecutor<Delete, String, St
 
     public Delete deserialize(Command.Message message) {
         Delete delete = new Delete();
+        delete.setRequest(message.getDelete().getRequest());
         if (message.hasDelete() && message.getDelete().hasResponse())
-            delete.setResponse(message.getPing().getResponse());
+            delete.setResponse(message.getDelete().getResponse());
         return delete;
     }
 
-    public String execute(Socket socket, String request) {
-        deleteFiles(request);
+    public String execute(Socket socket, ResponseCommand<String, String> command) {
+        deleteFiles(command.getRequest());
         return "Ok";
     }
 
     public void deleteFiles(String sDFSFileName) {
-        int NUMBER_OF_CHUNKS = this.partitioner.getNumberOfChunks(sDFSFileName);
+        int NUMBER_OF_CHUNKS = 1;
+
         try {
             for (int i = 0; i < NUMBER_OF_CHUNKS; i++) {
-                String chunkName = this.partitioner.getChunkNameByChunkId(sDFSFileName, i);
-                List<Membership.Member> serverList = this.partitioner.getServerListByChunkId(sDFSFileName, i);
+                String chunkName = sDFSFileName + i + ".bin";
+                List<Membership.Member> serverList = this.partitioner.getServerListForChunk(sDFSFileName + i + ".bin");
                 for (Membership.Member server : serverList) {
                     deleteChunk(server, chunkName);
                 }
@@ -86,7 +88,7 @@ public class DeleteHandler implements ResponseCommandExecutor<Delete, String, St
 
     private <TRequest, TResponse> ClientResponseCommandExecutor<TResponse> createResponseExecutor
             (Membership.Member member, ResponseCommand<TRequest, TResponse> command) throws IOException {
-        ResponseCommandExecutor commandHandler = new GetChunkHandler();
+        ResponseCommandExecutor commandHandler = new DeleteChunkHandler();
         String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
         Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
         return new TcpClientResponseCommandExecutor<>(member, command, commandHandler, logger);

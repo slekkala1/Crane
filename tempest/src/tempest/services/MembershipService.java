@@ -15,14 +15,14 @@ import java.util.Properties;
 /**
  * MembershipService is the main component of our gossip style
  * membership implementation.
- *
+ * <p/>
  * It's main function is to provide a wrapper around a list of
  * MemberHealth. There is a MemberHealth to represent each known
  * member of our group.  MembershipService keeps this list up to date
  * based on gossips that it receives from other members of the group.
  * Upon request MembershipService provides the authoritative
  * membership list for this member.
- *
+ * <p/>
  * Methods which access or change the list of MemberHealths are
  * synchronized to avoid threading issues since Server is multi threaded
  * and receives random updates to the membership list.
@@ -45,6 +45,7 @@ public class MembershipService {
     public MembershipService(Logger logger, String introducer, int localPort) throws UnknownHostException {
         this.logger = logger;
         this.introducer = introducer;
+        //this.introducer = "localhost:4444";
         this.localPort = localPort;
         localMemberHealth = new MemberHealth(Inet4Address.getLocalHost().getHostName(), localPort, System.currentTimeMillis(), 0);
     }
@@ -52,6 +53,7 @@ public class MembershipService {
     /**
      * start introduces this member to the introducer and starts a Heartbeat that periodically
      * sends the current membership list to a random member of the membership list.
+     *
      * @param client
      * @throws UnknownHostException
      */
@@ -95,6 +97,7 @@ public class MembershipService {
     /**
      * merges a given membership list with our list of MemberHealths and updates them to
      * reflect the newest known states.
+     *
      * @param membershipList
      */
     public synchronized void merge(Membership.MembershipList membershipList) {
@@ -103,7 +106,7 @@ public class MembershipService {
                 continue;
             }
             boolean merged = false;
-            for(MemberHealth memberHealth : memberHealths) {
+            for (MemberHealth memberHealth : memberHealths) {
                 if (memberHealth.matches(member)) {
                     memberHealth.merge(member);
                     merged = true;
@@ -121,6 +124,7 @@ public class MembershipService {
     /**
      * builds an immutable membership list that reflects the current state of our list
      * of MemberHealths
+     *
      * @return
      */
     public synchronized Membership.MembershipList getMembershipList() {
@@ -172,14 +176,12 @@ public class MembershipService {
         for (MemberHealth memberHealth : memberHealths) {
             if (currentTime - memberHealth.getLastSeen() > 5500) {
                 removals.add(memberHealth);
-            }
-            else if (currentTime - memberHealth.getLastSeen() > 2750) {
+            } else if (currentTime - memberHealth.getLastSeen() > 2750) {
                 if (!memberHealth.hasFailed() && !memberHealth.hasLeft()) {
                     memberHealth.setHasFailed(true);
                     logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has failed");
                 }
-            }
-            else {
+            } else {
                 if (memberHealth.hasFailed()) {
                     logger.logLine(Logger.INFO, "Member: " + memberHealth.getId() + " has rejoined");
                 }
@@ -194,6 +196,7 @@ public class MembershipService {
 
     /**
      * we keep the address and port of the introducer in a properties file which this method reads.
+     *
      * @return
      */
     private static String readPropertiesFile() {
@@ -217,7 +220,7 @@ public class MembershipService {
  * MemberHealth is a mutable and slightly more robust version our Protobuf Member.
  * It holds all the information we need to know about members in our group for
  * failure detection.
- *
+ * <p/>
  * MemberHealth is deliberately not a public class so that nothing outside of
  * MembershipService can access or change instances.  This provides safety from
  * bugs where MemberHealth may be accidentally modified elsewhere and cause failure
@@ -292,6 +295,7 @@ class MemberHealth {
 
     /**
      * Updates the heartbeat and last seen values of a matching member when needed
+     *
      * @param member
      */
     public void merge(Membership.Member member) {
@@ -305,7 +309,6 @@ class MemberHealth {
     }
 
     /**
-     *
      * @return an immutable Member that represents this MemberHealth
      */
     public Membership.Member toMember() {

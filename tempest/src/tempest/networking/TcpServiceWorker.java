@@ -1,6 +1,5 @@
 package tempest.networking;
 
-import tempest.commands.handler.GetHandler;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
@@ -33,50 +32,22 @@ public class TcpServiceWorker implements Runnable {
             for (ResponseCommandExecutor commandHandler : commandHandlers) {
                 if (commandHandler.canHandle(message.getType())) {
                     ResponseCommand command = (ResponseCommand) commandHandler.deserialize(message);
-                    if (message.getType() == Command.Message.Type.PUT || message.getType() == Command.Message.Type.PUTCHUNK) {
-                        writeFileToDisk(client.getInputStream(), (String) command.getRequest());
-                    }
 
-                    command.setResponse(commandHandler.execute(client,command.getRequest()));
-                    commandHandler.serialize(command).writeTo(client.getOutputStream());
+                    command.setResponse(commandHandler.execute(client, command));
+
+                    Command.Message serializedCommand = commandHandler.serialize(command);
+                    serializedCommand.writeTo(client.getOutputStream());
                 }
             }
             client.getOutputStream().flush();
             client.getOutputStream().close();
 
         } catch (IOException e) {
+            e.printStackTrace();
             logger.logLine(DefaultLogger.INFO, "Error handling command" + e);
         }
     }
 
-    public void writeFileToDisk(InputStream in, String sDFSfileName) {
-        byte[] aByte = new byte[1];
-        int bytesRead;
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        if (in != null) {
-
-            FileOutputStream fos = null;
-            BufferedOutputStream bos = null;
-            try {
-                fos = new FileOutputStream(new File(sDFSfileName));
-                bos = new BufferedOutputStream(fos);
-                bytesRead = in.read(aByte, 0, aByte.length);
-
-                do {
-                    baos.write(aByte);
-                    bytesRead = in.read(aByte);
-                } while (bytesRead != -1);
-
-                bos.write(baos.toByteArray());
-                bos.flush();
-                bos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
 
 

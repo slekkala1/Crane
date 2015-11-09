@@ -1,5 +1,6 @@
 package tempest.commands.handler;
 
+import tempest.commands.interfaces.ResponseCommand;
 import tempest.services.MembershipService;
 import tempest.commands.command.Leave;
 import tempest.commands.interfaces.ResponseCommandExecutor;
@@ -38,8 +39,8 @@ public class LeaveHandler implements ResponseCommandExecutor<Leave, Membership.M
         return leave;
     }
 
-    public String execute(Socket socket,Membership.Member request) {
-        membershipService.memberLeft(request);
+    public String execute(Socket socket, ResponseCommand<Membership.Member, String> command) {
+        membershipService.memberLeft(command.getRequest());
         return "Bye";
     }
 }

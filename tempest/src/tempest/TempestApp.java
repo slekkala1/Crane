@@ -5,6 +5,7 @@ import tempest.commands.handler.*;
 import tempest.commands.interfaces.CommandExecutor;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
+import tempest.sdfs.client.SDFSClient;
 import tempest.services.*;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.net.Inet4Address;
 /**
  * This is the entry point for Tempest and provides the lifecycle for most of the
  * players in the application.
- *
+ * <p/>
  * Currently, TempestApp is fairly clean and doing manual constructor
  * injection isn't too messy. However, if things start to get ugly, some kind
  * of IoC/DI framework may be nice if Java has a decent lightweight one.
@@ -25,18 +26,23 @@ public class TempestApp implements Runnable {
     private final CommandExecutor[] commandHandlers;
     private final ResponseCommandExecutor[] responseCommandHandlers;
     private final Partitioner partitioner;
+    private final ReplicaService replicaService;
+    private final SDFSClient sdfsClient;
 
     public TempestApp() throws IOException {
         String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
         Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
         membershipService = new MembershipService(logger);
-        commandHandlers = new CommandExecutor[] { new MembershipHandler(membershipService)};
-        partitioner = new Partitioner(membershipService);
-        responseCommandHandlers = new ResponseCommandExecutor[] { new PingHandler(), new GrepHandler(logger), new IntroduceHandler(membershipService, logger),
-                new LeaveHandler(membershipService), new PutHandler(partitioner),new PutChunkHandler(),new GetHandler(partitioner),new GetChunkHandler()};
+        commandHandlers = new CommandExecutor[]{new MembershipHandler(membershipService)};
+        partitioner = new Partitioner(logger, membershipService);
+        responseCommandHandlers = new ResponseCommandExecutor[]{new PingHandler(), new GrepHandler(logger), new IntroduceHandler(membershipService, logger),
+                new LeaveHandler(membershipService), new PutHandler(partitioner), new PutChunkHandler(partitioner), new GetHandler(partitioner),
+                new GetChunkHandler(), new DeleteHandler(partitioner), new DeleteChunkHandler(partitioner), new ListHandler(partitioner)};
         Client client = new Client(membershipService, logger, commandHandlers, responseCommandHandlers);
         server = new Server(logger, 4444, commandHandlers, responseCommandHandlers);
-        console = new Console(logger, client, server, membershipService);
+        console = new Console(logger, client, server, membershipService, partitioner);
+        sdfsClient = new SDFSClient();
+        replicaService = new ReplicaService(logger, commandHandlers, responseCommandHandlers, partitioner, sdfsClient);
     }
 
     /**
@@ -45,6 +51,7 @@ public class TempestApp implements Runnable {
     public void run() {
         try {
             server.start();
+            replicaService.start();
             ShellFactory.createConsoleShell("Tempest", "", console).commandLoop();
         } catch (IOException e) {
             e.printStackTrace();

@@ -29,7 +29,7 @@ public class UdpServiceWorker implements Runnable {
         this.logger = logger;
     }
 
-    public void run(){
+    public void run() {
         tempest.protos.Command.Message message;
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
@@ -42,8 +42,8 @@ public class UdpServiceWorker implements Runnable {
             }
             for (ResponseCommandExecutor commandHandler : responseCommandHandlers) {
                 if (commandHandler.canHandle(message.getType())) {
-                    ResponseCommand command = (ResponseCommand)commandHandler.deserialize(message);
-                    command.setResponse(commandHandler.execute(serverSocket,command.getRequest()));
+                    ResponseCommand command = (ResponseCommand) commandHandler.deserialize(message);
+                    command.setResponse(commandHandler.execute(serverSocket, command));
                     sendResponse(commandHandler.serialize(command));
                 }
             }

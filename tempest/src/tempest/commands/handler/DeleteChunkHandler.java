@@ -1,10 +1,13 @@
 package tempest.commands.handler;
 
 import tempest.commands.command.DeleteChunk;
+import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.protos.Command;
+import tempest.services.Partitioner;
 
 import java.io.File;
+import java.net.Inet4Address;
 import java.net.Socket;
 
 /**
@@ -14,6 +17,17 @@ public class DeleteChunkHandler implements ResponseCommandExecutor<DeleteChunk, 
     public boolean canHandle(Command.Message.Type type) {
         return type == DeleteChunk.type;
     }
+
+    private Partitioner partitioner;
+
+    public DeleteChunkHandler() {
+
+    }
+
+    public DeleteChunkHandler(Partitioner partitioner) {
+        this.partitioner = partitioner;
+    }
+
 
     public Command.Message serialize(DeleteChunk command) {
         Command.DeleteChunk.Builder deleteChunkBuilder = Command.DeleteChunk.newBuilder().setRequest(command.getRequest());
@@ -35,24 +49,26 @@ public class DeleteChunkHandler implements ResponseCommandExecutor<DeleteChunk, 
         return deleteChunk;
     }
 
-    public String execute(Socket socket,String request) {
-        deleteChunk(request);
+    public String execute(Socket socket, ResponseCommand<String, String> command) {
+        deleteChunk(command.getRequest());
         return "Ok";
     }
 
     public void deleteChunk(String chunkName) {
-        try{
+        try {
             File file = new File(chunkName);
-
-            if(file.delete()){
-                System.out.println(file.getName() + " is deleted!");
-            }else{
-                System.out.println("Delete operation is failed.");
+            System.out.println("Delete chunk " + chunkName + " from " + Inet4Address.getLocalHost().getHostName().toString());
+            if (file.exists()) {
+                if (file.delete()) {
+                    this.partitioner.getsDFSFileNamesAtTheVM().remove(chunkName);
+                    this.partitioner.getFileAndReplicaMap().remove(chunkName);
+                    System.out.println(file.getName() + " is deleted!");
+                } else {
+                    System.out.println("Delete operation failed.");
+                }
             }
-
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

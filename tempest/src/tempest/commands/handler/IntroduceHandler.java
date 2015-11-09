@@ -1,5 +1,6 @@
 package tempest.commands.handler;
 
+import tempest.commands.interfaces.ResponseCommand;
 import tempest.services.MembershipService;
 import tempest.commands.command.Introduce;
 import tempest.commands.interfaces.ResponseCommandExecutor;
@@ -41,8 +42,8 @@ public class IntroduceHandler implements ResponseCommandExecutor<Introduce, Memb
         return introduce;
     }
 
-    public Membership.MembershipList execute(Socket socket,Membership.Member request) {
-        membershipService.addMember(request);
+    public Membership.MembershipList execute(Socket socket, ResponseCommand<Membership.Member, Membership.MembershipList> command) {
+        membershipService.addMember(command.getRequest());
         return membershipService.getMembershipList();
     }
 }

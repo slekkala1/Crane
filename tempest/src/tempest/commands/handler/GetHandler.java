@@ -21,6 +21,7 @@ import java.io.*;
 import java.net.Inet4Address;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +37,6 @@ public class GetHandler implements ResponseCommandExecutor<Get, String, String> 
     public GetHandler(Partitioner partitioner) {
         this.partitioner = partitioner;
     }
-
 
     public boolean canHandle(Command.Message.Type type) {
         return type == Get.type;
@@ -56,65 +56,79 @@ public class GetHandler implements ResponseCommandExecutor<Get, String, String> 
 
     public Get deserialize(Command.Message message) {
         Get get = new Get();
+        get.setRequest(message.getGet().getRequest());
         if (message.hasGet() && message.getGet().hasResponse())
             get.setResponse(message.getGet().getResponse());
         return get;
     }
 
-    public String execute(Socket socket, String request) {
+    public String execute(Socket socket, ResponseCommand<String, String> command) {
 
-//get chunks from where they are stored to return to client
-        //getFile(request);
         try {
-            sendFile(socket.getOutputStream(), request);
+            int value = sendFile(socket.getOutputStream(), command.getRequest());
+            if (value == 0) return "file not available";
         } catch (IOException e) {
             e.printStackTrace();
         }
         return "Sent the file";
     }
 
-    public void sendFile(OutputStream outputStream, String sDFSFileName) {
+    public int sendFile(OutputStream outputStream, String sDFSFileName) {
 
-        byte AllFilesContent[] = null;
-
+        ByteArrayOutputStream AllFilesContent = null;
         int TOTAL_SIZE = 0;
-        int NUMBER_OF_CHUNKS = this.partitioner.getNumberOfChunks(sDFSFileName);
+        int NUMBER_OF_CHUNKS = 1;
+        //= Integer.MAX_VALUE;
         int CURRENT_LENGTH = 0;
-        AllFilesContent = new byte[TOTAL_SIZE]; // Length of All Files, Total Size
-        InputStream inStream = null;
+        AllFilesContent = new ByteArrayOutputStream(); // Length of All Files, Total Size
 
         try {
             for (int i = 0; i < NUMBER_OF_CHUNKS; i++) {
 
-                List<Membership.Member> serverList = this.partitioner.getServerListByChunkId(sDFSFileName, i);
+                List<Membership.Member> serverList = this.partitioner.getServerListForChunk(sDFSFileName + i + ".bin");
+               /*String host = "swapnas-MacBook-Air.local:4444";
+                final Membership.Member  member =Membership.Member.newBuilder().
+                        setPort(Integer.parseInt(host.split(":")[1]))
+                        .setHost(host.split(":")[0]).build();
+                List<Membership.Member> serverList = new ArrayList<>();
+                serverList.add(member); */
+
+                if (serverList.isEmpty()) break;
 
                 for (Membership.Member server : serverList) {
-                    GetChunk getChunk = getChunk(server, this.partitioner.getChunkNameByChunkId(sDFSFileName, i),
-                            this.partitioner.getChunkSizeByChunkId(sDFSFileName, i));
-                    if (getChunk.getResponse().equals("Ok")) {
-                        inStream = new ByteArrayInputStream(getChunk.getByteArray());
-                        inStream.read(AllFilesContent, CURRENT_LENGTH, getChunk.getBytesSize());
+                    System.out.println("Get chunkName " + sDFSFileName + i + ".bin" + " from Server " + server.getHost());
+
+                    GetChunk getChunk = getChunk(server, sDFSFileName + i + ".bin");
+                    String response = getChunk.getResponse();
+                    if (response.equals("Ok") && getChunk.getBytesSize() != 0) {
+                        AllFilesContent.write(getChunk.getByteArray(), CURRENT_LENGTH, getChunk.getBytesSize());
                         CURRENT_LENGTH += getChunk.getBytesSize();
-                        inStream.close();
                         break;
+                    }
+                    if (getChunk.getBytesSize() == 0) {
+                        outputStream.write(ByteBuffer.allocate(4).putInt(0).array());
+                        return 0;
                     }
                 }
             }
 
-            assert AllFilesContent.length == this.partitioner.getTotalFilesize(sDFSFileName);
-            outputStream.write(ByteBuffer.allocate(4).putInt(AllFilesContent.length).array());
-            outputStream.write(AllFilesContent);
+            AllFilesContent.flush();
+            outputStream.write(ByteBuffer.allocate(4).putInt(AllFilesContent.toByteArray().length).array());
+            outputStream.write(AllFilesContent.toByteArray());
+
+            outputStream.flush();
+            AllFilesContent.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println("Merge was executed successfully.!");
+        return AllFilesContent.toByteArray().length;
     }
 
-    public GetChunk getChunk(Membership.Member server, String chunkName, int chunkSize) throws IOException {
+    public GetChunk getChunk(Membership.Member server, String chunkName) throws IOException {
         GetChunk getChunk = new GetChunk();
         getChunk.setRequest(chunkName);
-        getChunk.setBytesSize(chunkSize);
         createResponseExecutor(server, getChunk).execute();
         return getChunk;
     }
@@ -126,6 +140,4 @@ public class GetHandler implements ResponseCommandExecutor<Get, String, String> 
         Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
         return new TcpClientResponseCommandExecutor<>(member, command, commandHandler, logger);
     }
-
-
 }

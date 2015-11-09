@@ -10,15 +10,14 @@ import tempest.interfaces.Logger;
 import tempest.networking.TcpClientResponseCommandExecutor;
 import tempest.protos.Command;
 import tempest.protos.Membership;
-import tempest.services.CommandLineExecutor;
-import tempest.services.DefaultLogWrapper;
-import tempest.services.DefaultLogger;
-import tempest.services.Partitioner;
+import tempest.services.*;
 
 import java.io.*;
 import java.net.Inet4Address;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by swapnalekkala on 10/27/15.
@@ -59,30 +58,38 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
         return put;
     }
 
-    public String execute(Socket socket,String request) {
-        int CHUNK_SIZE = 6400000;//64kb
-        chunkFile(request, CHUNK_SIZE);
+    public String execute(Socket client, ResponseCommand<String, String> command) {
+        byte[] fileLength = new byte[4];
+
+        try {
+            int readFile = client.getInputStream().read(fileLength);
+            byte[] fileBytes = FileIOUtils.writeInputStreamToByteArray(client.getInputStream(), ByteBuffer.wrap(fileLength).getInt());
+            int CHUNK_SIZE = 6400000;//6.4Mb
+            chunkFile(command.getRequest(), CHUNK_SIZE, fileBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //copy file to servers and return ok message
         // chunking
         return "Ok";
     }
 
-    public void chunkFile(String sDFSFileName, int CHUNK_SIZE) {
-        File sDFSFile = new File(sDFSFileName);
-        int FILE_SIZE = (int) sDFSFile.length();
-        ArrayList<String> nameList = new ArrayList<String>();
+    public void chunkFile(String sDFSFileName, int CHUNK_SIZE, byte[] sDFSFileByteArray) {
+
+        int FILE_SIZE = sDFSFileByteArray.length;
+        List<String> nameList = new ArrayList<>();
 
         System.out.println("Total File Size: " + FILE_SIZE);
         int chunkId = 0;
-        int NUMBER_OF_CHUNKS = FILE_SIZE/CHUNK_SIZE;
-        if(FILE_SIZE%CHUNK_SIZE !=0) NUMBER_OF_CHUNKS = NUMBER_OF_CHUNKS + 1;
+        int NUMBER_OF_CHUNKS = FILE_SIZE / CHUNK_SIZE;
+        if (FILE_SIZE % CHUNK_SIZE != 0) NUMBER_OF_CHUNKS = NUMBER_OF_CHUNKS + 1;
         byte[] temporary = null;
 
         try {
             InputStream inStream = null;
             int totalBytesRead = 0;
 
-            inStream = new BufferedInputStream(new FileInputStream(sDFSFile));
+            inStream = new ByteArrayInputStream(sDFSFileByteArray);
 
             while (totalBytesRead < FILE_SIZE) {
                 String PART_NAME = sDFSFileName + chunkId + ".bin";
@@ -97,31 +104,49 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
                 int bytesRead = inStream.read(temporary, 0, CHUNK_SIZE);
 
                 Response TResponse = null;
-                Membership.Member randomMember = null;
-                boolean end = true;
-                while (end) {
+                List<Membership.Member> memberList = this.partitioner.getServerListForChunk(PART_NAME);
+                List<Integer> nodeIdsForChunk = this.partitioner.getServerListNodeIdsForChunk(PART_NAME);
 
-                    randomMember = partitioner.getServerToSendChunkTo(sDFSFileName);
-                    System.out.println("sent to" + randomMember.getPort() + ":" + randomMember.getHost());
+                /*String host = "swapnas-MacBook-Air.local:4444";
+                final Membership.Member  member1 =Membership.Member.newBuilder().
+                        setPort(Integer.parseInt(host.split(":")[1]))
+                        .setHost(host.split(":")[0]).build();
+                List<Membership.Member> memberList = new ArrayList<>();
+                memberList.add(member1);
+*/
 
-                    TResponse = putChunk(temporary, PART_NAME, sDFSFileName, chunkId, randomMember);
-                    if(TResponse.getResponse().equals("Ok")) end = false;
+
+                boolean end;
+                for (Membership.Member member : memberList) {
+                    Membership.Member machine = member;
+                    end = true;
+                    while (end) {
+                        int nodeIdOfMachine = this.partitioner.getNodeIdOfMachine(machine);
+                        List<Integer> replicaList = new ArrayList<>();
+                        for (Integer n : nodeIdsForChunk) {
+                            if (!n.equals(nodeIdOfMachine)) {
+                                replicaList.add(n);
+                            }
+                        }
+
+                        System.out.println("sent " + PART_NAME + "to machine [" + machine.getPort() + ":"
+                                + machine.getHost() + "] with node Id" + nodeIdOfMachine);
+
+                        TResponse = putChunk(temporary, PART_NAME, sDFSFileName, chunkId, machine, replicaList.get(0), replicaList.get(1));
+                        //TResponse = putChunk(temporary, PART_NAME, sDFSFileName, chunkId, machine, 1, 2);
+
+                        if (TResponse.getResponse().equals("Ok")) end = false;
+                    }
                 }
-                partitioner.updateFileMetadata(sDFSFileName, PART_NAME, chunkId, CHUNK_SIZE, randomMember,NUMBER_OF_CHUNKS,FILE_SIZE);
-                nameList.add(PART_NAME);
 
                 if (bytesRead > 0) // If bytes read is not empty
                 {
                     totalBytesRead += bytesRead;
                     chunkId++;
                 }
-//                putChunk(temporary, "D://" + PART_NAME);
-//                nameList.add("D://" + PART_NAME);
-
-
+                nameList.add(PART_NAME);
                 System.out.println("Total Bytes Read: " + totalBytesRead);
             }
-            // return nameList;
         } catch (IOException e) {
             //logger.logLine(DefaultLogger.WARNING, "Client socket failed while connecting to " + server + e);
             //return null;
@@ -129,11 +154,14 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
         System.out.println(nameList.toString());
     }
 
-    public Response putChunk(byte[] byteArray, String chunkName, String sDFSFileName, int chunkId, Membership.Member randomMember) throws IOException {
+    public Response putChunk(byte[] byteArray, String chunkName, String sDFSFileName, int chunkId, Membership.Member member, int replica1, int replica2) throws IOException {
         PutChunk putChunk = new PutChunk();
         putChunk.setRequest(chunkName);
         putChunk.setByteArray(byteArray);
-        return createResponseExecutor(randomMember, putChunk).execute();
+        putChunk.setReplica1(replica1);
+        putChunk.setReplica2(replica2);
+        putChunk.setsDFSFileName(sDFSFileName);
+        return createResponseExecutor(member, putChunk).execute();
     }
 
     private <TRequest, TResponse> ClientResponseCommandExecutor<TResponse> createResponseExecutor

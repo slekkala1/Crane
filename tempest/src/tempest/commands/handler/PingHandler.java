@@ -1,10 +1,12 @@
 package tempest.commands.handler;
 
 import tempest.commands.command.Ping;
+import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.protos.Command;
 
 import java.net.Socket;
+import java.util.Objects;
 
 public class PingHandler implements ResponseCommandExecutor<Ping, Object, String> {
     public boolean canHandle(Command.Message.Type type) {
@@ -25,11 +27,11 @@ public class PingHandler implements ResponseCommandExecutor<Ping, Object, String
     public Ping deserialize(Command.Message message) {
         Ping ping = new Ping();
         if (message.hasPing() && message.getPing().hasResponse())
-        ping.setResponse(message.getPing().getResponse());
+            ping.setResponse(message.getPing().getResponse());
         return ping;
     }
 
-    public String execute(Socket socket,Object request) {
+    public String execute(Socket socket, ResponseCommand<Object, String> command) {
         return "Hello";
     }
 }

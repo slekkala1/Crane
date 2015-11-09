@@ -8,13 +8,23 @@ How to run?
 2) Go to the machine from which you want join the membership and type ‘?list’ at the >Tempest prompt to see the function calls that can be made from Client end
 
 3) Introducer which is VM 'fa15-cs425-g03-01.cs.illinois.edu' needs to be up for members to join the group.
-Type 'sm' or 'start-membership'(and Enter) at >Tempest to Join the membership/Gossip group and 'stme' or 'stop-membership'(and Enter) to Leave the membership/Gossip group.  
+Type 'mstart' or 'start-membership'(and Enter) at >Tempest to Join the membership/Gossip group and 'mstop' or 'stop-membership'(and Enter) to Leave the membership/Gossip group.  
 
-4) Type 'sm'(and Enter) at introducer 'fa15-cs425-g03-01.cs.illinois.edu' so others machines can join and similarly execute 'sm' on all machines at >Tempest command prompt to join the group.
+4) Type 'mstart'(and Enter) at introducer 'fa15-cs425-g03-01.cs.illinois.edu' so others machines can join and similarly execute 'sm' on all machines at >Tempest command prompt tomstop the group.
 
-5) Type 'stme'(and Enter) on the machine you want to leave.
+5) Type 'mstop'(and Enter) on the machine you want to leave.
 
 6) Type 'gml'(and Enter) or 'get-membership-list' at >Tempest command prompt to get the latest membership list on the machine. 
+
+7) Once mstart is done the machine is a member of SDFS file storage machines.
+
+8) To have the Client operations (put, get, delete) at the machine, java -cp uber-tempest-1.0-SNAPSHOT.jar tempest.SDFSClientApp at that particular machine and '?list' at the SDFSClientApp. 
+
+9) 'put localfilename sdfsfilename' will put the localfile with sdfsfilename at the SDFS file storage machines.
+
+10) 'get sdfsfilename' will get the sdfsfilename from SDFS machines and store it at local machine with same name.
+
+11) 'delete sdfsfilename' will delete the sdfsfile from all the SDFS machines where it is replicated. 
 
 
 Install
@@ -23,7 +33,9 @@ Install
 
 2) cd cs425-mp-lekkala-morrow/tempest folder and mvn clean install 
 
-3) cd target and java -jar uber-tempest-1.0-SNAPSHOT.jar to get the Tempest App running on your machine
+3) cd target and java -cp uber-tempest-1.0-SNAPSHOT.jar tempest.TempestApp to get the Tempest App running on your machine.
+
+4) java -cp uber-tempest-1.0-SNAPSHOT.jar tempest.SDFSClientApp to be the SDFS Client at that machine. 
 
 Run Tests (once you have installed)
 -----------------------------------

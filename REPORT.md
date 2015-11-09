@@ -33,7 +33,8 @@ Both SDFSClientApp and TempestApp are independent. SDFS file operations(put,get,
 machines can join or leave the SDFS file storage via TempestApp.
 
 SDFS Server machines are hard coded in SDFSClient, so client can pick any random alive machines to perform
-put, get, and delete operations.
+put, get, and delete operations. **Active replication** is used here. Once the random alive SDFS server receives the put command it
+sends put command with file to the node Ids determined by **Partitioner** one after another.
 
 Once a put command is issued, the SDFS server machine will calculate the alive nodes(in **Partitioner**)
 at which the file needs to be replicated using distributed hash table. SHA256 algorithm is used to calculate node Ids
@@ -67,6 +68,22 @@ and the whole file contents of all chunks are returned to the Client machine. Al
 to all servers that hold the chunks of a particular sdfsfile.
 
 All SDFS operations and commands use google protocol buffers to send and receive messages and are done using TCP connection.
+
+(i) re-replication time and bandwidth upon a
+failure (you can measure for a 20 MB file);
+4 data points for replication time for one failure 70,67,66,63 ms, average is 66.5 ms
+bandwidth 300 Mbps on average
+
+ii) My design is master-less.
+
+iii) times to read and write one file of size 20 MB
+4 data points for 20 MB file
+write takes time 360,415,335 and 416 ms
+read takes 212,217, 214 and 276 ms
+write takes more time than read because replication is also included. Given that three replicas need to be written to 3 different
+machines via active replication, the time taken is not significantly greater than the time taken to read.
+
+
 
 Gossip protocol
 ---------------

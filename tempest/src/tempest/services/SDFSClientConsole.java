@@ -25,7 +25,7 @@ public class SDFSClientConsole {
     public String put(@Param(name = "localfilename") String localFileName, @Param(name = "sdfsfilename") String sDFSFileName) {
         Response<String> response =
                 sDFSClient.put(localFileName, sDFSFileName);
-        if (response.getResponse().equals("Ok")) return "Successfully written to master";
+        if (response.getResponse().equals("Ok")) return "Successfully written to SDFS machines";
         return "Please try again put file failed";
     }
 
@@ -41,7 +41,7 @@ public class SDFSClientConsole {
     public String delete(@Param(name = "sdfsfilename") String sDFSFileName) {
         Response<String> response =
                 sDFSClient.delete(sDFSFileName);
-        if (response.getResponse().equals("Ok")) return "Successfully deleted" + sDFSFileName + "from disk";
+        if (response.getResponse().equals("Ok")) return "Successfully deleted " + sDFSFileName + " from disk";
         return "Please try again get file failed";
     }
 }

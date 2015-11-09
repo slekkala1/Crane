@@ -66,7 +66,7 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
         try {
             int readFile = client.getInputStream().read(fileLength);
             byte[] fileBytes = FileIOUtils.writeInputStreamToByteArray(client.getInputStream(), ByteBuffer.wrap(fileLength).getInt());
-            int CHUNK_SIZE = 6400000;//6.4Mb
+            int CHUNK_SIZE = 64000000;//6.4Mb
             chunkFile(command.getRequest(), CHUNK_SIZE, fileBytes);
         } catch (IOException e) {
             e.printStackTrace();

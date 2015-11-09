@@ -3,7 +3,8 @@ Tempest
 
 How to run?
 -----------
-1) On each machine, run /opt/tempest/run-tempest.sh to start the Server and Client
+1) On each machine go to /home/lekkala2 and use java -cp uber-tempest-1.0-SNAPSHOT.jar tempest.TempestApp to get the tempestApp running
+In a new terminal window login to the VM which you want to run SDFSClientApp java -cp uber-tempest-1.0-SNAPSHOT.jar tempest.SDFSClientApp
 
 2) Go to the machine from which you want join the membership and type ‘?list’ at the >Tempest prompt to see the function calls that can be made from Client end
 
@@ -18,13 +19,16 @@ Type 'mstart' or 'start-membership'(and Enter) at >Tempest to Join the membershi
 
 7) Once mstart is done the machine is a member of SDFS file storage machines.
 
-8) To have the Client operations (put, get, delete) at the machine, java -cp uber-tempest-1.0-SNAPSHOT.jar tempest.SDFSClientApp at that particular machine and '?list' at the SDFSClientApp. 
+8) To have the Client operations (put, get, delete) at the machine, java -cp uber-tempest-1.0-SNAPSHOT.jar tempest.SDFSClientApp at that particular machine in a new window and '?list' at the SDFSClientApp.
 
 9) 'put localfilename sdfsfilename' will put the localfile with sdfsfilename at the SDFS file storage machines.
 
 10) 'get sdfsfilename' will get the sdfsfilename from SDFS machines and store it at local machine with same name.
 
-11) 'delete sdfsfilename' will delete the sdfsfile from all the SDFS machines where it is replicated. 
+11) 'delete sdfsfilename' will delete the sdfsfile from all the SDFS machines where it is replicated.
+
+12) After 'put localfilename sdfsfilename' at SDFSClientApp, 'store' can be used at TempestApp running to display files at each SDFS server machine.
+'list sdfsfilename' will display all the VMs that have sdfsfilename.
 
 
 Install

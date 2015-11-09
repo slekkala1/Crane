@@ -73,6 +73,7 @@ public class SDFSClient {
         Get get = new Get();
         get.setRequest(sDFSFileName);
         Response response = null;
+        long startTime = System.currentTimeMillis();
 
         while (response == null) {
             String randomMachine = getRandomMachine();
@@ -83,6 +84,9 @@ public class SDFSClient {
             response = createResponseExecutor(member, get).execute();
 
         }
+        long timeTaken = System.currentTimeMillis() - startTime;
+        System.out.println("time taken for get to complete " + timeTaken);
+
         return response;
     }
 
@@ -91,6 +95,8 @@ public class SDFSClient {
         put.setRequest(sdfsFileName);
         put.setLocalFileName(localFileName);
         Response response = null;
+
+        long startTime = System.currentTimeMillis();
 
         while (response == null) {
             String randomMachine = getRandomMachine();
@@ -101,6 +107,9 @@ public class SDFSClient {
 
             response = createResponseExecutor(member, put).execute();
         }
+        long timeTaken = System.currentTimeMillis() - startTime;
+        System.out.println("time taken for put to complete " + timeTaken);
+
         return response;
     }
 
@@ -112,11 +121,18 @@ public class SDFSClient {
         putChunk.setByteArray(byteArray);
         putChunk.setsDFSFileName(sDFSFileName);
 
+        long startTime = System.currentTimeMillis();
+
         Membership.Member member = Membership.Member.newBuilder()
                 .setHost(machine.split(":")[0])
                 .setPort(Integer.parseInt(machine.split(":")[1]))
                 .build();
-        return createResponseExecutor(member, putChunk).execute();
+        Response response = createResponseExecutor(member, putChunk).execute();
+        long timeTaken = System.currentTimeMillis() - startTime;
+
+        System.out.println("time taken for replicate to complete " + timeTaken);
+
+        return response;
     }
 
     private <TRequest, TResponse> ClientResponseCommandExecutor<TResponse> createResponseExecutor(Membership.Member member, ResponseCommand<TRequest, TResponse> command) {

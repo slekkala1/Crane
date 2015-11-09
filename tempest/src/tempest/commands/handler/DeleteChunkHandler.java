@@ -28,7 +28,6 @@ public class DeleteChunkHandler implements ResponseCommandExecutor<DeleteChunk, 
         this.partitioner = partitioner;
     }
 
-
     public Command.Message serialize(DeleteChunk command) {
         Command.DeleteChunk.Builder deleteChunkBuilder = Command.DeleteChunk.newBuilder().setRequest(command.getRequest());
 

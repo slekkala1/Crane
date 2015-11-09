@@ -44,20 +44,14 @@ public class Partitioner {
 
     public void addFileAndReplicas(String sDFSFileChunkName, FileReplica fileReplica) {
         synchronized (lock) {
-            System.out.println("In addFileAndReplicas method in Partitioner");
             this.replicas.put(sDFSFileChunkName, fileReplica);
         }
     }
 
     public Map<String, FileReplica> getFileAndReplicaMap() {
         synchronized (lock) {
-            //logger.logLine(logger.INFO,"In getFileAndReplicaMap method in Partitioner");
             return this.replicas;
         }
-    }
-
-    public List<Membership.Member> getAllServersThatAreAlive() {
-        return this.membershipService.getMembershipList().getMemberList();
     }
 
     public void getAllServerNodeIds() {
@@ -82,46 +76,6 @@ public class Partitioner {
 
     public void setsDFSFileNamesAtTheVM(String addedSDFSFile, String sDFSFileName) {
         this.sDFSFileNamesAtTheVM.put(addedSDFSFile, sDFSFileName);
-    }
-
-    public Membership.Member getServerToSendChunkTo(String sDFSFileName) {
-        int fileKey = HashKey.hexToKey(HashKey.hashKey(sDFSFileName));
-        System.out.println("fileKey for " + sDFSFileName + "is " + fileKey);
-        logger.logLine(Logger.INFO, "fileKey for " + sDFSFileName + "is " + fileKey);
-
-        int nodeKey = -1;
-        List<Integer> aliveIds = new ArrayList<Integer>();
-
-        for (Membership.Member member : this.membershipService.getMembershipList().getMemberList()) {
-            aliveIds.add(HashKey.hexToKey(HashKey.hashKey(member.getHost() + ":" + member.getPort())));
-            System.out.println(HashKey.hexToKey(HashKey.hashKey(member.getHost() + ":" + member.getPort())));
-        }
-
-        Collections.sort(aliveIds);
-        for (Integer i : aliveIds) {
-            if (fileKey <= i) {
-                nodeKey = i;
-                break;
-            }
-        }
-
-        if (nodeKey == -1 && aliveIds.size() >= 1) {
-            nodeKey = aliveIds.get(0);
-        }
-
-
-        System.out.println("aliveIds" + nodeKey);
-        logger.logLine(Logger.INFO, "aliveIds" + nodeKey);
-
-
-        System.out.println(allMachinesId.get(nodeKey));
-        logger.logLine(Logger.INFO, "machine" + allMachinesId.get(nodeKey) + "for nodeKey" +
-                nodeKey + "for SDFS file name" + sDFSFileName);
-
-
-        return Membership.Member.newBuilder().
-                setPort(Integer.parseInt(allMachinesId.get(nodeKey).split(":")[1]))
-                .setHost(allMachinesId.get(nodeKey).split(":")[0]).build();
     }
 
     public List<Membership.Member> getServerListForChunk(String sDFSFileName) {
@@ -302,7 +256,6 @@ public class Partitioner {
     public String getMachineByNodeId(int nodeId) {
         return allMachinesId.get(nodeId);
     }
-
 
     public int getNodeIdOfMachine(Membership.Member member) {
         return HashKey.hexToKey(HashKey.hashKey(member.getHost() + ":" + member.getPort()));

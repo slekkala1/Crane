@@ -14,7 +14,6 @@ public class GetChunk implements ResponseCommand<String, String>, Tcp {
     private int bytesSize;
     private byte[] byteArray;
 
-
     public tempest.protos.Command.Message.Type getType() {
         return type;
     }

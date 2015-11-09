@@ -31,7 +31,6 @@ public class GetHandler implements ResponseCommandExecutor<Get, String, String> 
     private Partitioner partitioner;
 
     public GetHandler() {
-
     }
 
     public GetHandler(Partitioner partitioner) {
@@ -41,7 +40,6 @@ public class GetHandler implements ResponseCommandExecutor<Get, String, String> 
     public boolean canHandle(Command.Message.Type type) {
         return type == Get.type;
     }
-
 
     public Command.Message serialize(Get command) {
         Command.Get.Builder getBuilder = Command.Get.newBuilder().setRequest(command.getRequest());

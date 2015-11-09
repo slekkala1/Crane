@@ -52,5 +52,4 @@ public class Put implements ResponseCommand<String, String>, Tcp {
     public String add(String response1, String response2) {
         return response1 + System.lineSeparator() + response2;
     }
-
 }

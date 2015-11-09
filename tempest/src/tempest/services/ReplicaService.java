@@ -43,7 +43,6 @@ public class ReplicaService implements Runnable {
     }
 
     public void run() {
-//        System.out.println("replica service started");
         for (Map.Entry<String, FileReplica> entry : this.partitioner.getFileAndReplicaMap().entrySet()) {
             String sDFSFileName = this.partitioner.getsDFSFileNamesAtTheVM().get(entry.getKey());
             logger.logLine(logger.INFO, "replica service for file " + entry.getKey());
@@ -74,7 +73,7 @@ public class ReplicaService implements Runnable {
                 System.out.println("condition 2");
 
                 byte[] byteArray = FileIOUtils.sendByteArraytoReplicate(entry.getKey());
-                //nodeKeyIds.remove(entry.getValue().getReplica2());
+
                 for (int i = 0; i < nodeKeyIds.size(); i++) {
                     if (nodeKeyIds.get(i).equals(entry.getValue().getReplica2())) nodeKeyIds.remove(i);
                 }
@@ -87,7 +86,6 @@ public class ReplicaService implements Runnable {
                 System.out.println("condition 3");
 
                 byte[] byteArray = FileIOUtils.sendByteArraytoReplicate(entry.getKey());
-                //nodeKeyIds.remove(entry.getValue().getReplica1());
 
                 for (int i = 0; i < nodeKeyIds.size(); i++) {
                     if (nodeKeyIds.get(i).equals(entry.getValue().getReplica1())) nodeKeyIds.remove(i);

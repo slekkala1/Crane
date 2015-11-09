@@ -12,7 +12,6 @@ public class DeleteChunk implements ResponseCommand<String, String>, Tcp {
     private String request;
     private String response;
 
-
     public tempest.protos.Command.Message.Type getType() {
         return type;
     }

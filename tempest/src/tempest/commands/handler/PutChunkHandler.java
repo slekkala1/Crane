@@ -20,7 +20,6 @@ public class PutChunkHandler implements ResponseCommandExecutor<PutChunk, String
     private Partitioner partitioner;
 
     public PutChunkHandler() {
-
     }
 
     public PutChunkHandler(Partitioner partitioner) {

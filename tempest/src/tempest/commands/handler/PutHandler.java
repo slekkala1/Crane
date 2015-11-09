@@ -69,8 +69,6 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //copy file to servers and return ok message
-        // chunking
         return "Ok";
     }
 

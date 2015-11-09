@@ -43,6 +43,4 @@ public class GetChunkHandler implements ResponseCommandExecutor<GetChunk, String
         FileIOUtils.sendChunkFromDisk(socket, command.getRequest());
         return "Ok";
     }
-
-
 }

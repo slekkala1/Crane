@@ -17,14 +17,9 @@ import java.net.Socket;
 public class ListHandler implements ResponseCommandExecutor<List, String, String> {
     private Partitioner partitioner;
 
-    public ListHandler() {
-
-    }
-
     public ListHandler(Partitioner partitioner) {
         this.partitioner = partitioner;
     }
-
 
     public boolean canHandle(Command.Message.Type type) {
         return List.type == type;

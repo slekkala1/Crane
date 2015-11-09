@@ -17,6 +17,10 @@ public class PutChunk implements ResponseCommand<String, String>, Tcp {
     private int replica2;
     private String sDFSFileName;
 
+    public tempest.protos.Command.Message.Type getType() {
+        return type;
+    }
+
     public String getsDFSFileName() {
         return sDFSFileName;
     }
@@ -25,17 +29,12 @@ public class PutChunk implements ResponseCommand<String, String>, Tcp {
         this.sDFSFileName = sDFSFileName;
     }
 
-
     public byte[] getByteArray() {
         return byteArray;
     }
 
     public void setByteArray(byte[] byteArray) {
         this.byteArray = byteArray;
-    }
-
-    public tempest.protos.Command.Message.Type getType() {
-        return type;
     }
 
     public String getRequest() {

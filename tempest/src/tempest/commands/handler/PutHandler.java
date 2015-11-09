@@ -23,10 +23,8 @@ import java.util.List;
  * Created by swapnalekkala on 10/27/15.
  */
 public class PutHandler implements ResponseCommandExecutor<Put, String, String> {
-
     private Partitioner partitioner;
     private final Logger logger;
-
 
     public PutHandler(Logger logger) {
         this.logger = logger;
@@ -77,7 +75,6 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
     }
 
     public void chunkFile(String sDFSFileName, int CHUNK_SIZE, byte[] sDFSFileByteArray) {
-
         int FILE_SIZE = sDFSFileByteArray.length;
         List<String> nameList = new ArrayList<>();
 
@@ -97,26 +94,15 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
                 String PART_NAME = sDFSFileName + chunkId + ".bin";
                 int bytesRemaining = FILE_SIZE - totalBytesRead;
                 if (bytesRemaining < CHUNK_SIZE) // Remaining Data Part is Smaller Than CHUNK_SIZE
-                // CHUNK_SIZE is assigned to remain volume
                 {
                     CHUNK_SIZE = bytesRemaining;
                     System.out.println("CHUNK_SIZE: " + CHUNK_SIZE);
                 }
                 temporary = new byte[CHUNK_SIZE]; //Temporary Byte Array
                 int bytesRead = inStream.read(temporary, 0, CHUNK_SIZE);
-
                 Response TResponse = null;
                 List<Membership.Member> memberList = this.partitioner.getServerListForChunk(PART_NAME);
                 List<Integer> nodeIdsForChunk = this.partitioner.getServerListNodeIdsForChunk(PART_NAME);
-
-                /*String host = "swapnas-MacBook-Air.local:4444";
-                final Membership.Member  member1 =Membership.Member.newBuilder().
-                        setPort(Integer.parseInt(host.split(":")[1]))
-                        .setHost(host.split(":")[0]).build();
-                List<Membership.Member> memberList = new ArrayList<>();
-                memberList.add(member1);
-*/
-
 
                 boolean end;
                 for (Membership.Member member : memberList) {
@@ -130,13 +116,9 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
                                 replicaList.add(n);
                             }
                         }
-
                         System.out.println("sent " + PART_NAME + "to machine [" + machine.getPort() + ":"
                                 + machine.getHost() + "] with node Id" + nodeIdOfMachine);
-
                         TResponse = putChunk(temporary, PART_NAME, sDFSFileName, chunkId, machine, replicaList.get(0), replicaList.get(1));
-                        //TResponse = putChunk(temporary, PART_NAME, sDFSFileName, chunkId, machine, 1, 2);
-
                         if (TResponse.getResponse().equals("Ok")) end = false;
                     }
                 }
@@ -150,8 +132,6 @@ public class PutHandler implements ResponseCommandExecutor<Put, String, String> 
                 System.out.println("Total Bytes Read: " + totalBytesRead);
             }
         } catch (IOException e) {
-//            logger.logLine(DefaultLogger.WARNING, "Client socket failed while connecting to " + server + e);
-            //return null;
         }
         System.out.println(nameList.toString());
     }

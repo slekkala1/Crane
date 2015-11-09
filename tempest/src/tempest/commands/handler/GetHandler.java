@@ -61,7 +61,6 @@ public class GetHandler implements ResponseCommandExecutor<Get, String, String> 
     }
 
     public String execute(Socket socket, ResponseCommand<String, String> command) {
-
         try {
             int value = sendFile(socket.getOutputStream(), command.getRequest());
             if (value == 0) return "file not available";
@@ -72,30 +71,19 @@ public class GetHandler implements ResponseCommandExecutor<Get, String, String> 
     }
 
     public int sendFile(OutputStream outputStream, String sDFSFileName) {
-
         ByteArrayOutputStream AllFilesContent = null;
-        int TOTAL_SIZE = 0;
         int NUMBER_OF_CHUNKS = 1;
-        //= Integer.MAX_VALUE;
         int CURRENT_LENGTH = 0;
-        AllFilesContent = new ByteArrayOutputStream(); // Length of All Files, Total Size
+        AllFilesContent = new ByteArrayOutputStream();
 
         try {
             for (int i = 0; i < NUMBER_OF_CHUNKS; i++) {
 
                 List<Membership.Member> serverList = this.partitioner.getServerListForChunk(sDFSFileName + i + ".bin");
-               /*String host = "swapnas-MacBook-Air.local:4444";
-                final Membership.Member  member =Membership.Member.newBuilder().
-                        setPort(Integer.parseInt(host.split(":")[1]))
-                        .setHost(host.split(":")[0]).build();
-                List<Membership.Member> serverList = new ArrayList<>();
-                serverList.add(member); */
-
                 if (serverList.isEmpty()) break;
 
                 for (Membership.Member server : serverList) {
                     System.out.println("Get chunkName " + sDFSFileName + i + ".bin" + " from Server " + server.getHost());
-
                     GetChunk getChunk = getChunk(server, sDFSFileName + i + ".bin");
                     String response = getChunk.getResponse();
                     if (response.equals("Ok") && getChunk.getBytesSize() != 0) {
@@ -113,10 +101,8 @@ public class GetHandler implements ResponseCommandExecutor<Get, String, String> 
             AllFilesContent.flush();
             outputStream.write(ByteBuffer.allocate(4).putInt(AllFilesContent.toByteArray().length).array());
             outputStream.write(AllFilesContent.toByteArray());
-
             outputStream.flush();
             AllFilesContent.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -23,9 +23,8 @@ public class HashKey {
                 sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
             }
 
-            //System.out.println("Hex format : " + sb.toString());
         } catch (NoSuchAlgorithmException e) {
-//
+
         }
         return sb.toString();
     }

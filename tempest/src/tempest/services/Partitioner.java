@@ -35,7 +35,6 @@ public class Partitioner {
     private final Map<String, FileReplica> replicas = new HashMap<String, FileReplica>();
     private final Object lock = new Object();
 
-    // private Map<ImmutablePair<String, Integer>, Chunk> metadata = new HashMap<ImmutablePair<String, Integer>, Chunk>();
 
     public Partitioner(Logger logger, MembershipService membershipService) {
         this.membershipService = membershipService;

@@ -1,15 +1,12 @@
 package tempest.commands.handler;
 
-import tempest.commands.command.Get;
 import tempest.commands.command.GetChunk;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.protos.Command;
 import tempest.services.FileIOUtils;
 
-import java.io.*;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 
 /**
  * Created by swapnalekkala on 11/1/15.

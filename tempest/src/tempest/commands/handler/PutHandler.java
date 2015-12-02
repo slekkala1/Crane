@@ -12,7 +12,9 @@ import tempest.protos.Command;
 import tempest.protos.Membership;
 import tempest.services.*;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.Socket;
 import java.nio.ByteBuffer;

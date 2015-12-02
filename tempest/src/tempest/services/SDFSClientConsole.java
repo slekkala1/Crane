@@ -7,7 +7,6 @@ import tempest.interfaces.Logger;
 import tempest.sdfs.client.SDFSClient;
 
 import java.io.IOException;
-import java.net.Inet4Address;
 
 /**
  * Created by swapnalekkala on 10/27/15.

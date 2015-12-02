@@ -6,7 +6,6 @@ import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.protos.Command;
 
 import java.net.Socket;
-import java.util.Objects;
 
 public class PingHandler implements ResponseCommandExecutor<Ping, Object, String> {
     public boolean canHandle(Command.Message.Type type) {

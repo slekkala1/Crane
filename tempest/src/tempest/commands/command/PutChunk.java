@@ -3,8 +3,6 @@ package tempest.commands.command;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.Tcp;
 
-import java.io.InputStream;
-
 /**
  * Created by swapnalekkala on 10/29/15.
  */

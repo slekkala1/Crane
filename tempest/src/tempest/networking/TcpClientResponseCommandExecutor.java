@@ -5,13 +5,18 @@ import tempest.commands.ResponseData;
 import tempest.commands.command.*;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
-import tempest.interfaces.*;
-import tempest.protos.*;
+import tempest.interfaces.ClientResponseCommandExecutor;
+import tempest.interfaces.Logger;
+import tempest.protos.Command;
 import tempest.protos.Membership;
 import tempest.services.DefaultLogger;
 import tempest.services.FileIOUtils;
+import tempest.services.Tuple;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
@@ -40,6 +45,9 @@ public class TcpClientResponseCommandExecutor<TCommand extends ResponseCommand<T
             socket.getOutputStream().write(ByteBuffer.allocate(4).putInt(serializedCommand.toByteArray().length).array());
             serializedCommand.writeTo(socket.getOutputStream());
 
+            //  if (command instanceof Spout) {
+            //     FileIOUtils.sendFile(socket, (String) ((Spout) command).getLocalFileName());
+            //}
             if (command instanceof Put) {
                 FileIOUtils.sendFile(socket, (String) ((Put) command).getLocalFileName());
             }
@@ -77,6 +85,45 @@ public class TcpClientResponseCommandExecutor<TCommand extends ResponseCommand<T
             if (responseCommand instanceof DeleteChunk) {
                 ((DeleteChunk) command).setResponse(((DeleteChunk) responseCommand).getResponse());
             }
+
+            Response<TResponse> result = new Response<>();
+            result.setResponse(responseCommand.getResponse());
+            result.setResponseData(new ResponseData(System.currentTimeMillis() - startTime));
+            return result;
+        } catch (IOException e) {
+            logger.logLine(DefaultLogger.WARNING, "Client socket failed while connecting to [" + server + "]" + e);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Response<TResponse> executeUsingObjectOutputStream() {
+        long startTime = System.currentTimeMillis();
+        try {
+            Socket socket = new Socket(server.getHost(), server.getPort());
+            Command.Message serializedCommand = commandHandler.serialize(command);
+            socket.getOutputStream().write(ByteBuffer.allocate(4).putInt(serializedCommand.toByteArray().length).array());
+            serializedCommand.writeTo(socket.getOutputStream());
+
+            ObjectOutputStream objectOutputStream =new ObjectOutputStream(socket.getOutputStream());
+
+            for(int i =0; i<(((Bolt) command).getTuplesList().size()); i++) {
+                ByteArrayOutputStream b = new ByteArrayOutputStream();
+                ObjectOutputStream o = new ObjectOutputStream(b);
+                o.writeObject(((Bolt) command).getTuplesList().get(i));
+                objectOutputStream.writeInt(b.toByteArray().length);
+                objectOutputStream.write(b.toByteArray());
+            }
+            objectOutputStream.writeInt(-1);
+            objectOutputStream.flush();
+            socket.isOutputShutdown();
+            socket.shutdownOutput();
+
+
+            tempest.protos.Command.Message message = tempest.protos.Command.Message.parseFrom(socket.getInputStream());
+            socket.close();
+
+            ResponseCommand<TRequest, TResponse> responseCommand = commandHandler.deserialize(message);
 
             Response<TResponse> result = new Response<>();
             result.setResponse(responseCommand.getResponse());

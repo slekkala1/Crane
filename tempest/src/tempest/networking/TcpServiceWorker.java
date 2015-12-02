@@ -6,7 +6,7 @@ import tempest.interfaces.Logger;
 import tempest.protos.Command;
 import tempest.services.DefaultLogger;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
@@ -49,6 +49,3 @@ public class TcpServiceWorker implements Runnable {
     }
 
 }
-
-
-

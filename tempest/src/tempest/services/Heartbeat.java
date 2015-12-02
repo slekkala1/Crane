@@ -1,6 +1,8 @@
 package tempest.services;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Heartbeat implements Runnable {
     private final ScheduledExecutorService scheduler;

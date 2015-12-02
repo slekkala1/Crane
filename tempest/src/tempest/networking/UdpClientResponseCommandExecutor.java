@@ -4,8 +4,9 @@ import tempest.commands.Response;
 import tempest.commands.ResponseData;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
-import tempest.interfaces.*;
-import tempest.protos.*;
+import tempest.interfaces.ClientResponseCommandExecutor;
+import tempest.interfaces.Logger;
+import tempest.protos.Membership;
 import tempest.services.DefaultLogger;
 
 import java.io.ByteArrayInputStream;

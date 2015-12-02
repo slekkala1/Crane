@@ -5,8 +5,6 @@ import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.sdfs.client.SDFSClient;
 
-import java.net.Inet4Address;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -75,7 +73,7 @@ public class ReplicaService implements Runnable {
 
                 entry.getValue().setReplica1(nodeKeyIds.get(0));
             } else if (nodeKeyIds.contains(entry.getValue().getReplica1()) && !nodeKeyIds.contains(entry.getValue().getReplica2())) {
-                logger.logLine(logger.INFO,"Only replica2 died for sDFSFileName " + entry.getKey());
+                logger.logLine(logger.INFO,"Only replica2 died");
 
                 byte[] byteArray = FileIOUtils.sendByteArraytoReplicate(entry.getKey());
 

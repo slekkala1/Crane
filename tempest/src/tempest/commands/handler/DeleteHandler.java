@@ -2,8 +2,6 @@ package tempest.commands.handler;
 
 import tempest.commands.command.Delete;
 import tempest.commands.command.DeleteChunk;
-import tempest.commands.command.GetChunk;
-import tempest.commands.command.Ping;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.ClientResponseCommandExecutor;
@@ -16,7 +14,6 @@ import tempest.services.DefaultLogWrapper;
 import tempest.services.DefaultLogger;
 import tempest.services.Partitioner;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Socket;

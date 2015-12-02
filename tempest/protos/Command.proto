@@ -18,6 +18,8 @@ message Message {
         GETCHUNK = 10;
         DELETECHUNK = 11;
         LIST = 12;
+        BOLT = 13;
+        SPOUT = 14;
     }
 
     required Type type = 1;
@@ -33,6 +35,8 @@ message Message {
     optional GetChunk getChunk = 11;
     optional DeleteChunk deleteChunk = 12;
     optional List list = 13;
+    optional Bolt bolt = 14;
+    optional Spout spout = 15;
 }
 
 message Ping {
@@ -95,4 +99,14 @@ message DeleteChunk {
 message List {
     optional string request = 1;
     optional string response = 2;
+}
+
+message Bolt {
+    optional Member sendTo = 1;
+    optional Member recFrom = 2;
+}
+
+message Spout {
+    optional Member sendTo = 1;
+    optional Member response = 2;
 }

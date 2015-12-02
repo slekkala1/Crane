@@ -23,10 +23,12 @@ public class FileIOUtils {
         byte[] fileByteArray = null;
         try {
             System.out.println("replicate " + sDFSFileName + " at " + Inet4Address.getLocalHost().getHostName().toString());
-            FileInputStream fileInputStream = new FileInputStream(new File("/home/lekkala2/" + sDFSFileName));
-            if (new File("/home/lekkala2/" + sDFSFileName).exists()) {
+            FileInputStream fileInputStream = new FileInputStream(new File(sDFSFileName));
+
+//            FileInputStream fileInputStream = new FileInputStream(new File("/home/lekkala2/" + sDFSFileName));
+           /* if (new File("/home/lekkala2/" + sDFSFileName).exists()) {
                 logger.logLine(logger.INFO,"File exists " + sDFSFileName + " at " + Inet4Address.getLocalHost().getHostName().toString());
-            }
+            } */
             fileByteArray = IOUtils.toByteArray(fileInputStream);
             logger.logLine(logger.INFO, "filebyteArray length" + fileByteArray.length);
             fileInputStream.close();
@@ -116,14 +118,16 @@ public class FileIOUtils {
     }
 
     public static void sendChunkFromDisk(Socket socket, String chunkName) {
-        File myFile = new File("/home/lekkala2/" + chunkName);
+//        File myFile = new File("/home/lekkala2/" + chunkName);
+        File myFile = new File(chunkName);
+
         //File myFile = new File("/Users/swapnalekkala/cs425-mp-g3/" + chunkName);
-        logger.logLine(logger.INFO, "File at " + "/home/lekkala2/" + chunkName);
+        //logger.logLine(logger.INFO, "File at " + "/home/lekkala2/" + chunkName);
 
         try {
             BufferedOutputStream outToServer = new BufferedOutputStream(socket.getOutputStream());
             if (myFile.exists()) {
-                logger.logLine(logger.INFO,"Get chunkName " + chunkName + " from Server " + Inet4Address.getLocalHost().getHostName().toString());
+                logger.logLine(logger.INFO, "Get chunkName " + chunkName + " from Server " + Inet4Address.getLocalHost().getHostName().toString());
                 FileInputStream fis = new FileInputStream(myFile);
                 byte[] fileByteArray = IOUtils.toByteArray(fis);
                 outToServer.write(ByteBuffer.allocate(4).putInt(fileByteArray.length).array());

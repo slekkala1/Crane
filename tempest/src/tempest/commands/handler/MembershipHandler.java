@@ -1,9 +1,9 @@
 package tempest.commands.handler;
 
-import tempest.services.MembershipService;
 import tempest.commands.command.Membership;
 import tempest.commands.interfaces.CommandExecutor;
 import tempest.protos.Command;
+import tempest.services.MembershipService;
 
 public class MembershipHandler implements CommandExecutor<Membership, tempest.protos.Membership.MembershipList> {
     private MembershipService membershipService;

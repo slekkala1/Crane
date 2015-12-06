@@ -1,47 +1,39 @@
 package tempest.services.bolt;
 
-import tempest.protos.Command;
 import tempest.services.Tuple;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Created by swapnalekkala on 12/1/15.
+ * Created by swapnalekkala on 12/2/15.
  */
-public class FilterBolt {
+public class FilterBolt
+        implements Callable {
+    LinkedBlockingQueue<Tuple> queue;
+    OutputCollector outputCollector;
 
-    public static final tempest.protos.Command.Bolt.BoltType type = Command.Bolt.BoltType.FILTERBOLT;
 
-    LinkedBlockingQueue queue;
-    private static ExecutorService pool = Executors.newFixedThreadPool(7);
-    private OutputCollector outputCollector;
 
-    public tempest.protos.Command.Bolt.BoltType getType() {
-        return type;
-    }
-
-    public FilterBolt(LinkedBlockingQueue queue, OutputCollector outputCollector) {
+    public FilterBolt(LinkedBlockingQueue<Tuple> queue, OutputCollector outputCollector) {
         this.queue = queue;
         this.outputCollector = outputCollector;
     }
 
-    public void filter() {
-        Collection<Callable<Tuple>> callable = new ArrayList<Callable<Tuple>>() {{
-            add(new FilterBoltCallable(queue, outputCollector));
-            add(new FilterBoltCallable(queue, outputCollector));
-            add(new FilterBoltCallable(queue, outputCollector));
-            add(new FilterBoltCallable(queue, outputCollector));
-            add(new FilterBoltCallable(queue, outputCollector));
-            add(new FilterBoltCallable(queue, outputCollector));
-            add(new FilterBoltCallable(queue, outputCollector));
-        }};
-
+    public Tuple call() {
+        Tuple tuple = null;
         try {
-            pool.invokeAll(callable);
+            if(!outputCollector.member.getHost().equals("")) {
+                while((tuple = queue.poll(1000, TimeUnit.MILLISECONDS))!=null) {
+                //tuple = ;
+                    outputCollector.add(tuple);
+                }
+                //System.out.println(String.join(",", tuple.getStringList()));
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return tuple;
     }
 }

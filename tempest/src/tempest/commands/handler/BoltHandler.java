@@ -6,7 +6,7 @@ import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.protos.Command;
 import tempest.services.Tuple;
-import tempest.services.bolt.FilterBolt;
+import tempest.services.bolt.BaseBolt;
 import tempest.services.bolt.OutputCollector;
 
 import java.io.*;
@@ -57,9 +57,11 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
             thread.start();
            // if(!((Bolt)command).getSendTupleTo().getHost().equals("")) {
             outputCollector = new OutputCollector(((Bolt) command).getSendTupleTo());
+            Command.Bolt.BoltType type = ((Bolt)command).getBoltType();
+            int nThreads = ((Bolt)command).getParallelism();
             //}
-            FilterBolt filterBolt = new FilterBolt(queue,outputCollector);
-            filterBolt.filter();
+            BaseBolt bolt = new BaseBolt(queue,outputCollector,type,nThreads);
+            bolt.filter();
             thread.join();
             if(!((Bolt)command).getSendTupleTo().getHost().equals("")) {
                 Thread outputThread = new Thread(outputCollector.emit());

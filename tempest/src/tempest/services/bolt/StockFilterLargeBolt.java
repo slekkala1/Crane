@@ -14,24 +14,27 @@ import java.util.concurrent.TimeUnit;
 public class StockFilterLargeBolt
         implements Callable {
     LinkedBlockingQueue<Tuple> queue;
-    OutputCollector outputCollector;
+    private List<OutputCollector> outputCollectorList;
     double minSize = 1000000;
 
-    public StockFilterLargeBolt(LinkedBlockingQueue<Tuple> queue, OutputCollector outputCollector) {
+    public StockFilterLargeBolt(LinkedBlockingQueue<Tuple> queue, List<OutputCollector> outputCollectorList) {
         this.queue = queue;
-        this.outputCollector = outputCollector;
+        this.outputCollectorList = outputCollectorList;
     }
 
     public Tuple call() {
         Tuple tuple = null;
         try {
-                while((tuple = queue.poll(1000, TimeUnit.MILLISECONDS))!=null) {
-                	List<String> list = tuple.getStringList();
-                	double volume = Double.parseDouble(list.get(6));
-                	if (volume > minSize) {
-                		outputCollector.add(tuple);
-                	}
+            while ((tuple = queue.poll(1000, TimeUnit.MILLISECONDS)) != null) {
+                List<String> list = tuple.getStringList();
+                double volume = Double.parseDouble(list.get(6));
+                if (volume > minSize) {
+                    for (int i = 0; i < outputCollectorList.size(); i++) {
+                        outputCollectorList.get(i).add(tuple);
+                    }
+//                		outputCollector.add(tuple);
                 }
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

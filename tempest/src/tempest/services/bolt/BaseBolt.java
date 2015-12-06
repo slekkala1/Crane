@@ -17,8 +17,7 @@ public class BaseBolt {
 
     LinkedBlockingQueue queue;
     private static ExecutorService pool = Executors.newFixedThreadPool(7);
-        private List<OutputCollector> outputCollectorList;
-   // private OutputCollector outputCollector;
+    private List<OutputCollector> outputCollectorList;
 
     private final int nThreads;
 
@@ -26,13 +25,9 @@ public class BaseBolt {
         return type;
     }
 
-        public BaseBolt(LinkedBlockingQueue queue, List<OutputCollector> outputCollectorList, Command.Bolt.BoltType type, int nThreads) {
-    //public BaseBolt(LinkedBlockingQueue queue, OutputCollector outputCollector, Command.Bolt.BoltType type, int nThreads) {
-
+    public BaseBolt(LinkedBlockingQueue queue, List<OutputCollector> outputCollectorList, Command.Bolt.BoltType type, int nThreads) {
         this.queue = queue;
         this.outputCollectorList = outputCollectorList;
-        //this.outputCollector = outputCollector;
-
         this.type = type;
         this.nThreads = nThreads;
     }
@@ -41,20 +36,19 @@ public class BaseBolt {
         Collection<Callable<Tuple>> callable = new ArrayList<Callable<Tuple>>();
         if (type == Command.Bolt.BoltType.STOCKFILTERGAINBOLT) {
             for (int i = 0; i < nThreads; i++) {
-            	callable.add(new StockFilterGainBolt(queue, outputCollectorList));
+                callable.add(new StockFilterGainBolt(queue, outputCollectorList));
             }
-        }
-        else if (type == Command.Bolt.BoltType.STOCKFILTERLARGEBOLT) {
+        } else if (type == Command.Bolt.BoltType.STOCKFILTERLARGEBOLT) {
             for (int i = 0; i < nThreads; i++) {
-            	callable.add(new StockFilterLargeBolt(queue, outputCollectorList));
+                callable.add(new StockFilterLargeBolt(queue, outputCollectorList));
             }
         } else if (type == Command.Bolt.BoltType.TWITTERFILTERTRENDINGBOLT) {
             for (int i = 0; i < nThreads; i++) {
-            	callable.add(new TwitterFilterTrendingBolt(queue, outputCollectorList));
+                callable.add(new TwitterFilterTrendingBolt(queue, outputCollectorList));
             }
         } else if (type == Command.Bolt.BoltType.TWITTERSHORTENBOLT) {
             for (int i = 0; i < nThreads; i++) {
-            	callable.add(new TwitterShortenBolt(queue, outputCollectorList));
+                callable.add(new TwitterShortenBolt(queue, outputCollectorList));
             }
         }
         try {

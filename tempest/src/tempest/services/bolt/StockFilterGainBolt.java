@@ -14,11 +14,12 @@ import java.util.concurrent.TimeUnit;
 public class StockFilterGainBolt
         implements Callable {
     LinkedBlockingQueue<Tuple> queue;
-    OutputCollector outputCollector;
+//    OutputCollector outputCollector;
+    private List<OutputCollector> outputCollectorList;
 
-    public StockFilterGainBolt(LinkedBlockingQueue<Tuple> queue, OutputCollector outputCollector) {
+    public StockFilterGainBolt(LinkedBlockingQueue<Tuple> queue,  List<OutputCollector> outputCollectorList) {
         this.queue = queue;
-        this.outputCollector = outputCollector;
+        this.outputCollectorList = outputCollectorList;
     }
 
     public Tuple call() {
@@ -29,7 +30,10 @@ public class StockFilterGainBolt
                 	double open = Double.parseDouble(list.get(2));
                 	double close = Double.parseDouble(list.get(5));
                 	if (close > open) {
-                		outputCollector.add(tuple);
+                        for (int i = 0; i < outputCollectorList.size(); i++) {
+                            outputCollectorList.get(i).add(tuple);
+                        }
+//                		outputCollector.add(tuple);
                 	}
                 }
         } catch (InterruptedException e) {

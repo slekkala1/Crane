@@ -13313,9 +13313,10 @@ public final class Command {
           tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> 
           getSendTupleToFieldBuilder() {
         if (sendTupleToBuilder_ == null) {
-          sendTupleToBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+          sendTupleToBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder>(
-                  getSendTupleTo(),
+                  sendTupleTo_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
           sendTupleTo_ = null;
@@ -13690,34 +13691,68 @@ public final class Command {
         return this;
       }
 
-      private int sendTupleToID_ ;
-      /**
-       * <code>optional int32 sendTupleToID = 8;</code>
-       */
-      public boolean hasSendTupleToID() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
+      private java.util.List<java.lang.Integer> sendTupleToID_ = java.util.Collections.emptyList();
+      private void ensureSendTupleToIDIsMutable() {
+        if (!((bitField0_ & 0x00000080) == 0x00000080)) {
+          sendTupleToID_ = new java.util.ArrayList<java.lang.Integer>(sendTupleToID_);
+          bitField0_ |= 0x00000080;
+         }
       }
       /**
-       * <code>optional int32 sendTupleToID = 8;</code>
+       * <code>repeated int32 sendTupleToID = 8;</code>
        */
-      public int getSendTupleToID() {
-        return sendTupleToID_;
+      public java.util.List<java.lang.Integer>
+          getSendTupleToIDList() {
+        return java.util.Collections.unmodifiableList(sendTupleToID_);
       }
       /**
-       * <code>optional int32 sendTupleToID = 8;</code>
+       * <code>repeated int32 sendTupleToID = 8;</code>
        */
-      public Builder setSendTupleToID(int value) {
-        bitField0_ |= 0x00000080;
-        sendTupleToID_ = value;
+      public int getSendTupleToIDCount() {
+        return sendTupleToID_.size();
+      }
+      /**
+       * <code>repeated int32 sendTupleToID = 8;</code>
+       */
+      public int getSendTupleToID(int index) {
+        return sendTupleToID_.get(index);
+      }
+      /**
+       * <code>repeated int32 sendTupleToID = 8;</code>
+       */
+      public Builder setSendTupleToID(
+          int index, int value) {
+        ensureSendTupleToIDIsMutable();
+        sendTupleToID_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 sendTupleToID = 8;</code>
+       * <code>repeated int32 sendTupleToID = 8;</code>
+       */
+      public Builder addSendTupleToID(int value) {
+        ensureSendTupleToIDIsMutable();
+        sendTupleToID_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 sendTupleToID = 8;</code>
+       */
+      public Builder addAllSendTupleToID(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureSendTupleToIDIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, sendTupleToID_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 sendTupleToID = 8;</code>
        */
       public Builder clearSendTupleToID() {
+        sendTupleToID_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000080);
-        sendTupleToID_ = 0;
         onChanged();
         return this;
       }
@@ -16366,21 +16401,24 @@ public final class Command {
       "(\t\022\020\n\010response\030\002 \001(\t\"0\n\013DeleteChunk\022\017\n\007r" +
       "equest\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\")\n\004List\022\017" +
       "\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"\021\n\003Ack" +
-      "\022\n\n\002id\030\001 \001(\005\"\223\002\n\004Bolt\022\034\n\013sendTupleTo\030\001 \001" +
+      "\022\n\n\002id\030\001 \001(\005\"\376\002\n\004Bolt\022\034\n\013sendTupleTo\030\001 \003" +
       "(\0132\007.Member\022\034\n\013receiveFrom\030\002 \001(\0132\007.Membe" +
       "r\022\017\n\007request\030\003 \001(\t\022\020\n\010response\030\004 \001(\t\022\n\n\002" +
       "id\030\005 \001(\005\022 \n\010boltType\030\006 \001(\0162\016.Bolt.BoltTy" +
       "pe\022\023\n\013parallelism\030\007 \001(\005\022\025\n\rsendTupleToID" +
-      "\030\010 \001(\005\022\025\n\rreceiveFromID\030\t \001(\005\";\n\010BoltTyp" +
-      "e\022\016\n\nFILTERBOLT\020\001\022\021\n\rTRANSFORMBOLT\020\002\022\014\n\010",
-      "JOINBOLT\020\003\"\301\001\n\005Spout\022#\n\tspoutType\030\006 \002(\0162" +
-      "\020.Spout.SpoutType\022\027\n\006sendTo\030\001 \003(\0132\007.Memb" +
-      "er\022\030\n\007recFrom\030\002 \001(\0132\007.Member\022\017\n\007request\030" +
-      "\003 \001(\t\022\020\n\010response\030\004 \001(\t\022\n\n\002id\030\005 \001(\005\"1\n\tS" +
-      "poutType\022\022\n\016STOCKDATASPOUT\020\001\022\020\n\014TWITTERS" +
-      "POUT\020\002\"H\n\010Topology\022\025\n\005spout\030\001 \001(\0132\006.Spou" +
-      "t\022\023\n\004bolt\030\002 \003(\0132\005.Bolt\022\020\n\010response\030\003 \001(\t" +
-      "B\031\n\016tempest.protosB\007Command"
+      "\030\010 \003(\005\022\025\n\rreceiveFromID\030\t \001(\005\"\245\001\n\010BoltTy" +
+      "pe\022\016\n\nFILTERBOLT\020\001\022\021\n\rTRANSFORMBOLT\020\002\022\014\n",
+      "\010JOINBOLT\020\003\022\027\n\023STOCKFILTERGAINBOLT\020\004\022\030\n\024" +
+      "STOCKFILTERLARGEBOLT\020\005\022\035\n\031TWITTERFILTERT" +
+      "RENDINGBOLT\020\006\022\026\n\022TWITTERSHORTENBOLT\020\007\"\301\001" +
+      "\n\005Spout\022#\n\tspoutType\030\006 \002(\0162\020.Spout.Spout" +
+      "Type\022\027\n\006sendTo\030\001 \003(\0132\007.Member\022\030\n\007recFrom" +
+      "\030\002 \001(\0132\007.Member\022\017\n\007request\030\003 \001(\t\022\020\n\010resp" +
+      "onse\030\004 \001(\t\022\n\n\002id\030\005 \001(\005\"1\n\tSpoutType\022\022\n\016S" +
+      "TOCKDATASPOUT\020\001\022\020\n\014TWITTERSPOUT\020\002\"H\n\010Top" +
+      "ology\022\025\n\005spout\030\001 \001(\0132\006.Spout\022\023\n\004bolt\030\002 \003" +
+      "(\0132\005.Bolt\022\020\n\010response\030\003 \001(\tB\031\n\016tempest.p",
+      "rotosB\007Command"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

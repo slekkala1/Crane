@@ -37,10 +37,10 @@ public class FilterBoltCallable
         Tuple tuple = null;
         try {
 //            if(!outputCollector.member.getHost().equals("")) {
-                while((tuple = queue.poll(1000, TimeUnit.MILLISECONDS))!=null) {
+            while ((tuple = queue.poll(1000, TimeUnit.MILLISECONDS)) != null) {
                 //filterCondition
-                    outputCollector.add(tuple);
-                }
+                outputCollector.add(tuple);
+            }
 //                System.out.println(String.join(",", tuple.getStringList()));
 //            }
         } catch (InterruptedException e) {

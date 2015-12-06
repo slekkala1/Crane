@@ -14,11 +14,13 @@ import java.util.concurrent.TimeUnit;
 public class TwitterFilterTrendingBolt
         implements Callable {
     LinkedBlockingQueue<Tuple> queue;
-    OutputCollector outputCollector;
+//    OutputCollector outputCollector;
+    private List<OutputCollector> outputCollectorList;
 
-    public TwitterFilterTrendingBolt(LinkedBlockingQueue<Tuple> queue, OutputCollector outputCollector) {
+
+    public TwitterFilterTrendingBolt(LinkedBlockingQueue<Tuple> queue,  List<OutputCollector> outputCollectorList) {
         this.queue = queue;
-        this.outputCollector = outputCollector;
+        this.outputCollectorList = outputCollectorList;
     }
 
     public Tuple call() {
@@ -37,7 +39,10 @@ public class TwitterFilterTrendingBolt
             			}
             		}
                 	if (favorites > 5*followers) {
-                		outputCollector.add(tuple);
+                        for (int i = 0; i < outputCollectorList.size(); i++) {
+                            outputCollectorList.get(i).add(tuple);
+                        }
+//                		outputCollector.add(tuple);
                 	}
                 }
         } catch (InterruptedException e) {

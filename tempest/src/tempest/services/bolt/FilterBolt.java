@@ -27,7 +27,7 @@ public class FilterBolt
         try {
             if (!outputCollectorList.isEmpty()) {
                 while ((tuple = queue.poll(1000, TimeUnit.MILLISECONDS)) != null) {
-                    for(int i=0;i<outputCollectorList.size();i++) {
+                    for (int i = 0; i < outputCollectorList.size(); i++) {
                         outputCollectorList.get(i).add(tuple);
                     }
                 }

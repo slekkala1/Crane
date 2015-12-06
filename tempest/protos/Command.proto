@@ -117,14 +117,14 @@ message Bolt {
         JOINBOLT = 3;
     }
 
-    repeated Member sendTupleTo = 1;
+    optional Member sendTupleTo = 1;
     optional Member receiveFrom = 2;
     optional string request = 3;
     optional string response = 4;
     optional int32 id = 5;
     optional BoltType boltType = 6;
     optional int32 parallelism = 7;
-    repeated int32 sendTupleToID = 8;
+    optional int32 sendTupleToID = 8;
     optional int32 receiveFromID = 9;
 }
 
@@ -144,7 +144,7 @@ message Spout {
 }
 
 message Topology {
-    required Spout spout = 1;
+    optional Spout spout = 1;
     repeated Bolt bolt = 2;
     optional string response = 3;
 }

@@ -23,7 +23,7 @@ import java.util.concurrent.*;
  */
 public class SpoutService {
     private static ExecutorService pool = Executors.newFixedThreadPool(7);
-    LinkedBlockingQueue queue = new LinkedBlockingQueue();
+    LinkedBlockingQueue<Tuple> queue = new LinkedBlockingQueue();
     StockDataSpout stockDataSpout = new StockDataSpout(queue);
 
     private final MembershipService membershipService;
@@ -47,24 +47,25 @@ public class SpoutService {
 
     public LinkedBlockingQueue<Tuple> tuplesFromFile(LinkedBlockingQueue<Tuple> tupleQueue) {
         if (this.spout.getSpoutType().toString().equals("STOCKDATASPOUT")) {
-            stockDataSpout.tuplesFromFile1(tupleQueue, "xyz").run();
+            //stockDataSpout.tuplesFromFile1(tupleQueue, "xyz").run();
         } else if (this.spout.getSpoutType().equals("")) {
 
         }
         return tupleQueue;
     }
 
-    public void start(Membership.Member member, ResponseCommand<String, String> command) {
-
+    public void start(Membership.Member member) {
+        System.out.println("Spout type" + this.spout.getSpoutType().toString());
         if (this.spout.getSpoutType().toString().equals("STOCKDATASPOUT")) {
-            stockDataSpout.tuplesFromFile1(queue, "xyz").run();
+            System.out.println("sending tuples from stockdataspout");
+            stockDataSpout.tuplesFromFile1("xyz").run();
         } else if (this.spout.getSpoutType().equals("")) {
 
         }
         while (!queue.isEmpty()) {
             List<Tuple> tuples = new ArrayList<>();
             queue.drainTo(tuples, 10000);
-            SpoutThread spoutThread = new SpoutThread(tuples, member, command);
+            SpoutThread spoutThread = new SpoutThread(tuples, member);
 
             spoutThread.run();
         }
@@ -72,12 +73,12 @@ public class SpoutService {
 
     class SpoutThread implements Runnable {
         List<Tuple> tuples = new ArrayList<>();
-        ResponseCommand<String, String> command;
+//        ResponseCommand<String, String> command;
         Membership.Member member;
 
-        public SpoutThread(List<Tuple> tuples, Membership.Member member, ResponseCommand<String, String> command) {
+        public SpoutThread(List<Tuple> tuples, Membership.Member member) {
             this.tuples = tuples;
-            this.command = command;
+//            this.command = command;
             this.member = member;
         }
 
@@ -86,28 +87,28 @@ public class SpoutService {
             Response<String> response = null;
             boolean run = true;
             while (run) {
-                String introducer = "localhost:4444";
-                Membership.Member member = Membership.Member.newBuilder()
-                        .setHost(introducer.split(":")[0])
-                        .setPort(Integer.parseInt(introducer.split(":")[1]))
-                        .build();
+                //String introducer = "localhost:4444";
+//                Membership.Member member = Membership.Member.newBuilder()
+//                        .setHost(introducer.split(":")[0])
+//                        .setPort(Integer.parseInt(introducer.split(":")[1]))
+//                        .build();
 
-                response = spoutTo(member, command);
+                response = spoutTo(member);
                 if (response.getResponse().equals("ok")) run = false;
             }
         }
 
-        public Response spoutTo(Membership.Member member, ResponseCommand<String, String> command) {
+        public Response spoutTo(Membership.Member member) {
             Bolt bolt = new Bolt();
-            String introducer = "localhost:4445";
-            Membership.Member member1 = Membership.Member.newBuilder()
-                    .setHost(introducer.split(":")[0])
-                    .setPort(Integer.parseInt(introducer.split(":")[1]))
-                    .build();
-            bolt.setSendTupleTo(((Bolt) command).getSendTupleTo());
-            bolt.setBoltType(((Bolt) command).getBoltType());
+            //String introducer = "localhost:4445";
+            //Membership.Member member1 = Membership.Member.newBuilder()
+              //      .setHost(introducer.split(":")[0])
+                //    .setPort(Integer.parseInt(introducer.split(":")[1]))
+                  //  .build();
+            //bolt.setSendTupleTo(((Bolt) command).getSendTupleTo());
+            //bolt.setBoltType(((Bolt) command).getBoltType());
             //bolt.setSendTupleTo(member1);
-
+            System.out.println("sending tuples in spoutservice spoutTo method");
             bolt.setTuplesList(tuples);
             return createResponseExecutor(member, bolt).executeUsingObjectOutputStream();
         }

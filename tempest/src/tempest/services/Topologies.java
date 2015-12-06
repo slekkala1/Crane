@@ -23,9 +23,7 @@ public class Topologies {
         bolt1.setId(2);
         bolt1.setBoltType(Command.Bolt.BoltType.FILTERBOLT);
         bolt1.setReceiveFromID(1);
-        List<Integer> sendTo = new ArrayList<Integer>();
-        sendTo.add(3);
-        bolt1.setSendTupleToID(sendTo);
+        bolt1.setSendTupleToID(3);
         bolt1.setParallelism(7);
 
         tempest.commands.command.Bolt bolt2 = new tempest.commands.command.Bolt();

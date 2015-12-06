@@ -74,7 +74,8 @@ public class Client {
 
 
     public Response topology(Topology topology) {
-        String nimbus = "swapnas-MacBook-Air.local:4444";
+       // String nimbus = "localhost:4444";
+        String nimbus = "fa15-cs425-g03-01.cs.illinois.edu:4444";
         Membership.Member member = Membership.Member.newBuilder()
                 .setHost(nimbus.split(":")[0])
                 .setPort(Integer.parseInt(nimbus.split(":")[1]))

@@ -6,6 +6,7 @@ import tempest.protos.*;
 import tempest.protos.Membership;
 import tempest.services.Tuple;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -13,7 +14,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Created by swapnalekkala on 11/24/15.
  */
-public class Bolt implements ResponseCommand<String, String>, Tcp {
+public class Bolt implements ResponseCommand<String, String>, Tcp,Serializable {
     public static final tempest.protos.Command.Message.Type type = Command.Message.Type.BOLT;
     private String request;
     private String response;
@@ -21,8 +22,8 @@ public class Bolt implements ResponseCommand<String, String>, Tcp {
     private int receiveFromID;
     private List<Tuple> tuplesList;
     private LinkedBlockingQueue<Tuple> tuplesQueue;
-    private List<Membership.Member> sendTupleTo;
-    private List<Integer> sendTupleToID;
+    private Membership.Member sendTupleTo;
+    private int sendTupleToID;
     private int id;
     private tempest.protos.Command.Bolt.BoltType boltType;
     private int parallelism;
@@ -35,11 +36,11 @@ public class Bolt implements ResponseCommand<String, String>, Tcp {
         this.parallelism = parallelism;
     }
 
-    public List<Integer> getSendTupleToID() {
+    public int getSendTupleToID() {
         return sendTupleToID;
     }
 
-    public void setSendTupleToID(List<Integer> sendTupleToID) {
+    public void setSendTupleToID(int sendTupleToID) {
         this.sendTupleToID = sendTupleToID;
     }
 
@@ -75,11 +76,11 @@ public class Bolt implements ResponseCommand<String, String>, Tcp {
         return request;
     }
 
-    public List<Membership.Member> getSendTupleTo() {
+    public Membership.Member getSendTupleTo() {
         return sendTupleTo;
     }
 
-    public void setSendTupleTo(List<Membership.Member> sendTupleTo) {
+    public void setSendTupleTo(Membership.Member sendTupleTo) {
         this.sendTupleTo = sendTupleTo;
     }
 

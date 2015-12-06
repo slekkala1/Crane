@@ -20,9 +20,9 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class StockDataSpout implements BaseSpout {
 
-    LinkedBlockingQueue queue = new LinkedBlockingQueue();
+    LinkedBlockingQueue<Tuple> queue;
 
-    public StockDataSpout(LinkedBlockingQueue queue) {
+    public StockDataSpout(LinkedBlockingQueue<Tuple> queue) {
         this.queue = queue;
     }
 
@@ -34,17 +34,16 @@ public class StockDataSpout implements BaseSpout {
 
     public String tuplesFromFile(String fileName) {
 
-        File myFile = new File("/Users/swapnalekkala/Downloads/quantquote/daily/");
+        File myFile = new File("SDFSFiles/quant");
         try {
 
             if (myFile.exists()) {
-                Files.walk(Paths.get("/Users/swapnalekkala/Downloads/quantquote/daily/")).forEach(filePath -> {
+                Files.walk(Paths.get("SDFSFiles/quant")).forEach(filePath -> {
                     if (Files.isRegularFile(filePath)) {
                         System.out.println(filePath);
                     }
                 });
 
-                //logger.logLine(logger.INFO, "Get chunkName " + chunkName + " from Server " + Inet4Address.getLocalHost().getHostName().toString());
                 BufferedReader reader = new BufferedReader(new FileReader(myFile));
                 List<String> lines = new ArrayList<>();
                 String line = null;
@@ -61,12 +60,12 @@ public class StockDataSpout implements BaseSpout {
         return "";
     }
 
-    public Runnable tuplesFromFile1(LinkedBlockingQueue<Tuple> queue, String fileName) {
+    public Runnable tuplesFromFile1(String fileName) {
         return new Runnable() {
             @Override
             public void run() {
 
-                File myFile = new File("/Users/swapnalekkala/Downloads/quantquote/daily/");
+                File myFile = new File("SDFSFiles/quant");
                 try {
 
                     List<String> lines = new ArrayList<>();
@@ -74,29 +73,28 @@ public class StockDataSpout implements BaseSpout {
                     lines.add("DATE, TIME, OPEN, HIGH, LOW, CLOSE, VOLUME");
 
                     if (myFile.exists()) {
-                        Files.walk(Paths.get("/Users/swapnalekkala/Downloads/quantquote/daily1/")).forEach(filePath -> {
+                        Files.walk(Paths.get("SDFSFiles/quant")).forEach(filePath -> {
                             if (Files.isRegularFile(filePath)) {
                                 System.out.println(filePath);
                                 BufferedReader reader = null;
                                 try {
                                     reader = new BufferedReader(new FileReader(filePath.toFile()));
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                                String line = null;
-                                int count = 1;
-                                try {
-                                    while ((line = reader.readLine()) != null) {
-                                        line = count + "," + line;
-                                        List<String> s = Arrays.asList(line.split(","));
-                                        Tuple t = new Tuple(s);
-                                        queue.put(t);
-                                        lines.add(line);
-                                        count++;
+
+                                    String line = null;
+                                    int count = 1;
+                                    try {
+                                        while ((line = reader.readLine()) != null) {
+                                            line = count + "," + line;
+                                            List<String> s = Arrays.asList(line.split(","));
+                                            Tuple t = new Tuple(s);
+                                            queue.put(t);
+                                            lines.add(line);
+                                            count++;
+                                        }
+                                    } catch (IOException | InterruptedException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } catch (InterruptedException e) {
+                                } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -112,7 +110,4 @@ public class StockDataSpout implements BaseSpout {
             }
         };
     }
-//       // public static void main (String[]args){
-//            StockDataSpout.tuplesFromFile1("xyz");
-//        }
 }

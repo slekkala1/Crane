@@ -45,9 +45,18 @@ public class SpoutService {
         this.spout = spout;
     }
 
+    public LinkedBlockingQueue<Tuple> tuplesFromFile(LinkedBlockingQueue<Tuple> tupleQueue) {
+        if (this.spout.getSpoutType().toString().equals("STOCKDATASPOUT")) {
+            stockDataSpout.tuplesFromFile1(tupleQueue, "xyz").run();
+        } else if (this.spout.getSpoutType().equals("")) {
+
+        }
+        return tupleQueue;
+    }
+
     public void start(Membership.Member member, ResponseCommand<String, String> command) {
 
-        if (this.spout.getSpoutType().equals("STOCKDATASPOUT")) {
+        if (this.spout.getSpoutType().toString().equals("STOCKDATASPOUT")) {
             stockDataSpout.tuplesFromFile1(queue, "xyz").run();
         } else if (this.spout.getSpoutType().equals("")) {
 
@@ -95,8 +104,10 @@ public class SpoutService {
                     .setHost(introducer.split(":")[0])
                     .setPort(Integer.parseInt(introducer.split(":")[1]))
                     .build();
-            ;
             bolt.setSendTupleTo(((Bolt) command).getSendTupleTo());
+            bolt.setBoltType(((Bolt) command).getBoltType());
+            //bolt.setSendTupleTo(member1);
+
             bolt.setTuplesList(tuples);
             return createResponseExecutor(member, bolt).executeUsingObjectOutputStream();
         }

@@ -10,12 +10,14 @@ import tempest.protos.Command;
 import tempest.protos.Command.Message;
 import tempest.protos.Membership;
 import tempest.services.MembershipService;
+import tempest.services.Tuple;
 import tempest.services.spout.SpoutService;
 
 import java.net.Inet4Address;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by swapnalekkala on 12/5/15.
@@ -24,6 +26,7 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
     private Socket socket;
     private MembershipService membershipService;
     private SpoutService spoutService;
+    private LinkedBlockingQueue<Tuple> queue;
 
 
     public boolean canHandle(Message.Type type) {
@@ -33,9 +36,10 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
     public TopologyHandler() {
     }
 
-    public TopologyHandler(MembershipService membershipService, Logger logger) {
+    public TopologyHandler(MembershipService membershipService, Logger logger,LinkedBlockingQueue<Tuple> queue) {
         this.membershipService = membershipService;
         this.spoutService = new SpoutService(membershipService, logger);
+        this.queue = queue;
     }
 
     public Message serialize(Topology command) {
@@ -102,11 +106,33 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
             if (Inet4Address.getLocalHost().getHostName().equals("fa15-cs425-g03-01.cs.illinois.edu")) {
                 assignMachines(command);
             }
+            String introducer = "localhost:4444";
+            Membership.Member member = Membership.Member.newBuilder()
+                    .setHost(introducer.split(":")[0])
+                    .setPort(Integer.parseInt(introducer.split(":")[1]))
+                    .build();
+
+            String introducer1 = "localhost:4445";
+            Membership.Member member1 = Membership.Member.newBuilder()
+                    .setHost(introducer1.split(":")[0])
+                    .setPort(Integer.parseInt(introducer1.split(":")[1]))
+                    .build();
+
+            Topology topology = (Topology) command;
+
+            Bolt bolt = new Bolt();
+            bolt.setSendTupleTo(member1);
+            bolt.setBoltType(Command.Bolt.BoltType.FILTERBOLT);
+            spoutService.setSpout(topology.getSpout());
+
+            spoutService.start(member, bolt);
+
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         return "ok";
     }
+
 
     public void assignMachines(ResponseCommand<String, String> command) {
         //set all members at Spout for Spout and Bolts
@@ -130,13 +156,25 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
             }
         }
 
+      /*  for (int i = 0; i < topology.getBoltList().size(); i++) {
+            topology.getBoltList().get(i).setSendTupleTo(IdMemberMap.get(topology.getBoltList().get(i).getId()));
+
+        }*/
+
+
+
         topology.getSpout().setSendTo(spoutTo);
         spoutService.setSpout(topology.getSpout());
 
-        for (Map.Entry<Integer, Integer> entry : spoutToBoltToBoltID.entrySet()) {
-            Bolt bolt = new Bolt();
-            bolt.setSendTupleTo(IdMemberMap.get(entry.getValue()));
-            spoutService.start(IdMemberMap.get(entry.getKey()), bolt);
+        for(int i = 0; i < topology.getBoltList().size(); i++) {
+            Bolt bolt = topology.getBoltList().get(i);
+            bolt.setSendTupleTo(IdMemberMap.get(spoutToBoltToBoltID.get(topology.getBoltList().get(i).getId())));
+            spoutService.start(IdMemberMap.get(topology.getBoltList().get(i).getId()), bolt);
         }
+
+
+
+        this.queue = spoutService.tuplesFromFile(queue);
     }
+
 }

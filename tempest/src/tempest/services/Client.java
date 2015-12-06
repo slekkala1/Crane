@@ -60,6 +60,19 @@ public class Client {
         return executeAllParallel(list, true);
     }
 
+    public Response ack(int id) {
+        tempest.commands.command.Ack ack = new tempest.commands.command.Ack();
+        ack.setId(id);
+        String nimbus = "fa15-cs425-g03-01.cs.illinois.edu:4444";
+        Membership.Member member = Membership.Member.newBuilder()
+                .setHost(nimbus.split(":")[0])
+                .setPort(Integer.parseInt(nimbus.split(":")[1]))
+                .build();
+        return createResponseExecutor(member, ack).execute();
+        //return executeAllParallel(list, true);
+    }
+
+
     public Response topology(Topology topology) {
         String nimbus = "swapnas-MacBook-Air.local:4444";
         Membership.Member member = Membership.Member.newBuilder()

@@ -1,19 +1,26 @@
 package tempest.commands.handler;
 
+import tempest.commands.command.Ack;
 import tempest.commands.command.Bolt;
-import tempest.commands.command.Spout;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
+import tempest.interfaces.ClientResponseCommandExecutor;
+import tempest.interfaces.Logger;
+import tempest.networking.TcpClientResponseCommandExecutor;
 import tempest.protos.Command;
+import tempest.protos.Membership;
+import tempest.services.CommandLineExecutor;
+import tempest.services.DefaultLogWrapper;
+import tempest.services.DefaultLogger;
 import tempest.services.Tuple;
 import tempest.services.bolt.FilterBolt;
 import tempest.services.bolt.OutputCollector;
 
 import java.io.*;
+import java.net.Inet4Address;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by swapnalekkala on 11/24/15.
@@ -28,10 +35,18 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
     }
 
     public Command.Message serialize(Bolt command) {
-        Command.Bolt.Builder boltBuilder = Command.Bolt.newBuilder();
-        if(command.getSendTupleTo()!=null) {
+        Command.Bolt.Builder boltBuilder = Command.Bolt.newBuilder()
+                .setParallelism(command.getParallelism());
+        if (command.getSendTupleTo() != null) {
             boltBuilder.setSendTupleTo(command.getSendTupleTo());
         }
+        if (command.getBoltType() != null) {
+            boltBuilder.setBoltType(command.getBoltType());
+        }
+        // if(command.getParallelism()!= null) {
+        //   boltBuilder.setParallelism(command.getParallelism());
+        //}
+
         if (command.getResponse() != null)
             boltBuilder.setResponse(command.getResponse());
         Command.Message message = Command.Message.newBuilder()
@@ -55,18 +70,41 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
             this.socket = socket;
             Thread thread = new Thread(readTuples(command));
             thread.start();
-           // if(!((Bolt)command).getSendTupleTo().getHost().equals("")) {
+            //if (!((Bolt) command).getSendTupleTo().getHost().equals("")) {
             outputCollector = new OutputCollector(((Bolt) command).getSendTupleTo());
             //}
-            FilterBolt filterBolt = new FilterBolt(queue,outputCollector);
-            filterBolt.filter();
+            //else {
+            //  String introducer = "fa15-cs425-g03-01.cs.illinois.edu:4444";
+            //Membership.Member member = Membership.Member.newBuilder()
+            //      .setHost(introducer.split(":")[0])
+            //    .setPort(Integer.parseInt(introducer.split(":")[1]))
+            //  .build();
+
+            //  outputCollector = new OutputCollector(member);
+            //}
+            if (((Bolt) command).getBoltType().toString().equals("FILTERBOLT")) {
+                FilterBolt filterBolt = new FilterBolt(queue, outputCollector);
+                filterBolt.filter();
+            } else if (((Bolt) command).getBoltType().toString().equals("JOINBOLT")) {
+
+            } else if (((Bolt) command).getBoltType().toString().equals("TRANSFORMBOLT")) {
+
+            }
             thread.join();
-            if(!((Bolt)command).getSendTupleTo().getHost().equals("")) {
+            if (!((Bolt) command).getSendTupleTo().getHost().equals("")) {
                 Thread outputThread = new Thread(outputCollector.emit());
                 outputThread.start();
                 outputThread.join();
+            } else {
+                Tuple tuple;
+                while ((tuple = outputCollector.getQueue().poll(1000, TimeUnit.MILLISECONDS)) != null) {
+                    ack(Integer.parseInt(tuple.getStringList().get(0)));
+                    System.out.println(String.join(",", tuple.getStringList()));
+                }
             }
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -96,7 +134,7 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
                         queue.add(tuple);
                         //filterBolt.filter();
                         //System.out.println(String.join(",", tuple.getStringList()));
-                        if(((Bolt)command).getSendTupleTo().getHost().equals("")) {
+                        if (((Bolt) command).getSendTupleTo().getHost().equals("")) {
                             System.out.println(String.join(",", tuple.getStringList()));
                         }
                     }
@@ -108,5 +146,24 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
             }
 
         };
+    }
+
+    public void ack(int id) throws IOException {
+        Ack ack = new Ack();
+        ack.setId(id);
+        String introducer = "fa15-cs425-g03-01.cs.illinois.edu:4444";
+        Membership.Member member = Membership.Member.newBuilder()
+              .setHost(introducer.split(":")[0])
+            .setPort(Integer.parseInt(introducer.split(":")[1]))
+          .build();
+        createResponseExecutor(member, ack).execute();
+    }
+
+    private <TRequest, TResponse> ClientResponseCommandExecutor<TResponse> createResponseExecutor
+            (Membership.Member member, ResponseCommand<TRequest, TResponse> command) throws IOException {
+        ResponseCommandExecutor commandHandler = new AckHandler();
+        String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
+        Logger logger = new DefaultLogger(new CommandLineExecutor(), new DefaultLogWrapper(), logFile, logFile);
+        return new TcpClientResponseCommandExecutor<>(member, command, commandHandler, logger);
     }
 }

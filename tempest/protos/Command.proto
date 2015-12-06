@@ -21,6 +21,7 @@ message Message {
         BOLT = 13;
         SPOUT = 14;
         TOPOLOGY = 15;
+        ACK = 16;
     }
 
     required Type type = 1;
@@ -39,6 +40,7 @@ message Message {
     optional Bolt bolt = 14;
     optional Spout spout = 15;
     optional Topology topology = 16;
+    optional Ack ack = 17;
 }
 
 message Ping {
@@ -103,6 +105,10 @@ message List {
     optional string response = 2;
 }
 
+message Ack {
+    optional int32 id = 1;
+}
+
 message Bolt {
 
     enum BoltType{
@@ -116,7 +122,7 @@ message Bolt {
     optional string request = 3;
     optional string response = 4;
     optional int32 id = 5;
-    required BoltType boltType = 6;
+    optional BoltType boltType = 6;
     optional int32 parallelism = 7;
     optional int32 sendTupleToID = 8;
     optional int32 receiveFromID = 9;

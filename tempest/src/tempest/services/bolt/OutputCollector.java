@@ -7,6 +7,7 @@ import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.networking.TcpClientResponseCommandExecutor;
+import tempest.protos.Command;
 import tempest.protos.Membership;
 import tempest.services.Tuple;
 
@@ -31,6 +32,10 @@ public class OutputCollector {
         this.queue.add(tuple);
     }
 
+    public LinkedBlockingQueue<Tuple> getQueue() {
+        return this.queue;
+    }
+
     public Runnable emit() {
         return new Runnable() {
             @Override
@@ -46,7 +51,6 @@ public class OutputCollector {
                             .setHost(introducer.split(":")[0])
                             .setPort(Integer.parseInt(introducer.split(":")[1]))
                             .build();
-                    ;
 
                     response = spoutTo(member);
                     if (response.getResponse().equals("ok")) run = false;
@@ -66,6 +70,7 @@ public class OutputCollector {
 //                .setPort(Integer.parseInt(introducer.split(":")[1]))
 //                .build();
 //        bolt.setSendTupleTo(member1);
+        bolt.setBoltType(Command.Bolt.BoltType.FILTERBOLT);
         bolt.setTuplesQueue(queue);
 //        spout.setRequest(options);
         return createResponseExecutor(member, bolt).executeSendTupleFromQueue();

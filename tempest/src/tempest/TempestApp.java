@@ -11,6 +11,8 @@ import tempest.services.spout.SpoutService;
 
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This is the entry point for Tempest and provides the lifecycle for most of the
@@ -30,7 +32,10 @@ public class TempestApp implements Runnable {
     private final ReplicaService replicaService;
     private final SDFSClient sdfsClient;
     private final FileIOUtils fileIOUtils;
+    private List<Integer> ackedIds;
+    private LinkedBlockingQueue<Tuple> queue;
    // private final SpoutService spoutService;
+    private final TupleService tupleService;
 
     public TempestApp() throws IOException {
         String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
@@ -41,7 +46,7 @@ public class TempestApp implements Runnable {
         responseCommandHandlers = new ResponseCommandExecutor[]{new PingHandler(), new GrepHandler(logger), new IntroduceHandler(membershipService, logger),
                 new LeaveHandler(membershipService), new PutHandler(logger, partitioner), new PutChunkHandler(logger, partitioner), new GetHandler(partitioner),
                 new GetChunkHandler(), new DeleteHandler(partitioner), new DeleteChunkHandler(partitioner), new ListHandler(partitioner),
-                new BoltHandler(),new TopologyHandler(membershipService,logger)};
+                new BoltHandler(),new TopologyHandler(membershipService,logger,queue), new AckHandler(ackedIds)};
         Client client = new Client(membershipService, logger, commandHandlers, responseCommandHandlers);
         //spoutService = new SpoutService(membershipService,logger,commandHandlers,responseCommandHandlers);
         server = new Server(logger, 4444, commandHandlers, responseCommandHandlers);
@@ -49,6 +54,7 @@ public class TempestApp implements Runnable {
         sdfsClient = new SDFSClient(logger);
         replicaService = new ReplicaService(logger, commandHandlers, responseCommandHandlers, partitioner, sdfsClient);
         fileIOUtils = new FileIOUtils(logger);
+        tupleService = new TupleService(ackedIds,queue);
     }
 
     /**

@@ -25,6 +25,7 @@ public class StockDataSpout implements BaseSpout {
     public StockDataSpout(LinkedBlockingQueue queue) {
         this.queue = queue;
     }
+
     public static final tempest.protos.Command.Spout.SpoutType type = Command.Spout.SpoutType.STOCKDATASPOUT;
 
     public tempest.protos.Command.Spout.SpoutType getType() {
@@ -83,12 +84,15 @@ public class StockDataSpout implements BaseSpout {
                                     e.printStackTrace();
                                 }
                                 String line = null;
+                                int count = 1;
                                 try {
                                     while ((line = reader.readLine()) != null) {
+                                        line = count + "," + line;
                                         List<String> s = Arrays.asList(line.split(","));
                                         Tuple t = new Tuple(s);
                                         queue.put(t);
                                         lines.add(line);
+                                        count++;
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -98,9 +102,9 @@ public class StockDataSpout implements BaseSpout {
                             }
                         });
 
-                        System.out.println(lines.get(0));
+                        //System.out.println(lines.get(0));
                         System.out.println(lines.size());
-                        System.out.println(lines.get(lines.size() - 1));
+                        //System.out.println(lines.get(lines.size() - 1));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

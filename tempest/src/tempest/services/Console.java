@@ -70,7 +70,7 @@ public class Console {
         return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 
-    @Command(abbrev = "application1")
+    @Command(abbrev = "app1")
     public String application1() {
         Response<String> response = client.topology(Topologies.application1());
         return response.getResponse() + formatResponseStatistics(response.getResponseData());

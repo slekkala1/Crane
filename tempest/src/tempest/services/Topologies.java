@@ -18,12 +18,14 @@ public class Topologies {
         spout1.setId(1);
         spout1.setSpoutType(Command.Spout.SpoutType.STOCKDATASPOUT);
 //        spout1.setSendTo();
+
         tempest.commands.command.Bolt bolt1 = new tempest.commands.command.Bolt();
         bolt1.setId(2);
         bolt1.setBoltType(Command.Bolt.BoltType.FILTERBOLT);
         bolt1.setReceiveFromID(1);
         bolt1.setSendTupleToID(3);
         bolt1.setParallelism(7);
+
         tempest.commands.command.Bolt bolt2 = new tempest.commands.command.Bolt();
         bolt2.setBoltType(Command.Bolt.BoltType.FILTERBOLT);
         bolt2.setId(3);

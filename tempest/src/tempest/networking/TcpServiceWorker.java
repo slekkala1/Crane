@@ -47,5 +47,4 @@ public class TcpServiceWorker implements Runnable {
             logger.logLine(DefaultLogger.INFO, "Error handling command" + e);
         }
     }
-
 }

@@ -39,17 +39,22 @@ public class BaseBolt {
 
     public void filter() {
         Collection<Callable<Tuple>> callable = new ArrayList<Callable<Tuple>>();
-        if (type == Command.Bolt.BoltType.FILTERBOLT) {
+        if (type == Command.Bolt.BoltType.STOCKFILTERGAINBOLT) {
             for (int i = 0; i < nThreads; i++) {
-                callable.add(new FilterBolt(queue, outputCollector));
+            	callable.add(new StockFilterGainBolt(queue, outputCollector));
             }
-        } else if (type == Command.Bolt.BoltType.JOINBOLT) {
+        }
+        else if (type == Command.Bolt.BoltType.STOCKFILTERLARGEBOLT) {
             for (int i = 0; i < nThreads; i++) {
-
+            	callable.add(new StockFilterLargeBolt(queue, outputCollector));
             }
-        } else if (type == Command.Bolt.BoltType.TRANSFORMBOLT) {
+        } else if (type == Command.Bolt.BoltType.TWITTERFILTERTRENDINGBOLT) {
             for (int i = 0; i < nThreads; i++) {
-
+            	callable.add(new TwitterFilterTrendingBolt(queue, outputCollector));
+            }
+        } else if (type == Command.Bolt.BoltType.TWITTERSHORTENBOLT) {
+            for (int i = 0; i < nThreads; i++) {
+            	callable.add(new TwitterShortenBolt(queue, outputCollector));
             }
         }
         try {

@@ -4,23 +4,33 @@ import tempest.services.Tuple;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by swapnalekkala on 12/2/15.
  */
 public class FilterBoltCallable
         implements Callable {
-    LinkedBlockingQueue queue;
+    LinkedBlockingQueue<Tuple> queue;
+    OutputCollector outputCollector;
 
-    public FilterBoltCallable(LinkedBlockingQueue queue) {
+
+
+    public FilterBoltCallable(LinkedBlockingQueue<Tuple> queue, OutputCollector outputCollector) {
         this.queue = queue;
+        this.outputCollector = outputCollector;
     }
 
     public Tuple call() {
         Tuple tuple = null;
         try {
-            tuple = (Tuple) queue.take();
-            System.out.println(String.join(",", tuple.getStringList()));
+            if(!outputCollector.member.getHost().equals("")) {
+                while((tuple = queue.poll(1000, TimeUnit.MILLISECONDS))!=null) {
+                //tuple = ;
+                    outputCollector.add(tuple);
+                }
+                //System.out.println(String.join(",", tuple.getStringList()));
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

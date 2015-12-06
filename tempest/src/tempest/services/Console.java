@@ -70,6 +70,12 @@ public class Console {
         return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 
+    @Command(abbrev = "application1")
+    public String application1() {
+        Response<String> response = client.topology(Topologies.application1());
+        return response.getResponse() + formatResponseStatistics(response.getResponseData());
+    }
+
     @Command
     public void log(@Param(name = "level") String level, @Param(name = "message") String message) {
         logger.logLine(level, message);

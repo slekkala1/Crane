@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.util.concurrent.TimeUnit;
 
 public class TcpClientResponseCommandExecutor<TCommand extends ResponseCommand<TRequest, TResponse>, TRequest, TResponse> implements ClientResponseCommandExecutor<TResponse> {
     private final Membership.Member server;
@@ -45,9 +46,6 @@ public class TcpClientResponseCommandExecutor<TCommand extends ResponseCommand<T
             socket.getOutputStream().write(ByteBuffer.allocate(4).putInt(serializedCommand.toByteArray().length).array());
             serializedCommand.writeTo(socket.getOutputStream());
 
-            //  if (command instanceof Spout) {
-            //     FileIOUtils.sendFile(socket, (String) ((Spout) command).getLocalFileName());
-            //}
             if (command instanceof Put) {
                 FileIOUtils.sendFile(socket, (String) ((Put) command).getLocalFileName());
             }
@@ -105,20 +103,20 @@ public class TcpClientResponseCommandExecutor<TCommand extends ResponseCommand<T
             socket.getOutputStream().write(ByteBuffer.allocate(4).putInt(serializedCommand.toByteArray().length).array());
             serializedCommand.writeTo(socket.getOutputStream());
 
-            ObjectOutputStream objectOutputStream =new ObjectOutputStream(socket.getOutputStream());
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
-            for(int i =0; i<(((Bolt) command).getTuplesList().size()); i++) {
+            for (int i = 0; i < (((Bolt) command).getTuplesList().size()); i++) {
                 ByteArrayOutputStream b = new ByteArrayOutputStream();
                 ObjectOutputStream o = new ObjectOutputStream(b);
                 o.writeObject(((Bolt) command).getTuplesList().get(i));
                 objectOutputStream.writeInt(b.toByteArray().length);
                 objectOutputStream.write(b.toByteArray());
             }
+
             objectOutputStream.writeInt(-1);
             objectOutputStream.flush();
             socket.isOutputShutdown();
             socket.shutdownOutput();
-
 
             tempest.protos.Command.Message message = tempest.protos.Command.Message.parseFrom(socket.getInputStream());
             socket.close();
@@ -135,5 +133,46 @@ public class TcpClientResponseCommandExecutor<TCommand extends ResponseCommand<T
             return null;
         }
     }
-}
 
+    public Response<TResponse> executeSendTupleFromQueue() {
+        long startTime1 = System.currentTimeMillis();
+        try {
+            Socket socket = new Socket(server.getHost(), server.getPort());
+            Command.Message serializedCommand = commandHandler.serialize(command);
+            socket.getOutputStream().write(ByteBuffer.allocate(4).putInt(serializedCommand.toByteArray().length).array());
+            serializedCommand.writeTo(socket.getOutputStream());
+
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+
+            Tuple tuple;
+            while((tuple = ((Bolt) command).getTuplesQueue().poll(1000, TimeUnit.MILLISECONDS))!=null) {
+                ByteArrayOutputStream b = new ByteArrayOutputStream();
+                ObjectOutputStream o = new ObjectOutputStream(b);
+                o.writeObject(tuple);
+                objectOutputStream.writeInt(b.toByteArray().length);
+                objectOutputStream.write(b.toByteArray());
+            }
+            objectOutputStream.writeInt(-1);
+            objectOutputStream.flush();
+            socket.isOutputShutdown();
+            socket.shutdownOutput();
+
+            tempest.protos.Command.Message message = tempest.protos.Command.Message.parseFrom(socket.getInputStream());
+            socket.close();
+
+            ResponseCommand<TRequest, TResponse> responseCommand = commandHandler.deserialize(message);
+
+            Response<TResponse> result = new Response<>();
+            result.setResponse(responseCommand.getResponse());
+            result.setResponseData(new ResponseData(System.currentTimeMillis() - startTime1));
+            return result;
+        } catch (IOException e) {
+            logger.logLine(DefaultLogger.WARNING, "Client socket failed while connecting to [" + server + "]" + e);
+            e.printStackTrace();
+            return null;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}

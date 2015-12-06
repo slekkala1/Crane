@@ -11,7 +11,7 @@ public class Server {
     private final int port;
     private final CommandExecutor[] commandHandlers;
     private final ResponseCommandExecutor[] responseCommandHandlers;
-    private TcpServiceRunner tcpRunner;
+    private TcpServiceRunner tcpRunner,tcpRunner1;
     private UdpServiceRunner udpRunner;
 
     public Server(Logger logger, int port, CommandExecutor[] commandHandlers, ResponseCommandExecutor[] responseCommandHandlers) {
@@ -25,6 +25,9 @@ public class Server {
         if (tcpRunner == null) {
             tcpRunner = new TcpServiceRunner(logger, port, responseCommandHandlers);
             new Thread(tcpRunner).start();
+            //need to remove below server
+            tcpRunner1 = new TcpServiceRunner(logger, 4445, responseCommandHandlers);
+            new Thread(tcpRunner1).start();
         }
 
         if (udpRunner == null) {

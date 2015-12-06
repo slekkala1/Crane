@@ -202,6 +202,19 @@ public final class Command {
      * <code>optional .Spout spout = 15;</code>
      */
     tempest.protos.Command.SpoutOrBuilder getSpoutOrBuilder();
+
+    /**
+     * <code>optional .Topology topology = 16;</code>
+     */
+    boolean hasTopology();
+    /**
+     * <code>optional .Topology topology = 16;</code>
+     */
+    tempest.protos.Command.Topology getTopology();
+    /**
+     * <code>optional .Topology topology = 16;</code>
+     */
+    tempest.protos.Command.TopologyOrBuilder getTopologyOrBuilder();
   }
   /**
    * Protobuf type {@code Message}
@@ -448,6 +461,19 @@ public final class Command {
               bitField0_ |= 0x00004000;
               break;
             }
+            case 130: {
+              tempest.protos.Command.Topology.Builder subBuilder = null;
+              if (((bitField0_ & 0x00008000) == 0x00008000)) {
+                subBuilder = topology_.toBuilder();
+              }
+              topology_ = input.readMessage(tempest.protos.Command.Topology.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(topology_);
+                topology_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00008000;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -548,6 +574,10 @@ public final class Command {
        * <code>SPOUT = 14;</code>
        */
       SPOUT(13, 14),
+      /**
+       * <code>TOPOLOGY = 15;</code>
+       */
+      TOPOLOGY(14, 15),
       ;
 
       /**
@@ -606,6 +636,10 @@ public final class Command {
        * <code>SPOUT = 14;</code>
        */
       public static final int SPOUT_VALUE = 14;
+      /**
+       * <code>TOPOLOGY = 15;</code>
+       */
+      public static final int TOPOLOGY_VALUE = 15;
 
 
       public final int getNumber() { return value; }
@@ -626,6 +660,7 @@ public final class Command {
           case 12: return LIST;
           case 13: return BOLT;
           case 14: return SPOUT;
+          case 15: return TOPOLOGY;
           default: return null;
         }
       }
@@ -987,6 +1022,27 @@ public final class Command {
       return spout_;
     }
 
+    public static final int TOPOLOGY_FIELD_NUMBER = 16;
+    private tempest.protos.Command.Topology topology_;
+    /**
+     * <code>optional .Topology topology = 16;</code>
+     */
+    public boolean hasTopology() {
+      return ((bitField0_ & 0x00008000) == 0x00008000);
+    }
+    /**
+     * <code>optional .Topology topology = 16;</code>
+     */
+    public tempest.protos.Command.Topology getTopology() {
+      return topology_;
+    }
+    /**
+     * <code>optional .Topology topology = 16;</code>
+     */
+    public tempest.protos.Command.TopologyOrBuilder getTopologyOrBuilder() {
+      return topology_;
+    }
+
     private void initFields() {
       type_ = tempest.protos.Command.Message.Type.PING;
       ping_ = tempest.protos.Command.Ping.getDefaultInstance();
@@ -1003,6 +1059,7 @@ public final class Command {
       list_ = tempest.protos.Command.List.getDefaultInstance();
       bolt_ = tempest.protos.Command.Bolt.getDefaultInstance();
       spout_ = tempest.protos.Command.Spout.getDefaultInstance();
+      topology_ = tempest.protos.Command.Topology.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1028,6 +1085,24 @@ public final class Command {
       }
       if (hasMembership()) {
         if (!getMembership().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      if (hasBolt()) {
+        if (!getBolt().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      if (hasSpout()) {
+        if (!getSpout().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      if (hasTopology()) {
+        if (!getTopology().isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -1083,6 +1158,9 @@ public final class Command {
       }
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
         output.writeMessage(15, spout_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        output.writeMessage(16, topology_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1152,6 +1230,10 @@ public final class Command {
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(15, spout_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(16, topology_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1276,6 +1358,7 @@ public final class Command {
           getListFieldBuilder();
           getBoltFieldBuilder();
           getSpoutFieldBuilder();
+          getTopologyFieldBuilder();
         }
       }
       private static Builder create() {
@@ -1370,6 +1453,12 @@ public final class Command {
           spoutBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00004000);
+        if (topologyBuilder_ == null) {
+          topology_ = tempest.protos.Command.Topology.getDefaultInstance();
+        } else {
+          topologyBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00008000);
         return this;
       }
 
@@ -1514,6 +1603,14 @@ public final class Command {
         } else {
           result.spout_ = spoutBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
+          to_bitField0_ |= 0x00008000;
+        }
+        if (topologyBuilder_ == null) {
+          result.topology_ = topology_;
+        } else {
+          result.topology_ = topologyBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1575,6 +1672,9 @@ public final class Command {
         if (other.hasSpout()) {
           mergeSpout(other.getSpout());
         }
+        if (other.hasTopology()) {
+          mergeTopology(other.getTopology());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -1598,6 +1698,24 @@ public final class Command {
         }
         if (hasMembership()) {
           if (!getMembership().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasBolt()) {
+          if (!getBolt().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasSpout()) {
+          if (!getSpout().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasTopology()) {
+          if (!getTopology().isInitialized()) {
             
             return false;
           }
@@ -3281,6 +3399,122 @@ public final class Command {
           spout_ = null;
         }
         return spoutBuilder_;
+      }
+
+      private tempest.protos.Command.Topology topology_ = tempest.protos.Command.Topology.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Topology, tempest.protos.Command.Topology.Builder, tempest.protos.Command.TopologyOrBuilder> topologyBuilder_;
+      /**
+       * <code>optional .Topology topology = 16;</code>
+       */
+      public boolean hasTopology() {
+        return ((bitField0_ & 0x00008000) == 0x00008000);
+      }
+      /**
+       * <code>optional .Topology topology = 16;</code>
+       */
+      public tempest.protos.Command.Topology getTopology() {
+        if (topologyBuilder_ == null) {
+          return topology_;
+        } else {
+          return topologyBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .Topology topology = 16;</code>
+       */
+      public Builder setTopology(tempest.protos.Command.Topology value) {
+        if (topologyBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          topology_ = value;
+          onChanged();
+        } else {
+          topologyBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00008000;
+        return this;
+      }
+      /**
+       * <code>optional .Topology topology = 16;</code>
+       */
+      public Builder setTopology(
+          tempest.protos.Command.Topology.Builder builderForValue) {
+        if (topologyBuilder_ == null) {
+          topology_ = builderForValue.build();
+          onChanged();
+        } else {
+          topologyBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00008000;
+        return this;
+      }
+      /**
+       * <code>optional .Topology topology = 16;</code>
+       */
+      public Builder mergeTopology(tempest.protos.Command.Topology value) {
+        if (topologyBuilder_ == null) {
+          if (((bitField0_ & 0x00008000) == 0x00008000) &&
+              topology_ != tempest.protos.Command.Topology.getDefaultInstance()) {
+            topology_ =
+              tempest.protos.Command.Topology.newBuilder(topology_).mergeFrom(value).buildPartial();
+          } else {
+            topology_ = value;
+          }
+          onChanged();
+        } else {
+          topologyBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00008000;
+        return this;
+      }
+      /**
+       * <code>optional .Topology topology = 16;</code>
+       */
+      public Builder clearTopology() {
+        if (topologyBuilder_ == null) {
+          topology_ = tempest.protos.Command.Topology.getDefaultInstance();
+          onChanged();
+        } else {
+          topologyBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00008000);
+        return this;
+      }
+      /**
+       * <code>optional .Topology topology = 16;</code>
+       */
+      public tempest.protos.Command.Topology.Builder getTopologyBuilder() {
+        bitField0_ |= 0x00008000;
+        onChanged();
+        return getTopologyFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .Topology topology = 16;</code>
+       */
+      public tempest.protos.Command.TopologyOrBuilder getTopologyOrBuilder() {
+        if (topologyBuilder_ != null) {
+          return topologyBuilder_.getMessageOrBuilder();
+        } else {
+          return topology_;
+        }
+      }
+      /**
+       * <code>optional .Topology topology = 16;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Topology, tempest.protos.Command.Topology.Builder, tempest.protos.Command.TopologyOrBuilder> 
+          getTopologyFieldBuilder() {
+        if (topologyBuilder_ == null) {
+          topologyBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Command.Topology, tempest.protos.Command.Topology.Builder, tempest.protos.Command.TopologyOrBuilder>(
+                  getTopology(),
+                  getParentForChildren(),
+                  isClean());
+          topology_ = null;
+        }
+        return topologyBuilder_;
       }
 
       // @@protoc_insertion_point(builder_scope:Message)
@@ -11203,32 +11437,103 @@ public final class Command {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string request = 1;</code>
+     * <code>optional .Member sendTupleTo = 1;</code>
+     */
+    boolean hasSendTupleTo();
+    /**
+     * <code>optional .Member sendTupleTo = 1;</code>
+     */
+    tempest.protos.Membership.Member getSendTupleTo();
+    /**
+     * <code>optional .Member sendTupleTo = 1;</code>
+     */
+    tempest.protos.Membership.MemberOrBuilder getSendTupleToOrBuilder();
+
+    /**
+     * <code>optional .Member receiveFrom = 2;</code>
+     */
+    boolean hasReceiveFrom();
+    /**
+     * <code>optional .Member receiveFrom = 2;</code>
+     */
+    tempest.protos.Membership.Member getReceiveFrom();
+    /**
+     * <code>optional .Member receiveFrom = 2;</code>
+     */
+    tempest.protos.Membership.MemberOrBuilder getReceiveFromOrBuilder();
+
+    /**
+     * <code>optional string request = 3;</code>
      */
     boolean hasRequest();
     /**
-     * <code>optional string request = 1;</code>
+     * <code>optional string request = 3;</code>
      */
     java.lang.String getRequest();
     /**
-     * <code>optional string request = 1;</code>
+     * <code>optional string request = 3;</code>
      */
     com.google.protobuf.ByteString
         getRequestBytes();
 
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     boolean hasResponse();
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     java.lang.String getResponse();
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     com.google.protobuf.ByteString
         getResponseBytes();
+
+    /**
+     * <code>optional int32 id = 5;</code>
+     */
+    boolean hasId();
+    /**
+     * <code>optional int32 id = 5;</code>
+     */
+    int getId();
+
+    /**
+     * <code>required .Bolt.BoltType boltType = 6;</code>
+     */
+    boolean hasBoltType();
+    /**
+     * <code>required .Bolt.BoltType boltType = 6;</code>
+     */
+    tempest.protos.Command.Bolt.BoltType getBoltType();
+
+    /**
+     * <code>optional int32 parallelism = 7;</code>
+     */
+    boolean hasParallelism();
+    /**
+     * <code>optional int32 parallelism = 7;</code>
+     */
+    int getParallelism();
+
+    /**
+     * <code>optional int32 sendTupleToID = 8;</code>
+     */
+    boolean hasSendTupleToID();
+    /**
+     * <code>optional int32 sendTupleToID = 8;</code>
+     */
+    int getSendTupleToID();
+
+    /**
+     * <code>optional int32 receiveFromID = 9;</code>
+     */
+    boolean hasReceiveFromID();
+    /**
+     * <code>optional int32 receiveFromID = 9;</code>
+     */
+    int getReceiveFromID();
   }
   /**
    * Protobuf type {@code Bolt}
@@ -11283,15 +11588,72 @@ public final class Command {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+              tempest.protos.Membership.Member.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                subBuilder = sendTupleTo_.toBuilder();
+              }
+              sendTupleTo_ = input.readMessage(tempest.protos.Membership.Member.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(sendTupleTo_);
+                sendTupleTo_ = subBuilder.buildPartial();
+              }
               bitField0_ |= 0x00000001;
-              request_ = bs;
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+              tempest.protos.Membership.Member.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                subBuilder = receiveFrom_.toBuilder();
+              }
+              receiveFrom_ = input.readMessage(tempest.protos.Membership.Member.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(receiveFrom_);
+                receiveFrom_ = subBuilder.buildPartial();
+              }
               bitField0_ |= 0x00000002;
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              request_ = bs;
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
               response_ = bs;
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              id_ = input.readInt32();
+              break;
+            }
+            case 48: {
+              int rawValue = input.readEnum();
+              tempest.protos.Command.Bolt.BoltType value = tempest.protos.Command.Bolt.BoltType.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(6, rawValue);
+              } else {
+                bitField0_ |= 0x00000020;
+                boltType_ = value;
+              }
+              break;
+            }
+            case 56: {
+              bitField0_ |= 0x00000040;
+              parallelism_ = input.readInt32();
+              break;
+            }
+            case 64: {
+              bitField0_ |= 0x00000080;
+              sendTupleToID_ = input.readInt32();
+              break;
+            }
+            case 72: {
+              bitField0_ |= 0x00000100;
+              receiveFromID_ = input.readInt32();
               break;
             }
           }
@@ -11333,17 +11695,150 @@ public final class Command {
       return PARSER;
     }
 
-    private int bitField0_;
-    public static final int REQUEST_FIELD_NUMBER = 1;
-    private java.lang.Object request_;
     /**
-     * <code>optional string request = 1;</code>
+     * Protobuf enum {@code Bolt.BoltType}
      */
-    public boolean hasRequest() {
+    public enum BoltType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>FILTERBOLT = 1;</code>
+       */
+      FILTERBOLT(0, 1),
+      /**
+       * <code>TRANSFORMBOLT = 2;</code>
+       */
+      TRANSFORMBOLT(1, 2),
+      /**
+       * <code>JOINBOLT = 3;</code>
+       */
+      JOINBOLT(2, 3),
+      ;
+
+      /**
+       * <code>FILTERBOLT = 1;</code>
+       */
+      public static final int FILTERBOLT_VALUE = 1;
+      /**
+       * <code>TRANSFORMBOLT = 2;</code>
+       */
+      public static final int TRANSFORMBOLT_VALUE = 2;
+      /**
+       * <code>JOINBOLT = 3;</code>
+       */
+      public static final int JOINBOLT_VALUE = 3;
+
+
+      public final int getNumber() { return value; }
+
+      public static BoltType valueOf(int value) {
+        switch (value) {
+          case 1: return FILTERBOLT;
+          case 2: return TRANSFORMBOLT;
+          case 3: return JOINBOLT;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<BoltType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static com.google.protobuf.Internal.EnumLiteMap<BoltType>
+          internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<BoltType>() {
+              public BoltType findValueByNumber(int number) {
+                return BoltType.valueOf(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(index);
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return tempest.protos.Command.Bolt.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final BoltType[] VALUES = values();
+
+      public static BoltType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int index;
+      private final int value;
+
+      private BoltType(int index, int value) {
+        this.index = index;
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:Bolt.BoltType)
+    }
+
+    private int bitField0_;
+    public static final int SENDTUPLETO_FIELD_NUMBER = 1;
+    private tempest.protos.Membership.Member sendTupleTo_;
+    /**
+     * <code>optional .Member sendTupleTo = 1;</code>
+     */
+    public boolean hasSendTupleTo() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>optional string request = 1;</code>
+     * <code>optional .Member sendTupleTo = 1;</code>
+     */
+    public tempest.protos.Membership.Member getSendTupleTo() {
+      return sendTupleTo_;
+    }
+    /**
+     * <code>optional .Member sendTupleTo = 1;</code>
+     */
+    public tempest.protos.Membership.MemberOrBuilder getSendTupleToOrBuilder() {
+      return sendTupleTo_;
+    }
+
+    public static final int RECEIVEFROM_FIELD_NUMBER = 2;
+    private tempest.protos.Membership.Member receiveFrom_;
+    /**
+     * <code>optional .Member receiveFrom = 2;</code>
+     */
+    public boolean hasReceiveFrom() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional .Member receiveFrom = 2;</code>
+     */
+    public tempest.protos.Membership.Member getReceiveFrom() {
+      return receiveFrom_;
+    }
+    /**
+     * <code>optional .Member receiveFrom = 2;</code>
+     */
+    public tempest.protos.Membership.MemberOrBuilder getReceiveFromOrBuilder() {
+      return receiveFrom_;
+    }
+
+    public static final int REQUEST_FIELD_NUMBER = 3;
+    private java.lang.Object request_;
+    /**
+     * <code>optional string request = 3;</code>
+     */
+    public boolean hasRequest() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional string request = 3;</code>
      */
     public java.lang.String getRequest() {
       java.lang.Object ref = request_;
@@ -11360,7 +11855,7 @@ public final class Command {
       }
     }
     /**
-     * <code>optional string request = 1;</code>
+     * <code>optional string request = 3;</code>
      */
     public com.google.protobuf.ByteString
         getRequestBytes() {
@@ -11376,16 +11871,16 @@ public final class Command {
       }
     }
 
-    public static final int RESPONSE_FIELD_NUMBER = 2;
+    public static final int RESPONSE_FIELD_NUMBER = 4;
     private java.lang.Object response_;
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     public boolean hasResponse() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     public java.lang.String getResponse() {
       java.lang.Object ref = response_;
@@ -11402,7 +11897,7 @@ public final class Command {
       }
     }
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     public com.google.protobuf.ByteString
         getResponseBytes() {
@@ -11418,9 +11913,91 @@ public final class Command {
       }
     }
 
+    public static final int ID_FIELD_NUMBER = 5;
+    private int id_;
+    /**
+     * <code>optional int32 id = 5;</code>
+     */
+    public boolean hasId() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional int32 id = 5;</code>
+     */
+    public int getId() {
+      return id_;
+    }
+
+    public static final int BOLTTYPE_FIELD_NUMBER = 6;
+    private tempest.protos.Command.Bolt.BoltType boltType_;
+    /**
+     * <code>required .Bolt.BoltType boltType = 6;</code>
+     */
+    public boolean hasBoltType() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <code>required .Bolt.BoltType boltType = 6;</code>
+     */
+    public tempest.protos.Command.Bolt.BoltType getBoltType() {
+      return boltType_;
+    }
+
+    public static final int PARALLELISM_FIELD_NUMBER = 7;
+    private int parallelism_;
+    /**
+     * <code>optional int32 parallelism = 7;</code>
+     */
+    public boolean hasParallelism() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    /**
+     * <code>optional int32 parallelism = 7;</code>
+     */
+    public int getParallelism() {
+      return parallelism_;
+    }
+
+    public static final int SENDTUPLETOID_FIELD_NUMBER = 8;
+    private int sendTupleToID_;
+    /**
+     * <code>optional int32 sendTupleToID = 8;</code>
+     */
+    public boolean hasSendTupleToID() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    /**
+     * <code>optional int32 sendTupleToID = 8;</code>
+     */
+    public int getSendTupleToID() {
+      return sendTupleToID_;
+    }
+
+    public static final int RECEIVEFROMID_FIELD_NUMBER = 9;
+    private int receiveFromID_;
+    /**
+     * <code>optional int32 receiveFromID = 9;</code>
+     */
+    public boolean hasReceiveFromID() {
+      return ((bitField0_ & 0x00000100) == 0x00000100);
+    }
+    /**
+     * <code>optional int32 receiveFromID = 9;</code>
+     */
+    public int getReceiveFromID() {
+      return receiveFromID_;
+    }
+
     private void initFields() {
+      sendTupleTo_ = tempest.protos.Membership.Member.getDefaultInstance();
+      receiveFrom_ = tempest.protos.Membership.Member.getDefaultInstance();
       request_ = "";
       response_ = "";
+      id_ = 0;
+      boltType_ = tempest.protos.Command.Bolt.BoltType.FILTERBOLT;
+      parallelism_ = 0;
+      sendTupleToID_ = 0;
+      receiveFromID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -11428,6 +12005,10 @@ public final class Command {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
+      if (!hasBoltType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -11436,10 +12017,31 @@ public final class Command {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getRequestBytes());
+        output.writeMessage(1, sendTupleTo_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getResponseBytes());
+        output.writeMessage(2, receiveFrom_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getResponseBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeInt32(5, id_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeEnum(6, boltType_.getNumber());
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeInt32(7, parallelism_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        output.writeInt32(8, sendTupleToID_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        output.writeInt32(9, receiveFromID_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -11452,11 +12054,39 @@ public final class Command {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getRequestBytes());
+          .computeMessageSize(1, sendTupleTo_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getResponseBytes());
+          .computeMessageSize(2, receiveFrom_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getResponseBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, id_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(6, boltType_.getNumber());
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(7, parallelism_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(8, sendTupleToID_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(9, receiveFromID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -11567,6 +12197,8 @@ public final class Command {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getSendTupleToFieldBuilder();
+          getReceiveFromFieldBuilder();
         }
       }
       private static Builder create() {
@@ -11575,10 +12207,32 @@ public final class Command {
 
       public Builder clear() {
         super.clear();
-        request_ = "";
+        if (sendTupleToBuilder_ == null) {
+          sendTupleTo_ = tempest.protos.Membership.Member.getDefaultInstance();
+        } else {
+          sendTupleToBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00000001);
-        response_ = "";
+        if (receiveFromBuilder_ == null) {
+          receiveFrom_ = tempest.protos.Membership.Member.getDefaultInstance();
+        } else {
+          receiveFromBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00000002);
+        request_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        response_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
+        id_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        boltType_ = tempest.protos.Command.Bolt.BoltType.FILTERBOLT;
+        bitField0_ = (bitField0_ & ~0x00000020);
+        parallelism_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000040);
+        sendTupleToID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000080);
+        receiveFromID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000100);
         return this;
       }
 
@@ -11610,11 +12264,47 @@ public final class Command {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.request_ = request_;
+        if (sendTupleToBuilder_ == null) {
+          result.sendTupleTo_ = sendTupleTo_;
+        } else {
+          result.sendTupleTo_ = sendTupleToBuilder_.build();
+        }
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
+        if (receiveFromBuilder_ == null) {
+          result.receiveFrom_ = receiveFrom_;
+        } else {
+          result.receiveFrom_ = receiveFromBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.request_ = request_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
         result.response_ = response_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.id_ = id_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.boltType_ = boltType_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        result.parallelism_ = parallelism_;
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+          to_bitField0_ |= 0x00000080;
+        }
+        result.sendTupleToID_ = sendTupleToID_;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        result.receiveFromID_ = receiveFromID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -11631,21 +12321,46 @@ public final class Command {
 
       public Builder mergeFrom(tempest.protos.Command.Bolt other) {
         if (other == tempest.protos.Command.Bolt.getDefaultInstance()) return this;
+        if (other.hasSendTupleTo()) {
+          mergeSendTupleTo(other.getSendTupleTo());
+        }
+        if (other.hasReceiveFrom()) {
+          mergeReceiveFrom(other.getReceiveFrom());
+        }
         if (other.hasRequest()) {
-          bitField0_ |= 0x00000001;
+          bitField0_ |= 0x00000004;
           request_ = other.request_;
           onChanged();
         }
         if (other.hasResponse()) {
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000008;
           response_ = other.response_;
           onChanged();
+        }
+        if (other.hasId()) {
+          setId(other.getId());
+        }
+        if (other.hasBoltType()) {
+          setBoltType(other.getBoltType());
+        }
+        if (other.hasParallelism()) {
+          setParallelism(other.getParallelism());
+        }
+        if (other.hasSendTupleToID()) {
+          setSendTupleToID(other.getSendTupleToID());
+        }
+        if (other.hasReceiveFromID()) {
+          setReceiveFromID(other.getReceiveFromID());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
+        if (!hasBoltType()) {
+          
+          return false;
+        }
         return true;
       }
 
@@ -11668,15 +12383,247 @@ public final class Command {
       }
       private int bitField0_;
 
-      private java.lang.Object request_ = "";
+      private tempest.protos.Membership.Member sendTupleTo_ = tempest.protos.Membership.Member.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> sendTupleToBuilder_;
       /**
-       * <code>optional string request = 1;</code>
+       * <code>optional .Member sendTupleTo = 1;</code>
        */
-      public boolean hasRequest() {
+      public boolean hasSendTupleTo() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>optional string request = 1;</code>
+       * <code>optional .Member sendTupleTo = 1;</code>
+       */
+      public tempest.protos.Membership.Member getSendTupleTo() {
+        if (sendTupleToBuilder_ == null) {
+          return sendTupleTo_;
+        } else {
+          return sendTupleToBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .Member sendTupleTo = 1;</code>
+       */
+      public Builder setSendTupleTo(tempest.protos.Membership.Member value) {
+        if (sendTupleToBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          sendTupleTo_ = value;
+          onChanged();
+        } else {
+          sendTupleToBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>optional .Member sendTupleTo = 1;</code>
+       */
+      public Builder setSendTupleTo(
+          tempest.protos.Membership.Member.Builder builderForValue) {
+        if (sendTupleToBuilder_ == null) {
+          sendTupleTo_ = builderForValue.build();
+          onChanged();
+        } else {
+          sendTupleToBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>optional .Member sendTupleTo = 1;</code>
+       */
+      public Builder mergeSendTupleTo(tempest.protos.Membership.Member value) {
+        if (sendTupleToBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
+              sendTupleTo_ != tempest.protos.Membership.Member.getDefaultInstance()) {
+            sendTupleTo_ =
+              tempest.protos.Membership.Member.newBuilder(sendTupleTo_).mergeFrom(value).buildPartial();
+          } else {
+            sendTupleTo_ = value;
+          }
+          onChanged();
+        } else {
+          sendTupleToBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>optional .Member sendTupleTo = 1;</code>
+       */
+      public Builder clearSendTupleTo() {
+        if (sendTupleToBuilder_ == null) {
+          sendTupleTo_ = tempest.protos.Membership.Member.getDefaultInstance();
+          onChanged();
+        } else {
+          sendTupleToBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+      /**
+       * <code>optional .Member sendTupleTo = 1;</code>
+       */
+      public tempest.protos.Membership.Member.Builder getSendTupleToBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return getSendTupleToFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .Member sendTupleTo = 1;</code>
+       */
+      public tempest.protos.Membership.MemberOrBuilder getSendTupleToOrBuilder() {
+        if (sendTupleToBuilder_ != null) {
+          return sendTupleToBuilder_.getMessageOrBuilder();
+        } else {
+          return sendTupleTo_;
+        }
+      }
+      /**
+       * <code>optional .Member sendTupleTo = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> 
+          getSendTupleToFieldBuilder() {
+        if (sendTupleToBuilder_ == null) {
+          sendTupleToBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder>(
+                  getSendTupleTo(),
+                  getParentForChildren(),
+                  isClean());
+          sendTupleTo_ = null;
+        }
+        return sendTupleToBuilder_;
+      }
+
+      private tempest.protos.Membership.Member receiveFrom_ = tempest.protos.Membership.Member.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> receiveFromBuilder_;
+      /**
+       * <code>optional .Member receiveFrom = 2;</code>
+       */
+      public boolean hasReceiveFrom() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional .Member receiveFrom = 2;</code>
+       */
+      public tempest.protos.Membership.Member getReceiveFrom() {
+        if (receiveFromBuilder_ == null) {
+          return receiveFrom_;
+        } else {
+          return receiveFromBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .Member receiveFrom = 2;</code>
+       */
+      public Builder setReceiveFrom(tempest.protos.Membership.Member value) {
+        if (receiveFromBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          receiveFrom_ = value;
+          onChanged();
+        } else {
+          receiveFromBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      /**
+       * <code>optional .Member receiveFrom = 2;</code>
+       */
+      public Builder setReceiveFrom(
+          tempest.protos.Membership.Member.Builder builderForValue) {
+        if (receiveFromBuilder_ == null) {
+          receiveFrom_ = builderForValue.build();
+          onChanged();
+        } else {
+          receiveFromBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      /**
+       * <code>optional .Member receiveFrom = 2;</code>
+       */
+      public Builder mergeReceiveFrom(tempest.protos.Membership.Member value) {
+        if (receiveFromBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              receiveFrom_ != tempest.protos.Membership.Member.getDefaultInstance()) {
+            receiveFrom_ =
+              tempest.protos.Membership.Member.newBuilder(receiveFrom_).mergeFrom(value).buildPartial();
+          } else {
+            receiveFrom_ = value;
+          }
+          onChanged();
+        } else {
+          receiveFromBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      /**
+       * <code>optional .Member receiveFrom = 2;</code>
+       */
+      public Builder clearReceiveFrom() {
+        if (receiveFromBuilder_ == null) {
+          receiveFrom_ = tempest.protos.Membership.Member.getDefaultInstance();
+          onChanged();
+        } else {
+          receiveFromBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      /**
+       * <code>optional .Member receiveFrom = 2;</code>
+       */
+      public tempest.protos.Membership.Member.Builder getReceiveFromBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getReceiveFromFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .Member receiveFrom = 2;</code>
+       */
+      public tempest.protos.Membership.MemberOrBuilder getReceiveFromOrBuilder() {
+        if (receiveFromBuilder_ != null) {
+          return receiveFromBuilder_.getMessageOrBuilder();
+        } else {
+          return receiveFrom_;
+        }
+      }
+      /**
+       * <code>optional .Member receiveFrom = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> 
+          getReceiveFromFieldBuilder() {
+        if (receiveFromBuilder_ == null) {
+          receiveFromBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder>(
+                  getReceiveFrom(),
+                  getParentForChildren(),
+                  isClean());
+          receiveFrom_ = null;
+        }
+        return receiveFromBuilder_;
+      }
+
+      private java.lang.Object request_ = "";
+      /**
+       * <code>optional string request = 3;</code>
+       */
+      public boolean hasRequest() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional string request = 3;</code>
        */
       public java.lang.String getRequest() {
         java.lang.Object ref = request_;
@@ -11693,7 +12640,7 @@ public final class Command {
         }
       }
       /**
-       * <code>optional string request = 1;</code>
+       * <code>optional string request = 3;</code>
        */
       public com.google.protobuf.ByteString
           getRequestBytes() {
@@ -11709,36 +12656,36 @@ public final class Command {
         }
       }
       /**
-       * <code>optional string request = 1;</code>
+       * <code>optional string request = 3;</code>
        */
       public Builder setRequest(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000001;
+  bitField0_ |= 0x00000004;
         request_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string request = 1;</code>
+       * <code>optional string request = 3;</code>
        */
       public Builder clearRequest() {
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000004);
         request_ = getDefaultInstance().getRequest();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string request = 1;</code>
+       * <code>optional string request = 3;</code>
        */
       public Builder setRequestBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000001;
+  bitField0_ |= 0x00000004;
         request_ = value;
         onChanged();
         return this;
@@ -11746,13 +12693,13 @@ public final class Command {
 
       private java.lang.Object response_ = "";
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public boolean hasResponse() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public java.lang.String getResponse() {
         java.lang.Object ref = response_;
@@ -11769,7 +12716,7 @@ public final class Command {
         }
       }
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public com.google.protobuf.ByteString
           getResponseBytes() {
@@ -11785,37 +12732,200 @@ public final class Command {
         }
       }
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public Builder setResponse(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000008;
         response_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public Builder clearResponse() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000008);
         response_ = getDefaultInstance().getResponse();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public Builder setResponseBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000008;
         response_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int id_ ;
+      /**
+       * <code>optional int32 id = 5;</code>
+       */
+      public boolean hasId() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional int32 id = 5;</code>
+       */
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <code>optional int32 id = 5;</code>
+       */
+      public Builder setId(int value) {
+        bitField0_ |= 0x00000010;
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 id = 5;</code>
+       */
+      public Builder clearId() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        id_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private tempest.protos.Command.Bolt.BoltType boltType_ = tempest.protos.Command.Bolt.BoltType.FILTERBOLT;
+      /**
+       * <code>required .Bolt.BoltType boltType = 6;</code>
+       */
+      public boolean hasBoltType() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>required .Bolt.BoltType boltType = 6;</code>
+       */
+      public tempest.protos.Command.Bolt.BoltType getBoltType() {
+        return boltType_;
+      }
+      /**
+       * <code>required .Bolt.BoltType boltType = 6;</code>
+       */
+      public Builder setBoltType(tempest.protos.Command.Bolt.BoltType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000020;
+        boltType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required .Bolt.BoltType boltType = 6;</code>
+       */
+      public Builder clearBoltType() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        boltType_ = tempest.protos.Command.Bolt.BoltType.FILTERBOLT;
+        onChanged();
+        return this;
+      }
+
+      private int parallelism_ ;
+      /**
+       * <code>optional int32 parallelism = 7;</code>
+       */
+      public boolean hasParallelism() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>optional int32 parallelism = 7;</code>
+       */
+      public int getParallelism() {
+        return parallelism_;
+      }
+      /**
+       * <code>optional int32 parallelism = 7;</code>
+       */
+      public Builder setParallelism(int value) {
+        bitField0_ |= 0x00000040;
+        parallelism_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 parallelism = 7;</code>
+       */
+      public Builder clearParallelism() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        parallelism_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int sendTupleToID_ ;
+      /**
+       * <code>optional int32 sendTupleToID = 8;</code>
+       */
+      public boolean hasSendTupleToID() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      /**
+       * <code>optional int32 sendTupleToID = 8;</code>
+       */
+      public int getSendTupleToID() {
+        return sendTupleToID_;
+      }
+      /**
+       * <code>optional int32 sendTupleToID = 8;</code>
+       */
+      public Builder setSendTupleToID(int value) {
+        bitField0_ |= 0x00000080;
+        sendTupleToID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 sendTupleToID = 8;</code>
+       */
+      public Builder clearSendTupleToID() {
+        bitField0_ = (bitField0_ & ~0x00000080);
+        sendTupleToID_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int receiveFromID_ ;
+      /**
+       * <code>optional int32 receiveFromID = 9;</code>
+       */
+      public boolean hasReceiveFromID() {
+        return ((bitField0_ & 0x00000100) == 0x00000100);
+      }
+      /**
+       * <code>optional int32 receiveFromID = 9;</code>
+       */
+      public int getReceiveFromID() {
+        return receiveFromID_;
+      }
+      /**
+       * <code>optional int32 receiveFromID = 9;</code>
+       */
+      public Builder setReceiveFromID(int value) {
+        bitField0_ |= 0x00000100;
+        receiveFromID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 receiveFromID = 9;</code>
+       */
+      public Builder clearReceiveFromID() {
+        bitField0_ = (bitField0_ & ~0x00000100);
+        receiveFromID_ = 0;
         onChanged();
         return this;
       }
@@ -11836,32 +12946,87 @@ public final class Command {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string request = 1;</code>
+     * <code>required .Spout.SpoutType spoutType = 6;</code>
+     */
+    boolean hasSpoutType();
+    /**
+     * <code>required .Spout.SpoutType spoutType = 6;</code>
+     */
+    tempest.protos.Command.Spout.SpoutType getSpoutType();
+
+    /**
+     * <code>repeated .Member sendTo = 1;</code>
+     */
+    java.util.List<tempest.protos.Membership.Member> 
+        getSendToList();
+    /**
+     * <code>repeated .Member sendTo = 1;</code>
+     */
+    tempest.protos.Membership.Member getSendTo(int index);
+    /**
+     * <code>repeated .Member sendTo = 1;</code>
+     */
+    int getSendToCount();
+    /**
+     * <code>repeated .Member sendTo = 1;</code>
+     */
+    java.util.List<? extends tempest.protos.Membership.MemberOrBuilder> 
+        getSendToOrBuilderList();
+    /**
+     * <code>repeated .Member sendTo = 1;</code>
+     */
+    tempest.protos.Membership.MemberOrBuilder getSendToOrBuilder(
+        int index);
+
+    /**
+     * <code>optional .Member recFrom = 2;</code>
+     */
+    boolean hasRecFrom();
+    /**
+     * <code>optional .Member recFrom = 2;</code>
+     */
+    tempest.protos.Membership.Member getRecFrom();
+    /**
+     * <code>optional .Member recFrom = 2;</code>
+     */
+    tempest.protos.Membership.MemberOrBuilder getRecFromOrBuilder();
+
+    /**
+     * <code>optional string request = 3;</code>
      */
     boolean hasRequest();
     /**
-     * <code>optional string request = 1;</code>
+     * <code>optional string request = 3;</code>
      */
     java.lang.String getRequest();
     /**
-     * <code>optional string request = 1;</code>
+     * <code>optional string request = 3;</code>
      */
     com.google.protobuf.ByteString
         getRequestBytes();
 
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     boolean hasResponse();
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     java.lang.String getResponse();
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     com.google.protobuf.ByteString
         getResponseBytes();
+
+    /**
+     * <code>optional int32 id = 5;</code>
+     */
+    boolean hasId();
+    /**
+     * <code>optional int32 id = 5;</code>
+     */
+    int getId();
   }
   /**
    * Protobuf type {@code Spout}
@@ -11916,15 +13081,52 @@ public final class Command {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000001;
-              request_ = bs;
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                sendTo_ = new java.util.ArrayList<tempest.protos.Membership.Member>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              sendTo_.add(input.readMessage(tempest.protos.Membership.Member.PARSER, extensionRegistry));
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+              tempest.protos.Membership.Member.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                subBuilder = recFrom_.toBuilder();
+              }
+              recFrom_ = input.readMessage(tempest.protos.Membership.Member.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(recFrom_);
+                recFrom_ = subBuilder.buildPartial();
+              }
               bitField0_ |= 0x00000002;
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              request_ = bs;
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
               response_ = bs;
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              id_ = input.readInt32();
+              break;
+            }
+            case 48: {
+              int rawValue = input.readEnum();
+              tempest.protos.Command.Spout.SpoutType value = tempest.protos.Command.Spout.SpoutType.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(6, rawValue);
+              } else {
+                bitField0_ |= 0x00000001;
+                spoutType_ = value;
+              }
               break;
             }
           }
@@ -11935,6 +13137,9 @@ public final class Command {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          sendTo_ = java.util.Collections.unmodifiableList(sendTo_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -11966,17 +13171,170 @@ public final class Command {
       return PARSER;
     }
 
-    private int bitField0_;
-    public static final int REQUEST_FIELD_NUMBER = 1;
-    private java.lang.Object request_;
     /**
-     * <code>optional string request = 1;</code>
+     * Protobuf enum {@code Spout.SpoutType}
      */
-    public boolean hasRequest() {
+    public enum SpoutType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>STOCKDATASPOUT = 1;</code>
+       */
+      STOCKDATASPOUT(0, 1),
+      /**
+       * <code>TWITTERSPOUT = 2;</code>
+       */
+      TWITTERSPOUT(1, 2),
+      ;
+
+      /**
+       * <code>STOCKDATASPOUT = 1;</code>
+       */
+      public static final int STOCKDATASPOUT_VALUE = 1;
+      /**
+       * <code>TWITTERSPOUT = 2;</code>
+       */
+      public static final int TWITTERSPOUT_VALUE = 2;
+
+
+      public final int getNumber() { return value; }
+
+      public static SpoutType valueOf(int value) {
+        switch (value) {
+          case 1: return STOCKDATASPOUT;
+          case 2: return TWITTERSPOUT;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<SpoutType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static com.google.protobuf.Internal.EnumLiteMap<SpoutType>
+          internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<SpoutType>() {
+              public SpoutType findValueByNumber(int number) {
+                return SpoutType.valueOf(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(index);
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return tempest.protos.Command.Spout.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final SpoutType[] VALUES = values();
+
+      public static SpoutType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int index;
+      private final int value;
+
+      private SpoutType(int index, int value) {
+        this.index = index;
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:Spout.SpoutType)
+    }
+
+    private int bitField0_;
+    public static final int SPOUTTYPE_FIELD_NUMBER = 6;
+    private tempest.protos.Command.Spout.SpoutType spoutType_;
+    /**
+     * <code>required .Spout.SpoutType spoutType = 6;</code>
+     */
+    public boolean hasSpoutType() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>optional string request = 1;</code>
+     * <code>required .Spout.SpoutType spoutType = 6;</code>
+     */
+    public tempest.protos.Command.Spout.SpoutType getSpoutType() {
+      return spoutType_;
+    }
+
+    public static final int SENDTO_FIELD_NUMBER = 1;
+    private java.util.List<tempest.protos.Membership.Member> sendTo_;
+    /**
+     * <code>repeated .Member sendTo = 1;</code>
+     */
+    public java.util.List<tempest.protos.Membership.Member> getSendToList() {
+      return sendTo_;
+    }
+    /**
+     * <code>repeated .Member sendTo = 1;</code>
+     */
+    public java.util.List<? extends tempest.protos.Membership.MemberOrBuilder> 
+        getSendToOrBuilderList() {
+      return sendTo_;
+    }
+    /**
+     * <code>repeated .Member sendTo = 1;</code>
+     */
+    public int getSendToCount() {
+      return sendTo_.size();
+    }
+    /**
+     * <code>repeated .Member sendTo = 1;</code>
+     */
+    public tempest.protos.Membership.Member getSendTo(int index) {
+      return sendTo_.get(index);
+    }
+    /**
+     * <code>repeated .Member sendTo = 1;</code>
+     */
+    public tempest.protos.Membership.MemberOrBuilder getSendToOrBuilder(
+        int index) {
+      return sendTo_.get(index);
+    }
+
+    public static final int RECFROM_FIELD_NUMBER = 2;
+    private tempest.protos.Membership.Member recFrom_;
+    /**
+     * <code>optional .Member recFrom = 2;</code>
+     */
+    public boolean hasRecFrom() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional .Member recFrom = 2;</code>
+     */
+    public tempest.protos.Membership.Member getRecFrom() {
+      return recFrom_;
+    }
+    /**
+     * <code>optional .Member recFrom = 2;</code>
+     */
+    public tempest.protos.Membership.MemberOrBuilder getRecFromOrBuilder() {
+      return recFrom_;
+    }
+
+    public static final int REQUEST_FIELD_NUMBER = 3;
+    private java.lang.Object request_;
+    /**
+     * <code>optional string request = 3;</code>
+     */
+    public boolean hasRequest() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional string request = 3;</code>
      */
     public java.lang.String getRequest() {
       java.lang.Object ref = request_;
@@ -11993,7 +13351,7 @@ public final class Command {
       }
     }
     /**
-     * <code>optional string request = 1;</code>
+     * <code>optional string request = 3;</code>
      */
     public com.google.protobuf.ByteString
         getRequestBytes() {
@@ -12009,16 +13367,16 @@ public final class Command {
       }
     }
 
-    public static final int RESPONSE_FIELD_NUMBER = 2;
+    public static final int RESPONSE_FIELD_NUMBER = 4;
     private java.lang.Object response_;
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     public boolean hasResponse() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     public java.lang.String getResponse() {
       java.lang.Object ref = response_;
@@ -12035,7 +13393,7 @@ public final class Command {
       }
     }
     /**
-     * <code>optional string response = 2;</code>
+     * <code>optional string response = 4;</code>
      */
     public com.google.protobuf.ByteString
         getResponseBytes() {
@@ -12051,9 +13409,28 @@ public final class Command {
       }
     }
 
+    public static final int ID_FIELD_NUMBER = 5;
+    private int id_;
+    /**
+     * <code>optional int32 id = 5;</code>
+     */
+    public boolean hasId() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional int32 id = 5;</code>
+     */
+    public int getId() {
+      return id_;
+    }
+
     private void initFields() {
+      spoutType_ = tempest.protos.Command.Spout.SpoutType.STOCKDATASPOUT;
+      sendTo_ = java.util.Collections.emptyList();
+      recFrom_ = tempest.protos.Membership.Member.getDefaultInstance();
       request_ = "";
       response_ = "";
+      id_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -12061,6 +13438,10 @@ public final class Command {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
+      if (!hasSpoutType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -12068,11 +13449,23 @@ public final class Command {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getRequestBytes());
+      for (int i = 0; i < sendTo_.size(); i++) {
+        output.writeMessage(1, sendTo_.get(i));
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getResponseBytes());
+        output.writeMessage(2, recFrom_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getResponseBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeInt32(5, id_);
+      }
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeEnum(6, spoutType_.getNumber());
       }
       getUnknownFields().writeTo(output);
     }
@@ -12083,13 +13476,29 @@ public final class Command {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      for (int i = 0; i < sendTo_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getRequestBytes());
+          .computeMessageSize(1, sendTo_.get(i));
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getResponseBytes());
+          .computeMessageSize(2, recFrom_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getRequestBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getResponseBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, id_);
+      }
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(6, spoutType_.getNumber());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -12200,6 +13609,8 @@ public final class Command {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getSendToFieldBuilder();
+          getRecFromFieldBuilder();
         }
       }
       private static Builder create() {
@@ -12208,10 +13619,26 @@ public final class Command {
 
       public Builder clear() {
         super.clear();
-        request_ = "";
+        spoutType_ = tempest.protos.Command.Spout.SpoutType.STOCKDATASPOUT;
         bitField0_ = (bitField0_ & ~0x00000001);
+        if (sendToBuilder_ == null) {
+          sendTo_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          sendToBuilder_.clear();
+        }
+        if (recFromBuilder_ == null) {
+          recFrom_ = tempest.protos.Membership.Member.getDefaultInstance();
+        } else {
+          recFromBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
+        request_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
         response_ = "";
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000010);
+        id_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -12243,11 +13670,36 @@ public final class Command {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.request_ = request_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+        result.spoutType_ = spoutType_;
+        if (sendToBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            sendTo_ = java.util.Collections.unmodifiableList(sendTo_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.sendTo_ = sendTo_;
+        } else {
+          result.sendTo_ = sendToBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000002;
         }
+        if (recFromBuilder_ == null) {
+          result.recFrom_ = recFrom_;
+        } else {
+          result.recFrom_ = recFromBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.request_ = request_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000008;
+        }
         result.response_ = response_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.id_ = id_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -12264,21 +13716,60 @@ public final class Command {
 
       public Builder mergeFrom(tempest.protos.Command.Spout other) {
         if (other == tempest.protos.Command.Spout.getDefaultInstance()) return this;
+        if (other.hasSpoutType()) {
+          setSpoutType(other.getSpoutType());
+        }
+        if (sendToBuilder_ == null) {
+          if (!other.sendTo_.isEmpty()) {
+            if (sendTo_.isEmpty()) {
+              sendTo_ = other.sendTo_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureSendToIsMutable();
+              sendTo_.addAll(other.sendTo_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.sendTo_.isEmpty()) {
+            if (sendToBuilder_.isEmpty()) {
+              sendToBuilder_.dispose();
+              sendToBuilder_ = null;
+              sendTo_ = other.sendTo_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              sendToBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getSendToFieldBuilder() : null;
+            } else {
+              sendToBuilder_.addAllMessages(other.sendTo_);
+            }
+          }
+        }
+        if (other.hasRecFrom()) {
+          mergeRecFrom(other.getRecFrom());
+        }
         if (other.hasRequest()) {
-          bitField0_ |= 0x00000001;
+          bitField0_ |= 0x00000008;
           request_ = other.request_;
           onChanged();
         }
         if (other.hasResponse()) {
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000010;
           response_ = other.response_;
           onChanged();
+        }
+        if (other.hasId()) {
+          setId(other.getId());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
+        if (!hasSpoutType()) {
+          
+          return false;
+        }
         return true;
       }
 
@@ -12301,15 +13792,406 @@ public final class Command {
       }
       private int bitField0_;
 
-      private java.lang.Object request_ = "";
+      private tempest.protos.Command.Spout.SpoutType spoutType_ = tempest.protos.Command.Spout.SpoutType.STOCKDATASPOUT;
       /**
-       * <code>optional string request = 1;</code>
+       * <code>required .Spout.SpoutType spoutType = 6;</code>
        */
-      public boolean hasRequest() {
+      public boolean hasSpoutType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>optional string request = 1;</code>
+       * <code>required .Spout.SpoutType spoutType = 6;</code>
+       */
+      public tempest.protos.Command.Spout.SpoutType getSpoutType() {
+        return spoutType_;
+      }
+      /**
+       * <code>required .Spout.SpoutType spoutType = 6;</code>
+       */
+      public Builder setSpoutType(tempest.protos.Command.Spout.SpoutType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000001;
+        spoutType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required .Spout.SpoutType spoutType = 6;</code>
+       */
+      public Builder clearSpoutType() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        spoutType_ = tempest.protos.Command.Spout.SpoutType.STOCKDATASPOUT;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<tempest.protos.Membership.Member> sendTo_ =
+        java.util.Collections.emptyList();
+      private void ensureSendToIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          sendTo_ = new java.util.ArrayList<tempest.protos.Membership.Member>(sendTo_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> sendToBuilder_;
+
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public java.util.List<tempest.protos.Membership.Member> getSendToList() {
+        if (sendToBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(sendTo_);
+        } else {
+          return sendToBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public int getSendToCount() {
+        if (sendToBuilder_ == null) {
+          return sendTo_.size();
+        } else {
+          return sendToBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public tempest.protos.Membership.Member getSendTo(int index) {
+        if (sendToBuilder_ == null) {
+          return sendTo_.get(index);
+        } else {
+          return sendToBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public Builder setSendTo(
+          int index, tempest.protos.Membership.Member value) {
+        if (sendToBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSendToIsMutable();
+          sendTo_.set(index, value);
+          onChanged();
+        } else {
+          sendToBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public Builder setSendTo(
+          int index, tempest.protos.Membership.Member.Builder builderForValue) {
+        if (sendToBuilder_ == null) {
+          ensureSendToIsMutable();
+          sendTo_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          sendToBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public Builder addSendTo(tempest.protos.Membership.Member value) {
+        if (sendToBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSendToIsMutable();
+          sendTo_.add(value);
+          onChanged();
+        } else {
+          sendToBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public Builder addSendTo(
+          int index, tempest.protos.Membership.Member value) {
+        if (sendToBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSendToIsMutable();
+          sendTo_.add(index, value);
+          onChanged();
+        } else {
+          sendToBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public Builder addSendTo(
+          tempest.protos.Membership.Member.Builder builderForValue) {
+        if (sendToBuilder_ == null) {
+          ensureSendToIsMutable();
+          sendTo_.add(builderForValue.build());
+          onChanged();
+        } else {
+          sendToBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public Builder addSendTo(
+          int index, tempest.protos.Membership.Member.Builder builderForValue) {
+        if (sendToBuilder_ == null) {
+          ensureSendToIsMutable();
+          sendTo_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          sendToBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public Builder addAllSendTo(
+          java.lang.Iterable<? extends tempest.protos.Membership.Member> values) {
+        if (sendToBuilder_ == null) {
+          ensureSendToIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, sendTo_);
+          onChanged();
+        } else {
+          sendToBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public Builder clearSendTo() {
+        if (sendToBuilder_ == null) {
+          sendTo_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          sendToBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public Builder removeSendTo(int index) {
+        if (sendToBuilder_ == null) {
+          ensureSendToIsMutable();
+          sendTo_.remove(index);
+          onChanged();
+        } else {
+          sendToBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public tempest.protos.Membership.Member.Builder getSendToBuilder(
+          int index) {
+        return getSendToFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public tempest.protos.Membership.MemberOrBuilder getSendToOrBuilder(
+          int index) {
+        if (sendToBuilder_ == null) {
+          return sendTo_.get(index);  } else {
+          return sendToBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public java.util.List<? extends tempest.protos.Membership.MemberOrBuilder> 
+           getSendToOrBuilderList() {
+        if (sendToBuilder_ != null) {
+          return sendToBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(sendTo_);
+        }
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public tempest.protos.Membership.Member.Builder addSendToBuilder() {
+        return getSendToFieldBuilder().addBuilder(
+            tempest.protos.Membership.Member.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public tempest.protos.Membership.Member.Builder addSendToBuilder(
+          int index) {
+        return getSendToFieldBuilder().addBuilder(
+            index, tempest.protos.Membership.Member.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Member sendTo = 1;</code>
+       */
+      public java.util.List<tempest.protos.Membership.Member.Builder> 
+           getSendToBuilderList() {
+        return getSendToFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> 
+          getSendToFieldBuilder() {
+        if (sendToBuilder_ == null) {
+          sendToBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder>(
+                  sendTo_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          sendTo_ = null;
+        }
+        return sendToBuilder_;
+      }
+
+      private tempest.protos.Membership.Member recFrom_ = tempest.protos.Membership.Member.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> recFromBuilder_;
+      /**
+       * <code>optional .Member recFrom = 2;</code>
+       */
+      public boolean hasRecFrom() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional .Member recFrom = 2;</code>
+       */
+      public tempest.protos.Membership.Member getRecFrom() {
+        if (recFromBuilder_ == null) {
+          return recFrom_;
+        } else {
+          return recFromBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .Member recFrom = 2;</code>
+       */
+      public Builder setRecFrom(tempest.protos.Membership.Member value) {
+        if (recFromBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          recFrom_ = value;
+          onChanged();
+        } else {
+          recFromBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      /**
+       * <code>optional .Member recFrom = 2;</code>
+       */
+      public Builder setRecFrom(
+          tempest.protos.Membership.Member.Builder builderForValue) {
+        if (recFromBuilder_ == null) {
+          recFrom_ = builderForValue.build();
+          onChanged();
+        } else {
+          recFromBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      /**
+       * <code>optional .Member recFrom = 2;</code>
+       */
+      public Builder mergeRecFrom(tempest.protos.Membership.Member value) {
+        if (recFromBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+              recFrom_ != tempest.protos.Membership.Member.getDefaultInstance()) {
+            recFrom_ =
+              tempest.protos.Membership.Member.newBuilder(recFrom_).mergeFrom(value).buildPartial();
+          } else {
+            recFrom_ = value;
+          }
+          onChanged();
+        } else {
+          recFromBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      /**
+       * <code>optional .Member recFrom = 2;</code>
+       */
+      public Builder clearRecFrom() {
+        if (recFromBuilder_ == null) {
+          recFrom_ = tempest.protos.Membership.Member.getDefaultInstance();
+          onChanged();
+        } else {
+          recFromBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+      /**
+       * <code>optional .Member recFrom = 2;</code>
+       */
+      public tempest.protos.Membership.Member.Builder getRecFromBuilder() {
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return getRecFromFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .Member recFrom = 2;</code>
+       */
+      public tempest.protos.Membership.MemberOrBuilder getRecFromOrBuilder() {
+        if (recFromBuilder_ != null) {
+          return recFromBuilder_.getMessageOrBuilder();
+        } else {
+          return recFrom_;
+        }
+      }
+      /**
+       * <code>optional .Member recFrom = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> 
+          getRecFromFieldBuilder() {
+        if (recFromBuilder_ == null) {
+          recFromBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder>(
+                  getRecFrom(),
+                  getParentForChildren(),
+                  isClean());
+          recFrom_ = null;
+        }
+        return recFromBuilder_;
+      }
+
+      private java.lang.Object request_ = "";
+      /**
+       * <code>optional string request = 3;</code>
+       */
+      public boolean hasRequest() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional string request = 3;</code>
        */
       public java.lang.String getRequest() {
         java.lang.Object ref = request_;
@@ -12326,7 +14208,7 @@ public final class Command {
         }
       }
       /**
-       * <code>optional string request = 1;</code>
+       * <code>optional string request = 3;</code>
        */
       public com.google.protobuf.ByteString
           getRequestBytes() {
@@ -12342,36 +14224,36 @@ public final class Command {
         }
       }
       /**
-       * <code>optional string request = 1;</code>
+       * <code>optional string request = 3;</code>
        */
       public Builder setRequest(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000001;
+  bitField0_ |= 0x00000008;
         request_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string request = 1;</code>
+       * <code>optional string request = 3;</code>
        */
       public Builder clearRequest() {
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000008);
         request_ = getDefaultInstance().getRequest();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string request = 1;</code>
+       * <code>optional string request = 3;</code>
        */
       public Builder setRequestBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000001;
+  bitField0_ |= 0x00000008;
         request_ = value;
         onChanged();
         return this;
@@ -12379,13 +14261,13 @@ public final class Command {
 
       private java.lang.Object response_ = "";
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public boolean hasResponse() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public java.lang.String getResponse() {
         java.lang.Object ref = response_;
@@ -12402,7 +14284,7 @@ public final class Command {
         }
       }
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public com.google.protobuf.ByteString
           getResponseBytes() {
@@ -12418,37 +14300,69 @@ public final class Command {
         }
       }
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public Builder setResponse(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000010;
         response_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public Builder clearResponse() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000010);
         response_ = getDefaultInstance().getResponse();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string response = 2;</code>
+       * <code>optional string response = 4;</code>
        */
       public Builder setResponseBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000010;
         response_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int id_ ;
+      /**
+       * <code>optional int32 id = 5;</code>
+       */
+      public boolean hasId() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>optional int32 id = 5;</code>
+       */
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <code>optional int32 id = 5;</code>
+       */
+      public Builder setId(int value) {
+        bitField0_ |= 0x00000020;
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 id = 5;</code>
+       */
+      public Builder clearId() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        id_ = 0;
         onChanged();
         return this;
       }
@@ -12462,6 +14376,1059 @@ public final class Command {
     }
 
     // @@protoc_insertion_point(class_scope:Spout)
+  }
+
+  public interface TopologyOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Topology)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required .Spout spout = 1;</code>
+     */
+    boolean hasSpout();
+    /**
+     * <code>required .Spout spout = 1;</code>
+     */
+    tempest.protos.Command.Spout getSpout();
+    /**
+     * <code>required .Spout spout = 1;</code>
+     */
+    tempest.protos.Command.SpoutOrBuilder getSpoutOrBuilder();
+
+    /**
+     * <code>repeated .Bolt bolt = 2;</code>
+     */
+    java.util.List<tempest.protos.Command.Bolt> 
+        getBoltList();
+    /**
+     * <code>repeated .Bolt bolt = 2;</code>
+     */
+    tempest.protos.Command.Bolt getBolt(int index);
+    /**
+     * <code>repeated .Bolt bolt = 2;</code>
+     */
+    int getBoltCount();
+    /**
+     * <code>repeated .Bolt bolt = 2;</code>
+     */
+    java.util.List<? extends tempest.protos.Command.BoltOrBuilder> 
+        getBoltOrBuilderList();
+    /**
+     * <code>repeated .Bolt bolt = 2;</code>
+     */
+    tempest.protos.Command.BoltOrBuilder getBoltOrBuilder(
+        int index);
+
+    /**
+     * <code>optional string response = 3;</code>
+     */
+    boolean hasResponse();
+    /**
+     * <code>optional string response = 3;</code>
+     */
+    java.lang.String getResponse();
+    /**
+     * <code>optional string response = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getResponseBytes();
+  }
+  /**
+   * Protobuf type {@code Topology}
+   */
+  public static final class Topology extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Topology)
+      TopologyOrBuilder {
+    // Use Topology.newBuilder() to construct.
+    private Topology(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Topology(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Topology defaultInstance;
+    public static Topology getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Topology getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Topology(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              tempest.protos.Command.Spout.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                subBuilder = spout_.toBuilder();
+              }
+              spout_ = input.readMessage(tempest.protos.Command.Spout.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(spout_);
+                spout_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000001;
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                bolt_ = new java.util.ArrayList<tempest.protos.Command.Bolt>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              bolt_.add(input.readMessage(tempest.protos.Command.Bolt.PARSER, extensionRegistry));
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              response_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          bolt_ = java.util.Collections.unmodifiableList(bolt_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return tempest.protos.Command.internal_static_Topology_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return tempest.protos.Command.internal_static_Topology_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              tempest.protos.Command.Topology.class, tempest.protos.Command.Topology.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Topology> PARSER =
+        new com.google.protobuf.AbstractParser<Topology>() {
+      public Topology parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Topology(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Topology> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int SPOUT_FIELD_NUMBER = 1;
+    private tempest.protos.Command.Spout spout_;
+    /**
+     * <code>required .Spout spout = 1;</code>
+     */
+    public boolean hasSpout() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required .Spout spout = 1;</code>
+     */
+    public tempest.protos.Command.Spout getSpout() {
+      return spout_;
+    }
+    /**
+     * <code>required .Spout spout = 1;</code>
+     */
+    public tempest.protos.Command.SpoutOrBuilder getSpoutOrBuilder() {
+      return spout_;
+    }
+
+    public static final int BOLT_FIELD_NUMBER = 2;
+    private java.util.List<tempest.protos.Command.Bolt> bolt_;
+    /**
+     * <code>repeated .Bolt bolt = 2;</code>
+     */
+    public java.util.List<tempest.protos.Command.Bolt> getBoltList() {
+      return bolt_;
+    }
+    /**
+     * <code>repeated .Bolt bolt = 2;</code>
+     */
+    public java.util.List<? extends tempest.protos.Command.BoltOrBuilder> 
+        getBoltOrBuilderList() {
+      return bolt_;
+    }
+    /**
+     * <code>repeated .Bolt bolt = 2;</code>
+     */
+    public int getBoltCount() {
+      return bolt_.size();
+    }
+    /**
+     * <code>repeated .Bolt bolt = 2;</code>
+     */
+    public tempest.protos.Command.Bolt getBolt(int index) {
+      return bolt_.get(index);
+    }
+    /**
+     * <code>repeated .Bolt bolt = 2;</code>
+     */
+    public tempest.protos.Command.BoltOrBuilder getBoltOrBuilder(
+        int index) {
+      return bolt_.get(index);
+    }
+
+    public static final int RESPONSE_FIELD_NUMBER = 3;
+    private java.lang.Object response_;
+    /**
+     * <code>optional string response = 3;</code>
+     */
+    public boolean hasResponse() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional string response = 3;</code>
+     */
+    public java.lang.String getResponse() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          response_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string response = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getResponseBytes() {
+      java.lang.Object ref = response_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        response_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      spout_ = tempest.protos.Command.Spout.getDefaultInstance();
+      bolt_ = java.util.Collections.emptyList();
+      response_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasSpout()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!getSpout().isInitialized()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      for (int i = 0; i < getBoltCount(); i++) {
+        if (!getBolt(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, spout_);
+      }
+      for (int i = 0; i < bolt_.size(); i++) {
+        output.writeMessage(2, bolt_.get(i));
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(3, getResponseBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, spout_);
+      }
+      for (int i = 0; i < bolt_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, bolt_.get(i));
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getResponseBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static tempest.protos.Command.Topology parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.Topology parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.Topology parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tempest.protos.Command.Topology parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tempest.protos.Command.Topology parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.Topology parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.Topology parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static tempest.protos.Command.Topology parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static tempest.protos.Command.Topology parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static tempest.protos.Command.Topology parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(tempest.protos.Command.Topology prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Topology}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Topology)
+        tempest.protos.Command.TopologyOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return tempest.protos.Command.internal_static_Topology_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return tempest.protos.Command.internal_static_Topology_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                tempest.protos.Command.Topology.class, tempest.protos.Command.Topology.Builder.class);
+      }
+
+      // Construct using tempest.protos.Command.Topology.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getSpoutFieldBuilder();
+          getBoltFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        if (spoutBuilder_ == null) {
+          spout_ = tempest.protos.Command.Spout.getDefaultInstance();
+        } else {
+          spoutBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (boltBuilder_ == null) {
+          bolt_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          boltBuilder_.clear();
+        }
+        response_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return tempest.protos.Command.internal_static_Topology_descriptor;
+      }
+
+      public tempest.protos.Command.Topology getDefaultInstanceForType() {
+        return tempest.protos.Command.Topology.getDefaultInstance();
+      }
+
+      public tempest.protos.Command.Topology build() {
+        tempest.protos.Command.Topology result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public tempest.protos.Command.Topology buildPartial() {
+        tempest.protos.Command.Topology result = new tempest.protos.Command.Topology(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        if (spoutBuilder_ == null) {
+          result.spout_ = spout_;
+        } else {
+          result.spout_ = spoutBuilder_.build();
+        }
+        if (boltBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            bolt_ = java.util.Collections.unmodifiableList(bolt_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.bolt_ = bolt_;
+        } else {
+          result.bolt_ = boltBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.response_ = response_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof tempest.protos.Command.Topology) {
+          return mergeFrom((tempest.protos.Command.Topology)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(tempest.protos.Command.Topology other) {
+        if (other == tempest.protos.Command.Topology.getDefaultInstance()) return this;
+        if (other.hasSpout()) {
+          mergeSpout(other.getSpout());
+        }
+        if (boltBuilder_ == null) {
+          if (!other.bolt_.isEmpty()) {
+            if (bolt_.isEmpty()) {
+              bolt_ = other.bolt_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureBoltIsMutable();
+              bolt_.addAll(other.bolt_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.bolt_.isEmpty()) {
+            if (boltBuilder_.isEmpty()) {
+              boltBuilder_.dispose();
+              boltBuilder_ = null;
+              bolt_ = other.bolt_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              boltBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getBoltFieldBuilder() : null;
+            } else {
+              boltBuilder_.addAllMessages(other.bolt_);
+            }
+          }
+        }
+        if (other.hasResponse()) {
+          bitField0_ |= 0x00000004;
+          response_ = other.response_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasSpout()) {
+          
+          return false;
+        }
+        if (!getSpout().isInitialized()) {
+          
+          return false;
+        }
+        for (int i = 0; i < getBoltCount(); i++) {
+          if (!getBolt(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        tempest.protos.Command.Topology parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (tempest.protos.Command.Topology) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private tempest.protos.Command.Spout spout_ = tempest.protos.Command.Spout.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Spout, tempest.protos.Command.Spout.Builder, tempest.protos.Command.SpoutOrBuilder> spoutBuilder_;
+      /**
+       * <code>required .Spout spout = 1;</code>
+       */
+      public boolean hasSpout() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required .Spout spout = 1;</code>
+       */
+      public tempest.protos.Command.Spout getSpout() {
+        if (spoutBuilder_ == null) {
+          return spout_;
+        } else {
+          return spoutBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>required .Spout spout = 1;</code>
+       */
+      public Builder setSpout(tempest.protos.Command.Spout value) {
+        if (spoutBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          spout_ = value;
+          onChanged();
+        } else {
+          spoutBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>required .Spout spout = 1;</code>
+       */
+      public Builder setSpout(
+          tempest.protos.Command.Spout.Builder builderForValue) {
+        if (spoutBuilder_ == null) {
+          spout_ = builderForValue.build();
+          onChanged();
+        } else {
+          spoutBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>required .Spout spout = 1;</code>
+       */
+      public Builder mergeSpout(tempest.protos.Command.Spout value) {
+        if (spoutBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
+              spout_ != tempest.protos.Command.Spout.getDefaultInstance()) {
+            spout_ =
+              tempest.protos.Command.Spout.newBuilder(spout_).mergeFrom(value).buildPartial();
+          } else {
+            spout_ = value;
+          }
+          onChanged();
+        } else {
+          spoutBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      /**
+       * <code>required .Spout spout = 1;</code>
+       */
+      public Builder clearSpout() {
+        if (spoutBuilder_ == null) {
+          spout_ = tempest.protos.Command.Spout.getDefaultInstance();
+          onChanged();
+        } else {
+          spoutBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+      /**
+       * <code>required .Spout spout = 1;</code>
+       */
+      public tempest.protos.Command.Spout.Builder getSpoutBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return getSpoutFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>required .Spout spout = 1;</code>
+       */
+      public tempest.protos.Command.SpoutOrBuilder getSpoutOrBuilder() {
+        if (spoutBuilder_ != null) {
+          return spoutBuilder_.getMessageOrBuilder();
+        } else {
+          return spout_;
+        }
+      }
+      /**
+       * <code>required .Spout spout = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          tempest.protos.Command.Spout, tempest.protos.Command.Spout.Builder, tempest.protos.Command.SpoutOrBuilder> 
+          getSpoutFieldBuilder() {
+        if (spoutBuilder_ == null) {
+          spoutBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              tempest.protos.Command.Spout, tempest.protos.Command.Spout.Builder, tempest.protos.Command.SpoutOrBuilder>(
+                  getSpout(),
+                  getParentForChildren(),
+                  isClean());
+          spout_ = null;
+        }
+        return spoutBuilder_;
+      }
+
+      private java.util.List<tempest.protos.Command.Bolt> bolt_ =
+        java.util.Collections.emptyList();
+      private void ensureBoltIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          bolt_ = new java.util.ArrayList<tempest.protos.Command.Bolt>(bolt_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          tempest.protos.Command.Bolt, tempest.protos.Command.Bolt.Builder, tempest.protos.Command.BoltOrBuilder> boltBuilder_;
+
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public java.util.List<tempest.protos.Command.Bolt> getBoltList() {
+        if (boltBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(bolt_);
+        } else {
+          return boltBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public int getBoltCount() {
+        if (boltBuilder_ == null) {
+          return bolt_.size();
+        } else {
+          return boltBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public tempest.protos.Command.Bolt getBolt(int index) {
+        if (boltBuilder_ == null) {
+          return bolt_.get(index);
+        } else {
+          return boltBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public Builder setBolt(
+          int index, tempest.protos.Command.Bolt value) {
+        if (boltBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureBoltIsMutable();
+          bolt_.set(index, value);
+          onChanged();
+        } else {
+          boltBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public Builder setBolt(
+          int index, tempest.protos.Command.Bolt.Builder builderForValue) {
+        if (boltBuilder_ == null) {
+          ensureBoltIsMutable();
+          bolt_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          boltBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public Builder addBolt(tempest.protos.Command.Bolt value) {
+        if (boltBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureBoltIsMutable();
+          bolt_.add(value);
+          onChanged();
+        } else {
+          boltBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public Builder addBolt(
+          int index, tempest.protos.Command.Bolt value) {
+        if (boltBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureBoltIsMutable();
+          bolt_.add(index, value);
+          onChanged();
+        } else {
+          boltBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public Builder addBolt(
+          tempest.protos.Command.Bolt.Builder builderForValue) {
+        if (boltBuilder_ == null) {
+          ensureBoltIsMutable();
+          bolt_.add(builderForValue.build());
+          onChanged();
+        } else {
+          boltBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public Builder addBolt(
+          int index, tempest.protos.Command.Bolt.Builder builderForValue) {
+        if (boltBuilder_ == null) {
+          ensureBoltIsMutable();
+          bolt_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          boltBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public Builder addAllBolt(
+          java.lang.Iterable<? extends tempest.protos.Command.Bolt> values) {
+        if (boltBuilder_ == null) {
+          ensureBoltIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, bolt_);
+          onChanged();
+        } else {
+          boltBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public Builder clearBolt() {
+        if (boltBuilder_ == null) {
+          bolt_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          boltBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public Builder removeBolt(int index) {
+        if (boltBuilder_ == null) {
+          ensureBoltIsMutable();
+          bolt_.remove(index);
+          onChanged();
+        } else {
+          boltBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public tempest.protos.Command.Bolt.Builder getBoltBuilder(
+          int index) {
+        return getBoltFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public tempest.protos.Command.BoltOrBuilder getBoltOrBuilder(
+          int index) {
+        if (boltBuilder_ == null) {
+          return bolt_.get(index);  } else {
+          return boltBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public java.util.List<? extends tempest.protos.Command.BoltOrBuilder> 
+           getBoltOrBuilderList() {
+        if (boltBuilder_ != null) {
+          return boltBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(bolt_);
+        }
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public tempest.protos.Command.Bolt.Builder addBoltBuilder() {
+        return getBoltFieldBuilder().addBuilder(
+            tempest.protos.Command.Bolt.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public tempest.protos.Command.Bolt.Builder addBoltBuilder(
+          int index) {
+        return getBoltFieldBuilder().addBuilder(
+            index, tempest.protos.Command.Bolt.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Bolt bolt = 2;</code>
+       */
+      public java.util.List<tempest.protos.Command.Bolt.Builder> 
+           getBoltBuilderList() {
+        return getBoltFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          tempest.protos.Command.Bolt, tempest.protos.Command.Bolt.Builder, tempest.protos.Command.BoltOrBuilder> 
+          getBoltFieldBuilder() {
+        if (boltBuilder_ == null) {
+          boltBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              tempest.protos.Command.Bolt, tempest.protos.Command.Bolt.Builder, tempest.protos.Command.BoltOrBuilder>(
+                  bolt_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          bolt_ = null;
+        }
+        return boltBuilder_;
+      }
+
+      private java.lang.Object response_ = "";
+      /**
+       * <code>optional string response = 3;</code>
+       */
+      public boolean hasResponse() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional string response = 3;</code>
+       */
+      public java.lang.String getResponse() {
+        java.lang.Object ref = response_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            response_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getResponseBytes() {
+        java.lang.Object ref = response_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          response_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string response = 3;</code>
+       */
+      public Builder setResponse(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 3;</code>
+       */
+      public Builder clearResponse() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        response_ = getDefaultInstance().getResponse();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string response = 3;</code>
+       */
+      public Builder setResponseBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        response_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:Topology)
+    }
+
+    static {
+      defaultInstance = new Topology(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:Topology)
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
@@ -12539,6 +15506,11 @@ public final class Command {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Spout_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Topology_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Topology_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -12548,7 +15520,7 @@ public final class Command {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rCommand.proto\032\020Membership.proto\"\265\004\n\007Me" +
+      "\n\rCommand.proto\032\020Membership.proto\"\340\004\n\007Me" +
       "ssage\022\033\n\004type\030\001 \002(\0162\r.Message.Type\022\023\n\004pi" +
       "ng\030\002 \001(\0132\005.Ping\022\023\n\004grep\030\003 \001(\0132\005.Grep\022\035\n\t" +
       "introduce\030\004 \001(\0132\n.Introduce\022\025\n\005leave\030\005 \001" +
@@ -12558,30 +15530,43 @@ public final class Command {
       " \001(\0132\t.PutChunk\022\033\n\010getChunk\030\013 \001(\0132\t.GetC" +
       "hunk\022!\n\013deleteChunk\030\014 \001(\0132\014.DeleteChunk\022" +
       "\023\n\004list\030\r \001(\0132\005.List\022\023\n\004bolt\030\016 \001(\0132\005.Bol",
-      "t\022\025\n\005spout\030\017 \001(\0132\006.Spout\"\256\001\n\004Type\022\010\n\004PIN" +
-      "G\020\001\022\010\n\004GREP\020\002\022\r\n\tINTRODUCE\020\003\022\t\n\005LEAVE\020\004\022" +
-      "\016\n\nMEMBERSHIP\020\005\022\007\n\003PUT\020\006\022\007\n\003GET\020\007\022\n\n\006DEL" +
-      "ETE\020\010\022\014\n\010PUTCHUNK\020\t\022\014\n\010GETCHUNK\020\n\022\017\n\013DEL" +
-      "ETECHUNK\020\013\022\010\n\004LIST\020\014\022\010\n\004BOLT\020\r\022\t\n\005SPOUT\020" +
-      "\016\"\030\n\004Ping\022\020\n\010response\030\001 \001(\t\")\n\004Grep\022\017\n\007r" +
-      "equest\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"H\n\tIntrod" +
-      "uce\022\030\n\007request\030\001 \002(\0132\007.Member\022!\n\010respons" +
-      "e\030\002 \001(\0132\017.MembershipList\"3\n\005Leave\022\030\n\007req" +
-      "uest\030\001 \002(\0132\007.Member\022\020\n\010response\030\002 \001(\t\".\n",
-      "\nMembership\022 \n\007request\030\001 \002(\0132\017.Membershi" +
-      "pList\"?\n\003Put\022\017\n\007request\030\001 \001(\t\022\020\n\010respons" +
-      "e\030\002 \001(\t\022\025\n\rlocalFileName\030\003 \001(\t\"(\n\003Get\022\017\n" +
-      "\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"+\n\006Dele" +
-      "te\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"g\n" +
-      "\010PutChunk\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030\002" +
-      " \001(\t\022\020\n\010replica1\030\003 \001(\005\022\020\n\010replica2\030\004 \001(\005" +
-      "\022\024\n\014sDFSFileName\030\005 \001(\t\"-\n\010GetChunk\022\017\n\007re" +
-      "quest\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"0\n\013DeleteC" +
-      "hunk\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"",
-      ")\n\004List\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001" +
-      "(\t\")\n\004Bolt\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030" +
-      "\002 \001(\t\"*\n\005Spout\022\017\n\007request\030\001 \001(\t\022\020\n\010respo" +
-      "nse\030\002 \001(\tB\031\n\016tempest.protosB\007Command"
+      "t\022\025\n\005spout\030\017 \001(\0132\006.Spout\022\033\n\010topology\030\020 \001" +
+      "(\0132\t.Topology\"\274\001\n\004Type\022\010\n\004PING\020\001\022\010\n\004GREP" +
+      "\020\002\022\r\n\tINTRODUCE\020\003\022\t\n\005LEAVE\020\004\022\016\n\nMEMBERSH" +
+      "IP\020\005\022\007\n\003PUT\020\006\022\007\n\003GET\020\007\022\n\n\006DELETE\020\010\022\014\n\010PU" +
+      "TCHUNK\020\t\022\014\n\010GETCHUNK\020\n\022\017\n\013DELETECHUNK\020\013\022" +
+      "\010\n\004LIST\020\014\022\010\n\004BOLT\020\r\022\t\n\005SPOUT\020\016\022\014\n\010TOPOLO" +
+      "GY\020\017\"\030\n\004Ping\022\020\n\010response\030\001 \001(\t\")\n\004Grep\022\017" +
+      "\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"H\n\tInt" +
+      "roduce\022\030\n\007request\030\001 \002(\0132\007.Member\022!\n\010resp" +
+      "onse\030\002 \001(\0132\017.MembershipList\"3\n\005Leave\022\030\n\007",
+      "request\030\001 \002(\0132\007.Member\022\020\n\010response\030\002 \001(\t" +
+      "\".\n\nMembership\022 \n\007request\030\001 \002(\0132\017.Member" +
+      "shipList\"?\n\003Put\022\017\n\007request\030\001 \001(\t\022\020\n\010resp" +
+      "onse\030\002 \001(\t\022\025\n\rlocalFileName\030\003 \001(\t\"(\n\003Get" +
+      "\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"+\n\006D" +
+      "elete\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t" +
+      "\"g\n\010PutChunk\022\017\n\007request\030\001 \001(\t\022\020\n\010respons" +
+      "e\030\002 \001(\t\022\020\n\010replica1\030\003 \001(\005\022\020\n\010replica2\030\004 " +
+      "\001(\005\022\024\n\014sDFSFileName\030\005 \001(\t\"-\n\010GetChunk\022\017\n" +
+      "\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"0\n\013Dele",
+      "teChunk\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001" +
+      "(\t\")\n\004List\022\017\n\007request\030\001 \001(\t\022\020\n\010response\030" +
+      "\002 \001(\t\"\223\002\n\004Bolt\022\034\n\013sendTupleTo\030\001 \001(\0132\007.Me" +
+      "mber\022\034\n\013receiveFrom\030\002 \001(\0132\007.Member\022\017\n\007re" +
+      "quest\030\003 \001(\t\022\020\n\010response\030\004 \001(\t\022\n\n\002id\030\005 \001(" +
+      "\005\022 \n\010boltType\030\006 \002(\0162\016.Bolt.BoltType\022\023\n\013p" +
+      "arallelism\030\007 \001(\005\022\025\n\rsendTupleToID\030\010 \001(\005\022" +
+      "\025\n\rreceiveFromID\030\t \001(\005\";\n\010BoltType\022\016\n\nFI" +
+      "LTERBOLT\020\001\022\021\n\rTRANSFORMBOLT\020\002\022\014\n\010JOINBOL" +
+      "T\020\003\"\301\001\n\005Spout\022#\n\tspoutType\030\006 \002(\0162\020.Spout",
+      ".SpoutType\022\027\n\006sendTo\030\001 \003(\0132\007.Member\022\030\n\007r" +
+      "ecFrom\030\002 \001(\0132\007.Member\022\017\n\007request\030\003 \001(\t\022\020" +
+      "\n\010response\030\004 \001(\t\022\n\n\002id\030\005 \001(\005\"1\n\tSpoutTyp" +
+      "e\022\022\n\016STOCKDATASPOUT\020\001\022\020\n\014TWITTERSPOUT\020\002\"" +
+      "H\n\010Topology\022\025\n\005spout\030\001 \002(\0132\006.Spout\022\023\n\004bo" +
+      "lt\030\002 \003(\0132\005.Bolt\022\020\n\010response\030\003 \001(\tB\031\n\016tem" +
+      "pest.protosB\007Command"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -12601,7 +15586,7 @@ public final class Command {
     internal_static_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_Message_descriptor,
-        new java.lang.String[] { "Type", "Ping", "Grep", "Introduce", "Leave", "Membership", "Put", "Get", "Delete", "PutChunk", "GetChunk", "DeleteChunk", "List", "Bolt", "Spout", });
+        new java.lang.String[] { "Type", "Ping", "Grep", "Introduce", "Leave", "Membership", "Put", "Get", "Delete", "PutChunk", "GetChunk", "DeleteChunk", "List", "Bolt", "Spout", "Topology", });
     internal_static_Ping_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_Ping_fieldAccessorTable = new
@@ -12679,13 +15664,19 @@ public final class Command {
     internal_static_Bolt_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_Bolt_descriptor,
-        new java.lang.String[] { "Request", "Response", });
+        new java.lang.String[] { "SendTupleTo", "ReceiveFrom", "Request", "Response", "Id", "BoltType", "Parallelism", "SendTupleToID", "ReceiveFromID", });
     internal_static_Spout_descriptor =
       getDescriptor().getMessageTypes().get(14);
     internal_static_Spout_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_Spout_descriptor,
-        new java.lang.String[] { "Request", "Response", });
+        new java.lang.String[] { "SpoutType", "SendTo", "RecFrom", "Request", "Response", "Id", });
+    internal_static_Topology_descriptor =
+      getDescriptor().getMessageTypes().get(15);
+    internal_static_Topology_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Topology_descriptor,
+        new java.lang.String[] { "Spout", "Bolt", "Response", });
     tempest.protos.Membership.getDescriptor();
   }
 

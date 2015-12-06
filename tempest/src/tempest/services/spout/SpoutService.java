@@ -2,6 +2,7 @@ package tempest.services.spout;
 
 import tempest.commands.Response;
 import tempest.commands.command.*;
+import tempest.commands.handler.*;
 import tempest.commands.interfaces.*;
 import tempest.interfaces.ClientResponseCommandExecutor;
 import tempest.interfaces.Logger;
@@ -22,39 +23,53 @@ import java.util.concurrent.*;
  */
 public class SpoutService {
     private static ExecutorService pool = Executors.newFixedThreadPool(7);
-
     LinkedBlockingQueue queue = new LinkedBlockingQueue();
     StockDataSpout stockDataSpout = new StockDataSpout(queue);
 
     private final MembershipService membershipService;
     private final Logger logger;
-    private final CommandExecutor[] commandHandlers;
-    private final ResponseCommandExecutor[] responseCommandHandlers;
+    private ResponseCommandExecutor[] responseCommandHandlers;
+    private Spout spout;
 
-    public SpoutService(MembershipService membershipService, Logger logger, CommandExecutor[] commandHandlers, ResponseCommandExecutor[] responseCommandHandlers) {
+    public SpoutService(MembershipService membershipService, Logger logger) {
         this.membershipService = membershipService;
         this.logger = logger;
-        this.commandHandlers = commandHandlers;
-        this.responseCommandHandlers = responseCommandHandlers;
+        this.responseCommandHandlers = new ResponseCommandExecutor[]{new TopologyHandler(), new BoltHandler()};
     }
 
-    public void start() {
-        stockDataSpout.tuplesFromFile1(queue,"xyz").run();
-        while(!queue.isEmpty()) {
+    public Spout getSpout() {
+        return spout;
+    }
+
+    public void setSpout(Spout spout) {
+        this.spout = spout;
+    }
+
+    public void start(Membership.Member member, ResponseCommand<String, String> command) {
+
+        if (this.spout.getSpoutType().equals("STOCKDATASPOUT")) {
+            stockDataSpout.tuplesFromFile1(queue, "xyz").run();
+        } else if (this.spout.getSpoutType().equals("")) {
+
+        }
+        while (!queue.isEmpty()) {
             List<Tuple> tuples = new ArrayList<>();
             queue.drainTo(tuples, 10000);
-            SpoutThread spoutThread = new SpoutThread(tuples,this.membershipService);
+            SpoutThread spoutThread = new SpoutThread(tuples, member, command);
+
             spoutThread.run();
         }
     }
 
     class SpoutThread implements Runnable {
         List<Tuple> tuples = new ArrayList<>();
-        private final MembershipService membershipService;
+        ResponseCommand<String, String> command;
+        Membership.Member member;
 
-        public SpoutThread(List<Tuple> tuples, MembershipService membershipService) {
+        public SpoutThread(List<Tuple> tuples, Membership.Member member, ResponseCommand<String, String> command) {
             this.tuples = tuples;
-            this.membershipService = membershipService;
+            this.command = command;
+            this.member = member;
         }
 
         @Override
@@ -62,24 +77,27 @@ public class SpoutService {
             Response<String> response = null;
             boolean run = true;
             while (run) {
-//                Membership.MembershipList membershipList = this.membershipService.getMembershipListNoLocal();
-//                int index = new Random().nextInt(membershipList.getMemberList().size());
-//                Membership.Member member = membershipList.getMemberList().get(index);
                 String introducer = "localhost:4444";
                 Membership.Member member = Membership.Member.newBuilder()
                         .setHost(introducer.split(":")[0])
                         .setPort(Integer.parseInt(introducer.split(":")[1]))
-                        .build();;
+                        .build();
 
-                response = spoutTo(member);
+                response = spoutTo(member, command);
                 if (response.getResponse().equals("ok")) run = false;
             }
         }
 
-        public Response spoutTo(Membership.Member member) {
+        public Response spoutTo(Membership.Member member, ResponseCommand<String, String> command) {
             Bolt bolt = new Bolt();
+            String introducer = "localhost:4445";
+            Membership.Member member1 = Membership.Member.newBuilder()
+                    .setHost(introducer.split(":")[0])
+                    .setPort(Integer.parseInt(introducer.split(":")[1]))
+                    .build();
+            ;
+            bolt.setSendTupleTo(((Bolt) command).getSendTupleTo());
             bolt.setTuplesList(tuples);
-//        spout.setRequest(options);
             return createResponseExecutor(member, bolt).executeUsingObjectOutputStream();
         }
 

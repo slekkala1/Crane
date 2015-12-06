@@ -20,6 +20,7 @@ message Message {
         LIST = 12;
         BOLT = 13;
         SPOUT = 14;
+        TOPOLOGY = 15;
     }
 
     required Type type = 1;
@@ -37,6 +38,7 @@ message Message {
     optional List list = 13;
     optional Bolt bolt = 14;
     optional Spout spout = 15;
+    optional Topology topology = 16;
 }
 
 message Ping {
@@ -102,11 +104,41 @@ message List {
 }
 
 message Bolt {
-    optional Member sendTo = 1;
-    optional Member recFrom = 2;
+
+    enum BoltType{
+        FILTERBOLT = 1;
+        TRANSFORMBOLT = 2;
+        JOINBOLT = 3;
+    }
+
+    optional Member sendTupleTo = 1;
+    optional Member receiveFrom = 2;
+    optional string request = 3;
+    optional string response = 4;
+    optional int32 id = 5;
+    required BoltType boltType = 6;
+    optional int32 parallelism = 7;
+    optional int32 sendTupleToID = 8;
+    optional int32 receiveFromID = 9;
 }
 
 message Spout {
-    optional Member sendTo = 1;
-    optional Member response = 2;
+
+    enum SpoutType{
+        STOCKDATASPOUT = 1;
+        TWITTERSPOUT = 2;
+    }
+
+    required SpoutType spoutType = 6;
+    repeated Member sendTo = 1;
+    optional Member recFrom = 2;
+    optional string request = 3;
+    optional string response = 4;
+    optional int32 id = 5;
+}
+
+message Topology {
+    required Spout spout = 1;
+    repeated Bolt bolt = 2;
+    optional string response = 3;
 }

@@ -1,7 +1,9 @@
 package tempest.services.spout;
 
 import tempest.interfaces.BaseSpout;
+import tempest.protos.Command;
 import tempest.services.Tuple;
+import tempest.services.bolt.OutputCollector;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -9,6 +11,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -21,7 +25,11 @@ public class StockDataSpout implements BaseSpout {
     public StockDataSpout(LinkedBlockingQueue queue) {
         this.queue = queue;
     }
+    public static final tempest.protos.Command.Spout.SpoutType type = Command.Spout.SpoutType.STOCKDATASPOUT;
 
+    public tempest.protos.Command.Spout.SpoutType getType() {
+        return type;
+    }
 
     public String tuplesFromFile(String fileName) {
 

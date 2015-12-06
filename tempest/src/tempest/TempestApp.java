@@ -30,7 +30,7 @@ public class TempestApp implements Runnable {
     private final ReplicaService replicaService;
     private final SDFSClient sdfsClient;
     private final FileIOUtils fileIOUtils;
-    private final SpoutService spoutService;
+   // private final SpoutService spoutService;
 
     public TempestApp() throws IOException {
         String logFile = "machine." + Inet4Address.getLocalHost().getHostName() + ".log";
@@ -40,14 +40,15 @@ public class TempestApp implements Runnable {
         partitioner = new Partitioner(logger, membershipService);
         responseCommandHandlers = new ResponseCommandExecutor[]{new PingHandler(), new GrepHandler(logger), new IntroduceHandler(membershipService, logger),
                 new LeaveHandler(membershipService), new PutHandler(logger, partitioner), new PutChunkHandler(logger, partitioner), new GetHandler(partitioner),
-                new GetChunkHandler(), new DeleteHandler(partitioner), new DeleteChunkHandler(partitioner), new ListHandler(partitioner), new BoltHandler()};
+                new GetChunkHandler(), new DeleteHandler(partitioner), new DeleteChunkHandler(partitioner), new ListHandler(partitioner),
+                new BoltHandler(),new TopologyHandler(membershipService,logger)};
         Client client = new Client(membershipService, logger, commandHandlers, responseCommandHandlers);
+        //spoutService = new SpoutService(membershipService,logger,commandHandlers,responseCommandHandlers);
         server = new Server(logger, 4444, commandHandlers, responseCommandHandlers);
         console = new Console(logger, client, server, membershipService, partitioner);
         sdfsClient = new SDFSClient(logger);
         replicaService = new ReplicaService(logger, commandHandlers, responseCommandHandlers, partitioner, sdfsClient);
         fileIOUtils = new FileIOUtils(logger);
-        spoutService = new SpoutService(membershipService,logger,commandHandlers,responseCommandHandlers);
     }
 
     /**
@@ -57,7 +58,7 @@ public class TempestApp implements Runnable {
         try {
             server.start();
             replicaService.start();
-            spoutService.start();
+            //spoutService.start();
             ShellFactory.createConsoleShell("Tempest", "", console).commandLoop();
         } catch (IOException e) {
             e.printStackTrace();

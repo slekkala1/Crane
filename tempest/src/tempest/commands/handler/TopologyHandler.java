@@ -1,11 +1,13 @@
 package tempest.commands.handler;
 
+import tempest.commands.Response;
 import tempest.commands.command.Bolt;
 import tempest.commands.command.Spout;
 import tempest.commands.command.Topology;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
+import tempest.networking.TcpClientResponseCommandExecutor;
 import tempest.protos.Command;
 import tempest.protos.Command.Message;
 import tempest.protos.Membership;
@@ -24,6 +26,7 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
     private Socket socket;
     private MembershipService membershipService;
     private SpoutService spoutService;
+    Logger logger;
 
 
     public boolean canHandle(Message.Type type) {
@@ -53,7 +56,7 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
                         .setParallelism(command.getBoltList().get(i).getParallelism())
                         .setBoltType(command.getBoltList().get(i).getBoltType())
                         .setReceiveFromID(command.getBoltList().get(i).getReceiveFromID())
-                        .setSendTupleToID(command.getBoltList().get(i).getSendTupleToID()).build();
+                        .addAllSendTupleToID(command.getBoltList().get(i).getSendTupleToID()).build();
 
                 topologyBuilder.addBolt(i, bolt);
             }
@@ -112,7 +115,7 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
         //set all members at Spout for Spout and Bolts
         List<Membership.Member> memberList = new ArrayList<>();
         List<Membership.Member> spoutTo = new ArrayList<>();
-        Map<Integer, Integer> spoutToBoltToBoltID = new HashMap<>();
+        Map<Integer, List<Integer>> spoutToBoltToBoltID = new HashMap<>();
         Map<Integer, Membership.Member> IdMemberMap = new HashMap<>();
 
         Topology topology = (Topology) command;
@@ -129,14 +132,33 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
                 spoutToBoltToBoltID.put(topology.getBoltList().get(i).getId(), topology.getBoltList().get(i).getSendTupleToID());
             }
         }
+        for (Bolt bolt : topology.getBoltList()) {
+        	List<Membership.Member> list = new ArrayList<Membership.Member>();
+            for (Integer id : bolt.getSendTupleToID()) {
+            	list.add(IdMemberMap.get(id));
+            }
+            bolt.setSendTupleTo(list);
+        	Response<String> response = createResponseExecutor(IdMemberMap.get(bolt.getId()), bolt).executeSendTupleFromQueue();
+        	//if (response.getResponse().equals("ok")) redo
+        }
 
         topology.getSpout().setSendTo(spoutTo);
         spoutService.setSpout(topology.getSpout());
 
-        for (Map.Entry<Integer, Integer> entry : spoutToBoltToBoltID.entrySet()) {
+        for (Map.Entry<Integer, List<Integer>> entry : spoutToBoltToBoltID.entrySet()) {
             Bolt bolt = new Bolt();
-            bolt.setSendTupleTo(IdMemberMap.get(entry.getValue()));
+            List<Membership.Member> list = new ArrayList<Membership.Member>();
+            for (Integer id : entry.getValue()) {
+            	list.add(IdMemberMap.get(id));
+            }
+            bolt.setSendTupleTo(list);
             spoutService.start(IdMemberMap.get(entry.getKey()), bolt);
         }
+    }
+    
+    private <TRequest, TResponse> TcpClientResponseCommandExecutor<ResponseCommand<TRequest, TResponse>, TRequest, TResponse>
+    createResponseExecutor(Membership.Member member, ResponseCommand<TRequest, TResponse> command) {
+        ResponseCommandExecutor commandHandler = new BoltHandler();
+        return new TcpClientResponseCommandExecutor<>(member, command, commandHandler, logger);
     }
 }

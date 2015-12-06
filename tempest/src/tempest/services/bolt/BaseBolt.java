@@ -5,6 +5,7 @@ import tempest.services.Tuple;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.*;
 
 /**
@@ -16,16 +17,16 @@ public class BaseBolt {
 
     LinkedBlockingQueue queue;
     private static ExecutorService pool = Executors.newFixedThreadPool(7);
-    private OutputCollector outputCollector;
+    private List<OutputCollector> outputCollectorList;
     private final int nThreads;
 
     public tempest.protos.Command.Bolt.BoltType getType() {
         return type;
     }
 
-    public BaseBolt(LinkedBlockingQueue queue, OutputCollector outputCollector, Command.Bolt.BoltType type, int nThreads) {
+    public BaseBolt(LinkedBlockingQueue queue, List<OutputCollector> outputCollectorList, Command.Bolt.BoltType type, int nThreads) {
         this.queue = queue;
-        this.outputCollector = outputCollector;
+        this.outputCollectorList = outputCollectorList;
         this.type = type;
         this.nThreads = nThreads;
     }
@@ -35,7 +36,7 @@ public class BaseBolt {
     	if (type == Command.Bolt.BoltType.FILTERBOLT) {
         	for (int i=0; i<nThreads; i++)
         	{
-        		callable.add(new FilterBolt(queue, outputCollector));
+        		callable.add(new FilterBolt(queue, outputCollectorList));
         	}
     	}
     	else if (type == Command.Bolt.BoltType.JOINBOLT) {

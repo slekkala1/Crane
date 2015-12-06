@@ -41,12 +41,12 @@ public class OutputCollector {
 //                Membership.MembershipList membershipList = this.membershipService.getMembershipListNoLocal();
 //                int index = new Random().nextInt(membershipList.getMemberList().size());
 //                Membership.Member member = membershipList.getMemberList().get(index);
-                    String introducer = "localhost:4445";
+                    /*String introducer = "localhost:4445";
                     Membership.Member member = Membership.Member.newBuilder()
                             .setHost(introducer.split(":")[0])
                             .setPort(Integer.parseInt(introducer.split(":")[1]))
                             .build();
-                    ;
+                    ;*/
 
                     response = spoutTo(member);
                     if (response.getResponse().equals("ok")) run = false;

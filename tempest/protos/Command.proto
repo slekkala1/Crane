@@ -111,14 +111,14 @@ message Bolt {
         JOINBOLT = 3;
     }
 
-    optional Member sendTupleTo = 1;
+    repeated Member sendTupleTo = 1;
     optional Member receiveFrom = 2;
     optional string request = 3;
     optional string response = 4;
     optional int32 id = 5;
     required BoltType boltType = 6;
     optional int32 parallelism = 7;
-    optional int32 sendTupleToID = 8;
+    repeated int32 sendTupleToID = 8;
     optional int32 receiveFromID = 9;
 }
 

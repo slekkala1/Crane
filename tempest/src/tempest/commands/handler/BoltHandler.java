@@ -1,26 +1,21 @@
 package tempest.commands.handler;
 
-import tempest.commands.command.Ack;
 import tempest.commands.command.Bolt;
+import tempest.commands.command.Spout;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
-import tempest.interfaces.ClientResponseCommandExecutor;
-import tempest.interfaces.Logger;
-import tempest.networking.TcpClientResponseCommandExecutor;
 import tempest.protos.Command;
 import tempest.protos.Membership;
-import tempest.services.CommandLineExecutor;
-import tempest.services.DefaultLogWrapper;
-import tempest.services.DefaultLogger;
 import tempest.services.Tuple;
-import tempest.services.bolt.FilterBolt;
+import tempest.services.bolt.BaseBolt;
 import tempest.services.bolt.OutputCollector;
 
 import java.io.*;
-import java.net.Inet4Address;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by swapnalekkala on 11/24/15.
@@ -28,17 +23,16 @@ import java.util.concurrent.TimeUnit;
 public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String> {
     private Socket socket;
     LinkedBlockingQueue queue = new LinkedBlockingQueue();
-    OutputCollector outputCollector;
+    List<OutputCollector> outputCollectorList;
 
     public boolean canHandle(Command.Message.Type type) {
         return type == Bolt.type;
     }
 
     public Command.Message serialize(Bolt command) {
-        Command.Bolt.Builder boltBuilder = Command.Bolt.newBuilder()
-                .setParallelism(command.getParallelism());
-        if (command.getSendTupleTo() != null) {
-            boltBuilder.setSendTupleTo(command.getSendTupleTo());
+        Command.Bolt.Builder boltBuilder = Command.Bolt.newBuilder();
+        if(command.getSendTupleTo()!=null) {
+            boltBuilder.addAllSendTupleTo(command.getSendTupleTo());
         }
         if (command.getBoltType() != null) {
             boltBuilder.setBoltType(command.getBoltType());
@@ -58,7 +52,7 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
 
     public Bolt deserialize(Command.Message message) {
         Bolt bolt = new Bolt();
-        bolt.setSendTupleTo(message.getBolt().getSendTupleTo());
+        bolt.setSendTupleTo(message.getBolt().getSendTupleToList());
         if (message.hasBolt() && message.getBolt().hasResponse())
             bolt.setResponse(message.getBolt().getResponse());
         return bolt;
@@ -70,26 +64,17 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
             this.socket = socket;
             Thread thread = new Thread(readTuples(command));
             thread.start();
-            //if (!((Bolt) command).getSendTupleTo().getHost().equals("")) {
-            outputCollector = new OutputCollector(((Bolt) command).getSendTupleTo());
-            //}
-            //else {
-            //  String introducer = "fa15-cs425-g03-01.cs.illinois.edu:4444";
-            //Membership.Member member = Membership.Member.newBuilder()
-            //      .setHost(introducer.split(":")[0])
-            //    .setPort(Integer.parseInt(introducer.split(":")[1]))
-            //  .build();
-
-            //  outputCollector = new OutputCollector(member);
-            //}
-            if (((Bolt) command).getBoltType().toString().equals("FILTERBOLT")) {
-                FilterBolt filterBolt = new FilterBolt(queue, outputCollector);
-                filterBolt.filter();
-            } else if (((Bolt) command).getBoltType().toString().equals("JOINBOLT")) {
-
-            } else if (((Bolt) command).getBoltType().toString().equals("TRANSFORMBOLT")) {
-
+           // if(!((Bolt)command).getSendTupleTo().getHost().equals("")) {
+            //if (((Bolt)command).getSendTupleTo().isEmpty())
+            for (Membership.Member member : ((Bolt)command).getSendTupleTo()) {
+            	OutputCollector outputCollector = new OutputCollector(member);
+            	outputCollectorList.add(outputCollector);
             }
+            Command.Bolt.BoltType type = ((Bolt)command).getBoltType();
+            int nThreads = ((Bolt)command).getParallelism();
+            //}
+            BaseBolt bolt = new BaseBolt(queue,outputCollectorList,type,nThreads);
+            bolt.filter();
             thread.join();
             if (!((Bolt) command).getSendTupleTo().getHost().equals("")) {
                 Thread outputThread = new Thread(outputCollector.emit());
@@ -134,7 +119,7 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
                         queue.add(tuple);
                         //filterBolt.filter();
                         //System.out.println(String.join(",", tuple.getStringList()));
-                        if (((Bolt) command).getSendTupleTo().getHost().equals("")) {
+                        if(((Bolt)command).getSendTupleTo().get(0).getHost().equals("")) {
                             System.out.println(String.join(",", tuple.getStringList()));
                         }
                     }

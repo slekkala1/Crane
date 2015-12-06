@@ -1,12 +1,12 @@
 package tempest.commands.handler;
 
-import tempest.commands.interfaces.ResponseCommand;
-import tempest.services.MembershipService;
 import tempest.commands.command.Introduce;
+import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.protos.Command;
 import tempest.protos.Membership;
+import tempest.services.MembershipService;
 
 import java.net.Socket;
 

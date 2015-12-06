@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.util.ArrayList;
 
 /**
  * Console provides a command console using the Cliche library
@@ -68,6 +67,12 @@ public class Console {
     @Command(abbrev = "list")
     public String list(@Param(name = "SDFSFileName") String sDFSFileName) {
         Response<String> response = client.list(sDFSFileName);
+        return response.getResponse() + formatResponseStatistics(response.getResponseData());
+    }
+
+    @Command(abbrev = "application1")
+    public String application1() {
+        Response<String> response = client.topology(Topologies.application1());
         return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
 

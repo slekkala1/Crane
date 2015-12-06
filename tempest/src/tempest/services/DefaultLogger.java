@@ -3,9 +3,9 @@ package tempest.services;
 import tempest.interfaces.Executor;
 import tempest.interfaces.LogWrapper;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.Inet4Address;
-import java.util.logging.*;
+import java.util.logging.Level;
 
 public class DefaultLogger implements tempest.interfaces.Logger {
 

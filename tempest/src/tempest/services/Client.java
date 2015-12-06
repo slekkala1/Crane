@@ -1,12 +1,11 @@
 package tempest.services;
 
 import tempest.commands.Response;
-import tempest.commands.command.Grep;
-import tempest.commands.command.Introduce;
-import tempest.commands.command.Leave;
-import tempest.commands.command.Ping;
+import tempest.commands.command.*;
 import tempest.commands.interfaces.*;
-import tempest.interfaces.*;
+import tempest.interfaces.ClientCommandExecutor;
+import tempest.interfaces.ClientResponseCommandExecutor;
+import tempest.interfaces.Logger;
 import tempest.networking.TcpClientResponseCommandExecutor;
 import tempest.networking.UdpClientCommandExecutor;
 import tempest.networking.UdpClientResponseCommandExecutor;
@@ -59,6 +58,15 @@ public class Client {
         tempest.commands.command.List list = new tempest.commands.command.List();
         list.setRequest(sDFSFileName);
         return executeAllParallel(list, true);
+    }
+
+    public Response topology(Topology topology) {
+        String nimbus = "swapnas-MacBook-Air.local:4444";
+        Membership.Member member = Membership.Member.newBuilder()
+                .setHost(nimbus.split(":")[0])
+                .setPort(Integer.parseInt(nimbus.split(":")[1]))
+                .build();
+        return createResponseExecutor(member, topology).execute();
     }
 
     public void membership(Membership.Member member, Membership.MembershipList membershipList) {

@@ -2,17 +2,37 @@ package tempest.commands.command;
 
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.Tcp;
+import tempest.protos.Command;
 
+import java.util.List;
 /**
- * Created by swapnalekkala on 10/27/15.
+ * Created by swapnalekkala on 12/5/15.
  */
-public class Delete implements ResponseCommand<String, String>, Tcp {
-    public static final tempest.protos.Command.Message.Type type = tempest.protos.Command.Message.Type.DELETE;
-    private String request;
+public class Topology implements ResponseCommand<String, String>, Tcp {
+    public static final tempest.protos.Command.Message.Type type = tempest.protos.Command.Message.Type.TOPOLOGY;
+    private Spout spout;
+    private List<Bolt> boltList;
     private String response;
+    private String request;
 
     public tempest.protos.Command.Message.Type getType() {
         return type;
+    }
+
+    public Spout getSpout() {
+        return spout;
+    }
+
+    public void setSpout(Spout spout) {
+        this.spout = spout;
+    }
+
+    public List<Bolt> getBoltList() {
+        return boltList;
+    }
+
+    public void setBoltList(List<Bolt> boltList) {
+        this.boltList = boltList;
     }
 
     public String getRequest() {

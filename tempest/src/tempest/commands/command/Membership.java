@@ -1,7 +1,6 @@
 package tempest.commands.command;
 
 import tempest.commands.interfaces.Command;
-import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.Udp;
 
 public class Membership implements Command<tempest.protos.Membership.MembershipList>, Udp {

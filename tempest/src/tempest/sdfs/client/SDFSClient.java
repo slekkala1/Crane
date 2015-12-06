@@ -1,8 +1,14 @@
 package tempest.sdfs.client;
 
 import tempest.commands.Response;
-import tempest.commands.command.*;
-import tempest.commands.handler.*;
+import tempest.commands.command.Delete;
+import tempest.commands.command.Get;
+import tempest.commands.command.Put;
+import tempest.commands.command.PutChunk;
+import tempest.commands.handler.DeleteHandler;
+import tempest.commands.handler.GetHandler;
+import tempest.commands.handler.PutChunkHandler;
+import tempest.commands.handler.PutHandler;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.commands.interfaces.Udp;
@@ -11,10 +17,9 @@ import tempest.interfaces.Logger;
 import tempest.networking.TcpClientResponseCommandExecutor;
 import tempest.networking.UdpClientResponseCommandExecutor;
 import tempest.protos.Membership;
-import tempest.services.*;
+import tempest.services.DefaultLogger;
 
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

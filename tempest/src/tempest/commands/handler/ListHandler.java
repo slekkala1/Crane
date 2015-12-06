@@ -1,14 +1,11 @@
 package tempest.commands.handler;
 
-import tempest.commands.command.Grep;
 import tempest.commands.command.List;
 import tempest.commands.interfaces.ResponseCommand;
 import tempest.commands.interfaces.ResponseCommandExecutor;
-import tempest.interfaces.Logger;
 import tempest.protos.Command;
 import tempest.services.Partitioner;
 
-import java.net.Inet4Address;
 import java.net.Socket;
 
 /**

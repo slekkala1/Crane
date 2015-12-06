@@ -1,7 +1,10 @@
 package tempest.networking;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import tempest.commands.interfaces.*;
+import tempest.commands.interfaces.Command;
+import tempest.commands.interfaces.CommandExecutor;
+import tempest.commands.interfaces.ResponseCommand;
+import tempest.commands.interfaces.ResponseCommandExecutor;
 import tempest.interfaces.Logger;
 
 import java.io.ByteArrayInputStream;

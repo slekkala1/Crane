@@ -32,35 +32,7 @@ public class StockDataSpout implements BaseSpout {
         return type;
     }
 
-    public String tuplesFromFile(String fileName) {
-
-        File myFile = new File("SDFSFiles/quant");
-        try {
-
-            if (myFile.exists()) {
-                Files.walk(Paths.get("SDFSFiles/quant")).forEach(filePath -> {
-                    if (Files.isRegularFile(filePath)) {
-                        System.out.println(filePath);
-                    }
-                });
-
-                BufferedReader reader = new BufferedReader(new FileReader(myFile));
-                List<String> lines = new ArrayList<>();
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    lines.add(line);
-                }
-
-                System.out.println(lines.get(0));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
-
-    public Runnable tuplesFromFile1(String fileName) {
+    public Runnable retrieveTuples() {
         return new Runnable() {
             @Override
             public void run() {
@@ -70,7 +42,7 @@ public class StockDataSpout implements BaseSpout {
 
                     List<String> lines = new ArrayList<>();
 
-                    lines.add("DATE, TIME, OPEN, HIGH, LOW, CLOSE, VOLUME");
+                    lines.add("DATE, TIME, OPEN, HIGH, LOW, CLOSE, VOLUME, NAME");
 
                     if (myFile.exists()) {
                         Files.walk(Paths.get("SDFSFiles/quant")).forEach(filePath -> {
@@ -78,6 +50,7 @@ public class StockDataSpout implements BaseSpout {
                                 System.out.println(filePath);
                                 BufferedReader reader = null;
                                 try {
+                                	String name = filePath.toString().substring(filePath.toString().lastIndexOf('_')+1);
                                     reader = new BufferedReader(new FileReader(filePath.toFile()));
 
                                     String line = null;
@@ -86,6 +59,7 @@ public class StockDataSpout implements BaseSpout {
                                         while ((line = reader.readLine()) != null) {
                                             line = count + "," + line;
                                             List<String> s = Arrays.asList(line.split(","));
+                                            s.add(name);
                                             Tuple t = new Tuple(s);
                                             queue.put(t);
                                             lines.add(line);

@@ -4,6 +4,7 @@ import tempest.commands.Response;
 import tempest.commands.command.*;
 import tempest.commands.handler.*;
 import tempest.commands.interfaces.*;
+import tempest.interfaces.BaseSpout;
 import tempest.interfaces.ClientResponseCommandExecutor;
 import tempest.interfaces.Logger;
 import tempest.networking.TcpClientResponseCommandExecutor;
@@ -13,7 +14,6 @@ import tempest.services.MembershipService;
 import tempest.services.Tuple;
 
 import java.util.Random;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -24,7 +24,7 @@ import java.util.concurrent.*;
 public class SpoutService {
     private static ExecutorService pool = Executors.newFixedThreadPool(7);
     LinkedBlockingQueue<Tuple> queue = new LinkedBlockingQueue();
-    StockDataSpout stockDataSpout = new StockDataSpout(queue);
+    BaseSpout baseSpout;
 
     private final MembershipService membershipService;
     private final Logger logger;
@@ -57,10 +57,13 @@ public class SpoutService {
     public void start(Membership.Member member) {
         System.out.println("Spout type" + this.spout.getSpoutType().toString());
         if (this.spout.getSpoutType().toString().equals("STOCKDATASPOUT")) {
+        	baseSpout = new StockDataSpout(queue);
             System.out.println("sending tuples from stockdataspout");
-            stockDataSpout.tuplesFromFile1("xyz").run();
-        } else if (this.spout.getSpoutType().equals("")) {
-
+            baseSpout.retrieveTuples().run();
+        } else if (this.spout.getSpoutType().toString().equals("TWITTERSPOUT")) {
+        	baseSpout = new TwitterStreamSpout(queue);
+        	System.out.println("sending tuples from twitterspout");
+        	baseSpout.retrieveTuples().run();
         }
         while (!queue.isEmpty()) {
             List<Tuple> tuples = new ArrayList<>();

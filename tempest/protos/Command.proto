@@ -115,6 +115,10 @@ message Bolt {
         FILTERBOLT = 1;
         TRANSFORMBOLT = 2;
         JOINBOLT = 3;
+        STOCKFILTERGAINBOLT = 4;
+        STOCKFILTERLARGEBOLT = 5;
+        TWITTERFILTERTRENDINGBOLT = 6;
+        TWITTERSHORTENBOLT = 7;
     }
 
     repeated Member sendTupleTo = 1;

@@ -51,7 +51,7 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
 
     public Message serialize(Topology command) {
         Command.Topology.Builder topologyBuilder = Command.Topology.newBuilder();
-        if(command.getSpout()!=null) {
+        if (command.getSpout() != null) {
             Command.Spout spout = Command.Spout.newBuilder()
                     .setId(command.getSpout().getId())
                     .setSpoutType(command.getSpout().getSpoutType()).build();
@@ -65,13 +65,12 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
                         .setId(command.getBoltList().get(i).getId())
                         .setParallelism(command.getBoltList().get(i).getParallelism())
                         .setBoltType(command.getBoltList().get(i).getBoltType())
-                        .setReceiveFromID(command.getBoltList().get(i).getReceiveFromID())
-                        .setSendTupleToID(command.getBoltList().get(i).getSendTupleToID())
-                        ;
-
-                if(command.getBoltList().get(i).getSendTupleTo()!=null) {
-                    boltBuilder.setSendTupleTo(command.getBoltList().get(i).getSendTupleTo());
-
+                        .setReceiveFromID(command.getBoltList().get(i).getReceiveFromID());
+                if (command.getBoltList().get(i).getSendTupleToID() != null) {
+                    boltBuilder.addAllSendTupleToID(command.getBoltList().get(i).getSendTupleToID());
+                }
+                if (command.getBoltList().get(i).getSendTupleTo() != null) {
+                    boltBuilder.addAllSendTupleTo(command.getBoltList().get(i).getSendTupleTo());
                 }
 
                 topologyBuilder.addBolt(i, boltBuilder.build());
@@ -88,7 +87,7 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
 
     public Topology deserialize(Message message) {
         Topology topology = new Topology();
-        if(message.getSpout()!=null) {
+        if (message.getSpout() != null) {
             Spout spout = new Spout();
             spout.setSpoutType(message.getTopology().getSpout().getSpoutType());
             spout.setId(message.getTopology().getSpout().getId());
@@ -101,12 +100,12 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
             bolt.setId(message.getTopology().getBolt(i).getId());
             bolt.setParallelism(message.getTopology().getBolt(i).getParallelism());
             bolt.setReceiveFromID(message.getTopology().getBolt(i).getReceiveFromID());
-            if(message.getTopology().getBolt(i).getSendTupleToID() != 0) {
-                bolt.setSendTupleToID(message.getTopology().getBolt(i).getSendTupleToID());
+            if (message.getTopology().getBolt(i).getSendTupleToIDList() != null) {
+                bolt.setSendTupleToID(message.getTopology().getBolt(i).getSendTupleToIDList());
             }
 
-            if(message.getTopology().getBolt(i).getSendTupleTo() != null) {
-                bolt.setSendTupleTo(message.getTopology().getBolt(i).getSendTupleTo());
+            if (message.getTopology().getBolt(i).getSendTupleToList() != null) {
+                bolt.setSendTupleTo(message.getTopology().getBolt(i).getSendTupleToList());
             }
             boltList.add(bolt);
         }
@@ -132,7 +131,7 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
                 assignMachines(command);
             } else {
                 System.out.println("Writing boltobject to file at" + Inet4Address.getLocalHost().getHostName());
-                Bolt bolt =((Topology) command).getBoltList().get(0);
+                Bolt bolt = ((Topology) command).getBoltList().get(0);
                 FileOutputStream fout = new FileOutputStream("boltObject");
                 ObjectOutputStream oos = new ObjectOutputStream(fout);
                 oos.writeObject(bolt);
@@ -167,24 +166,35 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
             IdMemberMap.put(topology.getBoltList().get(i).getId(), randomMember);
             if (topology.getBoltList().get(i).getReceiveFromID() == 1) {
                 spoutTo.add(randomMember);
-                System.out.println("Spout to member"+ randomMember.getHost());
+                System.out.println("Spout to member" + randomMember.getHost());
             }
         }
 
         for (int i = 0; i < topology.getBoltList().size(); i++) {
-            int sendToId = topology.getBoltList().get(i).getSendTupleToID();
+            List<Integer> sendToId = new ArrayList<>();
+
+            for (int j = 0; j < topology.getBoltList().get(i).getSendTupleToID().size(); j++) {
+                sendToId.add(topology.getBoltList().get(i).getSendTupleToID().get(i));
+            }
             int boltId = topology.getBoltList().get(i).getId();
-            topology.getBoltList().get(i).setSendTupleTo(IdMemberMap.get(sendToId));
+
+            List<Membership.Member> sendTomemberList = new ArrayList<>();
+            for (int k = 0; k < sendToId.size(); k++) {
+                Membership.Member member = IdMemberMap.get(sendToId.get(k));
+                sendTomemberList.add(member);
+            }
+
+            topology.getBoltList().get(i).setSendTupleTo(sendTomemberList);
             Topology newTopology = new Topology();
             newTopology.setBoltList(new ArrayList<Bolt>());
             newTopology.getBoltList().add(topology.getBoltList().get(i));
             System.out.println("sending topology with bolt to" + IdMemberMap.get(boltId).getHost());
-            Response<String> response = createResponseExecutor(IdMemberMap.get(boltId),newTopology).execute();
+            Response<String> response = createResponseExecutor(IdMemberMap.get(boltId), newTopology).execute();
             assert response.getResponse().equals("ok");
         }
 
         spoutService.setSpout(topology.getSpout());
-        for (Membership.Member member: spoutTo) {
+        for (Membership.Member member : spoutTo) {
 //            Bolt bolt = new Bolt();
             System.out.println("sending tuples to member" + member);
             spoutService.start(member);

@@ -24,6 +24,9 @@ public class OutputCollector {
     Logger logger;
     Membership.Member member;
 
+    public OutputCollector() {
+    }
+
     public OutputCollector(Membership.Member member) {
         this.member = member;
     }

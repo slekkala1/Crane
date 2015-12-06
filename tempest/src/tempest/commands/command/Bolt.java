@@ -22,8 +22,8 @@ public class Bolt implements ResponseCommand<String, String>, Tcp,Serializable {
     private int receiveFromID;
     private List<Tuple> tuplesList;
     private LinkedBlockingQueue<Tuple> tuplesQueue;
-    private Membership.Member sendTupleTo;
-    private int sendTupleToID;
+    private List<Membership.Member> sendTupleTo;
+    private List<Integer> sendTupleToID;
     private int id;
     private tempest.protos.Command.Bolt.BoltType boltType;
     private int parallelism;
@@ -36,11 +36,11 @@ public class Bolt implements ResponseCommand<String, String>, Tcp,Serializable {
         this.parallelism = parallelism;
     }
 
-    public int getSendTupleToID() {
+    public List<Integer> getSendTupleToID() {
         return sendTupleToID;
     }
 
-    public void setSendTupleToID(int sendTupleToID) {
+    public void setSendTupleToID(List<Integer> sendTupleToID) {
         this.sendTupleToID = sendTupleToID;
     }
 
@@ -76,11 +76,11 @@ public class Bolt implements ResponseCommand<String, String>, Tcp,Serializable {
         return request;
     }
 
-    public Membership.Member getSendTupleTo() {
+    public List<Membership.Member> getSendTupleTo() {
         return sendTupleTo;
     }
 
-    public void setSendTupleTo(Membership.Member sendTupleTo) {
+    public void setSendTupleTo(List<Membership.Member> sendTupleTo) {
         this.sendTupleTo = sendTupleTo;
     }
 

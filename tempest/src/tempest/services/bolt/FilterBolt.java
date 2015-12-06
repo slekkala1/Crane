@@ -14,19 +14,24 @@ import java.util.concurrent.TimeUnit;
 public class FilterBolt
         implements Callable {
     LinkedBlockingQueue<Tuple> queue;
-    OutputCollector outputCollector;
+    List<OutputCollector> outputCollectorList;
 
-    public FilterBolt(LinkedBlockingQueue<Tuple> queue, OutputCollector outputCollector) {
+
+    public FilterBolt(LinkedBlockingQueue<Tuple> queue, List<OutputCollector> outputCollectorList) {
         this.queue = queue;
-        this.outputCollector = outputCollector;
+        this.outputCollectorList = outputCollectorList;
     }
 
     public Tuple call() {
         Tuple tuple = null;
         try {
-                while((tuple = queue.poll(1000, TimeUnit.MILLISECONDS))!=null) {
-                    outputCollector.add(tuple);
+            if (!outputCollectorList.isEmpty()) {
+                while ((tuple = queue.poll(1000, TimeUnit.MILLISECONDS)) != null) {
+                    for(int i=0;i<outputCollectorList.size();i++) {
+                        outputCollectorList.get(i).add(tuple);
+                    }
                 }
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -12020,17 +12020,28 @@ public final class Command {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .Member sendTupleTo = 1;</code>
+     * <code>repeated .Member sendTupleTo = 1;</code>
      */
-    boolean hasSendTupleTo();
+    java.util.List<tempest.protos.Membership.Member> 
+        getSendTupleToList();
     /**
-     * <code>optional .Member sendTupleTo = 1;</code>
+     * <code>repeated .Member sendTupleTo = 1;</code>
      */
-    tempest.protos.Membership.Member getSendTupleTo();
+    tempest.protos.Membership.Member getSendTupleTo(int index);
     /**
-     * <code>optional .Member sendTupleTo = 1;</code>
+     * <code>repeated .Member sendTupleTo = 1;</code>
      */
-    tempest.protos.Membership.MemberOrBuilder getSendTupleToOrBuilder();
+    int getSendTupleToCount();
+    /**
+     * <code>repeated .Member sendTupleTo = 1;</code>
+     */
+    java.util.List<? extends tempest.protos.Membership.MemberOrBuilder> 
+        getSendTupleToOrBuilderList();
+    /**
+     * <code>repeated .Member sendTupleTo = 1;</code>
+     */
+    tempest.protos.Membership.MemberOrBuilder getSendTupleToOrBuilder(
+        int index);
 
     /**
      * <code>optional .Member receiveFrom = 2;</code>
@@ -12101,13 +12112,17 @@ public final class Command {
     int getParallelism();
 
     /**
-     * <code>optional int32 sendTupleToID = 8;</code>
+     * <code>repeated int32 sendTupleToID = 8;</code>
      */
-    boolean hasSendTupleToID();
+    java.util.List<java.lang.Integer> getSendTupleToIDList();
     /**
-     * <code>optional int32 sendTupleToID = 8;</code>
+     * <code>repeated int32 sendTupleToID = 8;</code>
      */
-    int getSendTupleToID();
+    int getSendTupleToIDCount();
+    /**
+     * <code>repeated int32 sendTupleToID = 8;</code>
+     */
+    int getSendTupleToID(int index);
 
     /**
      * <code>optional int32 receiveFromID = 9;</code>
@@ -12171,21 +12186,16 @@ public final class Command {
               break;
             }
             case 10: {
-              tempest.protos.Membership.Member.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000001) == 0x00000001)) {
-                subBuilder = sendTupleTo_.toBuilder();
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                sendTupleTo_ = new java.util.ArrayList<tempest.protos.Membership.Member>();
+                mutable_bitField0_ |= 0x00000001;
               }
-              sendTupleTo_ = input.readMessage(tempest.protos.Membership.Member.PARSER, extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(sendTupleTo_);
-                sendTupleTo_ = subBuilder.buildPartial();
-              }
-              bitField0_ |= 0x00000001;
+              sendTupleTo_.add(input.readMessage(tempest.protos.Membership.Member.PARSER, extensionRegistry));
               break;
             }
             case 18: {
               tempest.protos.Membership.Member.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
                 subBuilder = receiveFrom_.toBuilder();
               }
               receiveFrom_ = input.readMessage(tempest.protos.Membership.Member.PARSER, extensionRegistry);
@@ -12193,23 +12203,23 @@ public final class Command {
                 subBuilder.mergeFrom(receiveFrom_);
                 receiveFrom_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000002;
+              bitField0_ |= 0x00000001;
               break;
             }
             case 26: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000004;
+              bitField0_ |= 0x00000002;
               request_ = bs;
               break;
             }
             case 34: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000004;
               response_ = bs;
               break;
             }
             case 40: {
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000008;
               id_ = input.readInt32();
               break;
             }
@@ -12219,23 +12229,39 @@ public final class Command {
               if (value == null) {
                 unknownFields.mergeVarintField(6, rawValue);
               } else {
-                bitField0_ |= 0x00000020;
+                bitField0_ |= 0x00000010;
                 boltType_ = value;
               }
               break;
             }
             case 56: {
-              bitField0_ |= 0x00000040;
+              bitField0_ |= 0x00000020;
               parallelism_ = input.readInt32();
               break;
             }
             case 64: {
-              bitField0_ |= 0x00000080;
-              sendTupleToID_ = input.readInt32();
+              if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+                sendTupleToID_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000080;
+              }
+              sendTupleToID_.add(input.readInt32());
+              break;
+            }
+            case 66: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000080) == 0x00000080) && input.getBytesUntilLimit() > 0) {
+                sendTupleToID_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000080;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                sendTupleToID_.add(input.readInt32());
+              }
+              input.popLimit(limit);
               break;
             }
             case 72: {
-              bitField0_ |= 0x00000100;
+              bitField0_ |= 0x00000040;
               receiveFromID_ = input.readInt32();
               break;
             }
@@ -12247,6 +12273,12 @@ public final class Command {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          sendTupleTo_ = java.util.Collections.unmodifiableList(sendTupleTo_);
+        }
+        if (((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+          sendTupleToID_ = java.util.Collections.unmodifiableList(sendTupleToID_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -12371,24 +12403,38 @@ public final class Command {
 
     private int bitField0_;
     public static final int SENDTUPLETO_FIELD_NUMBER = 1;
-    private tempest.protos.Membership.Member sendTupleTo_;
+    private java.util.List<tempest.protos.Membership.Member> sendTupleTo_;
     /**
-     * <code>optional .Member sendTupleTo = 1;</code>
+     * <code>repeated .Member sendTupleTo = 1;</code>
      */
-    public boolean hasSendTupleTo() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    /**
-     * <code>optional .Member sendTupleTo = 1;</code>
-     */
-    public tempest.protos.Membership.Member getSendTupleTo() {
+    public java.util.List<tempest.protos.Membership.Member> getSendTupleToList() {
       return sendTupleTo_;
     }
     /**
-     * <code>optional .Member sendTupleTo = 1;</code>
+     * <code>repeated .Member sendTupleTo = 1;</code>
      */
-    public tempest.protos.Membership.MemberOrBuilder getSendTupleToOrBuilder() {
+    public java.util.List<? extends tempest.protos.Membership.MemberOrBuilder> 
+        getSendTupleToOrBuilderList() {
       return sendTupleTo_;
+    }
+    /**
+     * <code>repeated .Member sendTupleTo = 1;</code>
+     */
+    public int getSendTupleToCount() {
+      return sendTupleTo_.size();
+    }
+    /**
+     * <code>repeated .Member sendTupleTo = 1;</code>
+     */
+    public tempest.protos.Membership.Member getSendTupleTo(int index) {
+      return sendTupleTo_.get(index);
+    }
+    /**
+     * <code>repeated .Member sendTupleTo = 1;</code>
+     */
+    public tempest.protos.Membership.MemberOrBuilder getSendTupleToOrBuilder(
+        int index) {
+      return sendTupleTo_.get(index);
     }
 
     public static final int RECEIVEFROM_FIELD_NUMBER = 2;
@@ -12397,7 +12443,7 @@ public final class Command {
      * <code>optional .Member receiveFrom = 2;</code>
      */
     public boolean hasReceiveFrom() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>optional .Member receiveFrom = 2;</code>
@@ -12418,7 +12464,7 @@ public final class Command {
      * <code>optional string request = 3;</code>
      */
     public boolean hasRequest() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>optional string request = 3;</code>
@@ -12460,7 +12506,7 @@ public final class Command {
      * <code>optional string response = 4;</code>
      */
     public boolean hasResponse() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>optional string response = 4;</code>
@@ -12502,7 +12548,7 @@ public final class Command {
      * <code>optional int32 id = 5;</code>
      */
     public boolean hasId() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>optional int32 id = 5;</code>
@@ -12517,7 +12563,7 @@ public final class Command {
      * <code>optional .Bolt.BoltType boltType = 6;</code>
      */
     public boolean hasBoltType() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>optional .Bolt.BoltType boltType = 6;</code>
@@ -12532,7 +12578,7 @@ public final class Command {
      * <code>optional int32 parallelism = 7;</code>
      */
     public boolean hasParallelism() {
-      return ((bitField0_ & 0x00000040) == 0x00000040);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <code>optional int32 parallelism = 7;</code>
@@ -12542,18 +12588,25 @@ public final class Command {
     }
 
     public static final int SENDTUPLETOID_FIELD_NUMBER = 8;
-    private int sendTupleToID_;
+    private java.util.List<java.lang.Integer> sendTupleToID_;
     /**
-     * <code>optional int32 sendTupleToID = 8;</code>
+     * <code>repeated int32 sendTupleToID = 8;</code>
      */
-    public boolean hasSendTupleToID() {
-      return ((bitField0_ & 0x00000080) == 0x00000080);
+    public java.util.List<java.lang.Integer>
+        getSendTupleToIDList() {
+      return sendTupleToID_;
     }
     /**
-     * <code>optional int32 sendTupleToID = 8;</code>
+     * <code>repeated int32 sendTupleToID = 8;</code>
      */
-    public int getSendTupleToID() {
-      return sendTupleToID_;
+    public int getSendTupleToIDCount() {
+      return sendTupleToID_.size();
+    }
+    /**
+     * <code>repeated int32 sendTupleToID = 8;</code>
+     */
+    public int getSendTupleToID(int index) {
+      return sendTupleToID_.get(index);
     }
 
     public static final int RECEIVEFROMID_FIELD_NUMBER = 9;
@@ -12562,7 +12615,7 @@ public final class Command {
      * <code>optional int32 receiveFromID = 9;</code>
      */
     public boolean hasReceiveFromID() {
-      return ((bitField0_ & 0x00000100) == 0x00000100);
+      return ((bitField0_ & 0x00000040) == 0x00000040);
     }
     /**
      * <code>optional int32 receiveFromID = 9;</code>
@@ -12572,14 +12625,14 @@ public final class Command {
     }
 
     private void initFields() {
-      sendTupleTo_ = tempest.protos.Membership.Member.getDefaultInstance();
+      sendTupleTo_ = java.util.Collections.emptyList();
       receiveFrom_ = tempest.protos.Membership.Member.getDefaultInstance();
       request_ = "";
       response_ = "";
       id_ = 0;
       boltType_ = tempest.protos.Command.Bolt.BoltType.FILTERBOLT;
       parallelism_ = 0;
-      sendTupleToID_ = 0;
+      sendTupleToID_ = java.util.Collections.emptyList();
       receiveFromID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
@@ -12595,31 +12648,31 @@ public final class Command {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeMessage(1, sendTupleTo_);
+      for (int i = 0; i < sendTupleTo_.size(); i++) {
+        output.writeMessage(1, sendTupleTo_.get(i));
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeMessage(2, receiveFrom_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(3, getRequestBytes());
       }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeBytes(4, getResponseBytes());
       }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeInt32(5, id_);
       }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         output.writeEnum(6, boltType_.getNumber());
       }
-      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeInt32(7, parallelism_);
       }
-      if (((bitField0_ & 0x00000080) == 0x00000080)) {
-        output.writeInt32(8, sendTupleToID_);
+      for (int i = 0; i < sendTupleToID_.size(); i++) {
+        output.writeInt32(8, sendTupleToID_.get(i));
       }
-      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         output.writeInt32(9, receiveFromID_);
       }
       getUnknownFields().writeTo(output);
@@ -12631,39 +12684,44 @@ public final class Command {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      for (int i = 0; i < sendTupleTo_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, sendTupleTo_);
+          .computeMessageSize(1, sendTupleTo_.get(i));
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, receiveFrom_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(3, getRequestBytes());
       }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(4, getResponseBytes());
       }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(5, id_);
       }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(6, boltType_.getNumber());
       }
-      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(7, parallelism_);
       }
-      if (((bitField0_ & 0x00000080) == 0x00000080)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(8, sendTupleToID_);
+      {
+        int dataSize = 0;
+        for (int i = 0; i < sendTupleToID_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(sendTupleToID_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getSendTupleToIDList().size();
       }
-      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(9, receiveFromID_);
       }
@@ -12787,11 +12845,11 @@ public final class Command {
       public Builder clear() {
         super.clear();
         if (sendTupleToBuilder_ == null) {
-          sendTupleTo_ = tempest.protos.Membership.Member.getDefaultInstance();
+          sendTupleTo_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
           sendTupleToBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000001);
         if (receiveFromBuilder_ == null) {
           receiveFrom_ = tempest.protos.Membership.Member.getDefaultInstance();
         } else {
@@ -12808,7 +12866,7 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000020);
         parallelism_ = 0;
         bitField0_ = (bitField0_ & ~0x00000040);
-        sendTupleToID_ = 0;
+        sendTupleToID_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000080);
         receiveFromID_ = 0;
         bitField0_ = (bitField0_ & ~0x00000100);
@@ -12840,16 +12898,17 @@ public final class Command {
         tempest.protos.Command.Bolt result = new tempest.protos.Command.Bolt(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
         if (sendTupleToBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            sendTupleTo_ = java.util.Collections.unmodifiableList(sendTupleTo_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
           result.sendTupleTo_ = sendTupleTo_;
         } else {
           result.sendTupleTo_ = sendTupleToBuilder_.build();
         }
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
+          to_bitField0_ |= 0x00000001;
         }
         if (receiveFromBuilder_ == null) {
           result.receiveFrom_ = receiveFrom_;
@@ -12857,31 +12916,32 @@ public final class Command {
           result.receiveFrom_ = receiveFromBuilder_.build();
         }
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
+          to_bitField0_ |= 0x00000002;
         }
         result.request_ = request_;
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
+          to_bitField0_ |= 0x00000004;
         }
         result.response_ = response_;
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000010;
+          to_bitField0_ |= 0x00000008;
         }
         result.id_ = id_;
         if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
-          to_bitField0_ |= 0x00000020;
+          to_bitField0_ |= 0x00000010;
         }
         result.boltType_ = boltType_;
         if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
-          to_bitField0_ |= 0x00000040;
+          to_bitField0_ |= 0x00000020;
         }
         result.parallelism_ = parallelism_;
-        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
-          to_bitField0_ |= 0x00000080;
+        if (((bitField0_ & 0x00000080) == 0x00000080)) {
+          sendTupleToID_ = java.util.Collections.unmodifiableList(sendTupleToID_);
+          bitField0_ = (bitField0_ & ~0x00000080);
         }
         result.sendTupleToID_ = sendTupleToID_;
         if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
-          to_bitField0_ |= 0x00000100;
+          to_bitField0_ |= 0x00000040;
         }
         result.receiveFromID_ = receiveFromID_;
         result.bitField0_ = to_bitField0_;
@@ -12900,8 +12960,31 @@ public final class Command {
 
       public Builder mergeFrom(tempest.protos.Command.Bolt other) {
         if (other == tempest.protos.Command.Bolt.getDefaultInstance()) return this;
-        if (other.hasSendTupleTo()) {
-          mergeSendTupleTo(other.getSendTupleTo());
+        if (sendTupleToBuilder_ == null) {
+          if (!other.sendTupleTo_.isEmpty()) {
+            if (sendTupleTo_.isEmpty()) {
+              sendTupleTo_ = other.sendTupleTo_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureSendTupleToIsMutable();
+              sendTupleTo_.addAll(other.sendTupleTo_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.sendTupleTo_.isEmpty()) {
+            if (sendTupleToBuilder_.isEmpty()) {
+              sendTupleToBuilder_.dispose();
+              sendTupleToBuilder_ = null;
+              sendTupleTo_ = other.sendTupleTo_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              sendTupleToBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getSendTupleToFieldBuilder() : null;
+            } else {
+              sendTupleToBuilder_.addAllMessages(other.sendTupleTo_);
+            }
+          }
         }
         if (other.hasReceiveFrom()) {
           mergeReceiveFrom(other.getReceiveFrom());
@@ -12925,8 +13008,15 @@ public final class Command {
         if (other.hasParallelism()) {
           setParallelism(other.getParallelism());
         }
-        if (other.hasSendTupleToID()) {
-          setSendTupleToID(other.getSendTupleToID());
+        if (!other.sendTupleToID_.isEmpty()) {
+          if (sendTupleToID_.isEmpty()) {
+            sendTupleToID_ = other.sendTupleToID_;
+            bitField0_ = (bitField0_ & ~0x00000080);
+          } else {
+            ensureSendTupleToIDIsMutable();
+            sendTupleToID_.addAll(other.sendTupleToID_);
+          }
+          onChanged();
         }
         if (other.hasReceiveFromID()) {
           setReceiveFromID(other.getReceiveFromID());
@@ -12958,115 +13048,239 @@ public final class Command {
       }
       private int bitField0_;
 
-      private tempest.protos.Membership.Member sendTupleTo_ = tempest.protos.Membership.Member.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> sendTupleToBuilder_;
-      /**
-       * <code>optional .Member sendTupleTo = 1;</code>
-       */
-      public boolean hasSendTupleTo() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+      private java.util.List<tempest.protos.Membership.Member> sendTupleTo_ =
+        java.util.Collections.emptyList();
+      private void ensureSendTupleToIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          sendTupleTo_ = new java.util.ArrayList<tempest.protos.Membership.Member>(sendTupleTo_);
+          bitField0_ |= 0x00000001;
+         }
       }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> sendTupleToBuilder_;
+
       /**
-       * <code>optional .Member sendTupleTo = 1;</code>
+       * <code>repeated .Member sendTupleTo = 1;</code>
        */
-      public tempest.protos.Membership.Member getSendTupleTo() {
+      public java.util.List<tempest.protos.Membership.Member> getSendTupleToList() {
         if (sendTupleToBuilder_ == null) {
-          return sendTupleTo_;
+          return java.util.Collections.unmodifiableList(sendTupleTo_);
         } else {
-          return sendTupleToBuilder_.getMessage();
+          return sendTupleToBuilder_.getMessageList();
         }
       }
       /**
-       * <code>optional .Member sendTupleTo = 1;</code>
+       * <code>repeated .Member sendTupleTo = 1;</code>
        */
-      public Builder setSendTupleTo(tempest.protos.Membership.Member value) {
+      public int getSendTupleToCount() {
+        if (sendTupleToBuilder_ == null) {
+          return sendTupleTo_.size();
+        } else {
+          return sendTupleToBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .Member sendTupleTo = 1;</code>
+       */
+      public tempest.protos.Membership.Member getSendTupleTo(int index) {
+        if (sendTupleToBuilder_ == null) {
+          return sendTupleTo_.get(index);
+        } else {
+          return sendTupleToBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .Member sendTupleTo = 1;</code>
+       */
+      public Builder setSendTupleTo(
+          int index, tempest.protos.Membership.Member value) {
         if (sendTupleToBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          sendTupleTo_ = value;
+          ensureSendTupleToIsMutable();
+          sendTupleTo_.set(index, value);
           onChanged();
         } else {
-          sendTupleToBuilder_.setMessage(value);
+          sendTupleToBuilder_.setMessage(index, value);
         }
-        bitField0_ |= 0x00000001;
         return this;
       }
       /**
-       * <code>optional .Member sendTupleTo = 1;</code>
+       * <code>repeated .Member sendTupleTo = 1;</code>
        */
       public Builder setSendTupleTo(
+          int index, tempest.protos.Membership.Member.Builder builderForValue) {
+        if (sendTupleToBuilder_ == null) {
+          ensureSendTupleToIsMutable();
+          sendTupleTo_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          sendTupleToBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTupleTo = 1;</code>
+       */
+      public Builder addSendTupleTo(tempest.protos.Membership.Member value) {
+        if (sendTupleToBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSendTupleToIsMutable();
+          sendTupleTo_.add(value);
+          onChanged();
+        } else {
+          sendTupleToBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTupleTo = 1;</code>
+       */
+      public Builder addSendTupleTo(
+          int index, tempest.protos.Membership.Member value) {
+        if (sendTupleToBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSendTupleToIsMutable();
+          sendTupleTo_.add(index, value);
+          onChanged();
+        } else {
+          sendTupleToBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTupleTo = 1;</code>
+       */
+      public Builder addSendTupleTo(
           tempest.protos.Membership.Member.Builder builderForValue) {
         if (sendTupleToBuilder_ == null) {
-          sendTupleTo_ = builderForValue.build();
+          ensureSendTupleToIsMutable();
+          sendTupleTo_.add(builderForValue.build());
           onChanged();
         } else {
-          sendTupleToBuilder_.setMessage(builderForValue.build());
+          sendTupleToBuilder_.addMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000001;
         return this;
       }
       /**
-       * <code>optional .Member sendTupleTo = 1;</code>
+       * <code>repeated .Member sendTupleTo = 1;</code>
        */
-      public Builder mergeSendTupleTo(tempest.protos.Membership.Member value) {
+      public Builder addSendTupleTo(
+          int index, tempest.protos.Membership.Member.Builder builderForValue) {
         if (sendTupleToBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              sendTupleTo_ != tempest.protos.Membership.Member.getDefaultInstance()) {
-            sendTupleTo_ =
-              tempest.protos.Membership.Member.newBuilder(sendTupleTo_).mergeFrom(value).buildPartial();
-          } else {
-            sendTupleTo_ = value;
-          }
+          ensureSendTupleToIsMutable();
+          sendTupleTo_.add(index, builderForValue.build());
           onChanged();
         } else {
-          sendTupleToBuilder_.mergeFrom(value);
+          sendTupleToBuilder_.addMessage(index, builderForValue.build());
         }
-        bitField0_ |= 0x00000001;
         return this;
       }
       /**
-       * <code>optional .Member sendTupleTo = 1;</code>
+       * <code>repeated .Member sendTupleTo = 1;</code>
+       */
+      public Builder addAllSendTupleTo(
+          java.lang.Iterable<? extends tempest.protos.Membership.Member> values) {
+        if (sendTupleToBuilder_ == null) {
+          ensureSendTupleToIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, sendTupleTo_);
+          onChanged();
+        } else {
+          sendTupleToBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Member sendTupleTo = 1;</code>
        */
       public Builder clearSendTupleTo() {
         if (sendTupleToBuilder_ == null) {
-          sendTupleTo_ = tempest.protos.Membership.Member.getDefaultInstance();
+          sendTupleTo_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
           sendTupleToBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
       /**
-       * <code>optional .Member sendTupleTo = 1;</code>
+       * <code>repeated .Member sendTupleTo = 1;</code>
        */
-      public tempest.protos.Membership.Member.Builder getSendTupleToBuilder() {
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return getSendTupleToFieldBuilder().getBuilder();
+      public Builder removeSendTupleTo(int index) {
+        if (sendTupleToBuilder_ == null) {
+          ensureSendTupleToIsMutable();
+          sendTupleTo_.remove(index);
+          onChanged();
+        } else {
+          sendTupleToBuilder_.remove(index);
+        }
+        return this;
       }
       /**
-       * <code>optional .Member sendTupleTo = 1;</code>
+       * <code>repeated .Member sendTupleTo = 1;</code>
        */
-      public tempest.protos.Membership.MemberOrBuilder getSendTupleToOrBuilder() {
-        if (sendTupleToBuilder_ != null) {
-          return sendTupleToBuilder_.getMessageOrBuilder();
-        } else {
-          return sendTupleTo_;
+      public tempest.protos.Membership.Member.Builder getSendTupleToBuilder(
+          int index) {
+        return getSendTupleToFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .Member sendTupleTo = 1;</code>
+       */
+      public tempest.protos.Membership.MemberOrBuilder getSendTupleToOrBuilder(
+          int index) {
+        if (sendTupleToBuilder_ == null) {
+          return sendTupleTo_.get(index);  } else {
+          return sendTupleToBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>optional .Member sendTupleTo = 1;</code>
+       * <code>repeated .Member sendTupleTo = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilder<
+      public java.util.List<? extends tempest.protos.Membership.MemberOrBuilder> 
+           getSendTupleToOrBuilderList() {
+        if (sendTupleToBuilder_ != null) {
+          return sendTupleToBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(sendTupleTo_);
+        }
+      }
+      /**
+       * <code>repeated .Member sendTupleTo = 1;</code>
+       */
+      public tempest.protos.Membership.Member.Builder addSendTupleToBuilder() {
+        return getSendTupleToFieldBuilder().addBuilder(
+            tempest.protos.Membership.Member.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Member sendTupleTo = 1;</code>
+       */
+      public tempest.protos.Membership.Member.Builder addSendTupleToBuilder(
+          int index) {
+        return getSendTupleToFieldBuilder().addBuilder(
+            index, tempest.protos.Membership.Member.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Member sendTupleTo = 1;</code>
+       */
+      public java.util.List<tempest.protos.Membership.Member.Builder> 
+           getSendTupleToBuilderList() {
+        return getSendTupleToFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
           tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder> 
           getSendTupleToFieldBuilder() {
         if (sendTupleToBuilder_ == null) {
-          sendTupleToBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+          sendTupleToBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               tempest.protos.Membership.Member, tempest.protos.Membership.Member.Builder, tempest.protos.Membership.MemberOrBuilder>(
-                  getSendTupleTo(),
+                  sendTupleTo_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
           sendTupleTo_ = null;
@@ -13441,34 +13655,68 @@ public final class Command {
         return this;
       }
 
-      private int sendTupleToID_ ;
-      /**
-       * <code>optional int32 sendTupleToID = 8;</code>
-       */
-      public boolean hasSendTupleToID() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
+      private java.util.List<java.lang.Integer> sendTupleToID_ = java.util.Collections.emptyList();
+      private void ensureSendTupleToIDIsMutable() {
+        if (!((bitField0_ & 0x00000080) == 0x00000080)) {
+          sendTupleToID_ = new java.util.ArrayList<java.lang.Integer>(sendTupleToID_);
+          bitField0_ |= 0x00000080;
+         }
       }
       /**
-       * <code>optional int32 sendTupleToID = 8;</code>
+       * <code>repeated int32 sendTupleToID = 8;</code>
        */
-      public int getSendTupleToID() {
-        return sendTupleToID_;
+      public java.util.List<java.lang.Integer>
+          getSendTupleToIDList() {
+        return java.util.Collections.unmodifiableList(sendTupleToID_);
       }
       /**
-       * <code>optional int32 sendTupleToID = 8;</code>
+       * <code>repeated int32 sendTupleToID = 8;</code>
        */
-      public Builder setSendTupleToID(int value) {
-        bitField0_ |= 0x00000080;
-        sendTupleToID_ = value;
+      public int getSendTupleToIDCount() {
+        return sendTupleToID_.size();
+      }
+      /**
+       * <code>repeated int32 sendTupleToID = 8;</code>
+       */
+      public int getSendTupleToID(int index) {
+        return sendTupleToID_.get(index);
+      }
+      /**
+       * <code>repeated int32 sendTupleToID = 8;</code>
+       */
+      public Builder setSendTupleToID(
+          int index, int value) {
+        ensureSendTupleToIDIsMutable();
+        sendTupleToID_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 sendTupleToID = 8;</code>
+       * <code>repeated int32 sendTupleToID = 8;</code>
+       */
+      public Builder addSendTupleToID(int value) {
+        ensureSendTupleToIDIsMutable();
+        sendTupleToID_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 sendTupleToID = 8;</code>
+       */
+      public Builder addAllSendTupleToID(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureSendTupleToIDIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, sendTupleToID_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 sendTupleToID = 8;</code>
        */
       public Builder clearSendTupleToID() {
+        sendTupleToID_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000080);
-        sendTupleToID_ = 0;
         onChanged();
         return this;
       }
@@ -16117,12 +16365,12 @@ public final class Command {
       "(\t\022\020\n\010response\030\002 \001(\t\"0\n\013DeleteChunk\022\017\n\007r" +
       "equest\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\")\n\004List\022\017" +
       "\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"\021\n\003Ack" +
-      "\022\n\n\002id\030\001 \001(\005\"\223\002\n\004Bolt\022\034\n\013sendTupleTo\030\001 \001" +
+      "\022\n\n\002id\030\001 \001(\005\"\223\002\n\004Bolt\022\034\n\013sendTupleTo\030\001 \003" +
       "(\0132\007.Member\022\034\n\013receiveFrom\030\002 \001(\0132\007.Membe" +
       "r\022\017\n\007request\030\003 \001(\t\022\020\n\010response\030\004 \001(\t\022\n\n\002" +
       "id\030\005 \001(\005\022 \n\010boltType\030\006 \001(\0162\016.Bolt.BoltTy" +
       "pe\022\023\n\013parallelism\030\007 \001(\005\022\025\n\rsendTupleToID" +
-      "\030\010 \001(\005\022\025\n\rreceiveFromID\030\t \001(\005\";\n\010BoltTyp" +
+      "\030\010 \003(\005\022\025\n\rreceiveFromID\030\t \001(\005\";\n\010BoltTyp" +
       "e\022\016\n\nFILTERBOLT\020\001\022\021\n\rTRANSFORMBOLT\020\002\022\014\n\010",
       "JOINBOLT\020\003\"\301\001\n\005Spout\022#\n\tspoutType\030\006 \002(\0162" +
       "\020.Spout.SpoutType\022\027\n\006sendTo\030\001 \003(\0132\007.Memb" +

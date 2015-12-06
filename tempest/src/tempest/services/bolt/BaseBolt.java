@@ -17,8 +17,8 @@ public class BaseBolt {
 
     LinkedBlockingQueue queue;
     private static ExecutorService pool = Executors.newFixedThreadPool(7);
-    //    private List<OutputCollector> outputCollectorList;
-    private OutputCollector outputCollector;
+        private List<OutputCollector> outputCollectorList;
+   // private OutputCollector outputCollector;
 
     private final int nThreads;
 
@@ -26,12 +26,12 @@ public class BaseBolt {
         return type;
     }
 
-    //    public BaseBolt(LinkedBlockingQueue queue, List<OutputCollector> outputCollectorList, Command.Bolt.BoltType type, int nThreads) {
-    public BaseBolt(LinkedBlockingQueue queue, OutputCollector outputCollector, Command.Bolt.BoltType type, int nThreads) {
+        public BaseBolt(LinkedBlockingQueue queue, List<OutputCollector> outputCollectorList, Command.Bolt.BoltType type, int nThreads) {
+    //public BaseBolt(LinkedBlockingQueue queue, OutputCollector outputCollector, Command.Bolt.BoltType type, int nThreads) {
 
         this.queue = queue;
-        //this.outputCollectorList = outputCollectorList;
-        this.outputCollector = outputCollector;
+        this.outputCollectorList = outputCollectorList;
+        //this.outputCollector = outputCollector;
 
         this.type = type;
         this.nThreads = nThreads;
@@ -41,7 +41,7 @@ public class BaseBolt {
         Collection<Callable<Tuple>> callable = new ArrayList<Callable<Tuple>>();
         if (type == Command.Bolt.BoltType.FILTERBOLT) {
             for (int i = 0; i < nThreads; i++) {
-                callable.add(new FilterBolt(queue, outputCollector));
+                callable.add(new FilterBolt(queue, outputCollectorList));
             }
         } else if (type == Command.Bolt.BoltType.JOINBOLT) {
             for (int i = 0; i < nThreads; i++) {

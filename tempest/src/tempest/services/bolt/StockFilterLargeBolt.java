@@ -32,11 +32,9 @@ public class StockFilterLargeBolt
                     for (int i = 0; i < outputCollectorList.size(); i++) {
                         outputCollectorList.get(i).add(tuple);
                     }
-//                		outputCollector.add(tuple);
-                    System.out.println("queue size after stock filter large bolt" + outputCollectorList.get(0).getQueue().size());
-
                 }
             }
+            System.out.println("queue size after stock filter large bolt" + outputCollectorList.get(0).getQueue().size());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 public class StockFilterGainBolt
         implements Callable {
     LinkedBlockingQueue<Tuple> queue;
-//    OutputCollector outputCollector;
     private List<OutputCollector> outputCollectorList;
 
     public StockFilterGainBolt(LinkedBlockingQueue<Tuple> queue,  List<OutputCollector> outputCollectorList) {

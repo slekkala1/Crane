@@ -210,8 +210,8 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
 //                List<Membership.Member> memberList, Set<Tuple> tupleSet, Set<Integer> ackedIds,
 //                MembershipService membershipService) {
 
-        TupleService tupleService = new TupleService(logger,memberList,spoutService.getTupleSet(),ids,membershipService,idMemberMap,topology);
-        tupleService.start();
+     //   TupleService tupleService = new TupleService(logger,memberList,spoutService.getTupleSet(),ids,membershipService,idMemberMap,topology);
+      //  tupleService.start();
 
     }
 

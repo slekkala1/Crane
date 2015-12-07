@@ -46,8 +46,6 @@ public class StockDataSpout implements BaseSpout {
 
                     List<String> lines = new ArrayList<>();
 
-                    lines.add("DATE, TIME, OPEN, HIGH, LOW, CLOSE, VOLUME, NAME");
-
                     if (myFile.exists()) {
                         Files.walk(Paths.get("SDFSFiles/quant")).forEach(filePath -> {
                             if (Files.isRegularFile(filePath)) {

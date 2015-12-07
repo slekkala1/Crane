@@ -63,6 +63,10 @@ public class SpoutService {
         	System.out.println("sending tuples from twitterspout");
         	baseSpout.retrieveTuples().run();
             tupleSet = baseSpout.getTupleSet();
+        } else if (this.spout.getSpoutType().toString().equals("BASEBALLSPOUT")) {
+        	baseSpout = new BaseballDataSpout(queue);
+        	System.out.println("sending tuples from baseball spout");
+        	baseSpout.retrieveTuples().run();
         }
         while (!queue.isEmpty()) {
             List<Tuple> tuples = new ArrayList<>();

@@ -10,7 +10,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -21,10 +24,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class BaseballDataSpout implements BaseSpout {
 
 	LinkedBlockingQueue<Tuple> queue;
+	Set<Tuple> tupleSet = Collections.synchronizedSet(new HashSet<Tuple>());
 
 	public BaseballDataSpout(LinkedBlockingQueue<Tuple> queue) {
 		this.queue = queue;
 	}
+	
+	public Set<Tuple> getTupleSet() {
+        return tupleSet;
+    }
 
 	public static final tempest.protos.Command.Spout.SpoutType type = Command.Spout.SpoutType.BASEBALLSPOUT;
 
@@ -40,7 +48,7 @@ public class BaseballDataSpout implements BaseSpout {
 				List<String> lines = new ArrayList<>();
 				
 				try {
-					BufferedReader reader = new BufferedReader(new FileReader("baseballdata/Batting.csv"));
+					BufferedReader reader = new BufferedReader(new FileReader("SDFSFiles/baseballdata/Batting.csv"));
 					String line = null;
 					int count = 1;
 					try {
@@ -49,6 +57,7 @@ public class BaseballDataSpout implements BaseSpout {
 							List<String> s = Arrays.asList(line.split(","));
 							Tuple t = new Tuple(s);
 							queue.put(t);
+							tupleSet.add(t);
 							lines.add(line);
 							count++;
 						}

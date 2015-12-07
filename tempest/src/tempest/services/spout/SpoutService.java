@@ -55,18 +55,26 @@ public class SpoutService {
         if (this.spout.getSpoutType().toString().equals("STOCKDATASPOUT")) {
         	baseSpout = new StockDataSpout(queue);
             System.out.println("sending tuples from stockdataspout");
-            baseSpout.retrieveTuples().run();
+            Thread thread = new Thread(baseSpout.retrieveTuples());
+            thread.start();
             tupleSet = baseSpout.getTupleSet();
-            //TupleService tupleService = new TupleService(qu);
         } else if (this.spout.getSpoutType().toString().equals("TWITTERSPOUT")) {
         	baseSpout = new TwitterStreamSpout(queue);
         	System.out.println("sending tuples from twitterspout");
-        	baseSpout.retrieveTuples().run();
+        	Thread thread = new Thread(baseSpout.retrieveTuples());
+        	thread.start();
             tupleSet = baseSpout.getTupleSet();
         } else if (this.spout.getSpoutType().toString().equals("BASEBALLSPOUT")) {
         	baseSpout = new BaseballDataSpout(queue);
         	System.out.println("sending tuples from baseball spout");
-        	baseSpout.retrieveTuples().run();
+        	Thread thread = new Thread(baseSpout.retrieveTuples());
+        	thread.start();
+        	tupleSet = baseSpout.getTupleSet();
+        }
+        try {
+        	Thread.sleep(2000);
+        } catch(InterruptedException e) {
+        	e.printStackTrace();
         }
         while (!queue.isEmpty()) {
             List<Tuple> tuples = new ArrayList<>();

@@ -44,8 +44,9 @@ public class StockDataSpout implements BaseSpout {
                 File myFile = new File("SDFSFiles/quant");
                 try {
 
-                    List<String> lines = new ArrayList<>();
+//                    List<String> lines = new ArrayList<>();
 
+                    final Integer[] totalTuples = {0};
                     if (myFile.exists()) {
                         Files.walk(Paths.get("SDFSFiles/quant")).forEach(filePath -> {
                             if (Files.isRegularFile(filePath)) {
@@ -63,9 +64,10 @@ public class StockDataSpout implements BaseSpout {
                                             List<String> s = Arrays.asList(line.split(","));
                                             Tuple t = new Tuple(s);
                                             queue.put(t);
-                                            tupleSet.add(t);
-                                            lines.add(line);
+                                            //tupleSet.add(t);
+                                            //lines.add(line);
                                             count++;
+                                            totalTuples[0] += 1;
                                         }
                                     } catch (IOException | InterruptedException e) {
                                         e.printStackTrace();
@@ -77,7 +79,7 @@ public class StockDataSpout implements BaseSpout {
                         });
 
                         //System.out.println(lines.get(0));
-                        System.out.println(lines.size());
+                        System.out.println("total Tuples" + totalTuples[0]);
                         //System.out.println(lines.get(lines.size() - 1));
                     }
                 } catch (IOException e) {

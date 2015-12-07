@@ -52,33 +52,33 @@ public class SpoutService {
 
     public void start(Membership.Member member) {
         System.out.println("Spout type" + this.spout.getSpoutType().toString());
-        if (this.spout.getSpoutType().toString().equals("STOCKDATASPOUT")) {
-        	baseSpout = new StockDataSpout(queue);
-            System.out.println("sending tuples from stockdataspout");
-            Thread thread = new Thread(baseSpout.retrieveTuples());
-            thread.start();
-            tupleSet = baseSpout.getTupleSet();
-        } else if (this.spout.getSpoutType().toString().equals("TWITTERSPOUT")) {
-        	baseSpout = new TwitterStreamSpout(queue);
-        	System.out.println("sending tuples from twitterspout");
-        	Thread thread = new Thread(baseSpout.retrieveTuples());
-        	thread.start();
-            tupleSet = baseSpout.getTupleSet();
-        } else if (this.spout.getSpoutType().toString().equals("BASEBALLSPOUT")) {
-        	baseSpout = new BaseballDataSpout(queue);
-        	System.out.println("sending tuples from baseball spout");
-        	Thread thread = new Thread(baseSpout.retrieveTuples());
-        	thread.start();
-        	tupleSet = baseSpout.getTupleSet();
-        }
         try {
-        	Thread.sleep(2000);
-        } catch(InterruptedException e) {
-        	e.printStackTrace();
+            if (this.spout.getSpoutType().toString().equals("STOCKDATASPOUT")) {
+                baseSpout = new StockDataSpout(queue);
+                System.out.println("sending tuples from stockdataspout");
+                Thread thread = new Thread(baseSpout.retrieveTuples());
+                thread.start();
+                thread.join();
+            } else if (this.spout.getSpoutType().toString().equals("TWITTERSPOUT")) {
+                baseSpout = new TwitterStreamSpout(queue);
+                System.out.println("sending tuples from twitterspout");
+                Thread thread = new Thread(baseSpout.retrieveTuples());
+                thread.start();
+                thread.join();
+            } else if (this.spout.getSpoutType().toString().equals("BASEBALLSPOUT")) {
+                baseSpout = new BaseballDataSpout(queue);
+                System.out.println("sending tuples from baseball spout");
+                Thread thread = new Thread(baseSpout.retrieveTuples());
+                thread.start();
+                thread.join();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
         while (!queue.isEmpty()) {
             List<Tuple> tuples = new ArrayList<>();
-            queue.drainTo(tuples, 10000);
+            queue.drainTo(tuples, 1000000);
             SpoutThread spoutThread = new SpoutThread(tuples, member);
 
             spoutThread.run();
@@ -99,12 +99,6 @@ public class SpoutService {
             Response<String> response = null;
             boolean run = true;
             while (run) {
-                //String introducer = "localhost:4444";
-//                Membership.Member member = Membership.Member.newBuilder()
-//                        .setHost(introducer.split(":")[0])
-//                        .setPort(Integer.parseInt(introducer.split(":")[1]))
-//                        .build();
-
                 response = spoutTo(member);
                 if (response.getResponse().equals("ok")) run = false;
             }
@@ -112,14 +106,6 @@ public class SpoutService {
 
         public Response spoutTo(Membership.Member member) {
             Bolt bolt = new Bolt();
-            //String introducer = "localhost:4445";
-            //Membership.Member member1 = Membership.Member.newBuilder()
-              //      .setHost(introducer.split(":")[0])
-                //    .setPort(Integer.parseInt(introducer.split(":")[1]))
-                  //  .build();
-            //bolt.setSendTupleTo(((Bolt) command).getSendTupleTo());
-            //bolt.setBoltType(((Bolt) command).getBoltType());
-            //bolt.setSendTupleTo(member1);
             System.out.println("sending tuples in spoutservice spoutTo method");
             bolt.setTuplesList(tuples);
             return createResponseExecutor(member, bolt).executeUsingObjectOutputStream();

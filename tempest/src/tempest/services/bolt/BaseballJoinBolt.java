@@ -33,7 +33,7 @@ public class BaseballJoinBolt
     
     private void generateNameMap() {
     	try {
-			BufferedReader reader = new BufferedReader(new FileReader("baseballdata/Master.csv"));
+			BufferedReader reader = new BufferedReader(new FileReader("SDFSFiles/baseballdata/Master.csv"));
 			String line = null;
 			try {
 				while ((line = reader.readLine()) != null) {

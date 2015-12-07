@@ -23,56 +23,59 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class BaseballDataSpout implements BaseSpout {
 
-	LinkedBlockingQueue<Tuple> queue;
-	Set<Tuple> tupleSet = Collections.synchronizedSet(new HashSet<Tuple>());
+    LinkedBlockingQueue<Tuple> queue;
+    Set<Tuple> tupleSet = Collections.synchronizedSet(new HashSet<Tuple>());
 
-	public BaseballDataSpout(LinkedBlockingQueue<Tuple> queue) {
-		this.queue = queue;
-	}
-	
-	public Set<Tuple> getTupleSet() {
+    public BaseballDataSpout(LinkedBlockingQueue<Tuple> queue) {
+        this.queue = queue;
+    }
+
+    public Set<Tuple> getTupleSet() {
         return tupleSet;
     }
 
-	public static final tempest.protos.Command.Spout.SpoutType type = Command.Spout.SpoutType.BASEBALLSPOUT;
+    public static final tempest.protos.Command.Spout.SpoutType type = Command.Spout.SpoutType.BASEBALLSPOUT;
 
-	public tempest.protos.Command.Spout.SpoutType getType() {
-		return type;
-	}
+    public tempest.protos.Command.Spout.SpoutType getType() {
+        return type;
+    }
 
-	public Runnable retrieveTuples() {
-		return new Runnable() {
-			@Override
-			public void run() {
+    public Runnable retrieveTuples() {
+        return new Runnable() {
+            @Override
+            public void run() {
 
-				List<String> lines = new ArrayList<>();
-				
-				try {
-					BufferedReader reader = new BufferedReader(new FileReader("SDFSFiles/baseballdata/Batting.csv"));
-					String line = null;
-					int count = 1;
-					try {
-						while ((line = reader.readLine()) != null) {
-							line = count + "," + line;
-							List<String> s = Arrays.asList(line.split(","));
-							Tuple t = new Tuple(s);
-							queue.put(t);
-							tupleSet.add(t);
-							lines.add(line);
-							count++;
-						}
-					} catch (IOException | InterruptedException e) {
-						e.printStackTrace();
-					}
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
+                //List<String> lines = new ArrayList<>();
+                final Integer[] totalTuples = {0};
 
-				// System.out.println(lines.get(0));
-				System.out.println(lines.size());
-				// System.out.println(lines.get(lines.size() - 1));
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader("SDFSFiles/baseballdata/Batting.csv"));
+                    String line = null;
+                    int count = 1;
+                    try {
+                        while ((line = reader.readLine()) != null) {
+                            line = count + "," + line;
+                            List<String> s = Arrays.asList(line.split(","));
+                            Tuple t = new Tuple(s);
+                            queue.put(t);
+                            //tupleSet.add(t);
+                            //lines.add(line);
+                            totalTuples[0] += 1;
 
-			}
-		};
-	}
+                            count++;
+                        }
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("total Tuples " + totalTuples[0]);
+
+//				System.out.println(lines.size());
+
+            }
+        };
+    }
 }

@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 public class BaseballFilterHRBolt
         implements Callable {
     LinkedBlockingQueue<Tuple> queue;
-//    OutputCollector outputCollector;
     private List<OutputCollector> outputCollectorList;
 
     public BaseballFilterHRBolt(LinkedBlockingQueue<Tuple> queue,  List<OutputCollector> outputCollectorList) {
@@ -27,7 +26,6 @@ public class BaseballFilterHRBolt
         try {
                 while((tuple = queue.poll(1000, TimeUnit.MILLISECONDS))!=null) {
                 	List<String> list = tuple.getStringList();
-                	System.out.println(list.toString());
                 	int hr = Integer.parseInt(list.get(9));
                 	if (hr >= 10) {
                         for (int i = 0; i < outputCollectorList.size(); i++) {

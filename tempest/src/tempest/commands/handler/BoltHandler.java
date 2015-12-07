@@ -61,7 +61,6 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
         Bolt bolt = new Bolt();
         if (message.getBolt().getSendTupleToList() != null) {
             bolt.setSendTupleTo(message.getBolt().getSendTupleToList());
-            //bolt.setSendTupleTo(message.getBolt().getSendTupleTo());
         }
         if (message.hasBolt() && message.getBolt().hasResponse())
             bolt.setResponse(message.getBolt().getResponse());
@@ -111,11 +110,8 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
                     outputThread.join();
                 }
             } else {
-                Tuple tuple;
-                while ((tuple = outputCollectorList.get(0).getQueue().poll(1000, TimeUnit.MILLISECONDS)) != null) {
-                    //ack(Integer.parseInt(tuple.getStringList().get(0)));
-                    System.out.println(String.join(",", tuple.getStringList()));
-                }
+            	Thread t = new Thread(printTuples(outputCollectorList.get(0)));
+            	t.start();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -126,6 +122,22 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
         }
 
         return "ok";
+    }
+    
+    public Runnable printTuples(OutputCollector outputCollector) {
+    	return new Runnable() {
+    		@Override
+    		public void run() {
+    			Tuple tuple;
+    			try {
+    				while ((tuple = outputCollector.getQueue().poll(1000, TimeUnit.MILLISECONDS)) != null) {
+    					System.out.println(String.join(",", tuple.getStringList()));
+    				}
+    			} catch (InterruptedException e) {
+    				e.printStackTrace();
+    			}
+    		}
+    	};
     }
 
     public Runnable readTuples(ResponseCommand<String, String> command) {

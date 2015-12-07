@@ -58,6 +58,10 @@ public class BaseBolt {
             for (int i = 0; i < nThreads; i++) {
                 callable.add(new BaseballJoinBolt(queue, outputCollectorList));
             }
+        } else if (type == Command.Bolt.BoltType.STOCKTRANSFORMBOLT) {
+            for (int i = 0; i < nThreads; i++) {
+                callable.add(new StockTransformBolt(queue, outputCollectorList));
+            }
         } 
         try {
             pool.invokeAll(callable);

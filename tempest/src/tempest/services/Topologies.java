@@ -29,7 +29,7 @@ public class Topologies {
         bolt1.setSendTupleToID(sendTo);
 
         tempest.commands.command.Bolt bolt2 = new tempest.commands.command.Bolt();
-        bolt2.setBoltType(Command.Bolt.BoltType.STOCKFILTERLARGEBOLT);
+        bolt2.setBoltType(Command.Bolt.BoltType.STOCKTRANSFORMBOLT);
         bolt2.setId(3);
         bolt2.setReceiveFromID(2);
         bolt2.setParallelism(7);

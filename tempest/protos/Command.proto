@@ -121,6 +121,7 @@ message Bolt {
         TWITTERSHORTENBOLT = 7;
         BASEBALLJOINBOLT = 8;
         BASEBALLFILTERHRBOLT = 9;
+        STOCKTRANSFORMBOLT = 10;
     }
 
     repeated Member sendTupleTo = 1;

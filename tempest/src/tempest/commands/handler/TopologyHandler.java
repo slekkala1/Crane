@@ -156,6 +156,7 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
         System.out.println("set all members at Spout for Spout and Bolts");
 
         memberList = new ArrayList<>();
+        List<String> memberNames = new ArrayList<String>();
         List<Membership.Member> spoutTo = new ArrayList<>();
         idMemberMap = new HashMap<>();
 
@@ -165,9 +166,10 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
         for (int i = 0; i < topology.getBoltList().size(); i++) {
 
             Membership.Member randomMember = getRandomMachineNoLocal();
-            while (memberList.contains(randomMember)) {
+            while (memberNames.contains(randomMember.getHost())) {
                 randomMember = getRandomMachineNoLocal();
             }
+            memberNames.add(randomMember.getHost());
             memberList.add(randomMember);
             idMemberMap.put(topology.getBoltList().get(i).getId(), randomMember);
             if (topology.getBoltList().get(i).getReceiveFromID() == 1) {
@@ -180,7 +182,7 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
             List<Integer> sendToId = new ArrayList<>();
 
             for (int j = 0; j < topology.getBoltList().get(i).getSendTupleToID().size(); j++) {
-                sendToId.add(topology.getBoltList().get(i).getSendTupleToID().get(i));
+                sendToId.add(topology.getBoltList().get(i).getSendTupleToID().get(j));
             }
             int boltId = topology.getBoltList().get(i).getId();
 

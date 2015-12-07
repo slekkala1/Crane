@@ -50,7 +50,15 @@ public class BaseBolt {
             for (int i = 0; i < nThreads; i++) {
                 callable.add(new TwitterShortenBolt(queue, outputCollectorList));
             }
-        }
+        } else if (type == Command.Bolt.BoltType.BASEBALLFILTERHRBOLT) {
+            for (int i = 0; i < nThreads; i++) {
+                callable.add(new BaseballFilterHRBolt(queue, outputCollectorList));
+            }
+        } else if (type == Command.Bolt.BoltType.BASEBALLJOINBOLT) {
+            for (int i = 0; i < nThreads; i++) {
+                callable.add(new BaseballJoinBolt(queue, outputCollectorList));
+            }
+        } 
         try {
             pool.invokeAll(callable);
         } catch (InterruptedException e) {

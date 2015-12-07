@@ -18,22 +18,23 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by swapnalekkala on 12/2/15.
  */
-public class BaseballJoinBolt
-        implements Callable {
-    LinkedBlockingQueue<Tuple> queue;
-    OutputCollector outputCollector;
-    Map<String, String> nameMap;
+public class BaseballJoinBolt implements Callable {
+	LinkedBlockingQueue<Tuple> queue;
+	private List<OutputCollector> outputCollectorList;
+	Map<String, String> nameMap;
 
-    public BaseballJoinBolt(LinkedBlockingQueue queue, OutputCollector outputCollector) {
-        this.queue = queue;
-        this.outputCollector = outputCollector;
-        this.nameMap = new HashMap<String, String>();
-        generateNameMap();
-    }
-    
-    private void generateNameMap() {
-    	try {
-			BufferedReader reader = new BufferedReader(new FileReader("SDFSFiles/baseballdata/Master.csv"));
+	public BaseballJoinBolt(LinkedBlockingQueue queue,
+			List<OutputCollector> outputCollectorList) {
+		this.queue = queue;
+		this.outputCollectorList = outputCollectorList;
+		this.nameMap = new HashMap<String, String>();
+		generateNameMap();
+	}
+
+	private void generateNameMap() {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(
+					"SDFSFiles/baseballdata/Master.csv"));
 			String line = null;
 			try {
 				while ((line = reader.readLine()) != null) {
@@ -49,27 +50,27 @@ public class BaseballJoinBolt
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
-    public Tuple call() {
-        Tuple tuple = null;
-        try {
-            if (!outputCollector.member.getHost().equals("")) {
-                while ((tuple = queue.poll(1000, TimeUnit.MILLISECONDS)) != null) {
-                	List<String> list = tuple.getStringList();
-                	List<String> shortened = new ArrayList<String>();
-                	String name = nameMap.get(list.get(0));
-                	if (name != null) {
-                		shortened.add(name);
-                		shortened.add(list.get(0));
-                		tuple.setStringList(shortened);
-                		outputCollector.add(tuple);
-                	}
-                }
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return tuple;
-    }
+	public Tuple call() {
+		Tuple tuple = null;
+		try {
+			while ((tuple = queue.poll(1000, TimeUnit.MILLISECONDS)) != null) {
+				List<String> list = tuple.getStringList();
+				List<String> shortened = new ArrayList<String>();
+				String name = nameMap.get(list.get(0));
+				if (name != null) {
+					shortened.add(name);
+					shortened.add(list.get(0));
+					tuple.setStringList(shortened);
+					for (int i = 0; i < outputCollectorList.size(); i++) {
+						outputCollectorList.get(i).add(tuple);
+					}
+				}
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return tuple;
+	}
 }

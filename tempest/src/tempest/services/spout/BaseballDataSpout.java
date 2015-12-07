@@ -8,9 +8,7 @@ import tempest.services.bolt.OutputCollector;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -21,9 +19,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class BaseballDataSpout implements BaseSpout {
 
 	LinkedBlockingQueue<Tuple> queue;
+	Set<Tuple> tupleSet = Collections.synchronizedSet(new HashSet<Tuple>());
 
 	public BaseballDataSpout(LinkedBlockingQueue<Tuple> queue) {
 		this.queue = queue;
+	}
+
+	public Set<Tuple> getTupleSet() {
+		return tupleSet;
 	}
 
 	public static final tempest.protos.Command.Spout.SpoutType type = Command.Spout.SpoutType.BASEBALLSPOUT;

@@ -22,19 +22,15 @@ public class TupleService implements Runnable {
     Set<Tuple> tupleSet = Collections.synchronizedSet(new HashSet<Tuple>());
     List<Membership.Member> memberList;
     private final Logger logger;
-    //private final CommandExecutor[] commandHandlers;
-    //private final ResponseCommandExecutor[] responseCommandHandlers;
     private final ScheduledExecutorService scheduler;
     private MembershipService membershipService;
     Map<Integer, Membership.Member> idMemberMap;
     Topology topology;
 
     public TupleService(Logger logger, List<Membership.Member> memberList, Set<Tuple> tupleSet, Set<Integer> ackedIds,
-                        MembershipService membershipService, Map<Integer, Membership.Member> idMemberMap,Topology topology) {
+                        MembershipService membershipService, Map<Integer, Membership.Member> idMemberMap, Topology topology) {
         this.logger = logger;
         scheduler = Executors.newScheduledThreadPool(1);
-        //this.commandHandlers = commandHandlers;
-        //this.responseCommandHandlers = responseCommandHandlers;
         this.memberList = memberList;
         this.tupleSet = tupleSet;
         this.ids = ackedIds;
@@ -58,39 +54,35 @@ public class TupleService implements Runnable {
         Integer i = 0;
 
         for (Integer j : idMemberMap.keySet()) {
-            if(i==0) i=j;
-            if(i<j) {
+            if (i == 0) i = j;
+            if (i < j) {
                 i = j;
             }
         }
-
         memberwithMaxID = idMemberMap.get(i);
 
-        System.out.println("member with maxID " + memberwithMaxID + " " + i);
+        System.out.println("member with maxID " + memberwithMaxID.getHost() + " " + i);
+        List<Boolean> iDFailed = new ArrayList<Boolean>();
+        List<Membership.Member> memberList1 = this.membershipService.getMembershipListNoLocal().getMemberList();
+        System.out.println("ids Failed" + iDFailed);
 
-        System.out.println("membershiplist" + this.membershipService.getMembershipListNoLocal().getMemberList());
-        if(!this.membershipService.getMembershipListNoLocal().getMemberList().contains(memberwithMaxID)) {
-            System.out.println("Machine with maxId failed");
-            new TopologyHandler().assignMachines(topology);
-            //replay application
-        }
+        int k = 0;
+        for (Membership.Member member1 : memberList) {
 
-        for (Membership.Member member : memberList) {
-            if(!this.membershipService.getMembershipListNoLocal().getMemberList().contains(member)) {
-                new TopologyHandler().assignMachines(topology);
-
-                //replay application
+            for (Membership.Member member : memberList1) {
+                if (member.getHost().equals(member1.getHost())) {
+                    iDFailed.add(k, false);
+                    break;
+                }
             }
-
+            k++;
         }
-
-
-        System.out.println("Size of acked Ids" + ids.size());
-
+        System.out.println("ids Failed" + iDFailed);
+        if (iDFailed.size()!=memberList.size()) {
+            //replay application
+            System.out.println("Machine(s) failed");
+            new TopologyHandler(membershipService, logger, ids).assignMachines(topology);
+            stop();
+        }
     }
-
-
-    //redo logic in Topology handler for the tuple list that is not acknowledged
-
-
 }

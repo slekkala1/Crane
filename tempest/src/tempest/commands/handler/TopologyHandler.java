@@ -47,7 +47,6 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
     public TopologyHandler() {
     }
 
-
     public TopologyHandler(MembershipService membershipService, Logger logger, Set<Integer> ackedIds) {
         this.membershipService = membershipService;
         this.spoutService = new SpoutService(membershipService, logger);
@@ -161,6 +160,8 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
         idMemberMap = new HashMap<>();
 
         Topology topology = (Topology) command;
+        System.out.println("Spout type " + topology.getSpout().getSpoutType().toString());
+
         for (int i = 0; i < topology.getBoltList().size(); i++) {
 
             Membership.Member randomMember = getRandomMachineNoLocal();
@@ -210,9 +211,8 @@ public class TopologyHandler implements ResponseCommandExecutor<Topology, String
 //                List<Membership.Member> memberList, Set<Tuple> tupleSet, Set<Integer> ackedIds,
 //                MembershipService membershipService) {
 
-     //   TupleService tupleService = new TupleService(logger,memberList,spoutService.getTupleSet(),ids,membershipService,idMemberMap,topology);
-      //  tupleService.start();
-
+        TupleService tupleService = new TupleService(logger,memberList,spoutService.getTupleSet(),ids,membershipService,idMemberMap,topology);
+        tupleService.start();
     }
 
     private <TRequest, TResponse> TcpClientResponseCommandExecutor<ResponseCommand<TRequest, TResponse>, TRequest, TResponse>

@@ -12,9 +12,9 @@ import tempest.networking.UdpClientResponseCommandExecutor;
 import tempest.protos.Membership;
 import tempest.services.MembershipService;
 import tempest.services.Tuple;
+import tempest.services.TupleService;
 
-import java.util.Random;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -25,16 +25,21 @@ public class SpoutService {
     private static ExecutorService pool = Executors.newFixedThreadPool(7);
     LinkedBlockingQueue<Tuple> queue = new LinkedBlockingQueue();
     BaseSpout baseSpout;
-
     private final MembershipService membershipService;
     private final Logger logger;
     private ResponseCommandExecutor[] responseCommandHandlers;
     private Spout spout;
+    Set<Tuple> tupleSet = Collections.synchronizedSet(new HashSet<Tuple>());
+
 
     public SpoutService(MembershipService membershipService, Logger logger) {
         this.membershipService = membershipService;
         this.logger = logger;
         this.responseCommandHandlers = new ResponseCommandExecutor[]{new TopologyHandler(), new BoltHandler()};
+    }
+
+    public Set<Tuple> getTupleSet() {
+        return tupleSet;
     }
 
     public Spout getSpout() {
@@ -45,25 +50,19 @@ public class SpoutService {
         this.spout = spout;
     }
 
-    public LinkedBlockingQueue<Tuple> tuplesFromFile(LinkedBlockingQueue<Tuple> tupleQueue) {
-        if (this.spout.getSpoutType().toString().equals("STOCKDATASPOUT")) {
-            //stockDataSpout.tuplesFromFile1(tupleQueue, "xyz").run();
-        } else if (this.spout.getSpoutType().equals("")) {
-
-        }
-        return tupleQueue;
-    }
-
     public void start(Membership.Member member) {
         System.out.println("Spout type" + this.spout.getSpoutType().toString());
         if (this.spout.getSpoutType().toString().equals("STOCKDATASPOUT")) {
         	baseSpout = new StockDataSpout(queue);
             System.out.println("sending tuples from stockdataspout");
             baseSpout.retrieveTuples().run();
+            tupleSet = baseSpout.getTupleSet();
+            //TupleService tupleService = new TupleService(qu);
         } else if (this.spout.getSpoutType().toString().equals("TWITTERSPOUT")) {
         	baseSpout = new TwitterStreamSpout(queue);
         	System.out.println("sending tuples from twitterspout");
         	baseSpout.retrieveTuples().run();
+            tupleSet = baseSpout.getTupleSet();
         }
         while (!queue.isEmpty()) {
             List<Tuple> tuples = new ArrayList<>();
@@ -76,12 +75,10 @@ public class SpoutService {
 
     class SpoutThread implements Runnable {
         List<Tuple> tuples = new ArrayList<>();
-//        ResponseCommand<String, String> command;
         Membership.Member member;
 
         public SpoutThread(List<Tuple> tuples, Membership.Member member) {
             this.tuples = tuples;
-//            this.command = command;
             this.member = member;
         }
 

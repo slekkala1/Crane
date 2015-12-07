@@ -80,7 +80,7 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
 
             System.out.println("Bolt parallelism" + bolt.getParallelism());
             System.out.println("Bolt sendtupleTo" + bolt.getSendTupleTo());
-            System.out.println("Bolt type" + bolt.getBoltType());
+            System.out.println("Bolt type " + bolt.getBoltType());
 
             //reading tuples from socket in thread
             Thread thread = new Thread(readTuples(bolt));
@@ -113,7 +113,7 @@ public class BoltHandler implements ResponseCommandExecutor<Bolt, String, String
             } else {
                 Tuple tuple;
                 while ((tuple = outputCollectorList.get(0).getQueue().poll(1000, TimeUnit.MILLISECONDS)) != null) {
-//                    ack(Integer.parseInt(tuple.getStringList().get(0)));
+                    //ack(Integer.parseInt(tuple.getStringList().get(0)));
                     System.out.println(String.join(",", tuple.getStringList()));
                 }
             }

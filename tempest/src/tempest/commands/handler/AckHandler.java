@@ -8,13 +8,15 @@ import tempest.protos.Command;
 
 import java.net.Socket;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by swapnalekkala on 12/5/15.
  */
 public class AckHandler implements ResponseCommandExecutor<Ack, String, String> {
 
-    List<Integer> ids;
+    Set<Integer> ids;
+
     public boolean canHandle(Command.Message.Type type) {
         return Ack.type == type;
     }
@@ -23,7 +25,7 @@ public class AckHandler implements ResponseCommandExecutor<Ack, String, String> 
 
     }
 
-    public AckHandler(List<Integer> ids) {
+    public AckHandler(Set ids) {
         this.ids = ids;
     }
 
@@ -44,11 +46,6 @@ public class AckHandler implements ResponseCommandExecutor<Ack, String, String> 
 
     public String execute(Socket socket, ResponseCommand<String, String> command) {
         this.ids.add(((Ack) command).getId());
-
         return "";
     }
-
-
-
-
 }

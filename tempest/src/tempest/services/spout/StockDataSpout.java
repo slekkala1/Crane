@@ -8,9 +8,7 @@ import tempest.services.bolt.OutputCollector;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -21,10 +19,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class StockDataSpout implements BaseSpout {
 
     LinkedBlockingQueue<Tuple> queue;
+    Set<Tuple> tupleSet = Collections.synchronizedSet(new HashSet<Tuple>());
 
     public StockDataSpout(LinkedBlockingQueue<Tuple> queue) {
         this.queue = queue;
     }
+
+    public Set<Tuple> getTupleSet() {
+        return tupleSet;
+    }
+
 
     public static final tempest.protos.Command.Spout.SpoutType type = Command.Spout.SpoutType.STOCKDATASPOUT;
 
@@ -50,18 +54,18 @@ public class StockDataSpout implements BaseSpout {
                                 System.out.println(filePath);
                                 BufferedReader reader = null;
                                 try {
-                                	String name = filePath.toString().substring(filePath.toString().lastIndexOf('_')+1);
+                                    String name = filePath.toString().substring(filePath.toString().lastIndexOf('_') + 1);
                                     reader = new BufferedReader(new FileReader(filePath.toFile()));
 
                                     String line = null;
                                     int count = 1;
                                     try {
                                         while ((line = reader.readLine()) != null) {
-                                            line = count + "," + line;
+                                            line = count + "," + line + "," + name;
                                             List<String> s = Arrays.asList(line.split(","));
-                                            s.add(name);
                                             Tuple t = new Tuple(s);
                                             queue.put(t);
+                                            tupleSet.add(t);
                                             lines.add(line);
                                             count++;
                                         }

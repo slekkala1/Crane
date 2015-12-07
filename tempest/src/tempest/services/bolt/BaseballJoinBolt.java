@@ -21,17 +21,16 @@ import java.util.concurrent.TimeUnit;
 public class BaseballJoinBolt implements Callable {
 	LinkedBlockingQueue<Tuple> queue;
 	private List<OutputCollector> outputCollectorList;
-	Map<String, String> nameMap;
+	static Map<String, String> nameMap = generateNameMap();
 
 	public BaseballJoinBolt(LinkedBlockingQueue queue,
 			List<OutputCollector> outputCollectorList) {
 		this.queue = queue;
 		this.outputCollectorList = outputCollectorList;
-		this.nameMap = new HashMap<String, String>();
-		generateNameMap();
 	}
 
-	private void generateNameMap() {
+	private static Map<String, String> generateNameMap() {
+		Map<String, String> nameMap = new HashMap<String, String>();
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(
 					"SDFSFiles/baseballdata/Master.csv"));
@@ -39,9 +38,9 @@ public class BaseballJoinBolt implements Callable {
 			try {
 				while ((line = reader.readLine()) != null) {
 					List<String> s = Arrays.asList(line.split(","));
-					String id = s.get(1);
-					String fName = s.get(14);
-					String lName = s.get(15);
+					String id = s.get(0);
+					String fName = s.get(13);
+					String lName = s.get(14);
 					nameMap.put(id, fName + " " + lName);
 				}
 			} catch (IOException e) {
@@ -50,6 +49,7 @@ public class BaseballJoinBolt implements Callable {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		return nameMap;
 	}
 
 	public Tuple call() {
@@ -58,10 +58,11 @@ public class BaseballJoinBolt implements Callable {
 			while ((tuple = queue.poll(1000, TimeUnit.MILLISECONDS)) != null) {
 				List<String> list = tuple.getStringList();
 				List<String> shortened = new ArrayList<String>();
-				String name = nameMap.get(list.get(0));
+				String name = nameMap.get(list.get(1));
 				if (name != null) {
 					shortened.add(name);
 					shortened.add(list.get(0));
+					shortened.add(list.get(9));
 					tuple.setStringList(shortened);
 					for (int i = 0; i < outputCollectorList.size(); i++) {
 						outputCollectorList.get(i).add(tuple);

@@ -30,6 +30,7 @@ public class TwitterShortenBolt
             while ((tuple = queue.poll(1000, TimeUnit.MILLISECONDS)) != null) {
                 List<String> list = tuple.getStringList();
                 List<String> shortened = new ArrayList<String>();
+                shortened.add(list.get(0));
                 boolean foundText = false;
                 boolean foundName = false;
                 for (String obj : list) {
@@ -46,7 +47,6 @@ public class TwitterShortenBolt
                     for (int i = 0; i < outputCollectorList.size(); i++) {
                         outputCollectorList.get(i).add(tuple);
                     }
-//            			outputCollector.add(tuple);
                 }
             }
         } catch (InterruptedException e) {

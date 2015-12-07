@@ -72,7 +72,9 @@ public class TwitterStreamSpout implements BaseSpout{
 	            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getStream()));
 
 	            String line;
+	            int count = 1;
 	            while ((line = reader.readLine()) != null) {
+	            	line = count + "," + line;
 	            	try {
 	            		List<String> s = Arrays.asList(line.split(","));
 	            		Tuple t = new Tuple(s);
@@ -80,6 +82,7 @@ public class TwitterStreamSpout implements BaseSpout{
 	            	} catch (InterruptedException e) {
 	            		e.printStackTrace();
 	            	}
+	            	count++;
 	            }
             	} catch (IOException ioe){
             		ioe.printStackTrace();

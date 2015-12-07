@@ -81,6 +81,12 @@ public class Console {
         Response<String> response = client.topology(Topologies.application2());
         return response.getResponse() + formatResponseStatistics(response.getResponseData());
     }
+    
+    @Command(abbrev = "app3")
+    public String application3() {
+        Response<String> response = client.topology(Topologies.application3());
+        return response.getResponse() + formatResponseStatistics(response.getResponseData());
+    }
 
     @Command
     public void log(@Param(name = "level") String level, @Param(name = "message") String message) {

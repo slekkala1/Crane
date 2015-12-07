@@ -42,7 +42,6 @@ public class TwitterFilterTrendingBolt
                         for (int i = 0; i < outputCollectorList.size(); i++) {
                             outputCollectorList.get(i).add(tuple);
                         }
-//                		outputCollector.add(tuple);
                 	}
                 }
         } catch (InterruptedException e) {

@@ -119,6 +119,8 @@ message Bolt {
         STOCKFILTERLARGEBOLT = 5;
         TWITTERFILTERTRENDINGBOLT = 6;
         TWITTERSHORTENBOLT = 7;
+        BASEBALLJOINBOLT = 8;
+        BASEBALLFILTERHRBOLT = 9;
     }
 
     repeated Member sendTupleTo = 1;
@@ -137,6 +139,7 @@ message Spout {
     enum SpoutType{
         STOCKDATASPOUT = 1;
         TWITTERSPOUT = 2;
+        BASEBALLSPOUT = 3;
     }
 
     required SpoutType spoutType = 6;

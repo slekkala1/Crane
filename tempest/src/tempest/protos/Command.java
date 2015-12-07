@@ -12343,6 +12343,14 @@ public final class Command {
        * <code>TWITTERSHORTENBOLT = 7;</code>
        */
       TWITTERSHORTENBOLT(6, 7),
+      /**
+       * <code>BASEBALLJOINBOLT = 8;</code>
+       */
+      BASEBALLJOINBOLT(7, 8),
+      /**
+       * <code>BASEBALLFILTERHRBOLT = 9;</code>
+       */
+      BASEBALLFILTERHRBOLT(8, 9),
       ;
 
       /**
@@ -12373,6 +12381,14 @@ public final class Command {
        * <code>TWITTERSHORTENBOLT = 7;</code>
        */
       public static final int TWITTERSHORTENBOLT_VALUE = 7;
+      /**
+       * <code>BASEBALLJOINBOLT = 8;</code>
+       */
+      public static final int BASEBALLJOINBOLT_VALUE = 8;
+      /**
+       * <code>BASEBALLFILTERHRBOLT = 9;</code>
+       */
+      public static final int BASEBALLFILTERHRBOLT_VALUE = 9;
 
 
       public final int getNumber() { return value; }
@@ -12386,6 +12402,8 @@ public final class Command {
           case 5: return STOCKFILTERLARGEBOLT;
           case 6: return TWITTERFILTERTRENDINGBOLT;
           case 7: return TWITTERSHORTENBOLT;
+          case 8: return BASEBALLJOINBOLT;
+          case 9: return BASEBALLFILTERHRBOLT;
           default: return null;
         }
       }
@@ -14043,6 +14061,10 @@ public final class Command {
        * <code>TWITTERSPOUT = 2;</code>
        */
       TWITTERSPOUT(1, 2),
+      /**
+       * <code>BASEBALLSPOUT = 3;</code>
+       */
+      BASEBALLSPOUT(2, 3),
       ;
 
       /**
@@ -14053,6 +14075,10 @@ public final class Command {
        * <code>TWITTERSPOUT = 2;</code>
        */
       public static final int TWITTERSPOUT_VALUE = 2;
+      /**
+       * <code>BASEBALLSPOUT = 3;</code>
+       */
+      public static final int BASEBALLSPOUT_VALUE = 3;
 
 
       public final int getNumber() { return value; }
@@ -14061,6 +14087,7 @@ public final class Command {
         switch (value) {
           case 1: return STOCKDATASPOUT;
           case 2: return TWITTERSPOUT;
+          case 3: return BASEBALLSPOUT;
           default: return null;
         }
       }
@@ -16401,24 +16428,26 @@ public final class Command {
       "(\t\022\020\n\010response\030\002 \001(\t\"0\n\013DeleteChunk\022\017\n\007r" +
       "equest\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\")\n\004List\022\017" +
       "\n\007request\030\001 \001(\t\022\020\n\010response\030\002 \001(\t\"\021\n\003Ack" +
-      "\022\n\n\002id\030\001 \001(\005\"\376\002\n\004Bolt\022\034\n\013sendTupleTo\030\001 \003" +
+      "\022\n\n\002id\030\001 \001(\005\"\256\003\n\004Bolt\022\034\n\013sendTupleTo\030\001 \003" +
       "(\0132\007.Member\022\034\n\013receiveFrom\030\002 \001(\0132\007.Membe" +
       "r\022\017\n\007request\030\003 \001(\t\022\020\n\010response\030\004 \001(\t\022\n\n\002" +
       "id\030\005 \001(\005\022 \n\010boltType\030\006 \001(\0162\016.Bolt.BoltTy" +
       "pe\022\023\n\013parallelism\030\007 \001(\005\022\025\n\rsendTupleToID" +
-      "\030\010 \003(\005\022\025\n\rreceiveFromID\030\t \001(\005\"\245\001\n\010BoltTy" +
+      "\030\010 \003(\005\022\025\n\rreceiveFromID\030\t \001(\005\"\325\001\n\010BoltTy" +
       "pe\022\016\n\nFILTERBOLT\020\001\022\021\n\rTRANSFORMBOLT\020\002\022\014\n",
       "\010JOINBOLT\020\003\022\027\n\023STOCKFILTERGAINBOLT\020\004\022\030\n\024" +
       "STOCKFILTERLARGEBOLT\020\005\022\035\n\031TWITTERFILTERT" +
-      "RENDINGBOLT\020\006\022\026\n\022TWITTERSHORTENBOLT\020\007\"\301\001" +
-      "\n\005Spout\022#\n\tspoutType\030\006 \002(\0162\020.Spout.Spout" +
-      "Type\022\027\n\006sendTo\030\001 \003(\0132\007.Member\022\030\n\007recFrom" +
-      "\030\002 \001(\0132\007.Member\022\017\n\007request\030\003 \001(\t\022\020\n\010resp" +
-      "onse\030\004 \001(\t\022\n\n\002id\030\005 \001(\005\"1\n\tSpoutType\022\022\n\016S" +
-      "TOCKDATASPOUT\020\001\022\020\n\014TWITTERSPOUT\020\002\"H\n\010Top" +
-      "ology\022\025\n\005spout\030\001 \001(\0132\006.Spout\022\023\n\004bolt\030\002 \003" +
-      "(\0132\005.Bolt\022\020\n\010response\030\003 \001(\tB\031\n\016tempest.p",
-      "rotosB\007Command"
+      "RENDINGBOLT\020\006\022\026\n\022TWITTERSHORTENBOLT\020\007\022\024\n" +
+      "\020BASEBALLJOINBOLT\020\010\022\030\n\024BASEBALLFILTERHRB" +
+      "OLT\020\t\"\324\001\n\005Spout\022#\n\tspoutType\030\006 \002(\0162\020.Spo" +
+      "ut.SpoutType\022\027\n\006sendTo\030\001 \003(\0132\007.Member\022\030\n" +
+      "\007recFrom\030\002 \001(\0132\007.Member\022\017\n\007request\030\003 \001(\t" +
+      "\022\020\n\010response\030\004 \001(\t\022\n\n\002id\030\005 \001(\005\"D\n\tSpoutT" +
+      "ype\022\022\n\016STOCKDATASPOUT\020\001\022\020\n\014TWITTERSPOUT\020" +
+      "\002\022\021\n\rBASEBALLSPOUT\020\003\"H\n\010Topology\022\025\n\005spou",
+      "t\030\001 \001(\0132\006.Spout\022\023\n\004bolt\030\002 \003(\0132\005.Bolt\022\020\n\010" +
+      "response\030\003 \001(\tB\031\n\016tempest.protosB\007Comman" +
+      "d"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

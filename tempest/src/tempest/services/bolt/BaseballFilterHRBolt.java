@@ -27,7 +27,8 @@ public class BaseballFilterHRBolt
         try {
                 while((tuple = queue.poll(1000, TimeUnit.MILLISECONDS))!=null) {
                 	List<String> list = tuple.getStringList();
-                	int hr = Integer.parseInt(list.get(8));
+                	System.out.println(list.toString());
+                	int hr = Integer.parseInt(list.get(9));
                 	if (hr >= 10) {
                         for (int i = 0; i < outputCollectorList.size(); i++) {
                             outputCollectorList.get(i).add(tuple);

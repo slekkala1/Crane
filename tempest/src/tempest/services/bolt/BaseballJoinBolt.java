@@ -38,9 +38,9 @@ public class BaseballJoinBolt
 			try {
 				while ((line = reader.readLine()) != null) {
 					List<String> s = Arrays.asList(line.split(","));
-					String id = s.get(0);
-					String fName = s.get(13);
-					String lName = s.get(14);
+					String id = s.get(1);
+					String fName = s.get(14);
+					String lName = s.get(15);
 					nameMap.put(id, fName + " " + lName);
 				}
 			} catch (IOException e) {

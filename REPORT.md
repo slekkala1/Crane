@@ -30,7 +30,7 @@ The **Crane** system is designed so that it can support a tree structure, meanin
 of outputs. The data begins at a **Spout** and is passed
 along to one or more **Bolts**, where the tuples of data can be processed in a variety of ways. A **Bolt** can either
 send the data to another **Bolt**, or collect it as output if it is the final processing step. This tree topology is defined in the
-**Topologies** class. The **Topologies** class creates a TCP message that is relayed to the introducer of the cluster, where each
+**Topologies** class. The **Topologies** class creates a TCP message that is relayed to the introducer/nimbus of the cluster, where each
 bolt is assigned to a node. The introducer will relay these assignments out to other nodes so that data can be sent along the correct path.
 
 Spouts are defined for each application, but all implement the BaseSpout interface. This ensures there is a retrieveTuples method that pulls
@@ -56,6 +56,9 @@ tweeter has followers.
 The last application processes a stream of baseball data. It finds all players in the dataset that have hit at least 10 homeruns in a season, and outputs
 their name along with the homerun total. Their name is found using a join bolt - players names are stored as ids in the streaming data, so this
 is joined with a dataset that contains their real name and id.
+
+Upon failure of machines that are assigned as workers, the application will replay to ensure no tuples are lost
+
 
 DATA:
 

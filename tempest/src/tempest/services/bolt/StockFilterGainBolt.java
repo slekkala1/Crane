@@ -16,10 +16,14 @@ public class StockFilterGainBolt
     LinkedBlockingQueue<Tuple> queue;
     private List<OutputCollector> outputCollectorList;
 
+    public StockFilterGainBolt() {
+    }
+
     public StockFilterGainBolt(LinkedBlockingQueue<Tuple> queue,  List<OutputCollector> outputCollectorList) {
         this.queue = queue;
         this.outputCollectorList = outputCollectorList;
     }
+
 
     public Tuple call() {
         Tuple tuple = null;

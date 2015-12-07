@@ -40,7 +40,8 @@ public class StockDataSpout implements BaseSpout {
         return new Runnable() {
             @Override
             public void run() {
-
+                System.out.println("xyz");
+                System.out.println("Working Directory = " +System.getProperty("user.dir"));
                 File myFile = new File("SDFSFiles/quant");
                 try {
 

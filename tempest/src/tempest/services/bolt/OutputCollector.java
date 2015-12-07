@@ -46,16 +46,6 @@ public class OutputCollector {
                 Response<String> response = null;
                 boolean run = true;
                 while (run) {
-//                Membership.MembershipList membershipList = this.membershipService.getMembershipListNoLocal();
-//                int index = new Random().nextInt(membershipList.getMemberList().size());
-//                Membership.Member member = membershipList.getMemberList().get(index);
-                    /*String introducer = "localhost:4445";
-                    Membership.Member member = Membership.Member.newBuilder()
-                            .setHost(introducer.split(":")[0])
-                            .setPort(Integer.parseInt(introducer.split(":")[1]))
-                            .build();
-                    ;*/
-
                     response = spoutTo(member);
                     if (response.getResponse().equals("ok")) run = false;
                 }
@@ -66,16 +56,7 @@ public class OutputCollector {
 
     public Response spoutTo(Membership.Member member) {
         Bolt bolt = new Bolt();
-        //bolt.setTuplesList(tuples);
-//        String introducer = "localhost:4445";
-//
-//        Membership.Member member1 = Membership.Member.newBuilder()
-//                .setHost(introducer.split(":")[0])
-//                .setPort(Integer.parseInt(introducer.split(":")[1]))
-//                .build();
-//        bolt.setSendTupleTo(member1);
         bolt.setTuplesQueue(queue);
-//        spout.setRequest(options);
         return createResponseExecutor(member, bolt).executeSendTupleFromQueue();
     }
 

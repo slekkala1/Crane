@@ -27,22 +27,26 @@ public class TwitterShortenBolt
     public Tuple call() {
         Tuple tuple = null;
         try {
-            while ((tuple = queue.poll(1000, TimeUnit.MILLISECONDS)) != null) {
+            while ((tuple = queue.poll(10000, TimeUnit.MILLISECONDS)) != null) {
                 List<String> list = tuple.getStringList();
                 List<String> shortened = new ArrayList<String>();
                 shortened.add(list.get(0));
                 boolean foundText = false;
                 boolean foundName = false;
                 for (String obj : list) {
-                    if (obj.substring(1, 5).equals("name") && !foundName) {
+                    if (obj.contains("name") && !foundName) {
                         foundName = true;
                         shortened.add(obj);
-                    } else if (obj.indexOf("text") != -1 && !foundText) {
+                    } else if (obj.contains("text") && !foundText) {
                         foundText = true;
                         shortened.add(obj);
                     }
+                    if (foundText && foundName) {
+                    	break;
+                    }
                 }
                 tuple.setStringList(shortened);
+                //Tuple newTuple = new Tuple(shortened);
                 if (shortened.size() > 0) {
                     for (int i = 0; i < outputCollectorList.size(); i++) {
                         outputCollectorList.get(i).add(tuple);
